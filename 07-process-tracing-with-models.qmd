@@ -541,7 +541,7 @@ kinformative2 <- function(A){
    }
 
 kinformative <- function(A){
-  paste(c("emptyset", "X", "Y", "XY")[!c(
+  paste(c("0", "X", "Y", "XY")[!c(
     dseparated(make_daggity(A), "Q", "K", c()),
     dseparated(make_daggity(A), "Q", "K", c("X")),
     dseparated(make_daggity(A), "Q", "K", c("Y")),
@@ -612,7 +612,7 @@ for(i in 1:length(accept)){
       list()
     titles[i] <- ifelse(length(kinf)==0, 
                          paste0(i, ". K never informative"),
-                         paste0(i, ". K possibly informative\n given: ", expression(paste(kinf))))
+                         paste0(i, ". K possibly informative\n given: ", kinf))
 }
 
 cowplot::plot_grid(plotlist=plist, ncol=6, labels=titles,
