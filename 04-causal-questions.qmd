@@ -108,7 +108,7 @@ This query can be still defined as statements about nodal types when models are 
 
 ```{r}
 #| label: fig-HJ-F-4-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  7
 #| fig.height :  4
 #| fig.align: "center"
@@ -165,7 +165,7 @@ In practice, it is the components of $\lambda^Y$---the shares of different nodal
 
 ```{r}
 #| label: fig-HJ-F-4-3
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  6
 #| fig.height :  4
 #| fig.align: "center"
@@ -225,7 +225,7 @@ From these expressions we can see that, asking whether a causal effect operated 
 
 ```{r}
 #| label: fig-HJ-F-4-4
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  7
 #| fig.height :  4
 #| fig.align: "center"
@@ -321,7 +321,7 @@ The same kind of exercise can be conducted for other pathway inquiries. Thus, @f
 
 ```{r}
 #| label: fig-HJ-F-4-5
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Combinations of nodal types for $M$ and $Y$ that generate direct
 #| indirect
 #| and overall positive effects together. The four digits in the nodal type labels for $Y$ correspond to the potential outcomes for $Y$ under four conditions: when $X :  0$ and $M :  0$
@@ -446,7 +446,7 @@ Likewise, if we want to ask *how often* Suzy's throw is an actual cause, in a po
 
 ```{r}
 #| label: fig-HJ-F-4-6
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  8
 #| fig.height :  4.5
 #| fig.align: "center"
@@ -553,7 +553,7 @@ df <- data.frame(
 
 ```{r}
 #| label: tbl-HJ-T-4-1
-#| echo :  FALSE
+#| echo:  false
 kabble(df, caption = "Set of causal types in the model that satisfy q1 and q2 along with the probability of the type.", booktabs = TRUE)
 ```
 
@@ -597,7 +597,7 @@ The same procedure can be used to identify any set of types that correspond to a
 
 ```{r}
 #| label: tbl-HJ-T-4-3
-#| echo :  FALSE
+#| echo:  false
 
 q <- read.csv("data/queries.csv")
 
@@ -641,7 +641,7 @@ For instance, for the interaction query, `Q`, `get_query_types(model, Q)` would 
                 
 ```{r}
 #| label: tbl-HJ-T-4-4
-#| echo :  FALSE
+#| echo:  false
 model <- make_model("X -> Y <- W")
 
 q1 <- get_query_types(model, 

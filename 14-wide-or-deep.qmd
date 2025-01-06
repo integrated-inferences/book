@@ -35,7 +35,7 @@ We get an intuition for the answer by imagining the inferences we might draw in 
 
 ```{r}
 #| label: fig-HJ-F-14-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  8
 #| fig.height :  5
 #| fig.cap :  "Posteriors on the ATE given different strategies and data patterns."
@@ -133,7 +133,7 @@ Within each panel, each line represents going wide to a differing degree: collec
 #| label: fig-HJ-F-14-2
 #| fig.width :  10
 #| fig.height :  7
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 #| fig.cap :  "Reduction in expected posterior variance for different wide versus deep strategies
 #| given different model-query combinations. Reductions are relative to the expected posterior variance for an N: 100

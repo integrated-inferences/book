@@ -150,7 +150,7 @@ One helpful way to think about these last two quantities is that they capture, r
 
 As shown in the second line of Equation (5.2), $\Pr(d)$ can be usefully written as a weighted average over different ways (alternative hypotheses, $H'$) in which the data could have come about. If we have three alternative hypotheses, for instance, we ask what the probability of the data pattern is under each hypothesis and then average across those probabilities, weighting each by the prior probability of its associated hypothesis. 
 
-Assessing $\Pr(d)$ requires putting prior probabilities on an exclusive and exhaustive set of hypotheses. However, it does not require a listing of all possible hypotheses, just some *exhaustive* collection of hypotheses (i.e., a set whose probability adds up to 1). For example, in a murder trial, we might need to assess the unconditional probability that the accused's fingerprints would be on the door. We can conceive of two mutually exclusive hypotheses that are collectively exhaustive of the possibilities: The accused is guilty, or they are not guilty. We can average across the probability of the accused's fingerprints being on the door under each of these two hypotheses, weighting by their prior probabilities. What we do *not* have to do is decompose the "not guilty" hypothesis into a set of hypotheses about who *else* might be guilty. As a procedure for assessing the probability of the evidence under the not-guilty hypothesis, it might be helpful to think through who else might have done it, but there is no logical problem with working with just the two hypotheses (guilty and not guilty) since they together capture all possible states of the world. In Section @sec-derived, we work through an example in which we can calculate the probability of data conditional on some effect *not* being present. 
+Assessing $\Pr(d)$ requires putting prior probabilities on an exclusive and exhaustive set of hypotheses. However, it does not require a listing of all possible hypotheses, just some *exhaustive* collection of hypotheses (i.e., a set whose probability adds up to 1). For example, in a murder trial, we might need to assess the unconditional probability that the accused's fingerprints would be on the door. We can conceive of two mutually exclusive hypotheses that are collectively exhaustive of the possibilities: The accused is guilty, or they are not guilty. We can average across the probability of the accused's fingerprints being on the door under each of these two hypotheses, weighting by their prior probabilities. What we do *not* have to do is decompose the "not guilty" hypothesis into a set of hypotheses about who *else* might be guilty. As a procedure for assessing the probability of the evidence under the not-guilty hypothesis, it might be helpful to think through who else might have done it, but there is no logical problem with working with just the two hypotheses (guilty and not guilty) since they together capture all possible states of the world. In @sec-derived, we work through an example in which we can calculate the probability of data conditional on some effect *not* being present. 
 
 Also, while the hypotheses that enter the formula have to be mutually exclusive, that does not prevent us from drawing downstream inferences about hypotheses that are not mutually exclusive. For instance, we might use Bayes' rule to form posteriors over which one of four people is guilty: an elderly man, John; a young man, Billy; an older woman, Maria; or a young woman, Kathy. These are mutually exclusive hypotheses. However, we can then use the posterior on each of these hypotheses to update our beliefs about the probability that a man is guilty and about the probability that an elderly person is guilty. Our beliefs about whether the four individuals did it will have knock-on effects on our beliefs about whether an individual with their characteristics did it. The fact that "man" and "elderly" are not mutually exclusive in no way means that we cannot learn about both of these hypotheses from an underlying Bayesian calculation, as long as the hypotheses to which we apply Bayes' rule are themselves mutually exclusive.      
 
@@ -197,7 +197,7 @@ Note that we can think of proportions as probabilities, and we will often write 
 #| label: fig-HJ-F-5-1
 #| fig.height :  7
 #| fig.width :  8
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap: "Beta distributions"
 
   expand.grid(alpha = c(.5, 1, 5, 20), 
@@ -624,7 +624,7 @@ The hoop test in this example makes use of an extreme probability---a probabilit
 ```{r}
 #| label: fig-HJ-F-5-2
 #| fig.cap: "A mapping from the probability of observing a clue if the proposition that a case is a $b$ type is true ($\\phi-b$) or false ($\\phi-d$) to a generalization of the tests described in Van-Evera (1997)."
-#| echo :  FALSE
+#| echo:  false
 #| fig.height: 12
 #| fig.width: 12
 
@@ -702,7 +702,7 @@ As we noted in the previous section, probative value does not depend upon priors
 ```{r}
 #| label: fig-HJ-F-5-3
 #| fig.cap :  "A smoking in which gun test with greatest impact on beliefs when priors are middling low and the clue is observed; a 'hoop test' in which the greatest effects arise when priors are middling high and the clue is not observed."
-#| echo :  FALSE
+#| echo:  false
 #| fig.height: 10
 #| fig.width: 10
 par(mfrow = c(2,2))
@@ -799,7 +799,7 @@ More generally, we propose that researchers update over a causal model. As we ex
 
 ```{r}
 #| label: ch5joint
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap: "Correlated beliefs on queries and probative value"
 #| fig.width :  10
 #| fig.height :  5

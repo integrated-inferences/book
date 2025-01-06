@@ -130,7 +130,7 @@ model_2 <-
 
 ```{r}
 #| label: fig-HJ-F-15-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap:  "Two models. The model on the right might be justified if $X$ is known to be randomized."
 #| fig.height :  4.5
 #| fig.width :  9
@@ -151,7 +151,7 @@ We generate data from the true model and then update Model 1 and Model 2. Then w
 
 ```{r}
 #| label: fig-HJ-F-15-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Can updating our models on large $N$ data render $M$ informative? Model 1: No knowledge of structure; Model 2: $X$ known to be randomized. Error bars show 95% credibility intervals"
 #| fig.height :  3
 #| fig.width :  7
@@ -206,7 +206,7 @@ We find that even with an auspicious monotonic data-generating process in which 
 ```{r}
 #| label: tbl-appnana6
 #| eval :  FALSE
-#| echo :  FALSE
+#| echo:  false
 model1 <- read_rds("saved/15_somethingnothing_model_1.rds")
 
 kabble(cbind(prior = get_parameters(model1, param_type = "flat"),
@@ -435,7 +435,7 @@ In @fig-HJ-F-15-3, we represent the true models from which simulated data are ge
 
 ```{r}
 #| label: fig-HJ-F-15-3
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 #| warning :  FALSE
 #| fig.cap :  "DAGs from three structural causal models."
@@ -457,7 +457,7 @@ In @fig-HJ-F-15-4, we show the structures that we recover. In all situations, we
 
 ```{r}
 #| label: fig-HJ-F-15-4
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 #| warning :  FALSE
 #| fig.cap :  "(Partially) recovered DAGs from data. Circles indicate uncertainty regarding whether an arrow starts or ends at a given point."

@@ -37,7 +37,7 @@ The argument in Pierson's 1994 book  *Dismantling the Welfare State?* challenged
 
 ```{r}
 #| label: fig-HJ-F-3-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  11
 #| fig.height :  8
 #| fig.align: "center"
@@ -119,7 +119,7 @@ At the same time, leaders can only choose a transformative strategy if they deci
 
 ```{r}
 #| label: fig-HJ-F-3-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  11
 #| fig.height :  7
 #| fig.align: "center"
@@ -180,7 +180,7 @@ We represent Przeworski and Limongi's argument in the DAG in @fig-HJ-F-3-3. The 
 
 ```{r}
 #| label: fig-HJ-F-3-3
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  11
 #| fig.height :  5
 #| fig.align: "center"

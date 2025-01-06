@@ -41,7 +41,7 @@ Finally, we allow for confounding. The theoretical intuition we want to capture 
 ```{r}
 #| label: model47
 #| message :  FALSE
-#| echo :  FALSE
+#| echo:  false
 
 if(run)
 make_model("I -> M -> D <- P; I -> D; I <-> M") |> #Specify the DAG
@@ -63,7 +63,7 @@ This model, with confounding, is represented graphically as in @fig-HJ-F-10-1. T
 
 ```{r}
 #| label: fig-HJ-F-10-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap: "Democracy and Inequality Model"
 #| fig.height :  2.7
 hj_ggdag(model=model_id)
@@ -83,7 +83,7 @@ As in @sec-HJC8, we will confront the model with data drawn from our coding of t
 
 ```{r}
 #| label: tbl-HJ-10-1-tab
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 data <- CausalQueries::democracy_data  
 
@@ -97,7 +97,7 @@ The raw correlations between variables are shown in @tbl-HJ-10-2-tab. Some corre
 
 ```{r}
 #| label: tbl-HJ-10-2-tab
-#| echo :  FALSE
+#| echo:  false
 #| warning  :  FALSE
 #| message :  FALSE
 kabble(cor(data[,-1], use = "pairwise.complete.obs"), digits = 3,
@@ -152,7 +152,7 @@ if(run)
 
 ```{r}
 #| label: fig-HJ-F-10-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  11
 #| fig.height :  5.5
 #| fig.cap :  "Case-level inferences given inequality and democratization values and possible observations of mobilization and pressure."
@@ -197,7 +197,7 @@ In @fig-HJ-F-10-3, we graph  posterior distributions for the full set of queries
 ```{r}
 #| label: pimdqueries
 #| include :  FALSE
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 #| warning :  FALSE
 
@@ -416,34 +416,13 @@ Given_labels <- c(
 
 ```
 
-```{r}
-#| label: dcaused0
-#| echo :  FALSE
-#| fig.cap :  "Priors and posteriors on the probability that inequality caused or prevented democratization given different kinds of observed case-level data. The error bars show 95 percent credibility intervals."
-#| eval :  FALSE
-#| include : FALSE
-
-ch09_queryresults_queries  |> bind_rows(.id = "case") |>
-  mutate(using = ifelse(grepl("priors", case), "Priors", "Posteriors"),
-         query = ifelse(grepl("result", case), "Inequlity caused democratization", "Inequality prevented democratization"),
-         Given = factor(Given, rev(Given_labels), rev(names(Given_labels))))  |> 
-  ggplot(aes(mean, Given, shape = using)) + 
-  geom_point(position=position_dodge(.5)) + 
-  theme_bw() +
-  geom_errorbarh(aes(xmin=cred.low, xmax=cred.high), 
-                size=.2, height = .1,
-                position=position_dodge(.5)) +
-  facet_grid(query~., scales = "free_y") + xlab("Estimate")
-
-```
-
 
 
 ```{r}
 #| label: fig-HJ-F-10-4
 #| fig.height :  4
 #| fig.width :  10
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Posterior means of parameters from the democracy model"
 
 df <- 
@@ -469,7 +448,7 @@ The structural causal model that we use (shown in @fig-HJ-F-10-5) is the same mo
 ```{r}
 #| label: HJ-10-rstmodel
 #| message :  FALSE
-#| echo :  FALSE
+#| echo:  false
 model_rst <- make_model("M -> R -> Y <- D; R <-> Y") |> #Specify the DAG
   set_restrictions("(R[M=1] > R[M=0])")
 
@@ -479,7 +458,7 @@ model_rst <- make_model("M -> R -> Y <- D; R <-> Y") |> #Specify the DAG
 
 ```{r}
 #| label: fig-HJ-F-10-5
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap: "Institutions and Growth Model"
 #| fig.height :  3.5
 hj_ggdag(model = model_rst)
@@ -493,7 +472,7 @@ We draw our data from the supplementary material for @rodrik2004institutions's p
 
 ```{r}
 #| label: tbl-data82RST
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 
 data_RST <- haven::read_dta("data/RST_replication.dta")
@@ -546,7 +525,7 @@ The raw correlations between variables are shown in @tbl-ch10yrdmcorr. We note t
 
 ```{r}
 #| label: tbl-ch10yrdmcorr
-#| echo :  FALSE
+#| echo:  false
 #| warning  :  FALSE
 #| message :  FALSE
 kabble(cor(RST %>% select(D, M, R, Y), use = "pairwise.complete.obs"), digits = 3,
@@ -584,7 +563,7 @@ Before looking at the more specific case- and population-level queries, we first
 
 ```{r}
 #| label: tbl-RSTATE
-#| echo :  FALSE
+#| echo:  false
 bind_rows(
   model_prior_rst |> query_model("Y[R=1] - Y[R=0]", 
   given = list("TRUE"), 
@@ -609,7 +588,7 @@ In Figure (@fig-HJ-F-10-6), we plot our beliefs both as derived from the untrain
 
 ```{r}
 #| label: RST11cases0
-#| echo :  FALSE
+#| echo:  false
 
 if(run)
  cases_RST(model = model_rst, using = "posteriors") |> write_rds("saved/10_RST_results.rds")
@@ -628,7 +607,7 @@ Moreover, if we want to collect more information about a given case, both settle
 
 ```{r}
 #| label: fig-HJ-F-10-6
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  12
 #| fig.height :  7
 #| fig.cap :  "Case level inferences given possible observations  of distance and mortality."
@@ -664,9 +643,10 @@ Second, unlike in the untrained process-tracing model, settler mortality is info
 
 ```{r}
 #| label: fig-HJ-F-10-7
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "A selection of posterior distributions on nodal types for $Y$ given nodal types for $R$ (selected types)."
-#| message :  FALSE
+#| message: false
+#| warning: false
 #| fig.height :  3
 #| fig.width :  6
 
@@ -682,14 +662,17 @@ if(run)
   write_rds("saved/10_correlated.rds")
 
   read_rds("saved/10_correlated.rds") |> 
-  ggplot(aes(mean, Y, shape = Given)) + geom_point(position = ggstance::position_dodgev(.5)) + ylab("Nodal type for Y") + xlab("Posterior") + theme_bw() + 
+  ggplot(aes(mean, Y, shape = Given)) + 
+    geom_point(position = ggstance::position_dodgev(.5)) + 
+    ylab("Nodal type for Y") + xlab("Posterior") + 
+    theme_bw() + 
   geom_errorbarh(aes(xmax = upper, xmin = lower), position = ggstance::position_dodgev(.5), height = .1) +
   theme(legend.position = "bottom")
 ```
 
 ```{r}
 #| label: fig-HJ-F-10-8
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Correlated posteriors"
 #| fig.width :  7
 #| fig.height :  3.5
@@ -718,7 +701,7 @@ We can see the learning about this confounding more starkly in @fig-HJ-F-10-8. I
 
 ```{r}
 #| label: RST
-#| echo :  FALSE
+#| echo:  false
 #| include :  FALSE
 
 if(run)
@@ -751,7 +734,7 @@ Again the updated model can be used not just to inform inferences about cases bu
 ```{r}
 #| label: yrmdqueries
 #| include :  FALSE
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 #| warning :  FALSE
 
@@ -922,7 +905,7 @@ So we now have both a direct path from $M$ to $Y$ and the mediated path from $M$
 
 ```{r}
 #| label: tbl-dirind1ch10
-#| echo :  FALSE
+#| echo:  false
 
 qs <- 
   c("Y[M = 0] - Y[M=1]",
@@ -973,7 +956,7 @@ Overall, these results suggest that any analysis of the long-run effects of sett
 
 ```{r}
 #| label: tbl-dirind2ch10
-#| echo :  FALSE
+#| echo:  false
 
 
 qs2 <- 

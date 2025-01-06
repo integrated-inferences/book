@@ -87,7 +87,7 @@ Consider next model $M^{\prime\prime}$ in @fig-HJ-F-6-1, which also supports (im
 
 ```{r}
 #| label: fig-HJ-F-6-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  7
 #| fig.height :  12
 #| fig.align: "center"
@@ -216,7 +216,7 @@ In other situations, we might imagine invoking a theory that does not necessaril
 
 ```{r}
 #| label: fig-HJ-F-6-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  7
 #| fig.height :  3.5
 #| fig.align: "center"
@@ -299,7 +299,8 @@ Let's now think about different ways of characterizing the gains from observing 
 
 ```{r}
 #| label: tbl-HJ-T-06-numeric
-#| echo :  FALSE
+#| echo:  false
+#| warning: false
 p_k_q <- function(k, q) .8*(k==q) + .2*(k!=q)
 prior = .2
 qk <- function(k) p_k_q(1,k) * prior / (p_k_q(1,k) * prior + p_k_q(0,k) * (1-prior) )
@@ -310,10 +311,27 @@ theorygains  <-
            inference = qk(k), sqerror = (inference - q)^2, variance = inference *(1-inference)) 
 
 theorygains |>
-  kabble(col.names = c("$q$ (Unobserved)", "$k$ (Observable)", "Event probability (subjective)", "Event probability (objective)", "Inference on $q$ given $k$", "Actual (squared) Error", "Posterior variance"),
-         caption = "Possible events, event probabilities, and inferences.", align = "c", escape = TRUE)  |>                   kableExtra::column_spec(1, width = "8em") |>                   kableExtra::column_spec(2, width = "8em")|>                   kableExtra::column_spec(3, width = "8em")|>                   kableExtra::column_spec(4, width = "8em") |>                   kableExtra::column_spec(5, width = "8em") |>                   kableExtra::column_spec(6, width = "8em") |>                   kableExtra::column_spec(7, width = "8em") |>
-  kable_styling(latex_options="scale_down")
- 
+  kabble(
+    col.names = c(
+      "$q$ (Unobserved)",
+      "$k$ (Observable)",
+      "Event probability (subjective)",
+      "Event probability (objective)",
+      "Inference on $q$ given $k$",
+      "Actual (squared) Error",
+      "Posterior variance"
+    ),
+    caption = "Possible events, event probabilities, and inferences.",
+    align = "c",
+    escape = FALSE
+  )  |>                   kableExtra::column_spec(1, width = "8em") |>
+  kableExtra::column_spec(2, width = "8em") |>                   
+  kableExtra::column_spec(3, width = "8em") |>                   
+  kableExtra::column_spec(4, width = "8em") |>                   
+  kableExtra::column_spec(5, width = "8em") |>
+  kableExtra::column_spec(6, width = "8em") |>                   
+  kableExtra::column_spec(7, width = "8em") |>
+  kable_styling(latex_options = "scale_down")
 
 ```
 
@@ -475,7 +493,7 @@ For two players, for instance, we might imagine a representation of a standard n
 
 ```{r}
 #| label: fig-HJ-F-6-3
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  4
 #| fig.align: "center"
@@ -507,7 +525,7 @@ How might this theory be represented as a causal model? @fig-HJ-F-6-4 provides o
 
 ```{r}
 #| label: fig-HJ-F-6-4
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  4
 #| fig.align: "center"
@@ -542,7 +560,7 @@ So far the model does not provide much of an *explanation* for behavior. A lower
 
 ```{r}
 #| label: fig-HJ-F-6-5
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  4
 #| fig.align: "center"
@@ -577,7 +595,7 @@ One might step still further back and ask *why* would actors form these beliefs,
 
 ```{r}
 #| label: fig-HJ-F-6-6
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  4
 #| fig.align: "center"
@@ -615,7 +633,7 @@ Nash's theory likely corresponds to position (ii). It can be captured by causal 
 
 ```{r}
 #| label: fig-HJ-F-6-7
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  4
 #| fig.align: "center"

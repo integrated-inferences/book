@@ -348,7 +348,9 @@ window.Quarto = {
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<p><img src=".\figures/cover_smaller.jpg" class="img-fluid"></p>
+</div></div>
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -559,53 +561,6 @@ Table&nbsp;6.1: Learning metrics.
 <p>Say, now, that we in fact observe <span class="math inline">\(k=1\)</span> and update to <span class="math inline">\(q_1 = p(q=1|k=1) = \frac{p(k=1|q=1)p(q=1)}{p(k=1|q=1)p(q=1) + p(k=1|q=0)p(q=0)} = \frac{0.8 \times 0.2}{0.8 \times  0.2 + 0.2 \times  0.8} = 0.5\)</span>. Suppose, however, that, unbeknownst to us, in reality <span class="math inline">\(q=0\)</span>. So we are in fact in row 2 of this table (<span class="math inline">\(q=0, k=1\)</span>). But since we cannot observe <span class="math inline">\(q\)</span>, we do not know whether we are in row 2, where <span class="math inline">\(q=0\)</span>, or row 4, where <span class="math inline">\(q=1\)</span>.</p>
 <p>Let’s now think about different ways of characterizing the gains from observing <span class="math inline">\(K\)</span>, the piece of evidence made usable by our theory.</p>
 <div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in kableExtra::column_spec(kabble(theorygains, col.names = c("$q$
-(Unobserved)", : Please specify format in kable. kableExtra can customize
-either HTML or LaTeX outputs. See https://haozhu233.github.io/kableExtra/ for
-details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in
-kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in
-kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in
-kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in
-kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in
-kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in
-kable_styling(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
-: Please specify format in kable. kableExtra can customize either HTML or LaTeX
-outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
-</div>
 <div id="tbl-HJ-T-06-numeric" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-06-numeric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;6.2: Possible events, event probabilities, and inferences.

@@ -1,13 +1,12 @@
 project:
   type: book
   output-dir: docs
+  execute-dir: project
 
 book:
   title: "Integrated Inferences"
   subtitle: "Causal Models for Qualitative and Mixed-Method Research"
-#  margin-header: >
-#    <p align='center'><a style = 'color: black; text-decoration: none; font-size: 17px' target='_new' href='https://www.cambridge.org/core/books/integrated-inferences/45B07964AD4718A74CDE3E35A31F26FA'>
-#    <img style='border: 1px solid darkgray; margin-bottom: 5px' width = 100px src='/figures/cover.jpg'><br/>Buy book</a></p>
+  margin-header: "![](/figures/cover_smaller.jpg)"
   author: "Macartan Humphreys and Alan M Jacobs"
   downloads: pdf
   doi: "https://doi.org/10.1017/9781316718636"
@@ -50,6 +49,9 @@ book:
       - 18-appendix.qmd
       - 19-errata.qmd
       - 20-references.qmd
+
+language:
+  crossref-rem-title: "Note"
 
 bibliography: bib.bib
 

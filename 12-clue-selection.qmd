@@ -49,7 +49,7 @@ We take two conditions as root nodes in this model. First, a country may or may 
 
 ```{r}
 #| label: fig-HJ-F-12-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  7
 #| fig.align: "center"
@@ -82,7 +82,7 @@ To summarize the intuition, governments will only fall if there is both corrupti
 ```{r}
 #| label: ch12definerunningmodel1
 #| warning :  FALSE
-#| echo :  FALSE
+#| echo:  false
 
 if(run)
   list(
@@ -146,7 +146,7 @@ We also indicate the probability of each realization given the strategy, the inf
 
 ```{r}
 #| label: tbl-HJ-T-12-1
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 # colnames(possible_inferences)[1:2] <- c("Prior var", "Var given W")
 
@@ -212,7 +212,7 @@ if(run)
 
 ```{r}
 #| label: fig-HJ-F-12-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  7
 #| fig.height :  5
 #| fig.cap :  "Expected reduction in variance for different data strategies for the base survival model and two variants of the model"
@@ -298,7 +298,7 @@ We start by specifying the democratization model, with negative effects ruled ou
 
 ```{r}
 #| label: pimdposs
-#| echo :  FALSE
+#| echo:  false
 
 el <- function(
     model = pimd,
@@ -344,7 +344,7 @@ el <- function(
 
 ```{r}
 #| label: model2
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 if(run)
 make_model("I -> M -> D <- P; I -> D") |> #Specify the DAG
@@ -369,7 +369,7 @@ In Figure  @fig-HJ-F-12-4, we average across the possible ways that each clue-se
 
 ```{r}
 #| label: fig-HJ-F-12-3
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Base democratization model: What we expect to find and what we expect to learn from different clue strategies. Size of each dot indicates the probability of observing the data pattern given the search strategy."
 #| fig.width: 10
 #| fig.height: 6
@@ -391,7 +391,7 @@ read_rds("saved/12_pimdcases12base.rds") |>
 
 ```{r}
 #| label: fig-HJ-F-12-4
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Reduction in expected variance from different data strategies for different  kinds of cases (base democratization model)."
 #| fig.height:  3
 #| fig.width :  8
@@ -431,7 +431,7 @@ The model revision that we contemplate removes a restriction, allowing the possi
 
 ```{r}
 #| label: model3
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 
 
@@ -474,7 +474,7 @@ if(run)
 
 ```{r}
 #| label: fig-HJ-F-12-5a
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Revised model: What you expect to find and what you expect to learn from different strategies. Size of the dots indicates probability of observing the data pattern given the search strategy."
 #| fig.width: 10
 #| fig.height: 6
@@ -492,7 +492,7 @@ read_rds("saved/12_pimd_strategies_r.rds") |>
 
 ```{r}
 #| label: fig-HJ-F-12-5
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Revised query and/or model: Expected reduction in posterior variance from different data strategies for cases with different I and D values"
 #| fig.width :  9
 #| fig.height :  3
@@ -552,7 +552,7 @@ To consider the simplest subset of these, consider the strategies that involve l
 ```{r}
 #| label: ch12definerunningmodel3
 #| warning :  FALSE
-#| echo :  FALSE
+#| echo:  false
 
 # Make model
 model <-
@@ -568,7 +568,7 @@ model <-
 
 ```{r}
 #| label: fig-HJ-F-12-6
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Cost-variance trade-offs for all dynamic strategies involving up to two clues
 #| under base government-survival model
 #| with undominated strategies labeled. In each label
@@ -646,7 +646,7 @@ We also implement this exercise for the basic inequality and democratization mod
 
 ```{r}
 #| label: model7
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 
 pimd <- make_model("I -> M -> D <- P; I -> D") |> #Specify the DAG
@@ -660,7 +660,7 @@ pimd <- make_model("I -> M -> D <- P; I -> D") |> #Specify the DAG
 
 ```{r}
 #| label: fig-HJ-F-12-7
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Cost-variance tradeoffs for all dynamic strategies involving up to two clues
 #| under the base democratization model"
 

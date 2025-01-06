@@ -50,7 +50,7 @@ Now, observing just $I$ and $D$ alone will always leave two nodal types in conte
 
 ```{r}
 #| label: fig-HJ-F-8-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  4
 #| fig.align: "center"
@@ -89,7 +89,7 @@ We represent in @fig-HJ-F-8-2 one possible lower level model consistent with our
 
 ```{r}
 #| label: fig-HJ-F-8-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  9
 #| fig.height :  7
 #| fig.align: "center"
@@ -246,7 +246,7 @@ I1D0 <- IDPT[[4]]
 
 ```{r}
 #| label: fig-HJ-F-8-3
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  12
 #| fig.height :  7
 #| fig.cap :  "Case-level inferences for whether the level of inequality caused the democratization outcome
@@ -449,7 +449,7 @@ We now construct the model. We are interested in a single outcome: economic prod
 
 ```{r}
 #| label: daggrowth
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  6
 #| fig.height :  4
 #| fig.align: "center"
@@ -486,7 +486,7 @@ The model statement includes two causes for $Y$ ($R$ and $D$), and one cause for
 
 ```{r}
 #| label: model-rst
-#| echo :  FALSE
+#| echo:  false
 #| include :  FALSE
 model_rst_pt <- make_model("M -> R -> Y <- D; R <-> Y")  |> 
   set_restrictions(c(
@@ -496,7 +496,7 @@ model_rst_pt <- make_model("M -> R -> Y <- D; R <-> Y")  |>
 
 ```{r}
 #| label: fig-HJ-F-8-4
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap: "Institutions and growth DAG"
 #| out.width :  "70%"
 #| fig.height :  4
@@ -527,7 +527,7 @@ We proceed in a similar manner as in the democratization example, focusing now o
 
 ```{r}
 #| label: RST8cases0
-#| echo :  FALSE
+#| echo:  false
 
 if(run)
  cases_RST(model = model_rst_pt) |> 
@@ -540,7 +540,7 @@ if(run)
 
 ```{r}
 #| label: fig-HJ-F-8-5
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  12
 #| fig.height :  7
 #| fig.cap :  "Case level inferences given possible observations  of distance and mortality (untrained model)."
@@ -590,7 +590,7 @@ In @tbl-HJ-T-8-1, we show the results of an analysis in which we build into our 
 
 ```{r}
 #| label: tbl-HJ-T-8-1
-#| echo :  FALSE
+#| echo:  false
 #| message :  FALSE
 #| warning :  FALSE
 
@@ -631,7 +631,7 @@ In @tbl-RSTD00, we show the inferences we would draw about whether low mortality
 
 ```{r}
 #| label: tbl-RSTD00
-#| echo :  FALSE
+#| echo:  false
   conditional_inferences(
     model_rst_pt,   
     parameters = NULL,  

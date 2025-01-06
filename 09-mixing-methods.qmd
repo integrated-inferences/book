@@ -68,7 +68,7 @@ The conceptual point is that the general logic of inference with multiple units 
 #| fig.width :  15
 #| fig.height :  3.5
 #| out.width :  "100%"
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Multiple units as vector valued nodes on a single DAG."
 source("data/singledag.R")
 dag_single()
@@ -98,7 +98,7 @@ Critically, we can deploy the principles of conditional independence on a DAG, e
 #| fig.width :  7
 #| fig.height :  5
 #| out.width :  "100%"
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "A population DAG with multiple units from the same population"
 source("data/doubldag.R")
 dag_double(ls = 2.8)
@@ -143,7 +143,7 @@ Inference then works by figuring out the probability of the data given different
 #| fig.width :  7
 #| fig.height :  7
 #| out.width :  "100%"
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Types
 #| parameters
 #| and priors"
@@ -185,7 +185,7 @@ package, these calculations are done using matrix operations.
 
 ```{r}
 #| label: tbl-ambigmatrixmix
-#| echo :  FALSE
+#| echo:  false
 #| include :  TRUE
 #| warning :  FALSE
 XY <- make_model("X -> Y") |> set_parameters(c(.4, .6, .3, .2, .2, .3))
@@ -196,7 +196,7 @@ kabble(ambiguityXY, caption = "An ambiguities matrix for a simple $X \\rightarro
 
 ```{r}
 #| label: tbl-parammmatrixmix
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 #| include :  TRUE
 paramXY <- grab(XY, "parameter_matrix") 
@@ -242,7 +242,7 @@ So, for instance, in the first row, we have one draw from our posterior distribu
 
 ```{r}
 #| label: tbl-posteriortable
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 if(run)
 make_model("X -> M -> Y") |> update_model(data.frame(X = 0:1, Y = 0:1)) |> write_rds("saved/09_posterior_chain.rds")
@@ -288,7 +288,7 @@ In all situations, once we have a distribution over the queries, we can calculat
 
 ```{r}
 #| label: fig-HJ-F-9-4
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 #| fig.cap :  "Posterior means and credibility intervals for a range of causal queries given different data
 #| for a chain model."
@@ -372,7 +372,7 @@ In @fig-HJ-F-9-5, we represent this confounding for a model with direct and indi
 #| fig.width :  9
 #| fig.height :  7
 #| out.width :  "95%"
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Types
 #| parameters
 #| and priors
@@ -638,7 +638,7 @@ We then imagine two possible worlds that we might be in, $\lambda_1$ and $\lambd
 
 ```{r}
 #| label: tbl-HJ-T-9-states
-#| echo :  FALSE
+#| echo:  false
 #| 
 
 df <- data.frame(world = c("$\\lambda_1$", "$\\lambda_2$"), 
@@ -746,7 +746,7 @@ PC_dist  <- read_rds("saved/09_PC_dist.rds")
 
 ```{r}
 #| label: fig-HJ-F-9-6
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Posterior distributions. ATE is identified
 #| PC is not identified but has informative bounds"
 #| warning :  FALSE
@@ -774,7 +774,7 @@ At the same time, for non-identified queries, we have to be cautious about the i
 
 ```{r}
 #| label: modelm1m2
-#| echo :  FALSE
+#| echo:  false
 model <- make_model("X1 -> M1 -> Y <- M2 <- X2")
 
 ```
@@ -815,7 +815,7 @@ Y_x <- function(x){
 
 ```{r}
 #| label: nonbindata
-#| echo :  FALSE
+#| echo:  false
 #| eval :  FALSE
 #| warning :  FALSE
 # We depict data from this model in @tbl-nonbindata.
@@ -842,7 +842,7 @@ make_model("X1 -> Y1 <- X2;  X1 -> Y2 <- X2; X1 <-> X2; Y1 <-> Y2") |>
 
 ```{r}
 #| label: tbl-HJ-T-9-5
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 if(run) 
 make_model("X1 -> Y1 <- X2;  X1 -> Y2 <- X2; X1 <-> X2; Y1 <-> Y2") |>
@@ -923,7 +923,7 @@ model <- make_model("X -> Y -> Yobs") |>
 
 ```{r}
 #| label: tbl-merror
-#| echo :  FALSE
+#| echo:  false
 
 model2 <- make_model("X -> Y -> Yobs1; Y -> Yobs2") |>
   set_restrictions(decreasing("Y", "Yobs1")) |>
@@ -970,7 +970,7 @@ model <- make_model("X -> Y -> Yobs1; Y -> Yobs2") |>
 
 ```{r}
 #| label: tbl-measurementerror2
-#| echo :  FALSE
+#| echo:  false
 set.seed(1)
 data <- make_data(model, n = 2000) 
 
@@ -1028,7 +1028,7 @@ spillover_queries <- list(
 
 ```{r}
 #| label: fig-HJ-F-9-7
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Model with spillovers: the treatment status of two units each affect the outcomes for both."
 #| out.width :  "50%"
 
@@ -1129,7 +1129,7 @@ query_model(model,
 
 ```{r}
 #| label: HJ09-5-1
-#| echo :  FALSE
+#| echo:  false
 if(run)
   query_model(model,
             query = "Y[X=1]> Y[X=0]",
@@ -1182,9 +1182,9 @@ results <-
 
 ```{r}
 #| label: tbl-HJ-T-9-12
-#| echo  :  FALSE
+#| echo:  false
 
-if(run)
+if(run){
   make_model("Z -> X -> Y; X <-> Y") |>
   update_model(data, data_type = "compact") |> 
   write_rds("saved/09_replication_chickering.rds")
@@ -1195,7 +1195,7 @@ if(run)
     using = "posteriors") |>
     select(-case_level) |>
     kabble(caption = "Replication of Chickering and Pearl (2007).")
-
+}
 ```
 
 
@@ -1204,7 +1204,7 @@ The results agree with the findings in @chickering1996clinician. We also show th
 
 ```{r}
 #| label: fig-HJ-F-9-9
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap :  "Posterior distributions on average treatment effects and treatment effects for compliers. Left panel replicates Chickering and Pearl (1997). "
 #| warning :  FALSE
 #| fig.height :  2.5
@@ -1251,7 +1251,7 @@ make_model("Z -> X -> Y; X <-> Y") |>
 
 ```{r}
 #| label: tbl-HJ-T-9-13
-#| echo :  FALSE
+#| echo:  false
 
 read_rds("saved/09_replication_chickering.rds") |>
   query_model(
@@ -1279,7 +1279,7 @@ We illustrate by imagining a chain model of the form $X \rightarrow M \rightarro
 
 ```{r}
 #| label: tbl-HJ-T-9-14
-#| echo :  FALSE
+#| echo:  false
 
 df <- data.frame(world = c("$\\lambda_1$", "$\\lambda_2$"), 
                  prior = c(0.5, 0.5),
@@ -1311,7 +1311,7 @@ For this reason, when drawing DAGs we need to be careful to specify either that 
 ```{r}
 #| label: fig-HJ-F-9-10
 #| eval :  TRUE
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  13
 #| fig.height :  5
 #| fig.align: "center"

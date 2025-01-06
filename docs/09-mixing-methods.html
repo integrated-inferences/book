@@ -382,7 +382,9 @@ window.Quarto = {
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<p><img src=".\figures/cover_smaller.jpg" class="img-fluid"></p>
+</div></div>
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -1502,38 +1504,15 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 <span>  <span class="fu">query_model</span><span class="op">(</span>query <span class="op">=</span> <span class="st">"Y[X=1] - Y[X=0]"</span>, using <span class="op">=</span> <span class="st">"posteriors"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><a href="#tbl-HJ-T-9-12" class="quarto-xref">Table&nbsp;<span>9.10</span></a> reports the results while <a href="#fig-HJ-F-9-9" class="quarto-xref">Figure&nbsp;<span>9.8</span></a> shows the full posterior distribution for this query.</p>
-<div class="cell" data-layout-align="center">
 <div id="tbl-HJ-T-9-12" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-9-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.10: Replication of Chickering and Pearl (2007).
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-HJ-T-9-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.10
 </figcaption><div aria-describedby="tbl-HJ-T-9-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
-<thead><tr class="header">
-<th style="text-align: left;">label</th>
-<th style="text-align: left;">query</th>
-<th style="text-align: left;">given</th>
-<th style="text-align: left;">using</th>
-<th style="text-align: right;">mean</th>
-<th style="text-align: right;">sd</th>
-<th style="text-align: right;">cred.low</th>
-<th style="text-align: right;">cred.high</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td style="text-align: left;">Y[X=1] - Y[X=0]</td>
-<td style="text-align: left;">Y[X=1] - Y[X=0]</td>
-<td style="text-align: left;">-</td>
-<td style="text-align: left;">posteriors</td>
-<td style="text-align: right;">0.552</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.373</td>
-<td style="text-align: right;">0.731</td>
-</tr></tbody>
-</table>
+<div>
+
 </div>
 </div>
 </figure>
-</div>
 </div>
 <p>The results agree with the findings in <span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span>. We also show the posterior distribution for the average effects <em>among the compliers</em>—those for whom <span class="math inline">\(Z\)</span> has a positive effect on <span class="math inline">\(X\)</span>—which is tighter thanks to identification for this query. </p>
 <div class="cell" data-layout-align="center">

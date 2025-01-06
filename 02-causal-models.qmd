@@ -336,7 +336,7 @@ $X_1$ is 0. For that type, $X_1$ and $X_2$ are "substitutes."
 
 ```{r}
 #| label: tbl-HJ-T-2-3
-#| echo :  FALSE
+#| echo:  false
 #| warning :  FALSE
 tab <- CausalQueries:::get_nodal_types(make_model("X1 -> Y <- X2"), collapse = FALSE)$Y
 
@@ -470,7 +470,7 @@ preferences and ethnic demography).
 
 ```{r}
 #| label: fig-HJ-F-2-1
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  7
 #| fig.height :  5
 #| fig.align: "center"
@@ -639,7 +639,7 @@ causes). We do this using a function $f^i$ for each node $i$. We will
 usually refer to these functions as "causal functions" to highlight the
 fact that they capture causal relations between
 nodes.[^02-causal-models-10] Critically, these functions contain all the
-information needed to construct potential outcomes (see Note
+information needed to construct potential outcomes (see
 @rem-lempo on these connections).
 
 [^02-causal-models-10]: These causal functions relate to "structural
@@ -1232,7 +1232,7 @@ more likely that the other outcome has also occurred.
 
 ```{r}
 #| label: fig-HJ-F-2-2
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  8
 #| fig.height :  4
 #| fig.align: "center"
@@ -1501,7 +1501,7 @@ the $I$ and $D$ relationship.
 
 ```{r}
 #| label: fig-HJ-F-2-3
-#| echo :  FALSE
+#| echo:  false
 #| fig.cap: "A DAG with unobserved confounding"
 #| out.width :  "60%"
 #| fig.height :  4
@@ -1620,7 +1620,7 @@ according to which information can flow across a causal graph.
 
 ```{r}
 #| label: fig-HJ-F-2-4
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  6
 #| fig.height :  4
 #| fig.align: "center"
@@ -1965,7 +1965,7 @@ between $A$ and $D$ in @fig-HJ-F-2-5. Try answering the following questions your
 
 ```{r}
 #| label: fig-HJ-F-2-5
-#| echo :  FALSE
+#| echo:  false
 #| fig.width :  5
 #| fig.height :  2
 #| fig.align: "center"
