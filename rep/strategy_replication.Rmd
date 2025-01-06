@@ -15,7 +15,7 @@ library(knitr)
 options(mc.cores = parallel::detectCores())
 
 run_test <- FALSE
-trim <- FALSE
+trim <- TRUE
 
 # wide_deep controls
 run_wide_deep <- FALSE
@@ -597,8 +597,10 @@ sample_datas_1 <- make_dfs(model = model_list[[1]], n_large =5, n_small = 2, n_s
 sample_datas_1
 
 # Adds to data given prior observed data; requires updating
+if(run_test)
 sample_datas_2 <- make_dfs(model = model_list[[1]], n_large =5, n_small = 2, n_sims=1, 
                              observed = data.frame(X=0:1, Y = 0:1))
+if(run_test)
 sample_datas_2
 
 # Schedule of data sets with multiple draws:
@@ -727,9 +729,18 @@ results <-
   group_by(label, wide_n, deep_n, Model) |>
   mutate(
     tops = quantile(sd^2, .995, na.rm = TRUE), 
-    n = n()) |>
-    filter(sd^2 <= tops) |>
+    score = scale(sd), 
+    n = n(),
+    to_keep_1 = sd^2 <= tops,
+    to_keep_2 = abs(score) < 5 ) |>
   ungroup()
+
+# to keep 2 has a lot of missingness becuase of missing sds?
+
+table(results$to_keep_1, results$to_keep_2)  
+table(results$to_keep_2)  
+
+results <- results |> filter(to_keep_1)
 
 after_trim <- dim(results)[1]
 

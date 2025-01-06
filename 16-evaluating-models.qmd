@@ -12,7 +12,6 @@ source("_packages_used.R")
 
 set.seed(202305)
 # run <- FALSE
-# runps <- FALSE
 library(DeclareDesign)
 
 p_two_sided <- function(T, t, digits = 2){
@@ -497,13 +496,18 @@ out <-
   given = c("X==1 & Y==1", "X==1 & Y==1 & M==0", "X==1 & Y==1 & M==1"),
   using = "parameters",
   expand_grid = TRUE)$mean})
-out2 <- t(out)  |> data.frame()
-names(out2) <- c("No data", "M0", "M1")
-out2 <- arrange(out2,M0, M1)
 
-cbind(adverse2, out2) |> data.frame() |>
+out2 <- t(out)  |> 
+  data.frame() 
+  
+names(out2) <- c("No data", "M0", "M1")
+
+arrange(out2, M0, M1) |>
+  mutate(a = adverse2) |>
+  relocate(a) |>
   kabble(
-    col.names = c("$\\lambda^Y_{10}$", "Prior", "$M=0$", "$M=1$"), digits = 3)
+    col.names = c("$\\lambda^Y_{10}$", "Prior", "$M=0$", "$M=1$"), 
+    digits = 3, escape = FALSE)
 
 ```
 

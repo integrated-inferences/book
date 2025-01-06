@@ -692,7 +692,7 @@ Figure&nbsp;4.6: A causal model that allows preemption.
 <li>Q2. What is the probability that <span class="math inline">\(X=1\)</span> causes <span class="math inline">\(Y=1\)</span> in cases in which <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span>? (“POC”)</li>
 </ul>
 <p>To answer these two queries, we define a simple query <span class="math inline">\(q_1\)</span> which assesses whether <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> for each <span class="math inline">\(\theta\)</span> and a second simple query <span class="math inline">\(q_2\)</span> which assesses whether <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span> for each <span class="math inline">\(\theta\)</span>. In this example, the first simple query involves some <code>do</code> operations, the second does not.</p>
-<p>Code <del>to</del><span style="color: orange;">for</span> answering these two simple queries is shown below and the output is shown in <span class="quarto-unresolved-ref">?tbl-HJ-T-4-1</span> (one row for each causal type).</p>
+<p>Code <del>to</del><span style="color: orange;">for</span> answering these two simple queries is shown below and the output is shown in <a href="#tbl-HJ-T-4-1" class="quarto-xref">Table&nbsp;<span>4.1</span></a> (one row for each causal type).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">make_model</span><span class="op">(</span><span class="st">"X -&gt; M -&gt; Y"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>         <span class="fu">set_restrictions</span><span class="op">(</span><span class="st">"X[]==0"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -707,9 +707,13 @@ Figure&nbsp;4.6: A causal model that allows preemption.
 <span>  a2 <span class="op">=</span> <span class="fu">get_query_types</span><span class="op">(</span><span class="va">model</span>, <span class="va">q2</span><span class="op">)</span><span class="op">$</span><span class="va">types</span>,</span>
 <span>  p  <span class="op">=</span> <span class="fu">CausalQueries</span><span class="fu">:::</span><span class="fu">get_type_prob</span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="tbl-HJ-T-4-1" class="cell anchored" data-layout-align="center">
+<div class="cell" data-layout-align="center">
+<div id="tbl-HJ-T-4-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4.1: Set of causal types in the model that satisfy q1 and q2 along with the probability of the type.
+</figcaption><div aria-describedby="tbl-HJ-T-4-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th></th>
 <th style="text-align: left;">a1</th>
@@ -773,10 +777,12 @@ Figure&nbsp;4.6: A causal model that allows preemption.
 </tr>
 </tbody>
 </table>
-<p>Set of causal types in the model that satisfy q1 and q2 along with the probability of the type.</p>
 </div>
 </div>
-<p>The answer to the overall queries are then (1) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given weights <span class="math inline">\(p\)</span> and (2) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given <span class="math inline">\(q_0\)</span> and weights <span class="math inline">\(p\)</span>. See the next block of code for the implementation in <code>CausalQueries</code> and <a href="#tbl-HJ-T-4-2" class="quarto-xref">Table&nbsp;<span>4.1</span></a> for the results.</p>
+</figure>
+</div>
+</div>
+<p>The answer to the overall queries are then (1) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given weights <span class="math inline">\(p\)</span> and (2) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given <span class="math inline">\(q_0\)</span> and weights <span class="math inline">\(p\)</span>. See the next block of code for the implementation in <code>CausalQueries</code> and <a href="#tbl-HJ-T-4-2" class="quarto-xref">Table&nbsp;<span>4.2</span></a> for the results.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu">summarize</span><span class="op">(</span></span>
 <span>  POS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">a1</span>, <span class="va">p</span><span class="op">)</span>,</span>
@@ -786,7 +792,7 @@ Figure&nbsp;4.6: A causal model that allows preemption.
 <div class="cell" data-layout-align="center">
 <div id="tbl-HJ-T-4-2" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: Calculated answers to two queries.
+Table&nbsp;4.2: Calculated answers to two queries.
 </figcaption><div aria-describedby="tbl-HJ-T-4-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -816,7 +822,7 @@ Table&nbsp;4.1: Calculated answers to two queries.
 <span><span class="fu">query_model</span><span class="op">(</span><span class="va">model</span>, query <span class="op">=</span> <span class="st">"Y[X = 1] &gt; Y[X = 0]"</span>, </span>
 <span>              given <span class="op">=</span> <span class="st">"X == 1 &amp; Y == 1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The same procedure can be used to identify any set of types that correspond to a particular query. <a href="#tbl-HJ-T-4-3" class="quarto-xref">Table&nbsp;<span>4.2</span></a> illustrates the procedure, showing the syntax for model definition and queries along with the syntax for identifying implied types using <code>get_query_types</code>.</p>
+<p>The same procedure can be used to identify any set of types that correspond to a particular query. <a href="#tbl-HJ-T-4-3" class="quarto-xref">Table&nbsp;<span>4.3</span></a> illustrates the procedure, showing the syntax for model definition and queries along with the syntax for identifying implied types using <code>get_query_types</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in kableExtra::column_spec(., 1, width = "7em"): Please specify format
@@ -852,7 +858,7 @@ https://haozhu233.github.io/kableExtra/ for details.</code></pre>
 </div>
 <div id="tbl-HJ-T-4-3" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.2: Examples of queries and corresponding causal types. The probability of the query is the probability of the causal types that imply the theory.
+Table&nbsp;4.3: Examples of queries and corresponding causal types. The probability of the query is the probability of the causal types that imply the theory.
 </figcaption><div aria-describedby="tbl-HJ-T-4-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -941,7 +947,7 @@ Table&nbsp;4.2: Examples of queries and corresponding causal types. The probabil
 <li><p>the interaction query <code>Q = (Y[X = 1, W = 1] - Y[X = 0, W = 1]) - (Y[X = 1, W = 0] - Y[X = 0, W = 0])</code> is similarly a combination of the simple queries <code>(Y[X = 1, W = 1] ==1</code>, <code>Y[X = 0, W = 1]==1</code>, <code>Y[X = 1, W = 0]==1</code>, and <code>Y[X = 0, W = 0]==1</code>.</p></li>
 </ul>
 <p>For linear complex queries like this, we can proceed by identifying a set of positive or negative coefficients for each causal type that can be used to combine the probabilities of the types.</p>
-<p>For instance, for the interaction query, <code>Q</code>, <code>get_query_types(model, Q)</code> would identify a set of positive or negative coefficients for each causal type that range from -2 to 2, with a 2, for instance corresponding to a type for which a change in <span class="math inline">\(W\)</span> changes the effect of <span class="math inline">\(X\)</span> from -1 to 1. See <a href="#tbl-HJ-T-4-4" class="quarto-xref">Table&nbsp;<span>4.3</span></a> for coefficients on types when <span class="math inline">\(X=1\)</span> and <span class="math inline">\(W =1\)</span>.</p>
+<p>For instance, for the interaction query, <code>Q</code>, <code>get_query_types(model, Q)</code> would identify a set of positive or negative coefficients for each causal type that range from -2 to 2, with a 2, for instance corresponding to a type for which a change in <span class="math inline">\(W\)</span> changes the effect of <span class="math inline">\(X\)</span> from -1 to 1. See <a href="#tbl-HJ-T-4-4" class="quarto-xref">Table&nbsp;<span>4.4</span></a> for coefficients on types when <span class="math inline">\(X=1\)</span> and <span class="math inline">\(W =1\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in kableExtra::column_spec(., 1, width = "6em"): Please specify format
@@ -960,7 +966,7 @@ outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
 </div>
 <div id="tbl-HJ-T-4-4" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.3: Coefficients on causal types for an interaction query
+Table&nbsp;4.4: Coefficients on causal types for an interaction query
 </figcaption><div aria-describedby="tbl-HJ-T-4-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
