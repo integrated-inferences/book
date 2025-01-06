@@ -120,7 +120,7 @@ At the same time, leaders can only choose a transformative strategy if they deci
 ```{r}
 #| label: fig-HJ-F-3-2
 #| echo:  false
-#| fig.width :  11
+#| fig.width :  12
 #| fig.height :  7
 #| fig.align: "center"
 #| out.width: '.7\\textwidth'

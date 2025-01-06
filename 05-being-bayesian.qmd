@@ -256,10 +256,10 @@ More generally, the informativeness of evidence depends on how different $\phi_1
 
 
 
-::::{.callout-note title="Chapter summary"}
-::: {.definition #defpv}
-Probative value
-:::
+::: {.definition #def-pv}
+**Probative value**
+
+
 \index{Probative value!Definition}
 
 Suppose that, if a hypothesis $H$ is true, a clue $K$ is observed with probability $\phi_1$ (and otherwise is not observed). The probability that the clue is observed if the hypothesis is not true is denoted as $\phi_0$. Let $p$ refer to the prior that the hypothesis is true. 
@@ -268,7 +268,7 @@ Then the "**probative value**" of an observed clue $K$ is:
 
 $$\text{Probative value} := \log\left(\frac{\phi_1}{\phi_0}\right)$$
 
-::::
+:::
 
 ```{r, include = FALSE, eval = FALSE}
 f1 = .999

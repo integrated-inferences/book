@@ -6,8 +6,6 @@ format:
     page-layout: full
 ---
 
-*Cambridge University Press*, 2023.
-
 ::: {.content-hidden}
 
 # Start {.unnumbered}

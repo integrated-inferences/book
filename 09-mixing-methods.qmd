@@ -256,7 +256,7 @@ head() |> kabble(digits = 2, caption = "An illustration of a posterior distribut
 
 #### Querying {#sec-Qch9}
 
-Once we have generated a posterior distribution for $\lambda$, we can then query that distribution. The simplest queries relate to values of $\lambda$ itself. For instance, if we are interested in the probability that $M$ has a positive effect on $Y$, given an updated $X \rightarrow M \rightarrow Y$ model, we want to know about the distribution of $\lambda^Y_{01}$. This distribution can be read directly from column 9 ($Y.01$) of Table  @tbl-posteriortable. 
+Once we have generated a posterior distribution for $\lambda$, we can then query that distribution. The simplest queries relate to values of $\lambda$ itself. For instance, if we are interested in the probability that $M$ has a positive effect on $Y$, given an updated $X \rightarrow M \rightarrow Y$ model, we want to know about the distribution of $\lambda^Y_{01}$. This distribution can be read directly from column 9 ($Y.01$) of  @tbl-posteriortable. 
 
 More complex queries can all be described as summaries of combinations of these columns. For instance, the query, "What is the average effect of $M$ on $Y$" is a question about the distribution of $\lambda^Y_{01} -  \lambda^Y_{10}$, which is given by the difference between columns 9 and 8 of @tbl-posteriortable. This is a linear summary of parameters and is easily calculated.  
 

@@ -521,24 +521,12 @@ Figure&nbsp;5.1: Beta distributions
 \tag{5.4}\]</span></span></p>
 <p>and the condition for learning (Equation <a href="#eq-learningcondition" class="quarto-xref">Equation&nbsp;<span>5.3</span></a>) reduces to <span class="math inline">\(\phi_1 \neq \phi_0\)</span>, so long as <span class="math inline">\(p\in(0,1)\)</span>.</p>
 <p>More generally, the informativeness of evidence depends on how different <span class="math inline">\(\phi_1\)</span> and <span class="math inline">\(\phi_0\)</span> are from each other: how different the likelihood of seeing that evidence is under the two hypotheses. How best to measure that difference? There are many possibilities (see <span class="citation" data-cites="kaye1986quantifying">Kaye (<a href="20-references.html#ref-kaye1986quantifying" role="doc-biblioref">1986</a>)</span> for a review), but a compelling approach is to use the log of the ratio of the likelihoods. This is a simple and elegant measure that corresponds to what <span class="citation" data-cites="good1950probability">Isidore Jacob Good (<a href="20-references.html#ref-good1950probability" role="doc-biblioref">1950</a>)</span> proposes in multiple contributions, a measure of the “weight of evidence.” <span class="citation" data-cites="kaye1986quantifying">Kaye (<a href="20-references.html#ref-kaye1986quantifying" role="doc-biblioref">1986</a>)</span> refers to this as the most common measure of “probative value.” <span class="citation" data-cites="fairfield2017explicit">Fairfield and Charman (<a href="20-references.html#ref-fairfield2017explicit" role="doc-biblioref">2017</a>)</span> also use this measure, highlighting how it provides a useful way of characterizing the impact of, and of analyzing, evidence. </p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Chapter summary
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div id="defpv" class="definition">
-<p>Probative value</p>
-</div>
+<div id="def-pv" class="definition theorem">
+<p><span class="theorem-title"><strong>Definition 5.1</strong></span> <strong>Probative value</strong></p>
 <p></p>
 <p>Suppose that, if a hypothesis <span class="math inline">\(H\)</span> is true, a clue <span class="math inline">\(K\)</span> is observed with probability <span class="math inline">\(\phi_1\)</span> (and otherwise is not observed). The probability that the clue is observed if the hypothesis is not true is denoted as <span class="math inline">\(\phi_0\)</span>. Let <span class="math inline">\(p\)</span> refer to the prior that the hypothesis is true.</p>
 <p>Then the “<strong>probative value</strong>” of an observed clue <span class="math inline">\(K\)</span> is:</p>
 <p><span class="math display">\[\text{Probative value} := \log\left(\frac{\phi_1}{\phi_0}\right)\]</span></p>
-</div>
 </div>
 <p>Some features of this measure of probative value are worth noting.</p>
 <p>First, perhaps not immediately obvious, this notion of probative value should be thought of with respect to the <em>realized</em> value of the clue, not the possible data that might have been found. That is, it is about the data you have, not the data you might have. Thus, a clue (if found to be present) might have weak probative value if the clue is found, but strong probative value if it is <em>not</em> found. To illustrate, say <span class="math inline">\(\phi_1 = \Pr(K = 1 | H_1) = 0.999\)</span> and <span class="math inline">\(\phi_0 = \Pr(K = 1 | H = 0) = 0.333\)</span>. The probative value of the found clue is <span class="math inline">\(\log(.999/.333) = 0.47\)</span>—a piece of evidence “barely worth mentioning” according to <span class="citation" data-cites="jeffreys1998theory">Jeffreys (<a href="20-references.html#ref-jeffreys1998theory" role="doc-biblioref">1998</a>)</span>. Our beliefs will shift only a little toward <span class="math inline">\(H_1\)</span> if the clue is found. The <em>non</em>-appearance of the same clue, however, has strong probative value for <span class="math inline">\(H_0\)</span>. In this case, probative value is <span class="math inline">\(\log\left(\frac{\Pr(K = 0 | H_0)}{\Pr(K = 0 | H_1)}\right) = \log\left(\frac{1-\phi_0}{1-\phi_1}\right) = \log(.667/.001) = 2.82\)</span> —“decisive” according to <span class="citation" data-cites="jeffreys1998theory">Jeffreys (<a href="20-references.html#ref-jeffreys1998theory" role="doc-biblioref">1998</a>)</span>. </p>
@@ -549,9 +537,9 @@ Chapter summary
 <p>How can we assess expected reductions in loss under a research strategy? For any data strategy, <span class="math inline">\(D\)</span>, we can imagine having seen different data patterns (<span class="math inline">\(d\)</span>) that are <em>possible</em> under the strategy. We can then assess our beliefs about the errors we will likely make if we see and draw inferences from those possible data patterns. Finally, we can ask, prospectively, what errors we <em>expect</em> to make given our prior beliefs about the world and the kinds of data patterns that those beliefs imply we are most likely to observe.</p>
 <p>Expected loss (equivalently, expected squared error or expected posterior variance) for query <span class="math inline">\(q\)</span> and data strategy <span class="math inline">\(D\)</span> can then be written:<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p><span class="math display">\[\mathcal{L}(q, D)=\mathbb{E}_\theta(\mathbb{E}_{{d}|\theta, D}(q(\theta)-\hat{q}({d}))^2)\]</span></p>
-<p>Where <span class="math inline">\(\hat{q}(d)\)</span> is the expected value of the query after observing data <span class="math inline">\(d\)</span>. To describe the <em>reduction in loss</em> that flows from strategy <span class="math inline">\(D\)</span>, we need to calculate the loss metric a second time, this time using the prior distribution. Since our loss is defined as expected squared errors, this is simply the prior variance. We can then define the expected learning from a data strategy as follows (<a href="#def-ell" class="quarto-xref">Definition&nbsp;<span>5.1</span></a>).</p>
+<p>Where <span class="math inline">\(\hat{q}(d)\)</span> is the expected value of the query after observing data <span class="math inline">\(d\)</span>. To describe the <em>reduction in loss</em> that flows from strategy <span class="math inline">\(D\)</span>, we need to calculate the loss metric a second time, this time using the prior distribution. Since our loss is defined as expected squared errors, this is simply the prior variance. We can then define the expected learning from a data strategy as follows (<a href="#def-ell" class="quarto-xref">Definition&nbsp;<span>5.2</span></a>).</p>
 <div id="def-ell" class="definition theorem">
-<p><span class="theorem-title"><strong>Definition 5.1</strong></span> </p>
+<p><span class="theorem-title"><strong>Definition 5.2</strong></span> </p>
 <p>Let <span class="math inline">\(V(q)&gt;0\)</span> denote prior variance on query <span class="math inline">\(q\)</span> and <span class="math inline">\(\mathcal{L}(q, D)\)</span> the expected error on <span class="math inline">\(q\)</span> from implementation of data strategy <span class="math inline">\(D\)</span>. Then:</p>
 <p><span class="math display">\[\begin{eqnarray*}
 \text{Expected learning}(q, D) &amp;:=&amp; 1 - \frac{\mathcal{L}(q, D)}{V(q)}

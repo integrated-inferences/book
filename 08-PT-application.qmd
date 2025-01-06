@@ -691,7 +691,7 @@ model_id_pt <-
 
 \index{Causal models!Democratization}
 
-Priors over the allowed (non-restricted) nodal types are set to be flat by default in the package. The model summary (found by typing `model_id_pt` indicates that there is 1 restricted nodal type fo $M$ and 236 for $D$).
+Priors over the allowed (non-restricted) nodal types are set to be flat by default in the package. The model summary (found by typing `model_id_pt`) indicates that there is 1 restricted nodal type fo $M$ and 236 for $D$.
 
 The institutions and growth model is formed like this:
 

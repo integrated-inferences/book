@@ -320,8 +320,7 @@ which $Y=0$ unless both $X_1$ and $X_2$ are 1.
 
 We now have 16 causal types for this node: 16 different
 patterns that $Y$ might display in response to changes in $X_1$ and
-$X_2$. \index{Causal types} The full set is represented in Table
-@tbl-HJ-T-2-3, which also illustrates how we read types off of
+$X_2$. \index{Causal types} The full set is represented in @tbl-HJ-T-2-3, which also illustrates how we read types off of
 four-digit subscripts. For instance, the table shows us that for nodal
 type $\theta^Y_{0101}$, $X_1$ has a positive causal effect on $Y$ but
 $X_2$ has no effect. On the other hand, for type $\theta^Y_{0011}$,
@@ -1444,8 +1443,7 @@ and $R$ are "possible causes" of $M$.[^02-causal-models-18]
 **No excluded common causes.** Any cause common to multiple nodes on a
 graph must itself be represented on the graph. If $A$ and $B$ on a graph
 are both affected by some third node, $C$, then we must represent this
-common cause. Thus, for instance, the graph in Figure
-@fig-HJ-F-2-1 implies that $I$ and $E$ have no common cause. If we
+common cause. Thus, for instance, the graph in @fig-HJ-F-2-1 implies that $I$ and $E$ have no common cause. If we
 believed that a country's level of inequality and its ethnic composition
 were both shaped by, say, its colonial heritage, then this DAG would
 *not* be an accurate representation of our beliefs about the world. To
@@ -1520,8 +1518,7 @@ causes" rule is that a causal graph does not need to include everything
 that we know about a substantive domain of interest. We may know quite a
 lot about the causes of economic inequality, for example. But we can
 safely omit any factor from the graph as long *as it does not
-affect multiple nodes in the model.* Indeed, $\theta^I$ in Figure
-@fig-HJ-F-2-1 already implicitly captures all factors that affect
+affect multiple nodes in the model.* Indeed, $\theta^I$ in @fig-HJ-F-2-1 already implicitly captures all factors that affect
 $I$. Similarly, $\theta^D$ captures all factors *other than*
 mobilization that affect democratization. We may be aware of a vast
 range of forces shaping whether countries democratize, but we can choose
@@ -1536,7 +1533,7 @@ pressure does not have an effect on the level of inequality, a state's
 ethnic makeup, redistributive demands, or mobilization.
 
 Similarly, we do not need to include all mediating steps that we believe
-might be operating between two causally linked variables. In Figure
+might be operating between two causally linked variables. In 
 @fig-HJ-F-2-1, we could choose to exclude $R$, for instance, and
 draw an arrow directly from $I$ to $M$. We could also exclude $M$, if we
 wished to. (Since $E$ points into $M$, removing $M$ would mean that we
@@ -1660,7 +1657,7 @@ second node tell us about a third node?
 **(1) A Path of Arrows in the Same Direction**
 
 *Unconditional relations.* Information can flow unconditionally along a
-path of arrows pointing in the same direction. In Panel 1 of Figure
+path of arrows pointing in the same direction. In Panel 1 of 
 @fig-HJ-F-2-4, information flows across all three nodes. If we
 have observed nothing yet, learning about any one node can tell us
 something about the other two.
