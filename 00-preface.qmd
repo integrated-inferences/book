@@ -1,0 +1,44 @@
+# Quick guide {.unnumbered}
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+source("_packages_used.R")
+```
+
+```{r HJ-F-cover, echo = FALSE, include=identical(knitr:::pandoc_to(), 'html'), fig.align = "center", warning = FALSE, include = FALSE}
+
+m <- make_model("A -> K1 -> B <- K2; B->K3 ; B <-> K3", add_causal_types = FALSE) 
+
+
+  hj_ggdag(model = m, 
+           x = c(1, 2.5, 2, 3, 4.5), 
+           y = c(1, 1.25, 1, 1, .75))  +                       
+    theme(panel.border = element_rect(color = "#1b98e0",
+                                    fill = NA,
+                                    size = 3))
+
+
+```
+
+This book has four main parts:
+
+* Part I introduces causal models and a Bayesian approach to learning about them and drawing inferences from them.
+
+* Part II applies these tools to strategies that use  process tracing, mixed methods, and "model aggregation."
+
+* Part III turns to design decisions, exploring strategies for assessing what kind of data is most useful for addressing different kinds of research questions given knowledge to date about a population or a case.
+
+*  In Part IV we put models into question and outline a range of strategies one can use to justify and evaluate causal models. 
+
+## Resources  {-}
+
+We (with wonderful colleagues) have developed an `R` package---`CausalQueries`---to accompany this book, hosted on [Cran](https://cran.r-project.org/web/packages/CausalQueries/index.html). Supplementary Materials, including a guide to the package, can be found at [https://integrated-inferences.github.io/](https://integrated-inferences.github.io/).
+\newpage
+
+## Corrections {-} 
+
+If (when!) we find errors we will correct them using track changes formatting ~~lik htis~~
+`r colorize("like this")` and list notable instances in section  @sec-errata.
+
+

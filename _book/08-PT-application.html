@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>8&nbsp; Process Tracing Applications – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./09-mixing-methods.html" rel="next">
+<link href="./07-process-tracing-with-models.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-process-tracing-with-models.html">II Model-based Causal Inference</a></li><li class="breadcrumb-item"><a href="./08-PT-application.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#inequality-and-democratization" id="toc-inequality-and-democratization" class="nav-link active" data-scroll-target="#inequality-and-democratization"><span class="header-section-number">8.1</span> Inequality and Democratization</a>
+  <ul class="collapse">
+<li><a href="#the-debate" id="toc-the-debate" class="nav-link" data-scroll-target="#the-debate"><span class="header-section-number">8.1.1</span> The Debate</a></li>
+  <li><a href="#a-causal-model" id="toc-a-causal-model" class="nav-link" data-scroll-target="#a-causal-model"><span class="header-section-number">8.1.2</span> A Causal Model</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">8.1.3</span> Results</a></li>
+  <li><a href="#considerations-theory-dependence" id="toc-considerations-theory-dependence" class="nav-link" data-scroll-target="#considerations-theory-dependence"><span class="header-section-number">8.1.4</span> Considerations: Theory Dependence</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#institutions-and-growth" id="toc-institutions-and-growth" class="nav-link" data-scroll-target="#institutions-and-growth"><span class="header-section-number">8.2</span> Institutions and Growth</a>
+  <ul class="collapse">
+<li><a href="#the-debate-1" id="toc-the-debate-1" class="nav-link" data-scroll-target="#the-debate-1"><span class="header-section-number">8.2.1</span> The Debate</a></li>
+  <li><a href="#a-causal-model-1" id="toc-a-causal-model-1" class="nav-link" data-scroll-target="#a-causal-model-1"><span class="header-section-number">8.2.2</span> A Causal Model</a></li>
+  <li><a href="#results-1" id="toc-results-1" class="nav-link" data-scroll-target="#results-1"><span class="header-section-number">8.2.3</span> Results</a></li>
+  <li><a href="#considerations-interactions-between-clues" id="toc-considerations-interactions-between-clues" class="nav-link" data-scroll-target="#considerations-interactions-between-clues"><span class="header-section-number">8.2.4</span> Considerations: Interactions between Clues</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-HJC-8-appendix" id="toc-sec-HJC-8-appendix" class="nav-link" data-scroll-target="#sec-HJC-8-appendix"><span class="header-section-number">8.3</span> Appendix: Forming Models in <code>CausalQueries</code></a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-process-tracing-with-models.html">II Model-based Causal Inference</a></li><li class="breadcrumb-item"><a href="./08-PT-application.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC8" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We apply the causal-model-based approach to process tracing to two major substantive issues in comparative politics: the relationship between inequality and democratization and the relationship between institutions and economic growth. Drawing on case-level data, we use restrictions on causal types together with flat priors to draw inferences about a range of causal queries. The applications are both very simple, but they are sufficiently complex to illustrate key features of process tracing with causal models: The different types of learning that can be gleaned from evidence on moderators and mediators, the dependence of inference from some clues on the values of other clues, and the scope for learning from more distal historical data when researchers have beliefs over confounding processes.</p>
+</div>
+</div>
+<p>In this chapter, we illustrate how causal-model-based process-tracing works using two substantive applications that have been of central interest to students of comparative politics for decades: the causes of democratization and the determinants of economic growth. In both cases, we develop simple models to demonstrate the logic of process-tracing with causal models. In <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a> we push the analysis further, illustrating the integration of process tracing with cross-case correlational analysis. The key difference is that, in this chapter, we assume—consistent with the process-tracing approach outlined in <a href="07-process-tracing-with-models.html" class="quarto-xref"><span>Chapter 7</span></a>—that the researcher comes to a case with a theoretical model in hand, including a set of beliefs about the shares of nodal types in the population. In <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a>, as we return to the same case-level queries, we use models that have been directly informed by data from that broader population of cases.</p>
+<p></p>
+<section id="inequality-and-democratization" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="inequality-and-democratization">
+<span class="header-section-number">8.1</span> Inequality and Democratization</h2>
+<p></p>
+<section id="the-debate" class="level3" data-number="8.1.1"><h3 data-number="8.1.1" class="anchored" data-anchor-id="the-debate">
+<span class="header-section-number">8.1.1</span> The Debate</h3>
+<p> </p>
+<p>Sociologists, economists, and political scientists have long theorized and empirically examined the relationship between inequality and democracy (e.g., <span class="citation" data-cites="dahl1973polyarchy">Dahl (<a href="20-references.html#ref-dahl1973polyarchy" role="doc-biblioref">1973</a>)</span>, <span class="citation" data-cites="bollen1985political">Bollen and Jackman (<a href="20-references.html#ref-bollen1985political" role="doc-biblioref">1985</a>)</span>, <span class="citation" data-cites="acemoglu2005economic">Acemoglu and Robinson (<a href="20-references.html#ref-acemoglu2005economic" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="boix2003democracy">Boix (<a href="20-references.html#ref-boix2003democracy" role="doc-biblioref">2003</a>)</span>, <span class="citation" data-cites="ansell2014inequality">Ansell and Samuels (<a href="20-references.html#ref-ansell2014inequality" role="doc-biblioref">2014</a>)</span>). In recent years, the work of <span class="citation" data-cites="boix2003democracy">Boix (<a href="20-references.html#ref-boix2003democracy" role="doc-biblioref">2003</a>)</span>, <span class="citation" data-cites="acemoglu2005economic">Acemoglu and Robinson (<a href="20-references.html#ref-acemoglu2005economic" role="doc-biblioref">2005</a>)</span>, and <span class="citation" data-cites="ansell2014inequality">Ansell and Samuels (<a href="20-references.html#ref-ansell2014inequality" role="doc-biblioref">2014</a>)</span> represent major theoretical advances in specifying when and how inequality might generate transitions to democracy (as well as its persistence, which we bracket here). The first and third of these books also provide large-n cross-national and historical tests of their theories’ key correlational predictions. <span class="citation" data-cites="haggard2012inequality">Haggard and Kaufman (<a href="20-references.html#ref-haggard2012inequality" role="doc-biblioref">2012</a>)</span>, moreover, derive causal process observations from a large number of “Third Wave” cases of democratization in order to examine these theories’ claims about the centrality of distributional issues to regime change. We provide a very condensed summary of the core logic of <span class="citation" data-cites="boix2003democracy">Boix (<a href="20-references.html#ref-boix2003democracy" role="doc-biblioref">2003</a>)</span> and <span class="citation" data-cites="acemoglu2005economic">Acemoglu and Robinson (<a href="20-references.html#ref-acemoglu2005economic" role="doc-biblioref">2005</a>)</span> before seeking to translate that logic into a causal model for the purposes of process tracing, using a transformed version of Haggard and Kaufman’s causal-process data.</p>
+<p>We briefly summarize the core logics of and differences among these three sets of arguments here, bracketing many of their moving parts to focus on the basic theorized relationship between inequality and democracy. Both Boix’s and Acemoglu and Robinson’s theories operate within a Meltzer-Richard (<span class="citation" data-cites="meltzer1981rational">Meltzer and Richard (<a href="20-references.html#ref-meltzer1981rational" role="doc-biblioref">1981</a>)</span>) framework in which, in a democracy, the median voter sets the level of taxation-and-transfer and, since mean income is higher than the median income, benefits from and votes for a positive tax rate, implying redistribution from rich to poor. The poorer the median voter, the more redistribution they will prefer. Democracy, with its poorer median voter, thus implies greater redistribution than (right-wing) authoritarianism—a better material position for the poor at the expense of the rich elite. Thus, in each of these approaches, struggles over political regimes are conflicts over the distribution of material resources.</p>
+<p>In Boix’s model, the poor generally prefer democracy for its material benefits. When the poor mobilize to demand regime change, the rich face a choice as to whether to repress or concede, and they are more likely to repress as inequality is higher since, all else equal, they have more to lose from democracy. Thus, with the poor always preferring democracy over right-wing authoritarianism, inequality reduces the prospects for democratization.</p>
+<p>In Acemoglu and Robinson’s model, inequality simultaneously affects the expected net gains to democracy for both rich and poor. At low levels of inequality, democracy is relatively unthreatening to the elite, as in Boix, but likewise of little benefit to the poor. Since regime change is costly, the poor do not mobilize for democracy when inequality is low, and democratization does not occur. At high levels of inequality, democracy is of great benefit to the poor but has high expected costs for the elite; thus, democratization does not occur because the elite repress popular demands for regime change. In Acemoglu and Robinson’s model, democracy emerges only when inequality is at middling levels: high enough for the poor to demand it and low enough for the rich to be willing to concede it.</p>
+<p>Ansell and Samuels, finally, extend the distributive politics of regime change in three key ways. First, they allow for a two-sector economy, with a governing elite comprising the landed aristocracy and an urban industrial elite excluded from political power under authoritarian institutions. Total inequality in the economy is a function of inequality in the landed sector, inequality in the industrial sector, and the relative size of each. Second, authoritarian (landed) elites can tax the industrial bourgeoisie, thus giving the industrial elite an incentive to seek constraints on autocratic rule. Third, in Ansell and Samuels’ model, rising industrial inequality means a rising industrial elite, generating a larger gap between them and industrial workers, though the industrial masses are richer than the peasantry. A number of results follow, of which we highlight just a couple. Rising land inequality reduces the likelihood of a bourgeois rebellion by giving the landed elite greater repressive capacities and increasing their expected losses under democracy. As industrial inequality rises, however, the industrial elite have more to lose to confiscatory taxation and thus greater incentive to push for partial democracy (in which they have the ability to constrain the government, while the poor remain politically excluded) as well as greater resources with which to mobilize and achieve it. Full democracy, brought on by joint mass and bourgeois rebellion, is most likely as the industrial sector grows in relative size, giving the urban masses more to lose to autocratic expropriation and more resources to mobilize and rebel.</p>
+<p>These three theoretical frameworks thus posit rather differing relationships between inequality and democracy. Taking these theoretical logics as forms of background knowledge, we would consider it possible that inequality reduces the likelihood of democracy or that it increases the likelihood of democracy. Yet one feature that is consistent with all three theories is a claim that distributional grievances drive demands for regime change. Moreover, in both Boix and Acemoglu and Robinson, less economically advantaged groups are, all else equal, more likely to demand democracy the worse their relative economic position. Ansell and Samuels’ model, on the other hand, suggests that relative deprivation may cut both ways: While poorer groups may have more to gain from redistribution under democracy, better-off groups have more to fear from confiscatory taxation under autocracy. In all three frameworks, <em>mobilization</em> by groups with material grievances is critical to transitions to democracy: Elites do not voluntarily cede power.</p>
+<p>In their qualitative analysis of “Third Wave” democratizations, Haggard and Kaufman point to additional factors, aside from inequality, that may generate transitions. Drawing on previous work on twentieth century democratic transitions (e.g., <span class="citation" data-cites="huntington1993third">Huntington (<a href="20-references.html#ref-huntington1993third" role="doc-biblioref">1993</a>)</span>, <span class="citation" data-cites="linz1996problems">Linz and Stepan (<a href="20-references.html#ref-linz1996problems" role="doc-biblioref">1996</a>)</span>), they pay particular attention to international pressures to democratize and to elite defections.</p>
+</section><section id="a-causal-model" class="level3" data-number="8.1.2"><h3 data-number="8.1.2" class="anchored" data-anchor-id="a-causal-model">
+<span class="header-section-number">8.1.2</span> A Causal Model</h3>
+<p> </p>
+<p>We now treat these theories as a form of background knowledge and express them as a causal model. We begin with the structure. Suppose we are interested in the case-level causal effect of inequality on democratization of a previously autocratic political system. Suppose further, to simplify the illustration, that we conceptualize both variables in binary terms: Inequality is either high or low, and democratization either occurs or does not occur. This means that we want to know, for a given case of interest, whether high inequality (as opposed to low inequality) causes democracy to emerge, prevents democracy from emerging, or has no effect (i.e., with democratization either occurring or not occurring independent of inequality). We can represent this query in the simple, high-level causal model shown in <a href="#fig-HJ-F-8-1" class="quarto-xref">Figure&nbsp;<span>8.1</span></a>. Here, the question, “What is the causal effect of high inequality on democratization in this case?” is equivalent to asking what the value of <span class="math inline">\(\theta^D\)</span> is in the case, where the possible values are <span class="math inline">\(\theta_{00}^D, \theta_{01}^D, \theta_{10}^D\)</span>, and <span class="math inline">\(\theta_{11}^D\)</span>. We assume here that the case’s nodal type, <span class="math inline">\(\theta^D\)</span>, is not itself observable, and thus we are in the position of having to make inferences about it.</p>
+<p>Drawing on the logic of probative value discussed in <a href="02-causal-models.html" class="quarto-xref"><span>Chapter 2</span></a>, we can already identify possibilities for learning about <span class="math inline">\(\theta^D\)</span> from the other nodes represented in this high-level graph. Merely observing the level of inequality in a case will tell us nothing since <span class="math inline">\(I\)</span> is not <span class="math inline">\(d-\)</span>connected to <span class="math inline">\(\theta^D\)</span> if we have observed nothing else. On the other hand, only observing the outcome—regime type—in a case <em>can</em> give us information about <span class="math inline">\(\theta^D\)</span> since <span class="math inline">\(D\)</span> <em>is</em> <span class="math inline">\(d-\)</span>connected to <span class="math inline">\(\theta^D\)</span>. For instance, if we observe <span class="math inline">\(D=1\)</span> (that a case democratized), then we can immediately rule out <span class="math inline">\(\theta_{00}^D\)</span> as a value of <span class="math inline">\(\theta^D\)</span> since this type does not permit democratization to occur. Further, conditional on observing <span class="math inline">\(D\)</span>, <span class="math inline">\(I\)</span> is now <span class="math inline">\(d-\)</span>connected to <span class="math inline">\(\theta^D\)</span>: In other words, having observed the outcome, we can additionally learn about the case’s type from observing the status of the causal variable. For example, if <span class="math inline">\(D=1\)</span>, then observing <span class="math inline">\(I=1\)</span> allows us additionally to rule out the value <span class="math inline">\(\theta_{10}^D\)</span> (a negative causal effect).</p>
+<p>Now, observing just <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> alone will always leave two nodal types in contention. For instance, seeing <span class="math inline">\(I=D=1\)</span> (the case had high inequality and democratized) would leave us unsure whether high inequality caused the democratization in this case (<span class="math inline">\(\theta^D=\theta_{01}^D\)</span>) or the democratization would have happened anyway (<span class="math inline">\(\theta^D=\theta_{11}^D\)</span>). This is a limitation of <span class="math inline">\(X, Y\)</span> data that we refer to in <span class="citation" data-cites="humphreys2015mixing">Humphreys and Jacobs (<a href="20-references.html#ref-humphreys2015mixing" role="doc-biblioref">2015</a>)</span> as the “fundamental problem of type ambiguity.” Note that this does not mean that we will be left indifferent between the two remaining types. Learning from <span class="math inline">\(X, Y\)</span> data alone—narrowing the types down to two—can be quite significant, depending on our priors over the distribution of types. For example, if we previously believed that a <span class="math inline">\(\theta_{00}^D\)</span> type (cases in which democracy will never occur, regardless of inequality) was much more likely than a <span class="math inline">\(\theta_{11}^D\)</span> type (democracy will always occur, regardless of inequality) and that positive and negative effects of inequality were about equally likely, then ruling out the <span class="math inline">\(\theta_{00}^D\)</span> and <span class="math inline">\(\theta_{10}^D\)</span> values for a case will shift us toward the belief that inequality caused democratization in the case. This is because we are ruling out both a negative effect and the type of null effect that we had considered the most likely, leaving a null effect that we consider relatively unlikely.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-8-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-8-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-PT-application_files/figure-html/fig-HJ-F-8-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-8-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: Simple democracy inequality model
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Nonetheless, we can increase the prospects for learning by <em>theorizing</em> the relationship between inequality and democratization. Given causal logics and empirical findings in the existing literature, we can say more than is contained in <a href="#fig-HJ-F-8-1" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> about the possible structure of the causal linkages between inequality and democratization. Moreover, we can embed this prior knowledge of the possible causal relations in this domain in a lower level model that is consistent with the high-level model that most simply represents our query.</p>
+<p>If we were to seek to fully capture them, the models developed by Boix, Acemoglu, and Robinson, and Ansell and Samuels would, each individually, suggest causal graphs with a large number of nodes and edges connecting them. Representing all variables and relationships jointly contained in these three models would take an extremely complex graph. Yet there is no need to go down to the lowest possible level—to generate the <em>most</em> detailed graph—in order to increase our empirical leverage on the problem.</p>
+<p>We represent in <a href="#fig-HJ-F-8-2" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> one possible lower level model consistent with our high-level model. Drawing on causal logics in the existing literature, we unpack the nodes in the high-level model in two ways:</p>
+<ol type="1">
+<li><p>We interpose a mediator between inequality and democratization: mobilization (<span class="math inline">\(M\)</span>) by economically disadvantaged groups expressing material grievances. <span class="math inline">\(M\)</span> is a function of both <span class="math inline">\(I\)</span> and its nodal type, <span class="math inline">\(\theta^M\)</span>, which defines its response to <span class="math inline">\(I\)</span>. In inserting this mediator, we have extracted <span class="math inline">\(\theta^M\)</span> from <span class="math inline">\(\theta^D\)</span>, pulling out that part of <span class="math inline">\(D\)</span>’s response to <span class="math inline">\(I\)</span> that depends on <span class="math inline">\(M\)</span>’s response to <span class="math inline">\(I\)</span>. </p></li>
+<li><p>We specify a second influence on democratization, international pressure (<span class="math inline">\(P\)</span>). Like <span class="math inline">\(\theta^M\)</span>, <span class="math inline">\(P\)</span> has also been extracted from <span class="math inline">\(\theta^D\)</span>; it represents that part of <span class="math inline">\(D\)</span>’s response to <span class="math inline">\(I\)</span> that is conditioned by international pressures.</p></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-8-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-8-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-PT-application_files/figure-html/fig-HJ-F-8-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-8-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.2: A lower level model of democratization in which inequality may affect regime type both directly and through mobilization of the lower classes and international pressure may also affect regime type.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>In representing the causal dependencies in this graph, we allow for inequality to have (in the language of mediation analysis) both an “indirect” effect on democratization via mobilization and a “direct” effect. The arrow running directly from <span class="math inline">\(I\)</span> to <span class="math inline">\(D\)</span> allows for effects of inequality on democratization beyond any effects running via mobilization of the poor, including effects that might run in the opposite direction. (For instance, it is possible that inequality has a positive effect on democratization via mobilization but a negative effect via any number of processes that are not explicitly specified in the model.) The graph also implies that there is no confounding: Since there is no arrow running from another variable in the graph to <span class="math inline">\(I\)</span>, <span class="math inline">\(I\)</span> is modeled as a root node.</p>
+<p>The lower level graph thus has two exogenous, <span class="math inline">\(\theta\)</span> nodes that will be relevant to assessing causal effects: <span class="math inline">\(\theta^M\)</span> and <span class="math inline">\(\theta^{D_{lower}}\)</span>. <span class="math inline">\(\theta^M\)</span>, capturing <span class="math inline">\(I\)</span>’s effect on <span class="math inline">\(M\)</span>, ranges across the usual four values for a single-cause, binary setup: <span class="math inline">\(\theta_{00}^M, \theta_{01}^M, \theta_{10}^M\)</span>, and <span class="math inline">\(\theta_{11}^M\)</span>.</p>
+<p>Node <span class="math inline">\(\theta^{D_{lower}}\)</span> is considerably more complicated, however, because this node represents <span class="math inline">\(D\)</span>’s response to three causal variables: <span class="math inline">\(I\)</span>, <span class="math inline">\(M\)</span>, and <span class="math inline">\(P\)</span>. One way to put this is that the values of <span class="math inline">\(\theta^{D_{lower}}\)</span> indicate how inequality’s direct effect will depend on mobilization (and how mobilization’s effect will depend on inequality), conditional on whether or not there is international pressure. Readers can find this more a complex notation at work within the <code>Causal Queries</code> package but for the sake of readability, we do not use it here in the text.</p>
+<p>The result is <span class="math inline">\(2^8=256\)</span> possible nodal types for <span class="math inline">\(D\)</span>. With four nodal types for <span class="math inline">\(M\)</span>, we thus have 1024 possible combinations of causal effects between named variables in the lower level graph. How do these lower level nodal types map onto the higher level nodal types that are of interest? In other words, which combinations of lower level types represent a positive, negative, or zero causal effect of inequality on democratization? When working with the <code>CausalQueries</code> package, the software figures this out for us automatically once we define our model and our query, but we work through the logic “by hand” here to help convey the intuition.</p>
+<p>Ignoring <span class="math inline">\(P\)</span> for the moment, there are 16 ways that nodal types for <span class="math inline">\(M\)</span> and nodal types for <span class="math inline">\(D\)</span> can combine to create positive effects of <span class="math inline">\(I\)</span> on <span class="math inline">\(D\)</span>. These different types involve different combinations of direct and indirect effects. In Figure 4.5, for a similar model, we can see all 16 types in which there are overall effects, with some types producing direct effects, some indirect effects, and some both.</p>
+<p>Another way to think of the different classes of causal types that generate a positive effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(D\)</span> is to distinguish among types according to the ways that <span class="math inline">\(I\)</span> affects <span class="math inline">\(M\)</span>. This gives us three families of causal types: those in which overall effects are due to (or at least not disrupted by) a positive effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(M\)</span>; those in which overall effects are due to (or not disrupted by) a negative effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(M\)</span>; and those in which there is no effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(M\)</span> at all.</p>
+<p>To define a causal effect of <span class="math inline">\(I\)</span> in this setup, we need to define the “joint effect” of <span class="math inline">\(I\)</span> and <span class="math inline">\(M\)</span> as being the effect of changing both variables simultaneously: when we both change <span class="math inline">\(I\)</span> from 0 to 1 and change <span class="math inline">\(M\)</span> in the manner in which it is changed by the change in <span class="math inline">\(I\)</span>. Thus, for instance, the joint effect of <span class="math inline">\(I\)</span> and <span class="math inline">\(M\)</span> on <span class="math inline">\(D\)</span> is positive if, when <span class="math inline">\(I\)</span> has a positive effect on <span class="math inline">\(M\)</span>, changing both <span class="math inline">\(I\)</span> and <span class="math inline">\(M\)</span> from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span> changes <span class="math inline">\(D\)</span> from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span>. We can likewise refer to the joint effect of an increase in one variable and a decrease in another. Given this definition, a positive causal effect of inequality on democratization emerges for all of the following sets of causal types:</p>
+<ol type="1">
+<li><p><strong>Types where <em>I</em> has a positive effect on <em>M</em>:</strong> <span class="math inline">\(I\)</span> has a positive effect on <span class="math inline">\(M\)</span>; and <span class="math inline">\(I\)</span> and <span class="math inline">\(M\)</span> have a <em>joint</em> positive effect on <span class="math inline">\(D\)</span>, when <span class="math inline">\(P\)</span> takes on whatever value it takes on in the case.</p></li>
+<li><p><strong>Types where <em>I</em> has a negative effect on <em>M</em>:</strong> <span class="math inline">\(I\)</span> has a negative effect on <span class="math inline">\(M\)</span>, and <span class="math inline">\(I\)</span> and <span class="math inline">\(M\)</span> have a <em>joint</em> negative effect on <span class="math inline">\(D\)</span>, when <span class="math inline">\(P\)</span> takes on whatever value it takes on in the case.</p></li>
+<li><p><strong>Types where <em>I</em> has no effect on <em>M</em>:</strong> <span class="math inline">\(I\)</span> has no effect on <span class="math inline">\(M\)</span>, and <span class="math inline">\(I\)</span> has a positive effect on <span class="math inline">\(D\)</span>, when we fix <span class="math inline">\(M\)</span>’s value (at 0 or at 1), and <span class="math inline">\(P\)</span> at whatever value it takes on in the case.</p></li>
+</ol>
+<p>If we start out with a case in which inequality is high and democratization has not occurred (or inequality is low and democratization <em>has</em> occurred), we will be interested in the possibility of a negative overall effect. A negative causal effect of inequality on democratization emerges for all of the following sets of causal types:</p>
+<ol start="4" type="1">
+<li><p><strong>Types where <em>I</em> has a positive effect on <em>M</em>:</strong> <span class="math inline">\(I\)</span> has a positive effect on <span class="math inline">\(M\)</span>, and <span class="math inline">\(I\)</span> and <span class="math inline">\(M\)</span> have a <em>joint</em> negative effect on <span class="math inline">\(D\)</span>, when <span class="math inline">\(P\)</span> takes on whatever value it takes on in the case.</p></li>
+<li><p><strong>Types where <em>I</em> has a negative effect on <em>M</em>:</strong> <span class="math inline">\(I\)</span> has a negative effect on <span class="math inline">\(M\)</span>, and jointly increasing <span class="math inline">\(I\)</span> while decreasing <span class="math inline">\(M\)</span> generates a decrease in <span class="math inline">\(D\)</span>, when <span class="math inline">\(P\)</span> takes on whatever value it takes on in the case.</p></li>
+<li><p><strong>Types where <em>I</em> has no effect on <em>M</em>:</strong> <span class="math inline">\(I\)</span> has no effect on <span class="math inline">\(M\)</span>, and <span class="math inline">\(I\)</span> has a negative effect on <span class="math inline">\(D\)</span>, when we fix <span class="math inline">\(M\)</span>’s value (at 0 or at 1), and <span class="math inline">\(P\)</span> at whatever value it takes on in the case.</p></li>
+</ol>
+<p>Finally, all other response patterns yield <em>no</em> effect of inequality on democratization.</p>
+<p>Thus, for a case in which <span class="math inline">\(I=D=1\)</span>, our query amounts to assessing the probability that <span class="math inline">\(\theta^M\)</span> and <span class="math inline">\(\theta^{D_{lower}}\)</span> jointly take on values falling into conditions 1, 2, or 3. And for a case in which <span class="math inline">\(I \neq D\)</span>, where we entertain the possibility of a negative effect, our query is an assessment of the probability of conditions 4, 5, or 6 arising.</p>
+<section id="forming-priors" class="level4" data-number="8.1.2.1"><h4 data-number="8.1.2.1" class="anchored" data-anchor-id="forming-priors">
+<span class="header-section-number">8.1.2.1</span> Forming Priors</h4>
+<p>We now need to express prior beliefs about the probability distribution from which values of <span class="math inline">\(\theta^M\)</span> and <span class="math inline">\(\theta^{D_{lower}}\)</span> are drawn. We place structure on this problem by drawing a set of beliefs about the likelihood or monotonicity of effects and interactions among variables from the theories in Boix, Acemoglu and Robinson, and Ansell and Samuels. As a heuristic device, we weight more heavily those propositions that are more widely shared across the three works than those that are consistent with only one of the frameworks. We intend this part of the exercise to be merely illustrative of how one might go about forming priors from an existing base of knowledge; there are undoubtedly other ways in which one could do so from the inequality and democracy literature.</p>
+<p>Specifically, the belief that we embed in our priors about <span class="math inline">\(\theta^M\)</span> is:</p>
+<ul>
+<li>
+<strong>Monotonicity of <span class="math inline">\(I\)</span>’s effect on <span class="math inline">\(M\)</span>: no negative effect</strong>: In Acemoglu and Robinson, inequality should generally increase the chances of—and, in Boix, should never prevent—mobilization by the poor. Only in Ansell and Samuels’ model does inequality have a partial downward effect on the poor’s demand for democracy insofar as improved material welfare for the poor increases the chances of autocratic expropriation; and this effect is countervailed by the greater redistributive gains that the poor will enjoy under democracy as inequality rises.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Consistent with the weight of prior theory on this effect, in our initial run of the analysis, we rule out negative effects of <span class="math inline">\(I\)</span> on <span class="math inline">\(M\)</span>. We are indifferent in our priors between positive and null effects and between the two types of null effects (mobilization always occurring or never occurring, regardless of the level of inequality). We thus set our prior on <span class="math inline">\(\theta^M\)</span> as: <span class="math inline">\(p(\theta^M=\theta^M_{10})=0.0\)</span>, <span class="math inline">\(p(\theta^M=\theta^M_{00})=0.25\)</span>, <span class="math inline">\(p(\theta^M=\theta^M_{11})=0.25\)</span>, and <span class="math inline">\(p(\theta^M=\theta^M_{01})=0.5\)</span>. We relax this monotonicity assumption to account for the Ansell and Samuels logic, in a second run of the analysis.</li>
+</ul>
+<p>For our prior on democracy’s responses to inequality, mobilization, and international pressure (<span class="math inline">\(\theta^{D_{lower}}\)</span>), we extract the following beliefs from the literature:</p>
+<ul>
+<li><p><strong>Monotonicity of direct <span class="math inline">\(I\)</span> effect: no positive effect</strong>: In none of the three theories does inequality promote democratization via a pathway <em>other than</em> via the poor’s rising demand for it. In all three theories, inequality has a distinct negative effect on democratization via an increase in the elite’s expected losses under democracy and thus, its willingness to repress. In Ansell and Samuels, the distribution of resources also affects the probability of success of rebellion; thus higher inequality also reduces the prospects for democratization by strengthening the elite’s hold on power. We thus set a zero prior probability on all types in which <span class="math inline">\(I\)</span>’s direct effect on <span class="math inline">\(D\)</span> is positive for any value of <span class="math inline">\(P\)</span>.</p></li>
+<li><p><strong>Monotonicity of <span class="math inline">\(M\)</span>’s effect: no negative effect</strong>: In none of the three theories does mobilization reduce the prospects of democratization. We thus set a zero probability on all types in which <span class="math inline">\(M\)</span>’s effect on <span class="math inline">\(D\)</span> is negative at any value of <span class="math inline">\(I\)</span> or <span class="math inline">\(P\)</span>.</p></li>
+<li><p><strong>Monotonicity of <span class="math inline">\(P\)</span>’s effect: no negative effect</strong>: While international pressures are only discussed in Haggard and Kaufman’s study, none of the studies considers the possibility that international pressures to democratize might prevent democratization that would otherwise have occurred. We thus set a zero probability on all types in which <span class="math inline">\(P\)</span>’s effect is negative at any value of <span class="math inline">\(I\)</span> or <span class="math inline">\(M\)</span>.</p></li>
+</ul>
+<p>This reduces the number of nodal types for <span class="math inline">\(D\)</span> from 256 to just 20. For all remaining allowable types, we set flat priors.</p>
+<p>The remaining 20 allowable types involve a rich range of possible interactions among international pressure, inequality, and mobilization, including:</p>
+<p>Since <span class="math inline">\(P\)</span> conditions the effect of <span class="math inline">\(I\)</span>, we must also establish a prior on the distribution of <span class="math inline">\(P\)</span>. Here we again set a flat prior by setting the prior probability of <span class="math inline">\(P=1\)</span> to 0.5, implying that before observing the data, we think that international pressures to democratize are present half the time.</p>
+<p>We show in Appendix (<a href="#sec-HJC-8-appendix" class="quarto-xref"><span>Section 8.3</span></a>) how to form this model using the <code>CausalQueries</code> package. </p>
+</section></section><section id="results" class="level3" data-number="8.1.3"><h3 data-number="8.1.3" class="anchored" data-anchor-id="results">
+<span class="header-section-number">8.1.3</span> Results</h3>
+<p>We can now choose nodes in addition to <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> to observe from the lower level model. Recall that our query is about the joint values of <span class="math inline">\(\theta^M\)</span> and <span class="math inline">\(\theta^{D_{lower}}\)</span>. By the logic of <span class="math inline">\(d-\)</span>separation, we can immediately see that both <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> may be informative about these nodes when <span class="math inline">\(D\)</span> has already been observed. Conditional on <span class="math inline">\(D\)</span>, both <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> are <span class="math inline">\(d-\)</span>connected to both <span class="math inline">\(\theta^M\)</span> and <span class="math inline">\(\theta^{D_{lower}}\)</span>. Let us see what we learn if we search for either mobilization of the lower classes or international pressure or both, and find either clue, present or absent.</p>
+<p>We consider four distinct situations corresponding to four possible combinations of inequality and democratization values that we might be starting with. In each situation, the nature of the query changes. Where we start with a case with low inequality and no democratization, asking if the level of inequality caused the outcome is to ask if the lack of inequality caused the lack of democratization. Where we have high inequality and no democratization, we want to know if democratization was prevented by high inequality (as high inequality does in Boix’s account). For cases in which democratization occurred, we want to know whether the lack or presence of inequality (whichever was the case) generated the democratization.</p>
+<p>Inference is done by applying Bayes rule to the observed data given the priors. Different “causal types” are consistent or inconsistent with possible data observations. Conversely, the observation of data lets us shift weight toward causal types that are consistent with the data and away from those that are not. As a simple illustration: if we observe <span class="math inline">\(D=1\)</span> in a case, then we would shift weight from types for which <span class="math inline">\(D\)</span> is always <span class="math inline">\(0\)</span>, given the other observed data, to types for which <span class="math inline">\(D\)</span> <em>can</em> be <span class="math inline">\(1\)</span> given the other observed data.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-8-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-8-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-PT-application_files/figure-html/fig-HJ-F-8-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-8-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.3: Case-level inferences for whether the level of inequality caused the democratization outcome given possible observations of mobilization and pressure (untrained model).
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>In coding countries’ level of inequality, we rely on Haggard and Kaufman’s coding using the Gini coefficient from the Texas Inequality dataset and dichotomizing at the sample median. In coding cases for democratization, we use the codings in <span class="citation" data-cites="cheibub2010democracy">Cheibub, Gandhi, and Vreeland (<a href="20-references.html#ref-cheibub2010democracy" role="doc-biblioref">2010</a>)</span>, one of two measures used by Haggard and Kaufman. Our codings of the <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> clues come from close readings of the country-specific transition accounts in <span class="citation" data-cites="haggard2012distributive">Haggard, Kaufman, and Teo (<a href="20-references.html#ref-haggard2012distributive" role="doc-biblioref">2012</a>)</span>, the publicly shared qualitative dataset associated with <span class="citation" data-cites="haggard2012inequality">Haggard and Kaufman (<a href="20-references.html#ref-haggard2012inequality" role="doc-biblioref">2012</a>)</span>. We code <span class="math inline">\(M\)</span> as <span class="math inline">\(1\)</span> where the transition account refers to anti-government or anti-regime political mobilization by economically disadvantaged groups, and as <span class="math inline">\(0\)</span> otherwise. For international pressure, we code <span class="math inline">\(P=0\)</span> if international pressures to democratize are not mentioned in the transition account and <span class="math inline">\(P=1\)</span> if they are. </p>
+<p>We plot results for 16 types of cases in <a href="#fig-HJ-F-8-3" class="quarto-xref">Figure&nbsp;<span>8.3</span></a>. In the first two columns of the figure, we consider cases that democratized, first those with low inequality and then those with high inequality. In the second two columns, we consider cases that did not democratize, those with <span class="math inline">\(I=0\)</span> and then those with <span class="math inline">\(I=1\)</span>. Within each column, each row represents a different realization of <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> values.</p>
+<p>Since <span class="citation" data-cites="haggard2012inequality">Haggard and Kaufman (<a href="20-references.html#ref-haggard2012inequality" role="doc-biblioref">2012</a>)</span> — from which we get our <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> data — includes only cases that democratized, we are only able to assign illustrative country names to the graphs in the <span class="math inline">\(D=1\)</span> columns. In the <span class="math inline">\(D=0\)</span> columns, we represent estimates we <em>would</em> arrive at if we observed the different <span class="math inline">\(M\)</span> and/or <span class="math inline">\(D\)</span> values in cases.</p>
+<p>Within each country graph, we plot the inference we draw under different evidentiary conditions. We show how confident we would be that the level of inequality caused the democratization outcome if (a) we observed only the cause and the outcome (<span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span>); (b) we additionally observed either clue, the level of mobilization by disadvantaged classes or the level of international pressure; and (c) if we observed both of these clues.</p>
+<p>We now discuss the four columns of Figure 8.3 in turn.</p>
+<section id="i0-d1-low-inequality-countries-that-democratized" class="level4" data-number="8.1.3.1"><h4 data-number="8.1.3.1" class="anchored" data-anchor-id="i0-d1-low-inequality-countries-that-democratized">
+<span class="header-section-number">8.1.3.1</span> <span class="math inline">\(I=0, D=1\)</span>: Low Inequality Countries that Democratized</h4>
+<p>In a case that had low inequality and had democratized, did low inequality cause democratization, as Boix’s thesis would suggest? Results for cases with <span class="math inline">\(I=0, D=1\)</span> are shown in the first column of <a href="#fig-HJ-F-8-3" class="quarto-xref">Figure&nbsp;<span>8.3</span></a>. With the analyses in this column, we address the question: What is the probability that Mexico, Taiwan, Albania, and Nicaragua democratized <em>because</em> they had relatively low inequality? The first plotted point is our estimate of the probability that low inequality was a cause of democratization when we observed only <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span>. Moving to the right, we then plot our inferences upon observing <span class="math inline">\(M\)</span> only, upon observing <span class="math inline">\(P\)</span> only, and upon observing <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span>, respectively.</p>
+<p>Upon observing only the level of inequality and the outcome of democratization in any of these cases, we would place a 0.438 probability of inequality having been a cause. With only these two pieces of information in hand, we reach identical inferences about the four cases since they take on the same <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> values.</p>
+<p>How do our inferences change as we gather additional clues? Let us turn first to gathering information about mobilization. By comparing the “No clues” to the “M only” point, we can see that observing <span class="math inline">\(M\)</span> changes our conclusions only modestly for all of the cases. Observing mobilization generally reduces our confidence in inequality’s negative effect relative to observing no mobilization. If we observe the level of mobilization, our confidence that inequality mattered goes up slightly (to 0.475) in Mexico and Taiwan, where mobilization did not occur, and goes down slightly in Albania and Nicaragua (to 0.394) where mobilization did occur. <span class="math inline">\(M\)</span>’s limited informativeness derives from the nature of the question we are asking and the restrictions we have imposed on the model. Recall that we are looking here for a negative effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(D\)</span>. Given the model restrictions (no negative <span class="math inline">\(I \rightarrow M\)</span> or <span class="math inline">\(M \rightarrow D\)</span> effects), this negative effect can only run via a direct effect, not through mobilization.</p>
+<p><span class="math inline">\(M\)</span> can nonetheless still be informative as a <em>moderator</em> of <span class="math inline">\(I\)</span>’s direct effect. As we know, learning about moderators tells us something about (a) how a case’s outcome responds to a causal variable under a given context (i.e., about the nodal types operating in the case) and (b) the context that the case is in. Thus, in the first instance, observing <span class="math inline">\(M\)</span> together with <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> helps us eliminate types inconsistent with these three data points. For example, if we see <span class="math inline">\(M=0\)</span>, then we eliminate any type in which <span class="math inline">\(D\)</span> is 0 when <span class="math inline">\(M=0\)</span> and <span class="math inline">\(I=1\)</span>, under any value of <span class="math inline">\(P\)</span>. Second, we learn from observing <span class="math inline">\(M\)</span> about the value of <span class="math inline">\(M\)</span> under which <span class="math inline">\(D\)</span> will be responding to <span class="math inline">\(I\)</span>. Now, because <span class="math inline">\(M\)</span> is itself potentially affected by <span class="math inline">\(I\)</span>, the learning here is somewhat complicated. What we learn most directly from observing <span class="math inline">\(M\)</span> is <em>the effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(M\)</span></em> in this case. If we observe <span class="math inline">\(M=1\)</span>, then we know that <span class="math inline">\(I\)</span> has no effect on <span class="math inline">\(M\)</span> in this case (since such an effect can only be positive in this model); whereas if we observe <span class="math inline">\(M=0\)</span>, <span class="math inline">\(I\)</span> might or might not have a positive effect on <span class="math inline">\(M\)</span>. Learning about this <span class="math inline">\(I \rightarrow M\)</span> effect then allows us to form a belief about how likely <span class="math inline">\(M\)</span> would be to be <span class="math inline">\(0\)</span> versus <span class="math inline">\(1\)</span> if <span class="math inline">\(I\)</span> changed from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span>. That is, it allows us to learn about the moderating conditions under which <span class="math inline">\(D\)</span> would be responding to this change in <span class="math inline">\(I\)</span> (would mobilization be occurring or not)? This belief, in turn, allows us to form a belief about how <span class="math inline">\(D\)</span> will respond to <span class="math inline">\(I\)</span> given the values of <span class="math inline">\(\theta^{D_{lower}}\)</span> that are consistent with the <span class="math inline">\(I, M\)</span>, and <span class="math inline">\(D\)</span> observations. The sum total of this learning remains quite modest, as we can see by comparing the “M only” estimate in each <span class="math inline">\(I=0, D=1\)</span> graph to the “No clues” estimate.</p>
+<p>As we see from the third estimate plotted on each graph, the international pressure clue is much more informative than the mobilization clue in an <span class="math inline">\(I=0, D=1\)</span> case. Observing the absence of international pressure makes us much more confident in low inequality’s effect. The reason is that international pressure is an alternative cause of democratization—a condition that could have caused democratization regardless of the level of inequality. Observing the presence of international pressure in a case makes it less likely for low inequality to have caused the outcome. Once we bring this second clue into the analysis, Mexico and Taiwan sharply part ways: seeing no international pressure in Mexico, we are now much more confident that inequality mattered for the Mexican transition (0.667); seeing international pressure in Taiwan, we are now substantially less confident that inequality mattered to the Taiwanese transition (0.393). Similarly, observing <span class="math inline">\(P\)</span> sharply differentiates the Albanian and Nicaraguan cases: Seeing no international pressure in the Albanian transition considerably boosts our confidence in inequality’s causal role there ((0.571)), while observing international pressure in the Nicaraguan transition strongly undermines our belief in an inequality effect there (0.263).</p>
+<p>We can see from the fourth column that, if we have already observed <span class="math inline">\(P\)</span>, then we gain further information from also observing <span class="math inline">\(M\)</span> (and likewise going from only observing <span class="math inline">\(M\)</span> to observing <span class="math inline">\(P\)</span> as well), and they generally push our inferences in the same direction. For Mexico, where both mobilization and international pressure were absent, we become even more confident in low inequality’s effect when we observe both than when we observe only one. In Nicaragua, meanwhile, where both are present, we believe it even less likely that low inequality mattered when we observe both than when we observe one. In Taiwan and Albania, where <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> take on different values, we see that we end up with inferences between the “M only” and the “P only” inferences when we observe both clues.</p>
+</section><section id="i1-d1-high-inequality-countries-that-democratized" class="level4" data-number="8.1.3.2"><h4 data-number="8.1.3.2" class="anchored" data-anchor-id="i1-d1-high-inequality-countries-that-democratized">
+<span class="header-section-number">8.1.3.2</span> <span class="math inline">\(I=1, D=1\)</span>: High Inequality Countries that Democratized</h4>
+<p>Where we see both high inequality and democratization, the question is whether high inequality caused democratization via a positive effect. Considering the second column of cases in <a href="#fig-HJ-F-8-3" class="quarto-xref">Figure&nbsp;<span>8.3</span></a>, did high inequality cause Mongolia, Sierra Leone, Paraguay, and Malawi to democratize?</p>
+<p>Observing only the level of inequality and the democratization outcome, we would have fairly low confidence that inequality mattered, with a belief of (0.128). Let us see what we can learn if we also observe the level of mobilization, international pressure, or both.</p>
+<p><span class="math inline">\(M\)</span> can now be highly informative since we are now looking for a <em>positive</em> effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(D\)</span>, and a positive effect has to run through mobilization under the model restriction that rules out positive direct effects. The observation of a lack of mobilization is most telling: High inequality cannot have caused democratization, given our model, if inequality did not cause mobilization to occur. There is no point in looking for international pressure since doing so will have no effect on our beliefs. Thus, when we observe no mobilization by the masses in Mongolia and Paraguay, we can be certain (given our model) that high inequality did <em>not</em> cause democratization in these cases. Moreover, this result does not change if we also go and look for international pressure: Neither seeing pressure nor seeing its absence shifts our posterior away from 0. Observing <span class="math inline">\(P\)</span> in these two cases only matters if we have <em>not</em> observed <span class="math inline">\(M\)</span>.</p>
+<p>If we look for mobilization and we do see it, on the other hand—as in Sierra Leone and Malawi—we are slightly more confident that high inequality was the cause of democratization (0.15). Moreover, if we first see <span class="math inline">\(M=1\)</span>, then observing international pressure can add much more information; and it substantially differentiates our conclusions about the causes of Sierra Leone’s and Malawi’s transitions. Just as in an <em>I=0, D=1</em> case, it is the absence of international pressure that leaves the most “space” for inequality to have generated the democratization outcome. When we see the absence of pressure in Sierra Leone, our confidence that high inequality was a cause of the transition increases to 0.25; seeing pressure present in Malawi reduces our confidence in inequality’s effect to 0.107.</p>
+<p>We next examine causal relations for cases that did not democratize. These cases are not included in <span class="citation" data-cites="haggard2012inequality">Haggard and Kaufman (<a href="20-references.html#ref-haggard2012inequality" role="doc-biblioref">2012</a>)</span>, and so are not labeled in the figure. However, our model can tell us what we <em>would</em> believe if we also observed different clues in cases that did not democratize.</p>
+<section id="i0-d0-low-inequality-countries-that-did-not-democratize" class="level5" data-number="8.1.3.2.1"><h5 data-number="8.1.3.2.1" class="anchored" data-anchor-id="i0-d0-low-inequality-countries-that-did-not-democratize">
+<span class="header-section-number">8.1.3.2.1</span> <span class="math inline">\(I=0, D=0\)</span>: Low Inequality Countries that Did Not Democratize</h5>
+<p>To begin with <span class="math inline">\(I=0, D=0\)</span> cases, we would want to ask: Did the absence of high inequality prevent democratization that would have otherwise occurred (as, for instance, at the left-hand end of the Acemoglu and Robinson inverted <span class="math inline">\(U\)</span>-curve)?</p>
+<p>We start based on the <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> values and our model, believing that there is a 0.128 chance that low inequality prevented democratization. We then see that our beliefs shift most dramatically if we look for mobilization and find that it was present. The reason is the mirror image of the reason why <span class="math inline">\(M=0\)</span> is so informative in an <span class="math inline">\(I=1, D=1\)</span> case: We are again looking for a positive effect of <span class="math inline">\(I\)</span> on <span class="math inline">\(D\)</span>, and such an effect has to run through the pathway mediated by <span class="math inline">\(M\)</span>. So observing <span class="math inline">\(M=1\)</span> when <span class="math inline">\(I=0\)</span> must mean that <span class="math inline">\(I\)</span> has no effect on <span class="math inline">\(M\)</span> in this case, and thus <span class="math inline">\(I\)</span> cannot have a positive effect on <span class="math inline">\(D\)</span>. If we do <em>not</em> observe mobilization when we look for it, on the other hand, we now think it is somewhat more likely that <span class="math inline">\(I=0\)</span> caused <span class="math inline">\(D=0\)</span> since it is still possible that high inequality <em>could</em> cause mobilization.</p>
+<p>We also see that observing whether there is international pressure has a substantial effect on our beliefs. When we observe <span class="math inline">\(M=0\)</span> (or don’t look for <span class="math inline">\(M\)</span> at all), the presence of international pressure increases the likelihood that low inequality prevented democratization. Intuitively, this is because international pressure, on average across types, has a positive effect on democratization; so pressure’s presence creates a greater opportunity for low inequality to counteract international pressure’s effect and prevent democratization from occurring that otherwise would have (if there had been high inequality and the resulting mobilization).</p>
+<p>In these cases, we see that observing <span class="math inline">\(M=0\)</span> adds almost no information if we have already observed <span class="math inline">\(P\)</span>, regardless of what value <span class="math inline">\(P\)</span> takes on. However, seeing <span class="math inline">\(M=1\)</span> dramatically shifts inferences even if we have already seen <span class="math inline">\(P\)</span>—since, by the logic above, it tells us that low inequality could not have prevented democratization given our model. Likewise, if we have already observed <span class="math inline">\(M=1\)</span>, then there is no gain from observing <span class="math inline">\(P\)</span>. It is only if we go looking for <span class="math inline">\(M\)</span> and see <span class="math inline">\(M=0\)</span> that <span class="math inline">\(P\)</span> can be potentially informative.</p>
+<p>We can see here the outlines of a conditional clue-selection logic—in which, the value of collecting information on a clue can depend on what we observe when seeking prior clues. We elaborate on this logic in greater depth in <a href="12-clue-selection.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
+</section><section id="i1-d0-high-inequality-countries-that-did-not-democratize" class="level5" data-number="8.1.3.2.2"><h5 data-number="8.1.3.2.2" class="anchored" data-anchor-id="i1-d0-high-inequality-countries-that-did-not-democratize">
+<span class="header-section-number">8.1.3.2.2</span> <span class="math inline">\(I=1, D=0\)</span>: High Inequality Countries that Did Not Democratize</h5>
+<p>In cases with high inequality and no democratization, the question is whether high inequality prevented democratization via a negative effect, as theorized by Boix. That negative effect has to have operated via inequality’s direct effect on democratization since our model’s monotonicity restrictions allow only positive effects via mobilization. In an <span class="math inline">\(I=1, D=0\)</span> case, the consequence of observing <span class="math inline">\(P\)</span> is similar in direction to, but greater in magnitude than, the consequence in the <span class="math inline">\(I=0, D=0\)</span> case: Seeing international pressure here greatly increases our confidence that high inequality prevented democratization, while seeing no international pressure moderately reduces that confidence. There is, returning to the same intuition, more opportunity for high inequality to exert a negative effect on democratization when international pressures are present and pushing toward democratization.</p>
+<p>Here, however, looking for <span class="math inline">\(M\)</span> has a more modest effect than it does in an <span class="math inline">\(I=0, D=0\)</span> case. This is because we learn nothing about the indirect pathway from <span class="math inline">\(I\)</span> to <span class="math inline">\(D\)</span> by observing <span class="math inline">\(M\)</span>: As we have said, we already know from seeing high inequality and no democratization (given our monotonicity assumptions) that any effect could not have run through the presence or absence of mobilization. However, <span class="math inline">\(M\)</span> provides some information given its role as a potential moderator for <span class="math inline">\(I\)</span>’s direct effect on <span class="math inline">\(D\)</span> (since <span class="math inline">\(M\)</span> is also pointing into <span class="math inline">\(D\)</span>). Assuming that we have not observed <span class="math inline">\(P\)</span>, we see a small downward shift in our confidence that inequality mattered if we see no mobilization, and a small upward shift if we see mobilization.</p>
+<p>For this set of cases, we see that <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span>’s respective probative value is fairly independent of whether we have observed the other clue first or of what we found if we did.</p>
+</section></section></section><section id="considerations-theory-dependence" class="level3" data-number="8.1.4"><h3 data-number="8.1.4" class="anchored" data-anchor-id="considerations-theory-dependence">
+<span class="header-section-number">8.1.4</span> Considerations: Theory Dependence</h3>
+<p></p>
+<p>Haggard and Kaufman set out to use causal process observations to test inequality-based theories of democratization against the experiences of “Third Wave” democratizations. Their principal test is to examine whether they see evidence of distributive conflict in the process of democratization, defined largely as the presence or absence of mobilization prior to the transition. They secondarily look for other possible causes, specifically international pressure and splits in the elite.</p>
+<p>In interpreting the evidence, Haggard and Kaufman generally treat the absence of mobilization as evidence against inequality-based theories of democratization as a whole (p.&nbsp;7). They also see the <em>presence</em> of distributive mobilization in cases with high inequality and democratization as evidence against the causal role of inequality (p.&nbsp;7). These inferences, however, seem only loosely connected to the logic of the causal theories under examination here. Haggard and Kaufman express concern that inequality-oriented arguments point to “cross-cutting effects” (p.&nbsp;1) of inequality, but do not systematically work through the implications of these multiple pathways for empirical strategy.</p>
+<p>Our analysis suggests that a systematic engagement with the underlying models can shift the interpretation of the evidence considerably. Under the model we have formulated, where inequality is <em>high</em>, the absence of mobilization in a country that democratized is indeed damning to the notion that inequality mattered. However, where inequality is <em>low</em>—precisely the situation in which Boix’s theory predicts that we will see democratization—things are more complicated. If we assume that inequality cannot prevent mobilization, then observing no mobilization (in a case with low inequality that democratized) does not work against the claim that inequality mattered for the transition; indeed, it slightly supports it, at least given what we think is a plausible model-representation of arguments in the literature. Observing the absence of inequality in such a case can undercut an inequality-based explanation if (and only if) we believe it is possible that inequality might prevent mobilization that would otherwise have occurred, a belief inconsistent with our model. Further, in cases with high inequality and democratization, the <em>absence</em> of mobilization by the lower classes would be the observation least consistent with the claim that inequality mattered. Observing mobilization, in contrast, pushes in favor of an inequality-based explanation.</p>
+<p>Moreover, it is striking that Haggard and Kaufman lean principally on a mediator clue, turning to evidence of international pressure and elite splits (moderators or alternative causes) largely as secondary clues to identify “ambiguous” cases. As we have shown, under a plausible model given prior theory, it is the moderator clue that is likely to be much more informative.</p>
+<p>Of course, the model we have written down is only one possible interpretation of existing theoretical knowledge. It is possible that Haggard and Kaufman, and other scholars in this domain hold beliefs that diverge from those encoded in our working model. The larger point, however, is that our process tracing inferences will inevitably <em>depend</em>—and could depend greatly—on our background knowledge of the domain under examination. Moreover, formalizing that knowledge as a causal model can help ensure that we take that prior knowledge into account—that the inferences we draw from new data are consistent with the knowledge we bring to the table.</p>
+<p>The analysis also has insights regarding case selection. Haggard and Kaufman justify their choice of only <span class="math inline">\(D=1\)</span> cases as a strategy “designed to test a particular theory and thus rests on the identification of the causal mechanism leading to regime change” (p.&nbsp;4). Ultimately, however, the authors seem centrally concerned with assessing whether inequality, as opposed to something else, played a key causal role in generating the outcome. As the results above demonstrate, however, there is nothing special about the <span class="math inline">\(D=1\)</span> cases in generating leverage on this question. The tables for <span class="math inline">\(D=0\)</span> show that, given the model, the same clues can shift beliefs about as much for <span class="math inline">\(D=0\)</span> as for <span class="math inline">\(D=1\)</span> cases. We leave a more detailed discussion of this kind of issue in model-based case-selection for <a href="13-case-selection.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>
+<p>Finally, we emphasize that all of the inferences in this chapter depend on a model that is constrained by theoretical insights but not one that has been systematically trained by data. Although we are able to make many inferences using this model, given observations from a case of interest, we have no empirical grounds to justify these inferences. In <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a>, we show how this same model can be trained with broader data from multiple cases, and in <a href="16-evaluating-models.html" class="quarto-xref"><span>Chapter 16</span></a> we illustrate how the model itself can be empirically evaluated.</p>
+</section></section><section id="institutions-and-growth" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="institutions-and-growth">
+<span class="header-section-number">8.2</span> Institutions and Growth</h2>
+<p></p>
+<p>We now consider a second application, again connecting to a major debate in political economy. This time we use the application to illustrate inference given a focus on rival explanations, rather than mediation, and the scope for case level inference that arises specifically from beliefs regarding unobserved confounding. </p>
+<section id="the-debate-1" class="level3" data-number="8.2.1"><h3 data-number="8.2.1" class="anchored" data-anchor-id="the-debate-1">
+<span class="header-section-number">8.2.1</span> The Debate</h3>
+<p>Just as there exists a long-running debate about the causes of democratization, a similar macro-level debate surrounds the causes of economic growth. Two main proposed explanations are geographic location and the quality of institutions. In a prominent geographic account, countries more distant from the equator experience cooler temperatures, climates less prone to disease, and other environmental benefits <span class="citation" data-cites="sachs2001tropical">(<a href="20-references.html#ref-sachs2001tropical" role="doc-biblioref">Sachs 2001</a>)</span>. The institutional argument is also quite simple. Going back to Adam Smith, scholars have argued that protections against expropriation and state abuse are key to prosperity. An important contribution by <span class="citation" data-cites="acemoglu2001colonial">Acemoglu, Johnson, and Robinson (<a href="20-references.html#ref-acemoglu2001colonial" role="doc-biblioref">2001</a>)</span> highlighted the difficulty of separating out cause and effect in studies of income and institutions and argued that a plausibly exogenous feature<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>—settler mortality—might usefully help disentangle the causal effects of institutions. They argue, specifically, that colonizers constructed stronger institutions, with more robust rule of law and property rights protections, in places that posed lower risks to settlers’ health.</p>
+<p><span class="citation" data-cites="rodrik2004institutions">Rodrik, Subramanian, and Trebbi (<a href="20-references.html#ref-rodrik2004institutions" role="doc-biblioref">2004</a>)</span> pitted these ideas against each other (and against a third focused on trade policy) and concluded that “institutions rule” in the sense that they have a larger average effect. We use the <span class="citation" data-cites="rodrik2004institutions">Rodrik, Subramanian, and Trebbi (<a href="20-references.html#ref-rodrik2004institutions" role="doc-biblioref">2004</a>)</span> data and couple it with a causal model in the hopes of being able to use case evidence to address case-level questions: Were good institutions plausibly a cause of wealth in a particular country? Does knowing about the location of a country make us more or less confident that institutions mattered?<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> </p>
+</section><section id="a-causal-model-1" class="level3" data-number="8.2.2"><h3 data-number="8.2.2" class="anchored" data-anchor-id="a-causal-model-1">
+<span class="header-section-number">8.2.2</span> A Causal Model</h3>
+<p></p>
+<p>We now construct the model. We are interested in a single outcome: economic productivity (Y) as measured by real per capita GDP in 1995.</p>
+<p>We have two causes of interest: rule of law (R) and distance from the equator (D). We also include settler mortality as an <em>instrument</em> for institutional quality. In doing so we allow for the possibility that institutions are not exogenous in our model, but we assume that (lower) settler mortality has an effect on rule of law but is not related to wealth except via its effect on rule of law.</p>
+<p>We show again in Appendix (<a href="#sec-HJC-8-appendix" class="quarto-xref"><span>Section 8.3</span></a>) how to form this model using the <code>CausalQueries</code> package.</p>
+<p>The model statement includes two causes for <span class="math inline">\(Y\)</span> (<span class="math inline">\(R\)</span> and <span class="math inline">\(D\)</span>), and one cause for <span class="math inline">\(R\)</span> (<span class="math inline">\(M\)</span>) that is otherwise unrelated to <span class="math inline">\(Y\)</span>. In addition it allows for arbitrary confounding between <span class="math inline">\(R\)</span> and <span class="math inline">\(Y\)</span>. The model is represented graphically in <a href="#fig-HJ-F-8-4" class="quarto-xref">Figure&nbsp;<span>8.4</span></a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-8-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-8-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-PT-application_files/figure-html/fig-HJ-F-8-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-8-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.4: Institutions and growth DAG
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>To make case-level inferences on causal effects from this model, we need informative beliefs over causal relations. As with the last application, we will set priors based on three monotonicity assumptions. We return to these assumptions in <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a> where we seek to use data to inform such beliefs.</p>
+<p>We first adopt the monotonicity assumption built into RST’s instrumental variables analysis: that <span class="math inline">\(M\)</span> has a monotonic effect on <span class="math inline">\(R\)</span>. More settler mortality never leads to greater institutional strength. From work on geography and growth (e.g., <span class="citation" data-cites="sachs2001tropical">Sachs (<a href="20-references.html#ref-sachs2001tropical" role="doc-biblioref">2001</a>)</span>) we adopt the assumption that proximity to the equator does not bolster growth. The background logic is that geography determines climate, agricultural productivity, and the ease of diffusion of important ideas and resources from other areas. We also suppose that strong institutions do not negatively affect national income. Few argue that weak protection of property rights is beneficial. For a discussion of “greasing” and “sanding” arguments, see <span class="citation" data-cites="meon2005does">Méon and Sekkat (<a href="20-references.html#ref-meon2005does" role="doc-biblioref">2005</a>)</span>.</p>
+<p>These restrictions dramatically reduce the number of possible nodal types. In the base model, without any restrictions, there are 256 nodal types for <span class="math inline">\(Y\)</span>, <span class="math inline">\(4\)</span> for <span class="math inline">\(R\)</span>, and <span class="math inline">\(2\)</span> each for <span class="math inline">\(M\)</span> and <span class="math inline">\(D\)</span>. Following the restrictions, there are nine nodal types for <span class="math inline">\(Y\)</span> and three for <span class="math inline">\(R\)</span>. Allowing confounding, however, means that we have more parameters than nodal types; specifically, we now have <span class="math inline">\(4 \times 9 = 36\)</span> parameters for <span class="math inline">\(Y\)</span>, allowing for possible dependence between the nodal types of <span class="math inline">\(Y\)</span> and the four nodal types of <span class="math inline">\(R\)</span>.</p>
+<p>We highlight that we have imposed no assumption regarding whether <span class="math inline">\(R\)</span> and <span class="math inline">\(M\)</span> are substitutes or complements in producing <span class="math inline">\(Y\)</span>.</p>
+</section><section id="results-1" class="level3" data-number="8.2.3"><h3 data-number="8.2.3" class="anchored" data-anchor-id="results-1">
+<span class="header-section-number">8.2.3</span> Results</h3>
+<p>We first consider whether institutions caused good economic outcomes for different cases. We then adjust the model to show how inferences can change qualitatively when patterns of confounding are specified. Finally, we use the same model to demonstrate how a change in the query we pose can switch which node is the causal variable of interest and which is the clue.</p>
+<section id="basic-results" class="level4" data-number="8.2.3.1"><h4 data-number="8.2.3.1" class="anchored" data-anchor-id="basic-results">
+<span class="header-section-number">8.2.3.1</span> Basic results</h4>
+<p>We proceed in a similar manner as in the democratization example, focusing now on questions of the form “did good institutions cause high income” and assessing how our answer changes as we learn different facts about a case.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-8-5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-8-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="08-PT-application_files/figure-html/fig-HJ-F-8-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-8-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.5: Case level inferences given possible observations of distance and mortality (untrained model).
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We report results in <a href="#fig-HJ-F-8-5" class="quarto-xref">Figure&nbsp;<span>8.5</span></a>. Each column in the figure displays cases with a particular combination of economic growth and institutional quality. Within each combination, we then have the four possible permutations of settler mortality and distance from the equator. This makes for a total of 16 types of countries. There is a real-world example for fifteen of these, with the sole exception being when growth is high, institutional quality is low, settler mortality is high, and distance from the equator is high. As with the inequality and democratization application, we emphasize that the case-level inferences shown here are based purely on the observation of nodes in the model and the model itself, and do not incorporate richer information about cases that experts will surely have available to them.</p>
+<p>Consider the cases with good growth and strong institutions, in the first column. Do good institutions explain good economic outcomes? The first thing we notice is that observing settler mortality rates (<span class="math inline">\(M\)</span>) makes no difference to our answer to this question. What happens to our beliefs, however, when we observe <span class="math inline">\(D\)</span>? As we see from comparing Brazil and the Dominican Republic to Malaysia and Papua New Guinea, observing that a case is distant from the equator makes us <em>less</em> likely to think that good economic outcomes are due to the institutions. As with democratization, evidence consistent with one explanation of the observed outcome results in less weight being placed on another explanation. Recall that we did not build into the model the specific idea that the causes are substitutes for one another.</p>
+<p>Consider next the four <span class="math inline">\(R=0, Y=0\)</span> cases. For these cases, we ask: Did the lack of high quality institutions cause the lack of growth? We see here that we again learn nothing from <span class="math inline">\(M\)</span> (regardless of distance from the equator). But, following the same alternative-cause logic that we discussed above, we are now more likely to think that the poor economic outcomes are due to weak institutions when we learn that a case is far from the equator—since being near the equator could have constituted an alternative cause of low growth. We are more confident that poor institutions were the culprit in Pakistan and Vietnam than in Suriname or Nigeria.</p>
+<p>For the off-diagonal cases—those with <span class="math inline">\(Y=1, R=0\)</span> and those with <span class="math inline">\(Y=0, R=1\)</span>—we have nothing to learn from collecting additional clues since our monotonicity assumption implies, as an <em>a priori</em> matter, that <span class="math inline">\(R\)</span> cannot have a negative effect on <span class="math inline">\(Y\)</span>. No additional evidence can change our posterior beliefs about that question since the nodal types that would allow for a negative effect have been excluded from the model from the outset. This highlights just how strong a monotonicty assumption can be for an attribution query.</p>
+<p>Notably, observing settler mortality makes no difference to inference for any type of case. Why is that? Looking to the graph, it is <em>not</em> that <span class="math inline">\(R\)</span> <span class="math inline">\(d\)</span>-separates <span class="math inline">\(M\)</span> from <span class="math inline">\(Y\)</span>. Without confounding, <span class="math inline">\(R\)</span> would <span class="math inline">\(d\)</span>-separate them;but with confounding, <span class="math inline">\(R\)</span> is a collider for <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>, meaning that observing <span class="math inline">\(R\)</span> <em>connects</em> these two nodes. Thus, in principle, given the structure of the graph, <span class="math inline">\(M\)</span> has the <em>potential</em> to be informative about <span class="math inline">\(\theta^Y\)</span>, that is, about <span class="math inline">\(R\)</span>’s effect on <span class="math inline">\(Y\)</span>. The reason <span class="math inline">\(M\)</span> is not informative in this instantiation of the model is that, although we have allowed for confounding, we have given no structure to this confounding. Building in more specific beliefs about the nature of the confounding would make a difference here. </p>
+</section><section id="sec-confoundingRST" class="level4" data-number="8.2.3.2"><h4 data-number="8.2.3.2" class="anchored" data-anchor-id="sec-confoundingRST">
+<span class="header-section-number">8.2.3.2</span> Using Stronger Background Knowledge: Beliefs about Confounding</h4>
+<p>If we are willing to encode more specific beliefs about confounding in our model, then the instrument, <span class="math inline">\(M\)</span>, can become informative about the case-level causal effect of <span class="math inline">\(R\)</span> on <span class="math inline">\(Y\)</span>. In the following example, we assume that there is a relation between the effect of <span class="math inline">\(M\)</span> on <span class="math inline">\(R\)</span> and the effect of <span class="math inline">\(R\)</span> on <span class="math inline">\(Y\)</span>: In particular, we imagine that <span class="math inline">\(M=0\)</span> is more likely to have produced <span class="math inline">\(R=1\)</span> in cases where <span class="math inline">\(R=1\)</span> would make a difference to growth. Substantively, we might believe that—where settler mortality was low—settlers were more likely to create strong institutions in places where strong institutions would be likely to help. Thus, knowing that settlers plausibly caused the strong institutions we observe is itself informative about the effects of institutions on growth. In the language of the instrumental-variables literature, we can think of this as there being stronger effects for compliers. </p>
+<p>Under these beliefs, observing <span class="math inline">\(M=0\)</span> indicates that <span class="math inline">\(R\)</span> is more likely to have been selected strategically on account of its economic effects. Conversely, learning that there was high mortality suggests that the good institutions we observe were not <em>due</em> to low mortality, and so—because selection effects are not in operation—observing the strength of institutions is less informative about the effectiveness of institutions. </p>
+<p>In <a href="#tbl-HJ-T-8-1" class="quarto-xref">Table&nbsp;<span>8.1</span></a>, we show the results of an analysis in which we build into our model the belief that it is very unlikely that institutions will have no effect on growth <em>if</em> settler mortality has a negative effect on institutional strength.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> We report inferences here for four countries with strong institutions and high growth. The point to take away from the table is a simple one. Whereas <span class="math inline">\(M\)</span> was completely uninformative in the analyses reported in <a href="#fig-HJ-F-8-5" class="quarto-xref">Figure&nbsp;<span>8.5</span></a>, we see that observing <span class="math inline">\(M\)</span> <em>does</em> matter here. We see that where <span class="math inline">\(M=0\)</span>, observing <span class="math inline">\(M\)</span> leads to a slight upward shift in the probability that <span class="math inline">\(R\)</span> caused <span class="math inline">\(Y\)</span>; where <span class="math inline">\(M=1\)</span>, observing <span class="math inline">\(M\)</span> leads to a large downward shift in that probability. <span class="math inline">\(M\)</span> remains informative for the query even if we have already observed <span class="math inline">\(D\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-HJ-T-8-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-8-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.1: Learning from an instrument when patterns of confounding are specified: four <span class="math inline">\(R=1, Y=1\)</span> cases.
+</figcaption><div aria-describedby="tbl-HJ-T-8-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Case</th>
+<th style="text-align: left;">M</th>
+<th style="text-align: left;">D</th>
+<th style="text-align: left;">No clues</th>
+<th style="text-align: left;">M only</th>
+<th style="text-align: left;">D only</th>
+<th style="text-align: left;">M and D</th>
+<th style="text-align: left;">Y1R1_names</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.703</td>
+<td style="text-align: left;">0.785</td>
+<td style="text-align: left;">0.826</td>
+<td style="text-align: left;">0.88</td>
+<td style="text-align: left;">Malaysia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.703</td>
+<td style="text-align: left;">0.785</td>
+<td style="text-align: left;">0.612</td>
+<td style="text-align: left;">0.709</td>
+<td style="text-align: left;">Brazil</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Papua</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New Guinea 1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.703</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;">0.826</td>
+<td style="text-align: left;">0.667</td>
+<td style="text-align: left;">Papua</td>
+<td style="text-align: left;">New Guinea</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dominican</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Republic 1 1</td>
+<td style="text-align: left;">0.70</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;">0.612</td>
+<td style="text-align: left;">0.4</td>
+<td style="text-align: left;">Dominican</td>
+<td style="text-align: left;">Republic</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>This analysis amplifies two general, closely related points we have made elsewhere. One is that whether or not a clue is informative for a given query cannot be read strictly from a DAG alone. We demonstrated in <a href="07-process-tracing-with-models.html" class="quarto-xref"><span>Chapter 7</span></a> that a clue’s <em>potential</em> informativeness can be determined from a graph. However, whether the clue is in fact informative can depend, among other things, on the prior probabilities we place on nodal types, including on relationships of confounding between nodal types; the observed values of other nodes; and the query we are trying to answer. We expand on clue informativeness in <a href="12-clue-selection.html" class="quarto-xref"><span>Chapter 12</span></a>.</p>
+<p>The second connected point is that how much the inferential leverage we can get out of process tracing will be shaped by the strength of the background knowledge we can bring to bear on the problem—and a DAG alone is insufficient to justify process-tracing inferences. As we saw, stipulating beliefs about the nature of the confounding turned an uninformative clue into an informative one. More generally, as we point out in <a href="07-process-tracing-with-models.html" class="quarto-xref"><span>Chapter 7</span></a>, to undertake single-case process tracing, we need to begin with informative prior beliefs about which nodal types are more likely than others. If, for instance, we had begun both process tracing exercises in this chapter with no restrictions and flat priors over all nodal types, none of the clues would have provided leverage on the problem. In the democratization model, if we had entered the analysis with no prior information about whether inequality more often had positive or negative effects on mobilization or whether mobilization more often had positive than negative effects on democratization, then observing <span class="math inline">\(M=1\)</span> in an <span class="math inline">\(I=1, D=1\)</span> case would have provided no leverage on whether <span class="math inline">\(I\)</span> had affected <span class="math inline">\(M\)</span> or <span class="math inline">\(M\)</span> had affected <span class="math inline">\(D\)</span> in the case. We need not start with beliefs as strong as a monotonicity restriction. We can also set quantitative priors, such as stipulating that positive <span class="math inline">\(I \rightarrow M\)</span> effects are twice as common as negative ones. But for single-case process tracing to work, we have to bring to it thicker background knowledge than a DAG alone provides.</p>
+<p>As we show in the next two chapters, a mixed-data approach opens up other possibilities. If we are working with a larger set of cases, then, we can begin with just a DAG, learn about the prevalence of different nodal types from the data itself, and then return to process-trace individual cases using this data-informed model.</p>
+</section><section id="long-run-effects" class="level4" data-number="8.2.3.3"><h4 data-number="8.2.3.3" class="anchored" data-anchor-id="long-run-effects">
+<span class="header-section-number">8.2.3.3</span> Long-Run Effects</h4>
+<p>Finally, we note that although settler mortality is included in <span class="citation" data-cites="acemoglu2001colonial">Acemoglu, Johnson, and Robinson (<a href="20-references.html#ref-acemoglu2001colonial" role="doc-biblioref">2001</a>)</span>’s and <span class="citation" data-cites="rodrik2004institutions">Rodrik, Subramanian, and Trebbi (<a href="20-references.html#ref-rodrik2004institutions" role="doc-biblioref">2004</a>)</span>’s seminal analyses as an instrument for studying the effect of recent institutions, the model can also be used to understand the effects of settler mortality itself on growth. Indeed, the title <span class="citation" data-cites="acemoglu2001colonial">Acemoglu, Johnson, and Robinson (<a href="20-references.html#ref-acemoglu2001colonial" role="doc-biblioref">2001</a>)</span>’s paper—“The Colonial Origins of Comparative Development”—suggests an interest in long-run processes. For a question about settler mortality’s long-run effects on growth—using the same model—<span class="math inline">\(R\)</span> can be thought of as a mediator of the effect of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> and so serve as a clue for answering the query.</p>
+<p>In <a href="#tbl-RSTD00" class="quarto-xref">Table&nbsp;<span>8.2</span></a>, we show the inferences we would draw about whether low mortality caused high growth in an <span class="math inline">\(M=0, Y=1\)</span> case, depending on what values of <span class="math inline">\(R\)</span> and <span class="math inline">\(D\)</span> we observe.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-RSTD00" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-RSTD00-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8.2: Inferences on whether low mortality caused high growth in an M=0, Y=1 case given observations on distance and institutions.
+</figcaption><div aria-describedby="tbl-RSTD00-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: center;">Distance (D)</th>
+<th style="text-align: center;">Institutions (R)</th>
+<th style="text-align: center;">posterior</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.333</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.200</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>We see that the strong monotonicity assumption makes observing <span class="math inline">\(R\)</span> a hoop test for the proposition that low mortality affected growth: We believe there is a positive probability that this is true if we observe <span class="math inline">\(R=1\)</span> and <span class="math inline">\(0\)</span> probability if <span class="math inline">\(R=0\)</span>. Inferences also depend on the case’s distance from the equator. We again see a substitution logic in operation here: We have greater confidence that low settler mortality caused high growth in countries where high growth cannot be explained by distance from the equator than we do in countries where distance is a viable explanation.</p>
+</section></section><section id="considerations-interactions-between-clues" class="level3" data-number="8.2.4"><h3 data-number="8.2.4" class="anchored" data-anchor-id="considerations-interactions-between-clues">
+<span class="header-section-number">8.2.4</span> Considerations: Interactions between Clues</h3>
+<p></p>
+<p>We saw in the last application that inferences from one clue were affected by data on another clue even though the model did not specify either complementarity or confounding. So where does this interaction come from?</p>
+<p>The key idea is that observing <span class="math inline">\(D=1\)</span> rules out some possible types we were entertaining in which <span class="math inline">\(R\)</span> makes a difference when <span class="math inline">\(D=0\)</span> (such as when either <span class="math inline">\(R\)</span> or <span class="math inline">\(D\)</span> would be sufficient) without ruling out types in which <span class="math inline">\(R\)</span> does not make a difference when <span class="math inline">\(D=0\)</span> (such as cases in which <span class="math inline">\(R\)</span> and <span class="math inline">\(D\)</span> are complements but <span class="math inline">\(D=0\)</span>).</p>
+<p>To see the logic more explicitly, imagine we had a model with <span class="math inline">\(X_1 \rightarrow Y \leftarrow X_2\)</span> and flat priors over just four possible nodal types for <span class="math inline">\(Y\)</span> (and two for <span class="math inline">\(X_2\)</span>). We label the causal types as in Table 8.3.</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th></th>
+<th style="text-align: center;"><span class="math inline">\(X_2=0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(X_2=1\)</span></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>
+<span class="math inline">\(X_1\)</span> alone (<span class="math inline">\(\theta^Y = 0101\)</span>)</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td>
+<span class="math inline">\(X_2\)</span> alone (<span class="math inline">\(\theta^Y = 0011\)</span>)</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td>Either <span class="math inline">\(X_1\)</span> or <span class="math inline">\(X_2\)</span> (<span class="math inline">\(\theta^Y = 0111\)</span>)</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr class="even">
+<td>
+<span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> jointly (<span class="math inline">\(\theta^Y = 0001\)</span>)</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">8</td>
+</tr>
+</tbody>
+</table>
+<p>We are interested in whether <span class="math inline">\(X_1\)</span> causes <span class="math inline">\(Y\)</span> conditional perhaps on knowing <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, and <span class="math inline">\(Y\)</span>. Table 8.4 summarizes inferences. For instance, <span class="math inline">\(X_1\)</span> causes <span class="math inline">\(Y\)</span> in cells 1, 3, 5, 8, and so our prior is 50%. If we learn that <span class="math inline">\(X_2=1\)</span> our prior remains at 50% (two possibilities, 5 and 8, from four, all equally weighted).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 28%">
+<col style="width: 38%">
+<col style="width: 8%">
+</colgroup>
+<thead><tr class="header">
+<th>Information</th>
+<th>Cases consistent with data</th>
+<th>Subset consistent with <span class="math inline">\(X=1\)</span> causes <span class="math inline">\(Y=1\)</span>
+</th>
+<th>Belief</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>None (Prior)</td>
+<td><span class="math inline">\(1,2,3,4,5,6,7,8\)</span></td>
+<td><span class="math inline">\(1,3,5,8\)</span></td>
+<td>1/2</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X_2 = 1\)</span></td>
+<td><span class="math inline">\(5, 6, 7, 8\)</span></td>
+<td><span class="math inline">\(5, 8\)</span></td>
+<td>1/2</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X_1 = 1, Y =   1\)</span></td>
+<td><span class="math inline">\(1, 3, 5, 6, 7, 8\)</span></td>
+<td><span class="math inline">\(1,3,5,8\)</span></td>
+<td>2/3</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X_1 = 1, Y =1, X_2=1\)</span></td>
+<td><span class="math inline">\(5,6,7,8\)</span></td>
+<td><span class="math inline">\(5,8\)</span></td>
+<td>1/2</td>
+</tr>
+</tbody>
+</table>
+<p>Note that comparing the last line to the second to last line of Table 8.4, observation of <span class="math inline">\(X_2=1\)</span> rules out two types (1,3) in which <span class="math inline">\(X_1\)</span> could have had a causal effect, without ruling out any types that are consistent with the already available data, in which it does not (such as 6 or 7). The conclusion is that without information on <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span>, <span class="math inline">\(X_2\)</span> can be uninformative for the effect of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(Y\)</span> (rows 1 and 2) but can still lead to a reduction in beliefs if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span> are known (rows 3 and 4). In some cases, it is even possible that <span class="math inline">\(X_2=1\)</span> could lead you to revise upward your belief that <span class="math inline">\(X_1\)</span> causes <span class="math inline">\(Y=1\)</span> but downward your belief that <span class="math inline">\(X_1\)</span> caused <span class="math inline">\(Y=1\)</span> in a case in which <span class="math inline">\(X_1 = 1\)</span> and <span class="math inline">\(Y=1\)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+</section></section><section id="sec-HJC-8-appendix" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="sec-HJC-8-appendix">
+<span class="header-section-number">8.3</span> Appendix: Forming Models in <code>CausalQueries</code>
+</h2>
+<p>The Inequality and Democratization model can be created in the <code>CausalQueries</code> package, along with monotonicity restrictions, like this: </p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_id_pt</span> <span class="op">&lt;-</span> </span>
+<span>  </span>
+<span>  <span class="fu">make_model</span><span class="op">(</span><span class="st">"I -&gt; M -&gt; D &lt;- P; I -&gt; D"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">set_restrictions</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"(M[I=1] &lt; M[I=0])"</span>,</span>
+<span>    <span class="st">"(D[I=1] &gt; D[I=0]) | (D[M=1] &lt; D[M=0]) | (D[P=1] &lt; D[P=0])"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p></p>
+<p>Priors over the allowed (non-restricted) nodal types are set to be flat by default in the package. The model summary (found by typing <code>model_id_pt</code> indicates that there is 1 restricted nodal type fo <span class="math inline">\(M\)</span> and 236 for <span class="math inline">\(D\)</span>).</p>
+<p>The institutions and growth model is formed like this:</p>
+<p></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_rst_pt</span> <span class="op">&lt;-</span> <span class="fu">make_model</span><span class="op">(</span><span class="st">"M -&gt; R -&gt; Y &lt;- D; R &lt;-&gt; Y"</span><span class="op">)</span>  <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">set_restrictions</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"(R[M=1] &gt; R[M=0])"</span>,</span>
+<span>    <span class="st">"(Y[R=1] &lt; Y[R=0]) | (Y[D=1] &lt; Y[D=0])"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that this model includes an unobserved confound. Monotonicity restrictions are again imposed (though we relax these when we return to the model in <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a>).</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-acemoglu2001colonial" class="csl-entry" role="listitem">
+Acemoglu, Daron, Simon Johnson, and James A Robinson. 2001. <span>“The Colonial Origins of Comparative Development: An Empirical Investigation.”</span> <em>American Economic Review</em> 91 (5): 1369–1401.
+</div>
+<div id="ref-acemoglu2005economic" class="csl-entry" role="listitem">
+Acemoglu, Daron, and James A Robinson. 2005. <em>Economic Origins of Dictatorship and Democracy</em>. New York: Cambridge University Press.
+</div>
+<div id="ref-ansell2014inequality" class="csl-entry" role="listitem">
+Ansell, Ben W, and David J Samuels. 2014. <em>Inequality and Democratization</em>. New York: Cambridge University Press.
+</div>
+<div id="ref-boix2003democracy" class="csl-entry" role="listitem">
+Boix, Carles. 2003. <em>Democracy and Redistribution</em>. New York: Cambridge University Press.
+</div>
+<div id="ref-bollen1985political" class="csl-entry" role="listitem">
+Bollen, Kenneth A, and Robert W Jackman. 1985. <span>“Political Democracy and the Size Distribution of Income.”</span> <em>American Sociological Review</em> 50 (4): 438–57.
+</div>
+<div id="ref-cheibub2010democracy" class="csl-entry" role="listitem">
+Cheibub, José Antonio, Jennifer Gandhi, and James Raymond Vreeland. 2010. <span>“Democracy and Dictatorship Revisited.”</span> <em>Public Choice</em> 143 (1-2): 67–101.
+</div>
+<div id="ref-dahl1973polyarchy" class="csl-entry" role="listitem">
+Dahl, Robert Alan. 1973. <em>Polyarchy: Participation and Opposition</em>. New Haven: Yale University Press.
+</div>
+<div id="ref-haggard2012inequality" class="csl-entry" role="listitem">
+Haggard, Stephan, and Robert R Kaufman. 2012. <span>“Inequality and Regime Change: Democratic Transitions and the Stability of Democratic Rule.”</span> <em>American Political Science Review</em> 106 (03): 495–516.
+</div>
+<div id="ref-haggard2012distributive" class="csl-entry" role="listitem">
+Haggard, Stephan, Robert R Kaufman, and Terence Teo. 2012. <span>“Distributive Conflict and Regime Change: A Qualitative Dataset.”</span> <em>Coding Document to Accompany Haggard and Kaufman</em>.
+</div>
+<div id="ref-humphreys2015mixing" class="csl-entry" role="listitem">
+Humphreys, Macartan, and Alan M Jacobs. 2015. <span>“Mixing Methods: A Bayesian Approach.”</span> <em>American Political Science Review</em> 109 (04): 653–73.
+</div>
+<div id="ref-huntington1993third" class="csl-entry" role="listitem">
+Huntington, Samuel P. 1993. <em>The Third Wave: Democratization in the Late Twentieth Century</em>. Norman, OK: University of Oklahoma Press.
+</div>
+<div id="ref-linz1996problems" class="csl-entry" role="listitem">
+Linz, Juan J, and Alfred Stepan. 1996. <em>Problems of Democratic Transition and Consolidation: Southern Europe, South America, and Post-Communist Europe</em>. Baltimore: Johns Hopkins University Press.
+</div>
+<div id="ref-meltzer1981rational" class="csl-entry" role="listitem">
+Meltzer, Allan H, and Scott F Richard. 1981. <span>“A Rational Theory of the Size of Government.”</span> <em>Journal of Political Economy</em> 89 (5): 914–27.
+</div>
+<div id="ref-meon2005does" class="csl-entry" role="listitem">
+Méon, Pierre-Guillaume, and Khalid Sekkat. 2005. <span>“Does Corruption Grease or Sand the Wheels of Growth?”</span> <em>Public Choice</em> 122 (1): 69–97.
+</div>
+<div id="ref-rodrik2004institutions" class="csl-entry" role="listitem">
+Rodrik, Dani, Arvind Subramanian, and Francesco Trebbi. 2004. <span>“Institutions Rule: The Primacy of Institutions over Geography and Integration in Economic Development.”</span> <em>Journal of Economic Growth</em> 9 (2): 131–65.
+</div>
+<div id="ref-sachs2001tropical" class="csl-entry" role="listitem">
+Sachs, Jeffrey D. 2001. <span>“Tropical Underdevelopment.”</span>
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>In addition, as the industrial bourgeoisie become richer, which increases the Gini, this group faces a greater risk of autocratic expropriation. If we consider the rising bourgeoisie’s mobilization to be mobilization by a materially disadvantaged group, then this constitutes an additional positive effect of inequality on mobilization.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Our usage of the term ``exogenous’’ here differs from the usage introduced in Chapter 2. Exogeneous is used here in the sense commonly employed by social scientists, to mean, essentially, that the variable is not a function of the outcome or of other factors that also cause the outcome.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>In what follows we ignore that trade openness argument both for reasons of parsimony and because little evidence was found for its importance in <span class="citation" data-cites="rodrik2004institutions">Rodrik, Subramanian, and Trebbi (<a href="20-references.html#ref-rodrik2004institutions" role="doc-biblioref">2004</a>)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Specifically, we set a <span class="math inline">\(0.01\)</span> probability on a null effect of <span class="math inline">\(R\)</span> on <span class="math inline">\(Y\)</span> given <span class="math inline">\(\theta^R_{10}\)</span>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Returning to the table, if we were quite sure that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> were not substitutes (and so remove cases 3 and 7), the last column would be 1/2, 2/3, 3/4, 2/3 and so <span class="math inline">\(X_2=1\)</span> would lead you to increase your beliefs in the ATE but still reduce your beliefs in POC. If we were quite sure that they were not complements (and so remove cases 4 and 8) then <span class="math inline">\(X_2=1\)</span> would lead you to reduce your beliefs in both the ATE and the POC. Sometimes however, learning that cause <span class="math inline">\(X_2\)</span> is present can lead you to increase your beliefs that <span class="math inline">\(X_1\)</span> mattered even given <span class="math inline">\(X_1=1, Y=1\)</span>. For instance, say you were unsure whether a case was one in which <span class="math inline">\(Y=1\)</span> regardless of <span class="math inline">\(X_1, X_2\)</span> or if <span class="math inline">\(Y=1\)</span> only if both <span class="math inline">\(X_1=1\)</span> and <span class="math inline">\(X_2=1\)</span>. Your prior on causal effect is 1/4. If you learn that <span class="math inline">\(X_1=1\)</span> and <span class="math inline">\(Y=1\)</span>, this increases to <span class="math inline">\(1/3\)</span> (as you rule out the possibility of joint determination and <span class="math inline">\(X_2=0\)</span>). However, if you just learn that <span class="math inline">\(X_2=1\)</span>, then your belief goes up to <span class="math inline">\(1/2\)</span> (for both cases where you do and do know <span class="math inline">\(X_1=1\)</span> and <span class="math inline">\(Y=1\)</span>).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./07-process-tracing-with-models.html" class="pagination-link" aria-label="Process Tracing with Causal Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./09-mixing-methods.html" class="pagination-link" aria-label="Integrated Inferences">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

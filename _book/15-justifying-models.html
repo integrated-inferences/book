@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>15&nbsp; Justifying Models – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./16-evaluating-models.html" rel="next">
+<link href="./14-wide-or-deep.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15-justifying-models.html">IV Models in Question</a></li><li class="breadcrumb-item"><a href="./15-justifying-models.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#justifying-probative-value" id="toc-justifying-probative-value" class="nav-link active" data-scroll-target="#justifying-probative-value"><span class="header-section-number">15.1</span> Justifying probative value</a>
+  <ul class="collapse">
+<li><a href="#sec-nino" id="toc-sec-nino" class="nav-link" data-scroll-target="#sec-nino"><span class="header-section-number">15.1.1</span> Nothing from Nothing</a></li>
+  <li><a href="#justifying-the-classic-process-tracing-tests" id="toc-justifying-the-classic-process-tracing-tests" class="nav-link" data-scroll-target="#justifying-the-classic-process-tracing-tests"><span class="header-section-number">15.1.2</span> Justifying the Classic Process-Tracing Tests</a></li>
+  </ul>
+</li>
+  <li><a href="#empirical-discovery-of-causal-structure" id="toc-empirical-discovery-of-causal-structure" class="nav-link" data-scroll-target="#empirical-discovery-of-causal-structure"><span class="header-section-number">15.2</span> Empirical Discovery of Causal Structure</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15-justifying-models.html">IV Models in Question</a></li><li class="breadcrumb-item"><a href="./15-justifying-models.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC15" class="quarto-section-identifier"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We outline strategies for justifying models on the basis of prior data and thus empirically grounding beliefs about the probative value of clues.</p>
+</div>
+</div>
+<p>The approaches to inference that we have described always involve updating beliefs given data and a model. So to get going, you need to start with a model of some form.</p>
+<p>We see two broad responses to this problem.</p>
+<p>One is to emphasize the model-contingent nature of claims. Some causal models might reasonably reflect actual beliefs about the world—for example, one might be convinced that treatment was randomly assigned, that there is no interference, and that units are independently sampled. All of these beliefs may be unwise, of course. But if held, then a simple model such as that represented by an <span class="math inline">\(X \rightarrow Y\)</span> DAG is more a representation of beliefs about a simple process in the world than a model <em>of</em> the world, in the sense of a simplified representation.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Recognizing that we are generally dealing with models that we do not really believe results in a reposing of the question: The question becomes not whether the assumptions are correct but whether the model is useful for some purpose <span class="citation" data-cites="clarke2012model">(<a href="20-references.html#ref-clarke2012model" role="doc-biblioref">Clarke and Primo 2012</a>)</span>. The next chapter expands upon this idea.</p>
+<p>A second approach is to seek to justify a model empirically. We describe such approaches to empirical model justification in this chapter. We take up the problem in two steps. First, we focus on process tracing and ask whether and when, given a causal structure, we can empirically derive the probative value of clues. Second, we briefly summarize an approach to discovering causal structures, the key input for both process tracing and mixed-method inference.</p>
+<section id="justifying-probative-value" class="level2" data-number="15.1"><h2 data-number="15.1" class="anchored" data-anchor-id="justifying-probative-value">
+<span class="header-section-number">15.1</span> Justifying probative value</h2>
+<p></p>
+<p>The problem of justifying assumptions is acute for case-level process-tracing inferences, for two reasons. First, the beliefs that come into play in generating probative value for our clues are beliefs over the distribution of <em>individual-level</em> effects, not just beliefs over average effects. We need beliefs, for instance, about the probability of seeing some clue, <span class="math inline">\(K\)</span>, in a given case if <span class="math inline">\(X=1\)</span> causes <span class="math inline">\(Y=1\)</span> in the case. This puts us up against the fundamental problem of causal inference <span class="citation" data-cites="holland1986statistics">(<a href="20-references.html#ref-holland1986statistics" role="doc-biblioref">Holland 1986</a>)</span>. Second, in single-case inference, we have limited opportunity to learn about our model from the case at hand; so the beliefs we go in with are critical. Indeed for case-level queries, inferences might be little more than conditional applications of a model.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>The question we pursue in this chapter is whether and under what conditions we can empirically justify those beliefs that yield probative value for our clues.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<section id="sec-nino" class="level3" data-number="15.1.1"><h3 data-number="15.1.1" class="anchored" data-anchor-id="sec-nino">
+<span class="header-section-number">15.1.1</span> Nothing from Nothing</h3>
+<p>We start with a discouraging result. Many of the models we have looked at—especially for process tracing—include a good deal of structure. Assumptions might include:</p>
+<ul>
+<li>conditional-independence assumptions</li>
+<li>assumptions of no confounding</li>
+<li>monotonicity assumptions or other restrictions such as no interactions</li>
+</ul>
+<p>What happens if we make none of these assumptions? One way to think about this question is: Can we start with a DAG that makes none of these assumptions and then use observational data—that is, learn from those data—to render clues informative about causal effects?</p>
+<p>Suppose that we would like to be able to learn from a candidate clue, a node <span class="math inline">\(M\)</span> that is possibly a mediator or perhaps a moderator in the sense that it is realized after some explanatory variable <span class="math inline">\(X\)</span> and before some outcome variable <span class="math inline">\(Y\)</span>. We work through this problem under favorable conditions, a world in which in fact (though unknown <em>ex ante</em> to the researcher):</p>
+<ul>
+<li>
+<span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> through <span class="math inline">\(M\)</span>
+</li>
+<li>
+<span class="math inline">\(X\)</span> is a necessary condition for <span class="math inline">\(M\)</span>, and <span class="math inline">\(M\)</span> is a sufficient condition for <span class="math inline">\(Y\)</span>—and so <span class="math inline">\(Y\)</span> is monotonic in <span class="math inline">\(X\)</span> and</li>
+<li>there is no confounding</li>
+</ul>
+<p>We also assume that we have access to large amounts of observational data on <span class="math inline">\(X\)</span>, <span class="math inline">\(M\)</span>, and <span class="math inline">\(Y\)</span>.</p>
+<p>We work through inferences for two types of models in which <span class="math inline">\(X\)</span> can have both indirect and direct effects on <span class="math inline">\(Y\)</span> (<a href="#fig-HJ-F-15-1" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>). We impose no restrictions on nodal types in either model. Even though there are only three nodes, Model 1 has 128 causal types (<span class="math inline">\(2\times 4 \times 16\)</span>). In addition:</p>
+<ul>
+<li><p>In Model 1 we allow confounding between all pairs of nodes. This results in 127 free parameters.</p></li>
+<li><p>In Model 2 we assume that <span class="math inline">\(X\)</span> is known to be (“as if”) randomized, but we still allow for confounding between <span class="math inline">\(M\)</span> and <span class="math inline">\(Y\)</span>. There are now only 64 free parameters.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-15-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-15-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="15-justifying-models_files/figure-html/fig-HJ-F-15-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-15-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: Two models. The model on the right might be justified if <span class="math inline">\(X\)</span> is known to be randomized.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We generate data from the true model and then update Model 1 and Model 2. Then we query the models to see how case-level inferences depend on (M). The results are shown in <a href="#fig-HJ-F-15-2" class="quarto-xref">Figure&nbsp;<span>15.2</span></a>. The query of interest is whether <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> in an <span class="math inline">\(X=1, Y=1\)</span> case. We can inspect the figure to determine whether <span class="math inline">\(M\)</span> is now informative about this query under trained versions of Model 1 and Model 2.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-15-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-15-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="15-justifying-models_files/figure-html/fig-HJ-F-15-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-15-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.2: Can updating our models on large <span class="math inline">\(N\)</span> data render <span class="math inline">\(M\)</span> informative? Model 1: No knowledge of structure; Model 2: <span class="math inline">\(X\)</span> known to be randomized. Error bars show 95% credibility intervals
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We find that even with an auspicious monotonic data-generating process in which <span class="math inline">\(M\)</span> is a total mediator, <span class="math inline">\(M\)</span> gives no traction on causal inference under Model 1—our beliefs have wide variance and are essentially unresponsive to <span class="math inline">\(M\)</span> <span style="color: red;">(in addition, updating on this model can cause computational errors)</span>. In contrast, when <span class="math inline">\(X\)</span> is known to be randomized, as in Model 2, we have tight posteriors, and <span class="math inline">\(M\)</span> gives considerable leverage. If we observe <span class="math inline">\(M=0\)</span>, we would downgrade confidence that <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span>.</p>
+<div id="tbl-appnana6" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl quarto-uncaptioned" id="tbl-appnana6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.1
+</figcaption><div aria-describedby="tbl-appnana6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+
+</div>
+</div>
+</figure>
+</div>
+<p>This example nicely illustrates the <span class="citation" data-cites="cartwright1994nature">Cartwright (<a href="20-references.html#ref-cartwright1994nature" role="doc-biblioref">1989</a>)</span><del>’s</del> idea of “no causes in, no causes out.” We also think it poses a challenge to any process-tracing exercise that aspires to model-independence: observational data alone are not sufficient to generate a justification for process-tracing inferences for three-node problems <em>even when in reality</em> causal structures are simple.</p>
+</section><section id="justifying-the-classic-process-tracing-tests" class="level3" data-number="15.1.2"><h3 data-number="15.1.2" class="anchored" data-anchor-id="justifying-the-classic-process-tracing-tests">
+<span class="header-section-number">15.1.2</span> Justifying the Classic Process-Tracing Tests</h3>
+<p>Now, on a more encouraging note, we show the possibility of justification of each of the four classical “qualitative tests” described by <span class="citation" data-cites="collier2011understanding">Collier (<a href="20-references.html#ref-collier2011understanding" role="doc-biblioref">2011</a>)</span> and drawing on <span class="citation" data-cites="Van-Evera:1997">Van Evera (<a href="20-references.html#ref-Van-Evera:1997" role="doc-biblioref">1997</a>)</span>, at least when treatment assignment is as-if randomized.</p>
+<p>Recall that the four tests are “smoking gun” tests, “hoop” tests, “doubly-decisive” tests, and “straw-in-the-wind” tests.A hoop test is one which, if failed, bodes especially badly for a claim; a smoking gun test is one that bodes especially well for a hypothesis if passed; a doubly-decisive test is strongly conclusive no matter what is found; and a straw-in-the-wind test is suggestive, though not conclusive, either way. Of course, Bayesian inference involves continuous probabilities, not discrete test categories, but we speak to these categories for heuristic purposes.</p>
+<p>The key point is that probative value for case-level inference can be derived from data in which randomization of a causal variable can be assumed. Deriving probative value from data contrasts with approaches in which researchers are meant to have more or less direct knowledge of the priors and likelihoods.</p>
+<p>In <span class="citation" data-cites="humphreys2015mixing">Humphreys and Jacobs (<a href="20-references.html#ref-humphreys2015mixing" role="doc-biblioref">2015</a>)</span>, for instance, formalization involves specifying (a) a prior that a hypothesis is true and, <em>independently</em> of that (b) a set of beliefs about the probability of seeing a given data pattern if the hypothesis is true and if it is false. Updating then proceeds using Bayes’ rule. However, this simple approach suffers from two related weaknesses. First, there is no good reason to expect these probabilities to be independent. Our prior beliefs about the hypotheses constitute beliefs about <em>how the world works</em>, and beliefs about how the world works should have implications for the conditions under which clues are likely to be observed. Second, there is nothing in the setup to indicate how beliefs about the probative value of clues should be established or justified.</p>
+<p>Both of these problems are resolvable in the context of inference from fully specified causal models. We illustrate first by using an idealized example to show that a case-level “doubly-decisive” test can be justified by population-level data from factorial experimental designs (see also our discussion in <a href="05-being-Bayesian.html" class="quarto-xref"><span>Chapter 5</span></a>); we then generalize to all four tests.</p>
+<p>Suppose that we have observed experimental data on just <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> across a large set of cases, allowing us to infer that <span class="math inline">\(\Pr(Y=1|X=1) = \Pr(Y=1|X=0) = .5\)</span>. Here, we have an average treatment effect of 0. But suppose, further, that our query is whether <span class="math inline">\(X=1\)</span> caused <span class="math inline">\(Y=1\)</span> in a particular case with <span class="math inline">\(X=1, Y=1\)</span>. The marginal distributions we have observed so far are consistent with a world in which <span class="math inline">\(X\)</span> never affects <span class="math inline">\(Y\)</span>. But less obviously, they are also consistent with a world in which <span class="math inline">\(X\)</span> always affects <span class="math inline">\(Y\)</span> (sometimes negatively, sometimes positively). And they are also consistent with many possibilities in between these extremes.</p>
+<p>Now let’s say that we have lots of data on a third variable, <span class="math inline">\(K\)</span>, and find (a) that <span class="math inline">\(K=1\)</span> arises with 50% probability and (b) that the marginal distributions of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span> and <span class="math inline">\(K\)</span> are as follows:</p>
+<ul>
+<li><span class="math inline">\(\Pr(Y=1|X=0, K = 0) = 1\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=1, K = 0) = .5\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=0, K = 1) = 0\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=1, K = 1) = .5\)</span></li>
+</ul>
+<p>We thus see that, in cases in which <span class="math inline">\(K=1\)</span>, <span class="math inline">\(X=1\)</span> is a necessary condition for <span class="math inline">\(Y=1\)</span>. So if <span class="math inline">\(K=1\)</span>, then <span class="math inline">\(X=1\)</span> certainly caused <span class="math inline">\(Y=1\)</span> (since, in that case, were <span class="math inline">\(X\)</span> zero, then <span class="math inline">\(Y\)</span> would certainly be 0). On the other hand, were <span class="math inline">\(K=0\)</span>, then <span class="math inline">\(X=0\)</span> would be a sufficient condition for <span class="math inline">\(Y=1\)</span>, which means that in this case, <span class="math inline">\(X=1\)</span> most certainly did <em>not</em> cause <span class="math inline">\(Y=1\)</span>. We have then that, if <span class="math inline">\(K=1\)</span>, then certainly <span class="math inline">\(X=1\)</span> caused <span class="math inline">\(Y=1\)</span>, whereas if <span class="math inline">\(K=0\)</span>, then certainly <span class="math inline">\(X=1\)</span> did not cause <span class="math inline">\(Y=1\)</span>.</p>
+<p>This example demonstrates it is, in principle, possible to justify a doubly decisive test on the basis of experimental data—provided that the case about which we seek to make inferences can be considered exchangeable with (that is, we have no reason to think it works differently from) the cases in the experimental data.</p>
+<p><a href="#tbl-tests15" class="quarto-xref">Table&nbsp;<span>15.2</span></a> shows how this logic generalizes to different types of tests. For each test, we first show the inferences from the data available to us (first five rows); we then show the inferences on whether <span class="math inline">\(X=1\)</span> causes <span class="math inline">\(Y=1\)</span> in cases where <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span> as a function of <span class="math inline">\(K\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-tests15" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tests15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.2: Known probabilities from a model with <span class="math inline">\(X \rightarrow Y \leftarrow K\)</span> justifying classic test types for clue <span class="math inline">\(K\)</span> given <span class="math inline">\(X=Y=1\)</span>.
+</figcaption><div aria-describedby="tbl-tests15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th></th>
+<th style="text-align: center;">Doubly decisive</th>
+<th style="text-align: center;">Hoop</th>
+<th style="text-align: center;">Smoking gun</th>
+<th style="text-align: center;">Straw in the wind</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\Pr(K = 1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{9}{10}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{10}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Pr(Y=1 \vert X=0, K = 0)\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(\frac13\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\Pr(Y=1 \vert X=1, K = 0)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{2}{3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{3}{4}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Pr(Y=1 \vert X=0, K = 1)\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{3}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{4}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\Pr(Y=1 \vert X=1, K = 1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{2}{3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\frac{3}{4}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\Pr(X \text{  causes }Y \vert K=0)\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(\left[\frac12, 1\right]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\left[\frac13,\frac23\right]\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\Pr(X \text{  causes }Y \vert K=1)\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(\left[\frac12, 1\right]\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(\left[\frac23,1\right]\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Note that some entries in <a href="#tbl-tests15" class="quarto-xref">Table&nbsp;<span>15.2</span></a> appear as ranges. This reflects the fact that, unless we are at edge cases, the estimand here is not identified even with infinite experimental data. In practice, we expect never to be at these edges. However, despite not being identified, bounds can be placed on causal quantities. For instance, for the hoop test, when <span class="math inline">\(K=1\)</span>, the bounds are <span class="math inline">\([.5,1]\)</span>. The reason that the probability of causation here cannot be <em>less</em> than 0.5 is that:</p>
+<ol type="1">
+<li>We can see from the distribution of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span> when <span class="math inline">\(K=1\)</span> that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span> at least one third of the time (the average effect is one third, and so there is a positive effect for at least one third of units; indeed, it is possible that there is a positive effect for 2/3 of units and a negative effect for the remaining 1/3).</li>
+<li>We can see that in two thirds of cases <span class="math inline">\(Y=1\)</span> when <span class="math inline">\(X=1, K=1\)</span>
+</li>
+<li>So at <em>least</em> half of these cases in which <span class="math inline">\(Y=1\)</span> when <span class="math inline">\(X=1, K=1\)</span> are cases for which <span class="math inline">\(Y=1\)</span> <em>because</em> <span class="math inline">\(X=1\)</span>.</li>
+</ol>
+<p>In these examples, the fact that queries are not point-identified with infinite data does not detract from the fact that <span class="math inline">\(K\)</span> is informative in the ways associated with the different types of tests.</p>
+<p>So much for infinite data. Is it possible to justify classic tests with inferences on finite data starting with flat priors? Using the procedures given in <a href="09-mixing-methods.html" class="quarto-xref"><span>Chapter 9</span></a>, the results in <a href="#tbl-testsfinite" class="quarto-xref">Table&nbsp;<span>15.3</span></a> show that it is. For these results, we imagine four different data generating <span class="math inline">\(X \rightarrow Y \leftarrow K\)</span> models. The models vary in the amount of weight they accord to three different nodal types for <span class="math inline">\(Y\)</span>—as well as in <span class="math inline">\(\lambda^K\)</span>. We then simulate 1,000 observations from each model and update an agnostic <span class="math inline">\(X \rightarrow Y \leftarrow K\)</span> model.</p>
+<p>In particular, for the doubly-decisive test, we generate the data from a model in which all units have nodal type <span class="math inline">\(\theta^Y = \theta^Y_{0001}\)</span>, and so the presence of <span class="math inline">\(K\)</span> is necessary and sufficient to render <span class="math inline">\(X\)</span> causal for <span class="math inline">\(Y\)</span>. For hoop tests, we generate data from a model in which there are also <span class="math inline">\(\theta^Y_{0101}\)</span> nodal types: that is, cases in which <span class="math inline">\(K\)</span> matters but <span class="math inline">\(X\)</span> does not. Given these cases, observation of <span class="math inline">\(K=0\)</span> guarantees that <span class="math inline">\(X\)</span> does not matter, but observation of <span class="math inline">\(K=1\)</span> does not guarantee that <span class="math inline">\(X\)</span> does matter. To generate smoking gun tests, our data-generating model has a distribution over <span class="math inline">\(\theta^Y_{0001}\)</span> and <span class="math inline">\(\theta^Y_{0011}\)</span> types—in which <span class="math inline">\(X\)</span> always matters when <span class="math inline">\(K=1\)</span> but <em>might</em> not matter when <span class="math inline">\(X=0\)</span>. For straw-in-the-wind tests, we imagine a distribution over all three types.</p>
+<p>In <a href="#tbl-testsfinite" class="quarto-xref">Table&nbsp;<span>15.3</span></a>, we show the inferences we would now draw from observing <span class="math inline">\(K=1\)</span> versus <span class="math inline">\(K=0\)</span> in a single case, based on updating a model that has no restrictions and flat priors over all nodal types. The query is whether <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span> in a given case. Each column-labeled with the classic test names- represents our beliefs about <span class="math inline">\(K\)</span>’s probative value as derived from data generated by the four models we described above. These indeed conform to expectations. In the “hoop test” column, we see that (having updated based on data from one of the four data-generating models), we have formed beliefs such that observing <span class="math inline">\(K=1\)</span> in a case slightly boosts our confidence that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span>, while observing <span class="math inline">\(K=0\)</span> dramatically undermines our confidence in such an effect. In the smoking gun column, we see that (having updated based on data from another one of the four data-generating models) we have formed beliefs such that observing <span class="math inline">\(K=1\)</span> in a case greatly boosts our confidence that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span>, while observing <span class="math inline">\(K=0\)</span> slightly undermines our confidence in such an effect.</p>
+<p>We underline that we have here <em>derived</em> the probative value of the clue from observed data and a model that was entirely agnostic about the clue’s probative value (but which did assume <em>some</em> priors on causal types). In particular, the model that we start with has no restrictions on <span class="math inline">\(Y\)</span>’s nodal types, has flat beliefs over the distribution of <span class="math inline">\(K\)</span>, and imposes no assumption that <span class="math inline">\(K\)</span> is informative for how <span class="math inline">\(Y\)</span> responds to <span class="math inline">\(X\)</span>. It does, however, assume that <span class="math inline">\(X\)</span> and <span class="math inline">\(K\)</span> are unconfounded root nodes, as might be the case if these were experimentally manipulated.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-testsfinite" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-testsfinite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15.3: Classic tests with probative value inferred from (simulated) data, for query, Does <span class="math inline">\(X\)</span> have a positive effect on <span class="math inline">\(Y\)</span> in this case (given <span class="math inline">\(K\)</span>)?
+</figcaption><div aria-describedby="tbl-testsfinite-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: center;">Given</th>
+<th style="text-align: center;">Straw in the wind</th>
+<th style="text-align: center;">Hoop</th>
+<th style="text-align: center;">Smoking gun</th>
+<th style="text-align: center;">Doubly Decisive</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">0.493</td>
+<td style="text-align: center;">0.455</td>
+<td style="text-align: center;">0.555</td>
+<td style="text-align: center;">0.484</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">K=0</td>
+<td style="text-align: center;">0.286</td>
+<td style="text-align: center;">0.041</td>
+<td style="text-align: center;">0.518</td>
+<td style="text-align: center;">0.009</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">K=1</td>
+<td style="text-align: center;">0.697</td>
+<td style="text-align: center;">0.496</td>
+<td style="text-align: center;">0.895</td>
+<td style="text-align: center;">0.976</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>For both of these examples, we have focused on moderators as clues. For results on mediators as clues, see <span class="citation" data-cites="dawid2019bounding">Dawid, Humphreys, and Musio (<a href="20-references.html#ref-dawid2019bounding" role="doc-biblioref">2019</a>)</span>, which establishes that mediators in chain models can produce hoop tests but are generally unable to generate smoking gun tests.</p>
+<p>This approach to thinking about process tracing tests is quite different from that described in existing (including Bayesian) treatments such as <span class="citation" data-cites="collier2011understanding">Collier (<a href="20-references.html#ref-collier2011understanding" role="doc-biblioref">2011</a>)</span>, <span class="citation" data-cites="BennettAppendix">Bennett (<a href="20-references.html#ref-BennettAppendix" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="fairfield2017explicit">Fairfield and Charman (<a href="20-references.html#ref-fairfield2017explicit" role="doc-biblioref">2017</a>)</span>, or <span class="citation" data-cites="humphreys2015mixing">Humphreys and Jacobs (<a href="20-references.html#ref-humphreys2015mixing" role="doc-biblioref">2015</a>)</span>. Rather than having a belief about the probative value of a clue, and a prior over a hypothesis, inferences are drawn directly from a causal model that embeds a clue in a network of possible causal effects. Critically, with this approach, the inferences made from observing clues can be justified by referencing a more fundamental, relatively agnostic model, that has been updated in light of data. The updated model yields a prior over the proposition, beliefs about probative values, and guidance for what conclusions to draw given knowledge of <span class="math inline">\(K\)</span>.</p>
+</section></section><section id="empirical-discovery-of-causal-structure" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="empirical-discovery-of-causal-structure">
+<span class="header-section-number">15.2</span> Empirical Discovery of Causal Structure</h2>
+<p>In the preceding discussion of learning about probative value for process tracing, we have taken causal structure—the DAG itself—as given. Moreover, even when we are engaged in mixed-data inference on multiple cases—where we can start with <em>only</em> the DAG—we still need to start with some causal structure. Where does knowledge of causal structure come from?</p>
+<p>One approach is to treat causal structure as just one more level in our multi-tiered hierarchy of models. We can entertain multiple models and specify priors over the causal structure. One could, for instance, have beliefs over two causal models that are mutually incompatible because arrows between two nodes point in opposite directions. In this case, uncertainty reflects uncertainty over models but learning involves not just updating model parameters but also updating over model structure.</p>
+<p>This is a perfectly coherent approach but given the complexity of inferences <em>conditional on</em> a causal structure, we do not pursue this strategy further here. Instead, we briefly describe approaches to “causal discovery”—strategies to derive causal structures from data.</p>
+<p>The empirical discovery of causal structure is a very large field of inquiry, and we cannot do it justice here. For a review, see <span class="citation" data-cites="glymour2019review">Glymour, Zhang, and Spirtes (<a href="20-references.html#ref-glymour2019review" role="doc-biblioref">2019</a>)</span>.</p>
+<p>We seek, rather, to illustrate the possibility of causal discovery.</p>
+<p>To do so,We demonstrate three situations in which there is a true—but unknown model—relating <span class="math inline">\(X,M,\)</span> and <span class="math inline">\(Y\)</span> to each other. Critically, we assume that there are no unobserved confounding relations (this is a requirement for the “PC” algorithm but not for the “Fast Causal Inference” algorithm). In each situation, we show the true relationship and the “skeleton” of the model as discovered by a prominent technique that uses a “constraint-based algorithm”—examining whether observed data correlations are consistent with one or another set of conditional-independence relations. </p>
+<p>In <a href="#fig-HJ-F-15-3" class="quarto-xref">Figure&nbsp;<span>15.3</span></a>, we represent the true models from which simulated data are generated. The objective is then to see how much of this true causal structure the discovery algorithm can recover from the data. In the first true model, <span class="math inline">\(X\)</span> affects <span class="math inline">\(Y\)</span> directly and indirectly through <span class="math inline">\(M\)</span>. In the second model, <span class="math inline">\(Y\)</span> has two causes that do not influence each other. Finally, in the third model, <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> through <span class="math inline">\(M\)</span> but not directly. When we simulate data from these models, we assume monotonicity but otherwise a flat distribution over nodal types. As noted, we We also assume no confounding: There is nothing not represented on the graph that affects more than one node.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-15-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-15-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="15-justifying-models_files/figure-html/fig-HJ-F-15-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-15-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.3: DAGs from three structural causal models.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>In <a href="#fig-HJ-F-15-4" class="quarto-xref">Figure&nbsp;<span>15.4</span></a>, we show the structures that we recover. In all situations, we correctly recover the skeleton: which nodes are connected to which nodes. Note that, for any link where we have an “o” on both ends of the link, we do not know in which direction causal effects flow.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-15-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-15-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="15-justifying-models_files/figure-html/fig-HJ-F-15-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-15-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.4: (Partially) recovered DAGs from data. Circles indicate uncertainty regarding whether an arrow starts or ends at a given point.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>In the first situation, the skeleton is unrestricted: We have correctly <em>not</em> excluded links between any two nodes, but we have not learned about the directions of effects. In the second situation, however, we have fully recovered the causal structure. Thus, the algorithm has figured out that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are not children of <span class="math inline">\(Y\)</span>. The algorithm sees, in essence, data patterns that are distinctively associated with colliders: <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> correlated conditional on <span class="math inline">\(Y\)</span> but not otherwise. In the last setup, we have not figured out the direction of the causal arrows, but the inference is still rather impressive. Although <span class="math inline">\(X\)</span>, <span class="math inline">\(M\)</span>, and <span class="math inline">\(Y\)</span> are all correlated with each other, the algorithm has figured out that there should be no direct link between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>—by observing that <span class="math inline">\(X\)</span> and <span class="math inline">\(M\)</span> are not correlated with each other <em>conditional</em> on <span class="math inline">\(M\)</span>.</p>
+<p>Note also that, in all three situations, if we have access to all relevant variables, the true graph can be recovered with additional knowledge of the temporal ordering of the variables.</p>
+<p>The assumption that we have captured all nodes that might generate confounding is critical to these results. Yet these examples provide grounds for hope that causal models can be discovered and not simply assumed. If all relevant nodes are known and measured—a tall order for sure—causal structures can be identified from data.</p>
+<p>We have shown that the models used for both process tracing and mixed-methods inference can be constructed from weaker models. This provides some defense against concerns that these approaches require assuming models that cannot be justified. In both cases, however, we also see that justification is not easy, sometimes not possible, and itself requires assumptions, albeit weaker ones.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-BennettAppendix" class="csl-entry" role="listitem">
+Bennett, Andrew. 2015. <span>“Appendix.”</span> In <em>Process Tracing: From Metaphor to Analytic Tool</em>, edited by Andrew Bennett and Jeffrey Checkel. New York: Cambridge University Press.
+</div>
+<div id="ref-cartwright1994nature" class="csl-entry" role="listitem">
+Cartwright, Nancy. 1989. <span>“Nature’s Capacities and Their Measurement.”</span>
+</div>
+<div id="ref-clarke2012model" class="csl-entry" role="listitem">
+Clarke, Kevin A, and David M Primo. 2012. <em>A Model Discipline: Political Science and the Logic of Representations</em>. New York: Oxford University Press.
+</div>
+<div id="ref-collier2011understanding" class="csl-entry" role="listitem">
+Collier, David. 2011. <span>“Understanding Process Tracing.”</span> <em>PS: Political Science &amp; Politics</em> 44 (04): 823–30.
+</div>
+<div id="ref-dawid2019bounding" class="csl-entry" role="listitem">
+Dawid, Philip, Macartan Humphreys, and Monica Musio. 2019. <span>“Bounding Causes of Effects with Mediators.”</span> <em>arXiv Preprint arXiv:1907.00399</em>.
+</div>
+<div id="ref-fairfield2017explicit" class="csl-entry" role="listitem">
+Fairfield, Tasha, and Andrew Charman. 2017. <span>“Explicit Bayesian Analysis for Process Tracing: Guidelines, Opportunities, and Caveats.”</span> <em>Political Analysis</em> 25 (3): 363–80.
+</div>
+<div id="ref-glymour2019review" class="csl-entry" role="listitem">
+Glymour, Clark, Kun Zhang, and Peter Spirtes. 2019. <span>“Review of Causal Discovery Methods Based on Graphical Models.”</span> <em>Frontiers in Genetics</em> 10: 524.
+</div>
+<div id="ref-holland1986statistics" class="csl-entry" role="listitem">
+Holland, Paul W. 1986. <span>“Statistics and Causal Inference.”</span> <em>Journal of the American Statistical Association</em> 81 (396): 945–60.
+</div>
+<div id="ref-humphreys2015mixing" class="csl-entry" role="listitem">
+Humphreys, Macartan, and Alan M Jacobs. 2015. <span>“Mixing Methods: A Bayesian Approach.”</span> <em>American Political Science Review</em> 109 (04): 653–73.
+</div>
+<div id="ref-Van-Evera:1997" class="csl-entry" role="listitem">
+Van Evera, Stephen. 1997. <em>Guide to Methods for Students of Political Science</em>. Ithaca, NY: Cornell University Press.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>Even in this simple case there are ways in which the representation is a model, not least the coding of events as a variable involves a form of modeling.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Though it is certainly possible to learn from a single case that the model itself is wrong—for example, if events are observed that are assigned 0 probability under a model.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The question was already addressed in Cahpters <a href="09-mixing-methods.html" class="quarto-xref"><span>Chapter 9</span></a> and <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a>; here, we gather together some particularly sharp positive and negative results.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./14-wide-or-deep.html" class="pagination-link" aria-label="Going Wide, Going Deep">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./16-evaluating-models.html" class="pagination-link" aria-label="Evaluating Models">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>11&nbsp; Mixing Models – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./12-clue-selection.html" rel="next">
+<link href="./10-mixed-application.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-process-tracing-with-models.html">II Model-based Causal Inference</a></li><li class="breadcrumb-item"><a href="./11-fusion.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#a-jigsaw-puzzle-integrating-across-a-model" id="toc-a-jigsaw-puzzle-integrating-across-a-model" class="nav-link active" data-scroll-target="#a-jigsaw-puzzle-integrating-across-a-model"><span class="header-section-number">11.1</span> A Jigsaw Puzzle: Integrating across a Model</a></li>
+  <li><a href="#sec-obsexp" id="toc-sec-obsexp" class="nav-link" data-scroll-target="#sec-obsexp"><span class="header-section-number">11.2</span> Combining Observational and Experimental Data</a></li>
+  <li><a href="#transportation-of-findings-across-contexts" id="toc-transportation-of-findings-across-contexts" class="nav-link" data-scroll-target="#transportation-of-findings-across-contexts"><span class="header-section-number">11.3</span> Transportation of Findings across Contexts</a></li>
+  <li><a href="#sec-multilevel" id="toc-sec-multilevel" class="nav-link" data-scroll-target="#sec-multilevel"><span class="header-section-number">11.4</span> Multilevel Models, Meta-analysis</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-process-tracing-with-models.html">II Model-based Causal Inference</a></li><li class="breadcrumb-item"><a href="./11-fusion.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC11" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We show how we can integrate inferences across models. We provide four examples of situations in which, by combining models, researchers can learn more than they could from any single model. Examples include situations in which researchers seek to integrate inferences from experimental and observational data, seek to learn across settings, or seek to integrate inferences from multiple studies.</p>
+</div>
+</div>
+<p>In <a href="09-mixing-methods.html" class="quarto-xref"><span>Chapter 9</span></a> and <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a>, we described one form of integration that causal models can enable: the systematic combination of (what we typically think of as) qualitative and quantitative evidence for the purposes of drawing population- and case-level causal inferences. One feature of the analyses we have been considering so far is that the integration is essentially integration of inferences in the context of a single study. We are, for instance, integrating quantitative evidence for a large set of cases with qualitative evidence for a <em>subset</em> of those cases. We are, moreover, drawing inferences from the set of cases we observe to a population <em>within which</em> that sample of cases is situated.</p>
+<p>In this chapter, we examine how we can use causal models to integrate across studies or settings that are, in a sense, more disjointed from one another: across studies that examine different causal relationships altogether; study designs that require different assumptions about exogeneity; and contexts across which the causal quantities of interest may vary.</p>
+<ol type="1">
+<li><p><strong>Integrating across a model</strong> Often, individual studies in a substantive domain examine distinct segments of a broader web of causal relationships. For instance, while one study might examine the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, another might examine the effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(Y\)</span>, and yet another might examine the effect of <span class="math inline">\(Z\)</span> on <span class="math inline">\(K\)</span>. We show in this chapter how we can, under some conditions, integrate across such studies in ways that yield learning that we could not achieve by taking each study on its own terms.</p></li>
+<li><p><strong>Integrating between experimental and observational studies</strong> One form of multi-method research that has become increasingly common is the use of both observational and experimental methods to study the same basic causal relationships. While an experiment can offer causal identification in a usually local or highly controlled setting, an observational analysis can often shed light on how the same relationships operate “in the wild,” if with a greater risk of confounding. Often, observational and experimental results are presented in parallel, as separate sources of support for a causal claim. We show how, in a causal model setup, we can use experimental and observational data <em>jointly</em> to address questions that cannot be answered when the designs are considered separately.</p></li>
+<li><p><strong>Transporting knowledge across contexts</strong> Researchers are sometimes in a situation where they can identify causal quantities in a particular setting—say, from a randomized controlled trial implemented in a specific local context—but want to know how those inferences travel to other settings. Would the intervention work differently in other countries or regions? As we will explain, we can draw inferences about causal relationships in other contexts with an appropriately specified causal model and the right data from the original context.</p></li>
+<li><p><strong>Models in hierarchies.</strong> Sometimes, researchers learn about the same types of processes in different settings. By thinking of the processes in each setting as deriving from a family of processes, researchers can learn from observations in one setting about causal processes in another and also learn about the nature of heterogeneity between settings.</p></li>
+</ol>
+<p>Before delving into the details of these strategies, we make one key qualification explicit: each of these approaches requires us to believe that setting-~or study-specific causal model can be nested within a lower level, “encompassing,” model that operates across the multiple settings that we are learning from and want to draw inferences about. Encompassing models, of course, can specifically take heterogeneity across settings into account by including in the model moderators that condition the effects of interest. But we have to believe that we have indeed captured in the model any ways in which relationships vary across the set of contexts across which we are integrating evidence or transporting inferences.</p>
+<p>Put differently, and perhaps more positively, we see social scientists commonly seeking to transport knowledge or combine information informally across studies and settings. Often such efforts are motivated, sometimes implicitly, by an interest in or reliance on general theoretical propositions. The approaches that we describe below ask the researcher to be <em>explicit</em> about the underlying causal beliefs that warrant that integration while also ensuring that the integration proceeds in a way that is logically consistent with stated beliefs.</p>
+<section id="a-jigsaw-puzzle-integrating-across-a-model" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="a-jigsaw-puzzle-integrating-across-a-model">
+<span class="header-section-number">11.1</span> A Jigsaw Puzzle: Integrating across a Model</h2>
+<p>Generating knowledge about a causal domain often involves cumulating learning across studies that each focus on some specific part of the domain. For instance, scholars interested in the political economy of democratization might undertake studies focused on the relationship between inequality and mass protests; studies on the role of mass mobilization in generating regime change; pathways other than mass mobilization through which inequality might affect democratization; studies of the effect of international sanctions on the likelihood that autocracies will democratize; and studies of the effects of democratization on other things, such as growth or the distribution of resources.</p>
+<p>We can think of these studies as each analyzing data on a particular part of a broader, more encompassing causal model. In an informal way, <em>if</em> findings “hold together” reasonably intuitively, we might be able to piece together an impression of the overall relations among variables in this domain. Yet an informal approach becomes more difficult for complex models or data patterns and, more importantly, will leave opportunities for learning unexploited.</p>
+<p>Consider the simple DAG in <a href="#fig-HJ-F-11-1" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>, in which both <span class="math inline">\(X\)</span> and <span class="math inline">\(Z\)</span> are causes of <span class="math inline">\(Y\)</span>, and <span class="math inline">\(Z\)</span> also causes <span class="math inline">\(K\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-11-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-11-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-fusion_files/figure-html/fig-HJ-F-11-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-11-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: A DAG containing nodes that feature in different studies.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p>
+<p>Now imagine three studies, all conducted in contexts in which we believe this model to hold:</p>
+<ol type="1">
+<li>Study 1 is an RCT in which <span class="math inline">\(X\)</span> is randomized, with data collected on both <span class="math inline">\(Y\)</span> and <span class="math inline">\(K\)</span>. <span class="math inline">\(Z\)</span> is not observed.</li>
+<li>Study 2 is a factorial experiment, in which <span class="math inline">\(X\)</span> and <span class="math inline">\(Z\)</span> are independently randomized, allowing an examination of the joint effects of <span class="math inline">\(X\)</span> and <span class="math inline">\(Z\)</span> on <span class="math inline">\(Y\)</span>. <span class="math inline">\(K\)</span> is not observed.</li>
+<li>Study 3 is an experiment randomizing <span class="math inline">\(Z\)</span>, with only <span class="math inline">\(K\)</span> observed as an outcome. <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not observed.</li>
+</ol>
+<p>Now, let’s say that our primary interest is in the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Obviously, Study 1 will, with a sufficiently large sample, perform just fine in estimating the average treatment effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. However, what if we are interested in a case-oriented query, such as the probability of causation: the probability, say, that <span class="math inline">\(X=1\)</span> caused <span class="math inline">\(Y=1\)</span> in a given <span class="math inline">\(X=1, Y=1\)</span> case?</p>
+<p>We know that within-case, process-tracing clues can sometimes provide probative value on case-level estimands like the probability of causation, and we have observed <span class="math inline">\(K\)</span> in the Study 1 cases. So what if we combine the <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, and <span class="math inline">\(K\)</span> data?</p>
+<p>A simple analysis of the graph tells us that <span class="math inline">\(K\)</span> cannot help us learn about <span class="math inline">\(Y\)</span>’s potential outcomes since <span class="math inline">\(K\)</span> and <span class="math inline">\(Y\)</span> are <span class="math inline">\(d\)</span>-separated by <span class="math inline">\(Z\)</span>, and we have not observed <span class="math inline">\(Z\)</span> in Study 1. We see this confirmed in <a href="#tbl-HJ-T-11-1" class="quarto-xref">Table&nbsp;<span>11.1</span></a>.</p>
+<p>In the first pair of rows, we show the results of analyses in which we have simulated data from the whole model, then updated using the Study 1 observations. We give here the posterior mean on the probability of causation for an <span class="math inline">\(X=Y=1\)</span> case, conditional on each possible value that <span class="math inline">\(K\)</span> might take on. As we can see, our beliefs about the estimand remain essentially unaffected by <span class="math inline">\(K\)</span>’s value, meaning that it contains no information about <span class="math inline">\(X\)</span>’s effect in the case.</p>
+<p>We see that the same thing is true for the other studies. In Study 2, we have not used <span class="math inline">\(K\)</span> to update the model, and so have not learned anything from the data about <span class="math inline">\(K\)</span>’s relationship to the other variables. Thus, we have no foundation on which to ground the probative value of <span class="math inline">\(K\)</span>. In Study 3, we understand the <span class="math inline">\(Z,K\)</span> relationship well, but know nothing quantitatively about how <span class="math inline">\(Z\)</span> and <span class="math inline">\(X\)</span> relate to <span class="math inline">\(Y\)</span>. Thus, we have learned nothing from Study 3 about what observing <span class="math inline">\(K\)</span> might tell us about the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-HJ-T-11-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-11-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.1: Clue <span class="math inline">\(K\)</span> is uninformative in all three studies
+</figcaption><div aria-describedby="tbl-HJ-T-11-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: right;">Study</th>
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">using</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">cred.low</th>
+<th style="text-align: right;">cred.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.670</td>
+<td style="text-align: right;">0.108</td>
+<td style="text-align: right;">0.433</td>
+<td style="text-align: right;">0.856</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"></td>
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.641</td>
+<td style="text-align: right;">0.111</td>
+<td style="text-align: right;">0.394</td>
+<td style="text-align: right;">0.835</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.662</td>
+<td style="text-align: right;">0.130</td>
+<td style="text-align: right;">0.366</td>
+<td style="text-align: right;">0.874</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"></td>
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.661</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.361</td>
+<td style="text-align: right;">0.874</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.499</td>
+<td style="text-align: right;">0.153</td>
+<td style="text-align: right;">0.207</td>
+<td style="text-align: right;">0.787</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"></td>
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.500</td>
+<td style="text-align: right;">0.120</td>
+<td style="text-align: right;">0.265</td>
+<td style="text-align: right;">0.731</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>However, we can do much better if we combine the data and update <em>jointly</em> across all model parameters. The results are shown in <a href="#tbl-HJ-T-11-2" class="quarto-xref">Table&nbsp;<span>11.2</span></a>. Updating simultaneously across the studies allows us, in a sense, to bridge across inferences. In particular, inferences from Study 2 make <span class="math inline">\(Z\)</span> informative about <span class="math inline">\(Y\)</span>’s potential outcomes under different values of <span class="math inline">\(X\)</span>. Meanwhile, inferences from the data in Study 3 allow us to use information on <span class="math inline">\(K\)</span> to update on values for <span class="math inline">\(Z\)</span>. As we now see in rows 1 and 2, having updated the model in an integrated fashion, <span class="math inline">\(K\)</span> now <em>is</em> informative about the probability of causation, with our posterior mean on this query changing substantially depending on the value of <span class="math inline">\(K\)</span> that we observe in a case.</p>
+<p>Rows 3–4 highlight that the updating works through inferences that <em>K</em> allows us to make about <span class="math inline">\(Z\)</span>: We see that if <span class="math inline">\(Z\)</span> is already known (we show this for <span class="math inline">\(Z=1\)</span>, but it holds for <span class="math inline">\(Z=0\)</span> as well), then there are no additional gains from the knowledge of <span class="math inline">\(K\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-HJ-T-11-2" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-11-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.2: Clue is informative after combining studies linking <span class="math inline">\(K\)</span> to <span class="math inline">\(Z\)</span> and <span class="math inline">\(Z\)</span> to <span class="math inline">\(Y\)</span>
+</figcaption><div aria-describedby="tbl-HJ-T-11-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">using</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">cred.low</th>
+<th style="text-align: right;">cred.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.93</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.13</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">0.85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.96</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Y[X=0] == 0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">0.96</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>We devote <a href="15-justifying-models.html" class="quarto-xref"><span>Chapter 15</span></a> to a discussion of how we justify a model. However, we note already that in this example, we have a form of model justification. We have seen an instance in which a researcher (examining a case in Study 1) might wish to draw inferences using <span class="math inline">\(K\)</span>, but does not have anything in study that justifies using <span class="math inline">\(K\)</span> for inference. owever, with access to additional data from other studies and making use of a lower level model, the researcher now has a justification for a process tracing strategy.</p>
+</section><section id="sec-obsexp" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="sec-obsexp">
+<span class="header-section-number">11.2</span> Combining Observational and Experimental Data</h2>
+<p></p>
+<p>Experimental studies are often understood as the “gold standard” for causal inference. This is, in particular, because of the ability of a randomized trial (given certain assumptions, such as “no spillovers”) to eliminate sources of confounding. By design, an experiment removes from the situation processes that, in nature, would generate a correlation between selection into treatment and potential outcomes. An experiment thereby allows for an unbiased estimate of the average causal effect of the treatment on the outcome.</p>
+<p>At the same time, an interesting weakness of experimental studies is that, by dealing so effectively with selection into treatment, they limit our ability to learn about selection and its implications in the real world. Often, however, we want to know what causal effects would be specifically for units that <em>would</em> in fact, take up a treatment in a real-world, nonexperimental setting. This kind of problem is studied, for example, by <span class="citation" data-cites="knox2019design">Knox et al. (<a href="20-references.html#ref-knox2019design" role="doc-biblioref">2019</a>)</span>. </p>
+<p>Consider, for instance, a policy that would make schooling subsidies available to parents, with the aim of improving educational outcomes for children. How would we know if the policy was effective? A source of confounding in an observational setting might be that those parents who apply for and take up the subsidy might also be those who are investing more in their children’s education in other ways, as compared to those parents who do not apply for the subsidy. The result is that when we compare those in treatment against those not in treatment we can expect to see a gap even if the subsidies are ineffective. To eliminate this problem, we might design an experiment in which parents are randomly assigned to receive (or not receive) the subsidy and compare outcomes between children in the treatment and control groups. With a no-spillovers assumption, we can extract the ATE of the receipt of subsidies. </p>
+<p>What this experiment cannot tell us, however, is how much the policy will boost educational outcomes outside the experiment. That is because the causal quantity of interest, for answering that question, is <em>not</em> the ATE: It is the average treatment effect for the <em>treated</em> (ATT), given real-world selection effects. That is, the policymaker wants to know what the effect of the subsidy will be for the children of parents who <em>select into</em> treatment. One could imagine the real-world ATT being higher than the ATE if, for instance, those parents who are informed and interested enough to take up the subsidy also put the subsidy to more effective use. One could also imagine the ATT being lower than the ATE if, for instance, there are diminishing marginal returns to educational investments, and the self-selecting parents are already investing quite a lot.</p>
+<p>Even outside a policy context, we may be interested in the effect of a causal condition <em>where</em> that causal condition emerges. To return to our inequality and democracy example, we may want to know what would have happened to autocracies with low inequality <em>if</em> they had had high inequality—the standard average-treatment effect question. But we might also be interested in knowing how much of a difference high inequality makes <em>in the kinds of cases</em> where high inequality tends to occur—where the effect could be very different.</p>
+<p>With such questions, we are in a sort of bind. The experiment cannot tell us <em>who</em> would naturally select into treatment and what the effects would be for them. Yet an observational study faces the challenge of confounding. Ideally, we would like to be able to combine the best features of both: use an experiment to deal with confounding and use observational data to learn about those whom nature assigns to treatment.</p>
+<p>We can achieve this form of integration with a causal model. We do so by creating a model in which random assignment is nested within a broader set of assignment processes. We plot the model in <a href="#fig-HJ-F-11-2" class="quarto-xref">Figure&nbsp;<span>11.2</span></a></p>
+<p>At the substantive core of this model is the <span class="math inline">\(X \rightarrow Y\)</span> relationship. However, we give <span class="math inline">\(X\)</span> a parent that is an unconfounded root node, <span class="math inline">\(Z\)</span>, to capture a random-assignment process. We give <span class="math inline">\(X\)</span> a second parent, <span class="math inline">\(O\)</span>, that is confounded with <span class="math inline">\(Y\)</span>: <span class="math inline">\(O\)</span> here represents the observational scenario. Finally, we include a “switch” variable, <span class="math inline">\(R\)</span>, that determines whether <span class="math inline">\(X\)</span> is randomly assigned or not. So when <span class="math inline">\(R=1\)</span>, <span class="math inline">\(X\)</span> is determined solely by <span class="math inline">\(Z\)</span>, with <span class="math inline">\(X=Z\)</span>. When <span class="math inline">\(R=0\)</span>, we are in an observational setting, and <span class="math inline">\(X\)</span> is determined solely by the confounded <span class="math inline">\(O\)</span>, with <span class="math inline">\(X=O\)</span>.</p>
+<p>A few notes on the parameter space: Parameters allow for complete confounding between <span class="math inline">\(O\)</span> and <span class="math inline">\(Y\)</span>, but <span class="math inline">\(Z\)</span> and <span class="math inline">\(Y\)</span> are unconfounded. <span class="math inline">\(X\)</span> has only one causal type since its job is to operate as a conveyor belt, simply inheriting the value of <span class="math inline">\(Z\)</span> or <span class="math inline">\(O\)</span>, depending on <span class="math inline">\(R\)</span>. </p>
+<p>Note also that this model assumes the exclusion restriction that entering the experimental sample (<span class="math inline">\(R\)</span>) is not related to <span class="math inline">\(Y\)</span> other than through the assignment of <span class="math inline">\(X\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-11-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-11-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-fusion_files/figure-html/fig-HJ-F-11-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-11-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2: A model that nests an observational and an experimental study. The treatment <span class="math inline">\(X\)</span> either takes on the observational value <span class="math inline">\(O\)</span> or the assigned values <span class="math inline">\(Z\)</span> depending on whether or not the case has been randomized <span class="math inline">\(R\)</span>.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Now, let us imagine true parameter values such that <span class="math inline">\(X\)</span> has a <span class="math inline">\(0.2\)</span> average effect on <span class="math inline">\(Y\)</span>. However, the effect is different for those who are selected into treatment in an observational setting: it is positive (<span class="math inline">\(0.6\)</span>) for cases in which <span class="math inline">\(X=1\)</span> under observational assignment, but negative (<span class="math inline">\(-0.2\)</span>) for cases in which <span class="math inline">\(X=0\)</span> under observational assignment. (See Supplementary Material for complete specification.)</p>
+<p>When we use the model to analyze the data, we will start with flat priors on the causal types.</p>
+<p>The implied true values for the estimands of interest, and our priors on those estimands, are displayed in <a href="#tbl-fusionestimands" class="quarto-xref">Table&nbsp;<span>11.3</span></a>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-fusionestimands" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fusionestimands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.3: Estimands under different assignment schemes
+</figcaption><div aria-describedby="tbl-fusionestimands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">label</th>
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">given</th>
+<th style="text-align: left;">using</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">cred.low</th>
+<th style="text-align: right;">cred.high</th>
+<th style="text-align: left;">Using</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">parameters</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: left;">truth</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">priors</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">-0.51</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: left;">priors</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==0</td>
+<td style="text-align: left;">parameters</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: left;">truth</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==0</td>
+<td style="text-align: left;">priors</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">-0.51</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: left;">priors</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==1</td>
+<td style="text-align: left;">parameters</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: left;">truth</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==1</td>
+<td style="text-align: left;">priors</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.26</td>
+<td style="text-align: right;">-0.51</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: left;">priors</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Now, we generate data from the model and then update the model using these data.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-fusiondim" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fusiondim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.4: Inferences on the ATE from differences in means
+</figcaption><div aria-describedby="tbl-fusiondim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th></th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">t value</th>
+<th style="text-align: right;">Pr(&gt;|t|)</th>
+<th style="text-align: right;">CI Lower</th>
+<th style="text-align: right;">CI Upper</th>
+<th style="text-align: right;">DF</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>X</td>
+<td style="text-align: right;">0.797</td>
+<td style="text-align: right;">0.029</td>
+<td style="text-align: right;">27.373</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.739</td>
+<td style="text-align: right;">0.854</td>
+<td style="text-align: right;">191</td>
+</tr></tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>We begin by analyzing just the observational data (cases where <span class="math inline">\(R=0\)</span>) and display the results in <a href="#tbl-fusiondim" class="quarto-xref">Table&nbsp;<span>11.4</span></a>. Recall that the true average effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is <span class="math inline">\(0.2\)</span>. Naive analysis of the observational data, taking a simple difference in means between the <span class="math inline">\(X=0\)</span> and <span class="math inline">\(X=1\)</span> cases, yields a strongly upwardly biased estimate of that effect, of 0.8.</p>
+<p>In contrast, when we update on the full causal model and use both the experimental and observational data, we get the much more accurate results shown in <a href="#tbl-fusionCQ" class="quarto-xref">Table&nbsp;<span>11.5</span></a>. Moving down the rows, we show here the estimate of the unconditional ATE, the estimate for the observational context (<span class="math inline">\(R=0\)</span>), and the estimate for the experimental context (<span class="math inline">\(R=1\)</span>). Unsurprisingly, the estimates are identical across all three settings since, in the model, <span class="math inline">\(R\)</span> is <span class="math inline">\(d\)</span>-separated from <span class="math inline">\(Y\)</span> by <span class="math inline">\(X\)</span>, which is observed. And, as we see, the posterior means are very close to the right answer of <span class="math inline">\(0.2\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-fusionCQ" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fusionCQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.5: Estimates on the ATE for observational (<span class="math inline">\(R=0\)</span>) and experimental (<span class="math inline">\(R=1\)</span>) set.
+</figcaption><div aria-describedby="tbl-fusionCQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">label</th>
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">given</th>
+<th style="text-align: left;">using</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">cred.low</th>
+<th style="text-align: right;">cred.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">0.276</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">0.276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==1</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">0.276</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Since the model used both the experimental and the observational data, we might wonder from where the leverage was derived: Did the observational data improve our estimates of the average treatment effect, or do our inferences emerge strictly from the experimental data? In the book’s Supplementary Material, we show the results that we get when we update using experimental data only. Comparing the two sets of results, we find there that we do indeed get a tightening of posterior variance and a more accurate result when we use both the observational and experimental data, but the experimental data alone are quite powerful, as we should expect for an estimate of the ATE. The observational data do not add a great deal to an ATE estimate, and the gains from observational data would be smaller still (and the experimental results even more accurate) if the experimental sample were larger.</p>
+<p>However, what we can learn about uniquely from this model and the combined observational and experimental data is <em>heterogeneity</em> in effects between those in treatment and those in control <em>in the observational</em> setting. In <a href="#tbl-combexpobsattatc" class="quarto-xref">Table&nbsp;<span>11.6</span></a>, we display the results of ATT and average treatment effect for the control (ATC) queries of the updated model. To estimate the ATT we pose an ATE query while conditioning on <span class="math inline">\(X=1\)</span>, while for an ATC query we pose the ATE query while conditioning on <span class="math inline">\(X=0\)</span>. In the first two rows, we see that, in the experimental setting (conditioning on <span class="math inline">\(R=1\)</span>), the average effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is the same in both the treated and control groups, exactly as we would expect under random assignment. In the third row, we see the estimate of <span class="math inline">\(X\)</span>’s average effect for those assigned “by nature” to the control group in the observational setting, extracting a result close to the “true” value of <span class="math inline">\(-0.2\)</span>. The final row shows our estimate of the treatment effect for those who are selected into treatment in the observational setting, again getting close to the answer implied by the underlying data-generating process (<span class="math inline">\(0.6\)</span>).</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-combexpobsattatc" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-combexpobsattatc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.6: Effects of <span class="math inline">\(X\)</span> conditional on <span class="math inline">\(X\)</span> for units that were randomly assigned or not. Effects of <span class="math inline">\(X\)</span> do not depend on <span class="math inline">\(X\)</span> in the experimental group, but they do in the observational group because of self selection.
+</figcaption><div aria-describedby="tbl-combexpobsattatc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">label</th>
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">given</th>
+<th style="text-align: left;">using</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">cred.low</th>
+<th style="text-align: right;">cred.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==1 &amp; X==0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">0.276</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==1 &amp; X==1</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.217</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">0.276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==0 &amp; X==0</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">-0.184</td>
+<td style="text-align: right;">0.027</td>
+<td style="text-align: right;">-0.235</td>
+<td style="text-align: right;">-0.131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATE</td>
+<td style="text-align: left;">c(Y[X=1] - Y[X=0])</td>
+<td style="text-align: left;">R==0 &amp; X==1</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.599</td>
+<td style="text-align: right;">0.047</td>
+<td style="text-align: right;">0.505</td>
+<td style="text-align: right;">0.690</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In sum, we can learn nothing about the observational ATT or ATC from the experimental data alone, where the ATT and ATC are the same quantity. And in the observational data alone, we are hobbled by confounding of unknown direction and size. What the mixed model and data, in effect, are able to do is to let us (a) learn about the ATE from experimental data, (b) use experimental inferences on the ATE to separate true effects from confounding in the observational data and thus learn about the direction and size of the confounding in those data, and (c) estimate the treatment effect for the <span class="math inline">\(X=0\)</span> group and for the <span class="math inline">\(X=1\)</span> group, respectively, in the observational data <em>using</em> knowledge about confounding in these data. By mixing the experimental and observational data, we can learn about how the treatment has affected those units that, in the “real” world of the observational setting, selected into treatment <em>and</em> about how the treatment <em>would</em> affect those that selected into control. </p>
+<p>It is not hard to see why the observational ATT and ATC might be of great interest to decision-makers where strong causal heterogeneity is a possibility. Imagine a situation, for instance, in which the ATE was the same as in our previous example, but with the negative effects arising in the group that naturally selects into treatment and a positive effect for those that naturally do not. Based on the experimental data alone, we might conclude that the policy that makes <span class="math inline">\(X=1\)</span> available is a good bet, given its positive ATE (assuming, of course, that <span class="math inline">\(Y=1\)</span> is a valued outcome). And, of course, the observational data alone would not allow us to confidently conclude otherwise. What the integrated analysis can reveal, however, is that <span class="math inline">\(X\)</span> in fact has a <em>negative</em> mean effect on those who would be most likely to take up the treatment. The strong positive effect for the control strongly shapes the experimental results but will go unrealized in the real world. In a similar vein, these estimates can aid causal explanations. Seeing the positive ATE might lead us to infer that most of the <span class="math inline">\(X=1, Y=1\)</span> cases we observe in the world are ones in which <span class="math inline">\(X=1\)</span> caused <span class="math inline">\(Y=1\)</span>. The observational ATT estimates would point in a very different direction, however, indicating that these are actually the cases in which <span class="math inline">\(X\)</span> is least likely to have a positive effect and, thus, where <span class="math inline">\(Y=1\)</span> was most likely generated by some other cause.</p>
+<p>We note that the results here relate to the LATE theorem <span class="citation" data-cites="angrist1995identification">(<a href="20-references.html#ref-angrist1995identification" role="doc-biblioref">Angrist and Imbens 1995</a>)</span>. Imagine using data only on (a) the experimental group in control and (b) the observational group, some of whom are in treatment. We can conceptualize our design as one in which the observational group is “encouraged” to take up treatment, allowing us to estimate the effect for the “compliers” in the observational setting: those that self-select into treatment. Conversely, we could use data only on (a) the experimental group in treatment and (b) the observational group, some of whom are in control. This is a design in which the observational group is “encouraged” to take up the control condition, allowing us to estimate the effect for the “compliers” in this group (those that self select into control).</p>
+</section><section id="transportation-of-findings-across-contexts" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="transportation-of-findings-across-contexts">
+<span class="header-section-number">11.3</span> Transportation of Findings across Contexts</h2>
+<p> Sometimes, we study the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> in one context (a country, region, or time period, for instance) and then want to make inferences about these effects in another context (say, another country, region, or time period). We may face the challenge that effects are heterogeneous, and that conditions that vary across contexts may be related to treatment assignment, outcomes, and selection into the sample. For example, we might study the relationship between inequality and democratization in low-income countries and then want to know how those effects travel to middle-income settings. However, the level of income may have implications jointly for the level of inequality and for how likely inequality is to generate regime change, meaning that causal effects uncovered in the first context cannot be assumed to operate the same way in the second context.</p>
+<p>This is the problem studied by <span class="citation" data-cites="pearl2014external">Pearl and Bareinboim (<a href="20-references.html#ref-pearl2014external" role="doc-biblioref">2014</a>)</span>. In particular, <span class="citation" data-cites="pearl2014external">Pearl and Bareinboim (<a href="20-references.html#ref-pearl2014external" role="doc-biblioref">2014</a>)</span> identify the nodes for which data are needed to “license” external claims, given a model. </p>
+<p>We illustrate with a simple model in which an observable confounder has a different distribution across contexts. In the model drawn in <a href="#fig-HJ-F-11-3" class="quarto-xref">Figure&nbsp;<span>11.3</span></a>, <em>Context</em> determines the distribution of the confounder, <span class="math inline">\(W\)</span>. We set a restriction such that the value of <span class="math inline">\(W\)</span> in Context 1 is never less than the value of <span class="math inline">\(W\)</span> in Context 0; our priors are otherwise flat over the remaining nodal types in the model.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-11-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-11-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-fusion_files/figure-html/fig-HJ-F-11-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-11-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.3: Extrapolation when confounders have different distributions across contexts
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We show priors and true values for the estimands, drawn from a “true” set of parameter values that we have posited, in <a href="#fig-HJ-F-11-4" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>. We see that the incidence of <span class="math inline">\(W=1\)</span> is higher in Context 1 than in Context 0, both in our priors and in the “truth” posited by the assigned parameter values. The “true” ATE of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is also higher in Context 1, though this is not reflected in our priors. The average treatment effect conditional on <span class="math inline">\(W\)</span> is the same in both contexts, whether we work from priors or assigned parameter values, as it must be given the model. That is, in this model the ATE varies conditional on <span class="math inline">\(W\)</span>—and it varies conditional <em>only</em> on <span class="math inline">\(W\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthetic with geom_path was deprecated in ggplot2 3.4.0.
+ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-HJ-F-11-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-11-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-fusion_files/figure-html/fig-HJ-F-11-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-11-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.4: Priors and true values (parameters) for three estimands: the frequency of <span class="math inline">\(W\)</span> the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> and the effect conditional on <span class="math inline">\(W: 1\)</span>
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p>
+<p>We now update the model using data from one context and then see if we can transport those findings to the other context. Specifically, we update using data on <span class="math inline">\(X, Y,\)</span> and <span class="math inline">\(W\)</span> from Context 0. We then use the updated beliefs to draw inferences about Context 1, using data <em>only</em> on <span class="math inline">\(W\)</span> from Context 1. In <a href="#fig-HJ-F-11-5" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>, we show our posteriors on the queries of interest as compared to the truth, given the “true” parameter values we have posited.</p>
+<p>We see that we have done well in recovering the effects, <em>both</em> for the context we studied (i.e., in which we observed <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>) and for the context we did not study. We can think of the learning here as akin to post-stratification. We have learned from observing <span class="math inline">\(X, Y\)</span>, and <span class="math inline">\(W\)</span> in Context 0 how <span class="math inline">\(X\)</span>’s effect depends on <span class="math inline">\(W\)</span>. Then we use those updated beliefs when confronted with a new value of <span class="math inline">\(W\)</span> in Context 1 to form a belief about <span class="math inline">\(X\)</span>’s effect in this second context. Of course, getting the right answer from this procedure depends, as always, on starting with the a good model.</p>
+<p>We can also see, in <a href="#fig-HJ-F-11-5" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>, what would have happened if we had attempted to make the extrapolation to Context 1 without data on <span class="math inline">\(W\)</span> in that context. We see a very large posterior variance. The high posterior variance here captures the fact that we know things could be different in Context 1, but we don’t know in what way they are different. So we don’t learn much, but at least we know that we don’t.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-11-5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-11-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-fusion_files/figure-html/fig-HJ-F-11-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-11-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.5: Extrapolation when two contexts differ on <span class="math inline">\(W\)</span> and <span class="math inline">\(W\)</span> is not observable in target context. Posteriors and true values (parameters) for the average effect the average effect conditional on <span class="math inline">\(W\)</span> (CATE) and the incidence of <span class="math inline">\(W\)</span> for two contexts.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p>
+</section><section id="sec-multilevel" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="sec-multilevel">
+<span class="header-section-number">11.4</span> Multilevel Models, Meta-analysis</h2>
+<p></p>
+<p>A key idea in Bayesian meta-analysis is that when we analyze multiple studies together, not only do we learn about common processes that give rise to the different results seen in different sites, but we also learn more about each study from seeing the other studies.</p>
+<p>A classic setup is provided in <span class="citation" data-cites="gelman2013bayesian">Gelman et al. (<a href="20-references.html#ref-gelman2013bayesian" role="doc-biblioref">2013</a>)</span>, in which we have access to estimates of effects and uncertainty in eight sites (schools), <span class="math inline">\((b_j, se_j)_{j \in \{1,2,\ldots,8\}}\)</span>. To integrate learning across these studies we employ a “hierarchical model” that treats each <span class="math inline">\(b_j\)</span> as a draw from distribution <span class="math inline">\(N(\beta_j, se_j)\)</span> (and, in turn treats each <span class="math inline">\(\beta_j\)</span> is a draw from distribution <span class="math inline">\(N(\beta, \sigma)\)</span>). In that setup we want to learn about the superpopulation parameters <span class="math inline">\(\beta, \sigma\)</span>, but we also get to learn more about the study-level effects <span class="math inline">\((\beta_j)_{j \in \{1,2,\ldots,8\}}\)</span> by studying them jointly.</p>
+<p>A hierarchical model like this allows us to think about the populations in our study sites as themselves drawn from a larger population (“superpopulation”) of settings. And, crucially, it allows us, in turn to use data in the study sites to learn about that broader superpopulation of settings.</p>
+<p>Although often used in the context of linear models with parameters for average causal effects, this logic works just as well with the kinds of causal models we have been using in this book.</p>
+<p>Let’s review how our analytic setup has worked so far. At each node in a causal model, we conceptualize a given case as having a particular nodal type. The case’s nodal type is drawn from a distribution of nodal types in the population of cases from which this case has been drawn. When we do process tracing, we consider that population-level distribution to be a set of fixed shares of nodal types in the population: Say, for node <span class="math inline">\(Y\)</span>, we might believe that half the cases in the population are <span class="math inline">\(\lambda^Y_{01}\)</span>, a quarter are <span class="math inline">\(\lambda^Y_{00}\)</span>, and a quarter are <span class="math inline">\(\lambda^Y_{11}\)</span>. We then use data from the case to update on the case’s nodal types (or on the combination of nodal types that correspond to some case-level query), given the population-level shares.</p>
+<p>When we engage in population-level inference, we begin with <em>uncertainty</em> about the population-level shares of types, and we express our prior beliefs about those shares as a Dirichlet <em>distribution</em>. So, for instance, our beliefs might be centered around a <span class="math inline">\(\lambda^Y_{01}=0.5, \lambda^Y_{00}=0.25, \lambda^Y_{11}=0.25\)</span> breakdown of shares in the population; and we also express some degree of uncertainty about what the breakdown is. Now, when we analyze data on some number of cases, we can update both on those cases’ types and on our beliefs about the distribution of types in the population—perhaps shifting toward a higher share of <span class="math inline">\(\lambda^Y_{01}\)</span>’s (and with a change in the distribution’s variance).</p>
+<p>As in the last section, we can also build a model in which there are multiple settings, possibly differing on some population-level characteristics. Fundamentally, however, the setup in the last section still involved population-level inference in that we were assuming that the <em>type shares</em> (<span class="math inline">\(\lambda\)</span> values) are the same across settings. The settings might differ in the value of a moderating variable, but they do not differ in the shares of cases that <em>would</em> respond in any given way to the moderator (and other causal conditions). The data allow us to update on what those common, cross-setting type proportions are.</p>
+<p>When we build a hierarchical model, each case is still understood as being embedded within a population: our cases might be citizens, say, each embedded within a country. The key difference from population-level inference is that we now conceive of there being <em>multiple</em> populations—say, multiple countries—each drawn from a population of populations, or superpopulation. Now, we think of each population (country) as having its own set of type shares for each node. In practice we think of each country’s type shares as being drawn from a Dirichlet distribution of type shares (for each node) that lives at the superpopulation level. Moreover, we are <em>uncertain</em> about what that distribution at the superpopulation level <em>is</em>. We are uncertain about what type proportions the superpopulation-level distribution is centered around, and we are uncertain about how dispersed this distribution is. While the distribution’s central tendency will be related to the mean type shares for countries, its variance will determine the degree of <em>heterogeneity</em> across countries in their type shares. </p>
+<p>To summarize, in population-level inference, we express uncertainty about the population’s type shares with a Dirichlet prior, at the population level, on which we update. In the hierarchical setting, we are uncertain about the population-level type shares and the superpopulation Dirichlet from which each node’s type shares are drawn. We express our uncertainty about each superpopulation Dirichlet by positing a prior distribution over the Dirichlet’s <span class="math inline">\(\alpha\)</span> parameters.</p>
+<p>Now when we observe data on citizens within countries, we can update our beliefs about the types for the particular citizens we observe, about type shares in the population of citizens within each country that we study, <em>and</em> on the parameters of the Dirichlet distribution from which population shares have been drawn. In updating on the last of these, we are learning not just about the countries we observe but also about those we do not directly observe.</p>
+<p>We illustrate with a simulation using a simple <span class="math inline">\(X \rightarrow Y\)</span> model. We imagine that we are studying the <span class="math inline">\(X \rightarrow Y\)</span> effect in 10 countries. Each country has a parameter distribution drawn from a common Dirichlet distribution.</p>
+<p>We assign a particular true set of superpopulation parameter values that, for the analytic exercise, are treated as unknown and that we would like to recover. In this true world, the probability of assignment to <span class="math inline">\(X=1\)</span> is distributed Beta(6, 4), meaning that on average, 40% of units are assigned to treatment, though there is variation in this proportion across countries (or study sites). Nodal types on <span class="math inline">\(Y\)</span> are distributed Dirichlet with parameter <span class="math inline">\(\alpha^Y = (3, 4, 10, 3)\)</span>, meaning that in the average country, the treatment effect is 0.3 (i.e.&nbsp;<span class="math inline">\(\frac{10}{20} -  \frac{4}{20}\)</span>), though this also varies across countries. Using these true parameter values, we simulate <span class="math inline">\(X, Y\)</span> data for 50 observations for <span class="math inline">\(n=10\)</span> countries.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-11-6" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-11-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="11-fusion_files/figure-html/fig-HJ-F-11-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-11-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.6: Updating on study level parameters from integrated analyses. Error bars indicate 95 percent credibility intervals. Studies are ordered by the size of the estimates from the unpooled analysis.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We now need to specify uncertainty over the (<span class="math inline">\(\alpha\)</span>) parameters of the Dirichlet distribution at the superpopulation level. In practice, we use an inverse gamma distribution for this, the critical feature being that we presuppose positive numbers but otherwise keep priors on these parameters dispersed. When we update now, we update simultaneously over the <span class="math inline">\(\alpha\)</span> parameters and the <span class="math inline">\(\lambda\)</span> parameters <em>for each country</em>.</p>
+<p>In <a href="#fig-HJ-F-11-6" class="quarto-xref">Figure&nbsp;<span>11.6</span></a> we plot the results. We focus on the average treatment effects and show a comparison of three values for each country: the unpooled estimate, or the estimate we get for each country using only data from that country; the pooled estimate, or the estimate we get for each country using data from <em>all</em> countries to inform that country’s parameter estimate; and the truth as posited for this simulation. As we can see, the pooled estimates are generally closer to the center than the unpooled estimates: this is because we are effectively using data from all countries to discount extreme features of the data observed in a given country. Put differently, the pooled data serve somewhat like a prior when it comes to drawing inferences about a single country: our inference is a compromise between the data from that country and the beliefs we have formed from the pooled data. We can also see that, for most countries, the pooling helps: The regularization provided by the pooling often (but not always) gives us an estimate closer to the truth for most of the settings. This is especially true when the unpooled estimates are unusually low. Across cases we have a reduction in root-mean-squared error of 65%.</p>
+<p>Of course, we also get an estimate for the meta-estimand, the average effect in the superpopulation. This lies close to the correct answer and has a relatively tight credibility interval.</p>
+<p>Finally, we can extract estimates of the <em>variation</em> in treatment effects across cases—a quantity distinct from our <em>uncertainty</em> about average effects. We can, for instance, think of a concentration parameter, operationalized as the sum of the <span class="math inline">\(\alpha^j\)</span> terms for a node, with a higher value representing lower overall heterogeneity. In this example, the “true” <span class="math inline">\(\alpha^Y\)</span> terms that we assigned summed to 20. This “true” <span class="math inline">\(\alpha^Y\)</span> vector implies that treatment effects lie, 95% of the time, between -0.04 and 0.6. Our estimate of this concentration parameter is 25.16. With this particular data draw, we thus underestimate heterogeneity. . Though this concentration parameter estimate still implies considerable heterogeneity in effects.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Our posteriors imply that we expect treatment effects to lie, with 95% probability, between -0.01 and 0.53.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-angrist1995identification" class="csl-entry" role="listitem">
+Angrist, Joshua D, and Guido W Imbens. 1995. <span>“Identification and Estimation of Local Average Treatment Effects.”</span> National Bureau of Economic Research.
+</div>
+<div id="ref-gelman2013bayesian" class="csl-entry" role="listitem">
+Gelman, Andrew, John B Carlin, Hal S Stern, David B Dunson, Aki Vehtari, and Donald B Rubin. 2013. <em>Bayesian Data Analysis</em>. Boca Raton, FL: CRC Press.
+</div>
+<div id="ref-knox2019design" class="csl-entry" role="listitem">
+Knox, Dean, Teppei Yamamoto, Matthew A Baum, and Adam J Berinsky. 2019. <span>“Design, Identification, and Sensitivity Analysis for Patient Preference Trials.”</span> <em>Journal of the American Statistical Association</em>, 1–27.
+</div>
+<div id="ref-pearl2014external" class="csl-entry" role="listitem">
+Pearl, Judea, and Elias Bareinboim. 2014. <span>“External Validity: From Do-Calculus to Transportability Across Populations.”</span> <em>Statistical Science</em> 29 (4): 579–95.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>There is of course also posterior variation around this estimate.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Implied variation at the mean estimates of <span class="math inline">\(\alpha\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./10-mixed-application.html" class="pagination-link" aria-label="Integrated Inferences Applications">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./12-clue-selection.html" class="pagination-link" aria-label="Clue Selection as a Decision Problem">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

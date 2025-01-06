@@ -1,0 +1,5 @@
+# Errata  {#sec-errata}
+
+* ***2024-01-13***: Typo in caption of @fig-HJ-F-16-6.  
+* ***2023-12-20***: Text before @tbl-HJ-T-11-1.  
+

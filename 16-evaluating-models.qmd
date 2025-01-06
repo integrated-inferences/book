@@ -1,0 +1,1380 @@
+# Evaluating Models {#sec-HJC16}
+
+:::{.callout-note title="Chapter summary"}
+We describe strategies for figuring out whether a model is likely doing more harm than good and for comparing the performance of different models to one another.
+:::
+
+
+```{r}
+#| label: packagesused15b
+#| include :  FALSE
+source("_packages_used.R")
+
+set.seed(202305)
+# run <- FALSE
+# runps <- FALSE
+library(DeclareDesign)
+
+p_two_sided <- function(T, t, digits = 2){
+     cuts_0 = mean(T) - abs(mean(T)-t)
+     cuts_1 = mean(T) + abs(mean(T)-t)
+     (mean(T <= cuts_0) + mean(T >= cuts_1) )|> round(digits)}
+```
+
+Throughout this book, we have maintained the conceit that you believe your model. But it is also obvious that even the most nonparametric-seeming models depend on substantive assumptions and that these are almost certainly wrong. The question then is not how much you believe your model (or whether you really believe what you say you believe) but whether your model is useful in some sense. How can we evaluate the usefulness of our models?
+
+## Four Strategies
+
+In this chapter, we will describe four strategies and show them at work for a running example in which we know a model poorly captures an assumed causal process. We will then use turn the four strategies loose on the two models that we examined in Chapters @sec-HJC8 and @sec-HJC10.
+
+Here's our running example. Imagine a true causal process involving $X$, $M$, and $Y$. Say that $X$ affects $Y$ *directly*, $M$ never has a negative effect on $Y$, and $X$ has no effect on $M$ (and so there is no indirect effect of $X$ on $Y$ via $M$). But imagine that researchers wrongly suppose that the effect of $X$ on $Y$ runs entirely through $M$, positing a model of the form $X \rightarrow M \rightarrow Y$.
+
+The problem with the posited model, then, is that it represents overly strong beliefs about independence relations: It does not allow for a direct effect that is in fact operating.
+
+
+We are perfectly able to update using this too-strong $X \rightarrow M \rightarrow Y$ model and data---but the updated model can produce wildly misleading causal inferences. We show this using a set of 200 observations simulated from a model that has direct effects only and an average effect of $X$ on $Y$ of $1/3$.
+
+In the left panel of @fig-HJ-F-16-1, we show the estimated average treatment effect of $X$ on $Y$ when using these data to update the $X \rightarrow M \rightarrow Y$ model. In the right panel, we show the inferences we would make using the same data but using a model that makes weaker assumptions by allowing for direct effects: An $X \rightarrow M \rightarrow Y \leftarrow X$ model. With both models, we start with flat priors over nodal types.
+
+We represent the (stipulated) true average effect with the vertical line in each graph.
+
+As we can see, the weaker (i.e., more permissive) model performs alright: The true effect falls within the posterior distribution on the ATE. However, the stronger model, which excludes direct effects, generates a tight posterior distribution that essentially excludes the right answer. So, if we go into the analysis with the stronger model, we have a problem.
+
+But can we *know* we have a problem?
+
+In the remainder of this section, we explore a range of diagnostics that researchers can undertake to evaluate the usefulness of their models or to compare models with one another: Checking assumptions of conditional independence built into a model; checking the model's fit; using "leave-one-out" cross-validation; and assessing model sensitivity. \index{Sensitivity analysis}
+
+```{r}
+#| label: modelsch15
+#| echo :  FALSE
+n = 200
+
+if(run){
+  
+ unrestricted_model <- 
+    make_model("X -> M -> Y <- X") |>
+    set_parameters(statement = c("M[X=1] != M[X=0]"), parameters = 0) |>    
+   set_parameters(statement = "(Y[X=1] < Y[X=0])", parameters = c(0)
+      ) 
+ 
+ restricted_model <- make_model("X -> M -> Y")|>
+    set_parameters(
+      statement = c("M[X=1] < M[X=0]"),
+      parameters = c(0))  |>
+       set_parameters(
+      statement = c("(Y[M=1] <= Y[M=0])"), # Note perfect MY correlation
+      parameters = 0
+      ) 
+
+ 
+make_data(unrestricted_model, using = "parameters", n = n) |>
+     write_rds("saved/16_data.rds") 
+  
+make_data(restricted_model, using = "parameters", n = n) |>
+     write_rds("saved/16_XMYdata.rds") 
+
+data <-   read_rds("saved/16_data.rds") 
+  
+ restricted_model |>
+   update_model(data, keep_fit = TRUE) |>
+   write_rds("saved/16_restricted_model.rds") 
+
+ unrestricted_model |>
+   update_model(data, keep_fit = TRUE) |>
+   write_rds("saved/16_unrestricted_model.rds") 
+
+}
+
+data               <-   read_rds("saved/16_data.rds") 
+XMYdata            <-   read_rds("saved/16_XMYdata.rds") 
+restricted_model   <-   read_rds("saved/16_restricted_model.rds") 
+unrestricted_model <-   read_rds("saved/16_unrestricted_model.rds") 
+
+if(run){
+  
+  ateXY1 <- query_distribution(restricted_model, "Y[X=1] - Y[X=0]", using = "posteriors")
+  ateXY2 <- query_distribution(unrestricted_model, "Y[X=1] - Y[X=0]", using = "posteriors")
+
+ write_rds(data.frame(restricted_ate = ateXY1 |> t(), 
+                      unrestricted_ate = ateXY2 |> t()),
+           "saved/16_ates.rds")
+}
+
+ates <- read_rds("saved/16_ates.rds") 
+
+```
+
+```{r}
+#| label: fig-HJ-F-16-1
+#| echo :  FALSE
+#| fig.cap :  "A restricted model yields a credibility interval that does not contain the actual average effect."
+#| message :  FALSE
+#| fig.height :  2
+#| fig.width :  6
+strong_weak_labels <- 
+  c("Stronger Model (Restricted)", "Weaker Model  (Unrestricted)")
+
+ates |> gather("var", "val") |> 
+  mutate(var = factor(var, c("restricted_ate", "unrestricted_ate"), strong_weak_labels)) |> 
+  ggplot(aes(val)) + geom_histogram() + facet_grid(~var) + theme_bw() + xlab("Effect of X on Y") + geom_vline(xintercept = 1/3, color = "black")
+```
+
+
+
+### Check Conditional Independence
+\index{Conditional independence}
+
+First, even before engaging in updating, we can look to see whether the data we have are consistent with the causal model we postulate. In particular, we can check whether there are inconsistencies with the Markov condition that we introduced in @sec-HJC2: That every node is *conditionally independent* of its nondescendants, given its parents.
+
+In this case, if the stronger model is right, then given $M$, $Y$ should be independent of $X$.
+
+Is it?
+
+One way to check is to assess the covariance of $X$ and $Y$ given $M$ in the data. Specifically, we regress $Y$ on $X$ for each value of $M$, once for $M=1$ and again for $M=0$; a correlation between $X$ and $Y$ at either value of $M$ would be problematic for the conditional independence assumption embedded in the stronger model.
+
+Note that this form of diagnostic test is a classical one in the frequentist sense: We start by hypothesizing that our model is correct and then ask whether the data were unlikely given the model.
+
+```{r}
+#| label: tbl-HJT-r16
+#| echo :  FALSE
+rbind(
+  estimatr::lm_robust(Y~X, data = filter(data, M==0)) |> tidy() |> filter(term == "X"), 
+  estimatr::lm_robust(Y~X, data = filter(data, M==1)) |> tidy() |> filter(term == "X")) |>
+  mutate(M = 0:1) |>
+  select(M, estimate, std.error, p.value) |> 
+  kabble(digits = 3, caption =  "Regression coefficient on $X$ given $M=0$ and $M=1$")
+
+
+```
+
+We report the regression coefficients on $X$ in @tbl-HJT-r16. It is immediately apparent that we have a problem. At both values of $M$, and especially when $M=0$, there is a strong correlation between $X$ and $Y$, evidence of a violation of the Markov condition implied by the stronger model.[^evaluating-models5-2]
+
+[^evaluating-models5-2]: In applying the Markov condition, we also need to take into account any unobserved confounding. For instance, suppose that there was an unobserved confounder of the relationship between $M$ and $Y$ in the $X \rightarrow M \rightarrow Y$ model. Then we would *not* expect $Y$ to be independent of $X$ conditional on $M$. In this case $M$ acts as a collider between $X$ and another unobserved cause of $Y$; so conditioning on $M$ introduces a correlation between $X$ and this unobserved cause, and thus between $X$ and $Y$.\index{Collider}
+
+Identifying the full set of conditional independence assumptions in a causal model can be difficult. There are however well developed algorithms for identifying what sets, if any, we need to condition on to ensure conditional independence between two nodes given a DAG.[^evaluating-models5-3]
+
+[^evaluating-models5-3]: `R` users can quickly access such results using the `impliedConditionalIndependencies` function in the `dagitty` package.
+
+
+### Bayesian *p*-Value: Are the Data Unexpected Given Your Model?
+
+\index{Bayesian p value@{Bayesian $p$-value}} A second---though clearly related--approach asks whether features of the data we observe are in some sense unusual given our updated model, or more unusual given our model than another model. For instance, if one model assumed no adverse effects of $X$ on $Y$ and no confounding, then a strong negative correlation between $X$ and $Y$ would be unusual, even for the model updated with this data; and this negative correlation would be *more* unusual for this model than for a model that allowed for adverse effects.
+
+This approach is also quite classical: We are looking to see whether we should "reject" our model in light of inconsistencies between the data we have and the data we expect to see given our updated model. The idea is not to figure out whether the model is false---we know it is---but whether it is unacceptably inconsistent with data patterns in the world [@gelman2013two].\index{Gelman, Andrew}
+
+```{r}
+#| label: fig-HJ-F-16-2
+#| fig.cap :  "Bayesian $p$  values are not calibrated."
+#| fig.height :  4
+#| fig.width :  10
+#| echo :  FALSE
+#| message :  FALSE
+
+# helper function to take a data draw of size n using event probability from iteration j 
+# returns compact data frame
+draw <- function(model, j, n = 5)
+  make_events(model,
+              n = n,
+              w = as.matrix(model$stan_objects$event_probabilities[j,] )) 
+
+if(run){
+df    <- data.frame(X = c(0,1), Y = c(0,1))
+model <- make_model("X -> Y")
+reps <- 10
+sims <- 10000
+
+# test stat here is whether data is on the diagonal
+test_stat <- function(data) 
+  # with(data, all(X==Y))
+  sum(data$count[2:3]) == 0
+
+# done here by simulation though could use multinoal probabilites also to 
+# calculate probability of diagonal data
+ps <-
+  sapply(1:reps, function(x) {
+  print(x)  
+  m <- update_model(model, df |> uncount(2^x), iter = 12000, chains = 8, keep_event_probabilities = TRUE)
+  s <- sapply(1:sims, function(j)
+       draw(model = m, j, n = 2^{x+1}) |> test_stat())
+  mean(s, na.rm = TRUE)
+})
+
+write_rds(data.frame(N = 2^(1:reps+1), p = ps), "saved/16_bayes_ps.rds")
+
+}
+
+read_rds("saved/16_bayes_ps.rds") |>
+  ggplot(aes(N, p)) + geom_point() + theme_bw() + ylim(0, NA) +
+  ylab("Posterior probability of seeing a\nperfect correlation between X and Y") +
+  xlab("Number of observations (exhibiting a perfect correlation between X and Y).") + 
+  scale_x_sqrt()
+  
+
+```
+
+
+An approach for doing this using simulated data from the posterior predictive distribution is described in @gabry2019visualization.[^evaluating-models5-4] The basic procedure we employ here is to:\index{Bayesian p value@{Bayesian $p$-value}!procedure} 
+
+1. Draw a parameter vector from the posterior. 
+2. Draw data using the parameter vector. 
+3. Calculate a test statistic using these data. 
+4. Repeat 1 - 3 to build up a distribution of test statistics.
+5. Calculate the same test statistic using the real data (the observed statistic). 
+6. Assess how extreme the observed statistic is relative to the distribution of statistics generated from the posterior (e.g. the probability of getting a test statistic as large or larger than the observed statistic).\index{Gabry, John} 
+
+[^evaluating-models5-4]: Tools in the `bayesplot` package can be used to show how typical the data we observe is for different models
+
+Note that in this straightforward calculation we assess the probability of the data given the same model that generated the data; approaches could also be used that seek out-of-sample estimates of the probability of observing the observed data.
+
+We note that the $p$ values generated in this way are not necessarily "calibrated" in the sense that given a true vector $\theta$, the distribution of the $p$ value is not uniform [@bayarri2000p].[^evaluating-models5-5] It nevertheless gives an indication of whether the data are unusual given our model. As an illustration, imagine a simple $X\rightarrow Y$ model and imagine that in truth the effect of $X$ on $Y$ were 1. Say we observe $N$ cases in which $X$ and $Y$ are indeed perfectly correlated; we update our model and then draw data from this updated model. What are the chances that the data we draw would also be perfectly correlated, like the data we put into the model? In fact, surprisingly, the answer is "low," and, moreover *how* low depends on $N$.See this result plotted in @fig-HJ-F-16-2. In other words, the extreme data we see can seem extreme to us---even after we have updated using the right model and extreme data.
+
+[^evaluating-models5-5]: A uniform distribution has the property that the probability of getting a value of $p$ or less under the model is $p$.
+
+Returning to our running example, we consider two test statistics and compare performance for the stronger and weaker model (@fig-HJ-F-16-3. First, we look just at the distribution of the outcome $Y$ to see how the actual distribution in the data compares to the predicted distribution from the updated model. Second, we look at the actual correlation between $X$ and $Y$ and see how this compares to the predicted distribution. In both cases we calculate a two-sided $p$-value by assessing the chances of such an extreme outcome as what we observe. If the observed data were at the mean of the predictive distribution, then we would have a $p$-value of 1. If they were at the 95th percentile (and the distribution of test statistics under the model were symmetric) we would have a $p$-value of 0.10.
+
+
+```{r, echo = FALSE, message = FALSE}
+if(run){
+  
+ sims <- 500
+ n <- nrow(data)
+ 
+ # Outcome prediction
+ ############################################# 
+ t(replicate(sims, {
+   dd <- make_data(restricted_model, n = n, param_type = "posterior_draw")
+   c(Y=mean(dd$Y), C = cor(dd$Y, dd$X))})) |>  data.frame() |>
+  write_rds("saved/16_replicates_restricted.rds") 
+
+ t(replicate(sims, {
+   dd <- make_data(unrestricted_model, n = n, param_type = "posterior_draw")
+   c(Y=mean(dd$Y), C = cor(dd$Y, dd$X))})) |> data.frame() |>
+  write_rds("saved/16_replicates_unrestricted.rds") 
+  
+  }
+
+df <- 
+  list(
+    Stronger = read_rds("saved/16_replicates_restricted.rds"),
+    Weaker =    read_rds("saved/16_replicates_unrestricted.rds")) |>
+  bind_rows(.id = "Model") |> gather("test", "Val", -Model) 
+
+tests <- c("Test stat: Mean of Y", "Test stat: X, Y covariance")
+
+wegot <- data.frame(test = c("Y", "C"), 
+                    wegot = c(mean(data$Y), cor(data$Y, data$X)))
+wegot_labelled <-  wegot  |>
+  mutate(test = factor(test, c("Y", "C"), tests))
+                       
+ps <- df |> group_by(Model, test) |> left_join(wegot) |> 
+  summarize(p = p_two_sided(Val, wegot[1])) |> 
+  mutate(Val = 1, x = 0, y = 120, label = paste0("p = ", p))
+
+ps_labelled <- ps |>
+  mutate(test = factor(test, c("Y", "C"), tests)) 
+
+
+```
+
+```{r}
+#| label: fig-HJ-F-16-3
+#| echo :  FALSE
+#| message :  FALSE
+#| fig.cap :  "Bayesian $p$-values for different test statistics and models."
+
+  
+df |>
+  mutate(test = factor(test, c("Y", "C"), tests)) |> 
+  ggplot(aes(Val)) + geom_histogram() + facet_grid(Model ~ test) + xlab("predictions") +
+  geom_vline(data = wegot_labelled, aes(xintercept = wegot), color = "black") + theme_bw() + 
+  ggtext::geom_textbox(data  = ps_labelled, aes(x = x, y = y, label = label), width = unit(0.4, "npc"))
+
+```
+
+For the first test, we see that the predicted distribution of the outcome $Y$ is similar for both updated models; and the actual mean outcome is within the distribution of predicted mean outcomes. The $p$-values for the stronger (`r (ps |> filter(Model == "Stronger" & test == "Y"))$p`) and weaker models (`r (ps |> filter(Model == "Weaker" & test == "Y"))$p`) suggest that the observed mean $Y$ value is not unusual for either model. No clues there. This is a fairly "easy" test in the sense that many models should have little difficulty producing a reasonable distribution for $Y$ even if they are problematic in other ways.
+
+When it comes to the correlation between $X$ and $Y$, however, the two models perform very differently. The posterior predictive distribution from the stronger model is centered around a $0$ correlation and does not even extend out as far as the observed correlation. The resulting $p$-value is 0, meaning that from the perspective of the stronger model the $X,Y$ correlation in the data is entirely unexpected. A frequentist looking at the observed correlation between $X$ and $Y$ should feel comfortable rejecting the stronger model. The updated weaker model, in contrast, predicts a strong correlation, and the observed correlation is comfortably within the posterior predictive distribution, with a $p$-value of `r (ps |> filter(Model == "Weaker" & test == "C"))$p`.
+
+At first blush, the abysmal performance of the stronger model may seem surprising. Even after this model has *seen* the $X,Y$ correlations in the data, the model still finds those correlations highly surprising. The $X \rightarrow M \rightarrow Y$ model fails to learn, however, because the strong assumptions on independence do not provide the flexibility it needs to capture the complex relations between $X$, $M$, and $Y$. The problem is that $M$ is uncorrelated with $X$ in the true data-generating process, so the stronger model learns that there is no indirect effect. But, at the same time, this model does not *allow* for a direct effect. Despite what would seem to be overwhelming evidence of a systematic $X,Y$ correlation, a causal relationship connecting $X$ to $Y$ remains extremely unlikely given the $X,M$ data pattern and the impossibility of direct effects. The stronger model just can't handle the truth. The weaker model, on the other hand, readily learns about the direct $X \rightarrow Y$ effect.
+
+
+### Leave-One-Out Likelihoods
+
+\index{LOO cross validation} A further class of model-validation methods involves cross-validation. Rather than asking how well the updated model predicts the data used to update it, cross-validation uses the data at hand to estimate how well the model is likely to predict new data that have not yet been seen.
+
+One way to do this is to split the available data, using one subsample to update and then assessing predictions using the other subsample. We focus here, however, on a "leave-one-out" (LOO) approach that uses *all* of the available data to estimate out-of-sample predictive performance.
+
+\index{LOO cross validation!procedure} In the LOO approach, we update the model using all data points except for one and then ask how well the model performs in predicting the left-out observation. We repeat this for every data point in the dataset to assess how well we can predict the entire dataset.
+
+Often, the LOO approach is used to predict a particular outcome variable. We, however, \index{CausalQueries@\texttt{CausalQueries}} are interested in predictions over the joint realization of all nodes. Thus, we calculate the posterior probability of each data point, using the model updated with all of the other observations.
+
+The LOO estimate of out-of-sample predictive fit, for a dataset with $n$ observations, is then:
+
+$$\prod_1^np(y_i|y_{-i}, \text{model})$$ where $y_{-i}$ is the data pattern with observation $y_i$ left out, and $y_i$ represents the values of all nodes of interest for observation $i$.
+
+
+```{r}
+#| label: fig-HJ-F-16-4
+#| echo :  FALSE
+#| fig.cap :  "LOO likelihoods for different models"
+#| message: FALSE
+#| warning: FALSE
+#| fig.height :  4
+#Leave one out
+
+
+if(run){
+  
+  get_loo_likelihood(data, restricted_model, 2000) |> write_rds("saved/16_loo_restricted.rds")
+    
+  get_loo_likelihood(data, unrestricted_model, 2000) |> write_rds("saved/16_loo_unrestricted.rds")
+
+}
+
+if(run){
+  
+  get_loo_likelihood(XMYdata, restricted_model, 2000) |> write_rds("saved/16_loo_restricted_2.rds")
+    
+  get_loo_likelihood(XMYdata, unrestricted_model, 2000) |> write_rds("saved/16_loo_unrestricted_2.rds")
+
+}
+
+
+loo_restricted   <- read_rds("saved/16_loo_restricted.rds") 
+loo_unrestricted <- read_rds("saved/16_loo_unrestricted.rds")  
+
+data.frame(restricted = loo_restricted$case_likelihood |> unlist(),
+           unrestricted = loo_unrestricted$case_likelihood |> unlist(),
+           label = loo_restricted$data$event) |>
+  ggplot(aes(restricted, unrestricted, label = label)) +
+  geom_point(color = "black") + xlim(.04, .22) + ylim(.04, .22) +
+  xlab("Stronger model") + ylab("Weaker model") +
+  ggrepel::geom_text_repel() + theme_bw() + 
+  ggtitle("LOO likelihoods for stronger (restricted) and weaker (unrestricted) models")
+
+```
+
+We implement LOO cross-validation of the stronger and weaker models using 200 observations generated from the same data-generating model employed above. We find that the LOO likelihood of the data under the stronger model is `r  formatC(loo_restricted$loo_likelihood, format = "e", digits = 2)` while the likelihood is `r  formatC(loo_unrestricted$loo_likelihood, format = "e", digits = 2)` under the weaker model. Thus, the weaker model represents an estimated improvement in out-of-sample prediction on the order of `r  formatC(loo_unrestricted$loo_likelihood/loo_restricted$loo_likelihood, format = "e", digits = 2)`^[These numbers (and later numbers) change from simulation to simulation based on the particular data we draw from the model.]
+
+We can visualize the pattern in @fig-HJ-F-16-4, where we plot the likelihood of each possible data type under the stronger model against the likelihood of that data type under the weaker model. The distribution is much more compressed on the horizontal axis than on the vertical axis indicating how the stronger model is not able to differentiate as much across the data types as the weaker.
+
+Notably, the stronger model is not able to "learn" from the data about the (*in fact*, operative) relationship between $X$ and $Y$. The positive correlation arises because both models  have "learned" from chance correlations in the data that different values $X,M$ combinations are differentially likely. The weaker model, however, also succeeds in dividing the data types into two groups: Those with a positive $X,Y$ correlation and those with a negative $X,Y$ correlation and has correctly (given the true model) learned that the former is more likely than the latter.  The stronger model is not successful in separating these sets out in this way.
+<!-- Flag: two typos in this paragraph in published book -->
+
+```{r}
+#| label: fig-HJ-F-16-5
+#| echo :  FALSE
+#| fig.cap :  "LOO likelihoods and data type counts for the  stronger and weaker models"
+#| fig.height :  4
+plot_loo <- function(models, model_names = names(models), model_labels = names(models))
+  
+  lapply(models, function(m)
+         data.frame(
+           case_likelihood = m$case_likelihood |> unlist(),
+           label = m$data$event,
+           count = m$data$count)
+         ) |> bind_rows(.id = "model") |>
+    mutate(model = factor(model, model_names, model_labels)) |>
+    filter(count > 0) |>
+
+    ggplot(aes(case_likelihood, count, label = label)) + geom_point()+ 
+       xlab("Case likelihood") + 
+       ylab("Actual number of cases") + 
+    facet_wrap(~model) + theme_bw() +
+    geom_abline(slope = models[[1]]$data$count |> sum(), intercept = 0) +
+    ggtitle("LOO likelihoods and case shares I") + theme_bw() +
+    ggrepel::geom_text_repel()   
+
+plot_loo_nolabel <- function(models)
+  
+  lapply(models, function(m)
+         data.frame(
+           case_likelihood = m$case_likelihood |> unlist(),
+           label = m$data$event,
+           count = m$data$count)
+         ) |> bind_rows(.id = "model") |>
+    mutate(model = factor(model, names(models))) |>
+    filter(count > 0) |>
+    ggplot(aes(case_likelihood, count)) + geom_point()+ 
+       xlab("Case likelihood") + 
+       ylab("Actual number of cases") + facet_wrap(~model) + theme_bw() +
+    geom_abline(slope = models[[1]]$data$count |> sum(), intercept = 0) +
+    ggtitle("LOO likelihoods and case shares") + theme_bw() 
+
+list(restricted = loo_restricted, unrestricted  = loo_unrestricted) |> 
+  plot_loo(c("restricted", "unrestricted"), strong_weak_labels)
+
+r2_loo <- function(models) # , model_names = names(models), model_labels = strong_weak_labels)
+  models |> 
+  lapply(function(m)
+         data.frame(
+           case_likelihood = m$case_likelihood |> unlist(),
+           label = m$data$event,
+           count = m$data$count)
+         ) |> bind_rows(.id = "model") |>
+#    mutate(model = factor(model, model_names, model_labels)) |>
+    filter(count > 0) |>
+    group_by(model) %>%
+    mutate(R2 = lm_robust(count ~ case_likelihood)$adj.r.squared) %>%
+  slice(1) %>%
+  ungroup()
+  
+  
+```
+
+In @fig-HJ-F-16-6, we then see how the likelihoods of each data type line up with the actual count of each data type. As we can see, the weaker model updates to likelihoods that fit the actual data pattern well while the stronger model does not; in particular the stronger model underpredicts cases that are on the diagonal and over predicts cases that are off it.
+
+We can also turn the tables and imagine that the *stronger* model represents the true data-generating process. We implement LOO cross-validation of the two models using 200 data points generated from the stronger model. In @fig-HJ-F-16-6, we see a comparison of the likelihoods of the data types under the two updated models and note that they are extremely similar. This represents an important asymmetry: The model that makes weaker assumptions performs far better in handling data generated by a "stronger" true model than does the stronger model in learning about a process that violates one of its assumptions. Since the weaker model allows for both direct and indirect effects, the weaker *can* learn about the parameters of the true process in the first situation; but the strong model cannot do so in the second situation because it has by assumption ruled out a key feature of that process (the direct effect).
+
+```{r}
+#| label: fig-HJ-F-16-6
+#| echo :  FALSE
+#| fig.cap :  "Data prediction of a restricted and unrestricted model when in fact the data are generated by the ~~un~~restricted  (stronger) model"
+#| fig.height :  4
+
+
+loo_restricted_2   <- read_rds("saved/16_loo_restricted_2.rds") 
+loo_unrestricted_2 <- read_rds("saved/16_loo_unrestricted_2.rds")  
+
+
+list(restricted = loo_restricted_2, unrestricted  = loo_unrestricted_2) |> 
+  plot_loo(c("restricted", "unrestricted"), strong_weak_labels) + 
+  ggtitle("LOO likelihoods and case shares II")
+
+```
+
+
+While it is difficult to see this in @fig-HJ-F-16-6, the stronger model performs better here than the weaker model. The likelihood of the data under the stronger model is now `r  formatC(loo_restricted_2$loo_likelihood, format = "e", digits = 2)`, compared to the likelihood of `r  formatC(loo_unrestricted_2$loo_likelihood, format = "e", digits = 2)` under the weaker model. Thus, the weaker model represents an estimated loss to out-of-sample prediction on the order of `r  formatC(loo_unrestricted_2$loo_likelihood/loo_restricted_2$loo_likelihood, format = "e", digits = 2)`. This is not surprising insofar as the stronger model *precisely* models the data-generating process while the extra parameters in the weaker model allow for "learning" from chance features of the data.
+
+These examples display features of estimation of out-of-sample prediction accuracy familiar from a regression context. In a regression framework, adding parameters to a model may improve fit to sample---generating gains to out-of-sample prediction accuracy when the new parameters pick up systematic features of the data-generating process---but run a risk of over-fitting to chance patterns in the data. Similarly, in a causal models framework, for a model with weaker assumptions and more parameters. We saw that the weaker model performed much better when the true process involved direct effects since the extra parameters, allowing for direct effects, captured something "real" going on. But the same model performed slightly worse than the stronger model when there were no direct effects to pick up, such that the extra parameter could only model noise.
+
+
+
+### Sensitivity
+
+\index{Causal models!Sensitivity} The last approach we consider brackets the question of which model is better and asks, instead: How much do your conclusions depend on the model? You can worry less about your assumptions if the conclusions are not strongly dependent on them.
+
+For the running example we already saw in @fig-HJ-F-16-1 that conclusions can depend dramatically on the model used. This alone is reason to be worried.
+
+To illustrate how to think about sensitivity for a process tracing example, consider a situation in which we are unsure about posited parameter values: That is, about the probability of particular effects at particular nodes. It is likely to be the case in many research situations that we are considerably uncertain about how to quantify intuitive or theoretically informed beliefs about the relative likelihood of different effects.
+
+Suppose, for instance, that we begin with an $X \rightarrow M \rightarrow Y$ model. And suppose, further, that we believe that it is unlikely that $M$ has an adverse effect on $Y$. But we are not sure *how* unlikely that adverse effect is. (We assume all other nodal types are equally likely.) Finally, say that we want to use the observation of $M$ to draw an inference about whether $X=1$ caused $Y=1$ in an $X=Y=1$ case.
+
+How much does our inference regarding $X$'s effect on $Y$---when we see $M=0$ or $M=1$---depend on this second stage assumption about the probability of a negative $M \rightarrow Y$ effect?
+
+We answer the question by looking at posterior beliefs for a range of possible values for the relevant parameter, $\lambda^Y_{10}$. In @tbl-ch16ranges, we examine a range of values for $\lambda^Y_{10}$, from 0 to 0.25 (full parity with other types). For each parameter value, we first show the resulting prior belief about the probability that $X=1$ caused $Y=1$. We can see that, before we observe $M$, we think that a positive $X \rightarrow Y$ effect is more likely as a negative $M \rightarrow Y$ effect becomes more likely. This stands to reason since a negative second-stage effect is one possible process through which a positive $X \rightarrow Y$ effect might occur. And higher values for $\lambda^Y_{10}$ come disproportionately at the expense of types under which $X$ cannot affect $Y$.[^evaluating-models5-6]
+
+[^evaluating-models5-6]: Increasing weight on $\lambda^Y_{10}$ is drawn equally from $\lambda^Y_{00}$, $\lambda^Y_{11}$, and $\lambda^Y_{10}$, with the first two of these three representing null effects.
+
+In the next two columns, we show the posterior belief we arrive at when we observe $M=0$ and then $M=1$, for each $\lambda^Y_{10}$ assumption. Looking at the last column first, we see that our inference from $M=1$ does *not* depend at all on our beliefs about adverse $M \rightarrow Y$ effects. The reason is that, if we see $M=1$, we already know that $M$ did not have a negative effect on $Y$, given that we also know $Y=1$. Our beliefs are purely a function of the probability that there are positive effects at both stages as compared to the probability of other causal types that could yield $X=M=Y=1$, a comparison unaffected by the probability of a negative $M \rightarrow Y$ effect.
+
+Our inferences when $M=0$, on the other hand, do depend on $\lambda^Y_{10}$: When we see $M=0$, our belief about a positive $X \rightarrow Y$ effect depends on the likelihood of *negative* effects at both stages. We see, then, that the likelier we think negative effects are at the second stage, the higher our posterior confidence in a positive $X \rightarrow Y$ effect when we see $M=0$.
+
+```{r}
+#| label: tbl-ch16ranges
+#| fig.cap :  "Possible inferences on `X caused Y` given observation of M: 0 and M: 1 given different possible models. The highest inference when M: 0 is lower than the lowest inference when M: 1"
+#| echo :  FALSE
+#| message: FALSE
+#| warning: FALSE
+
+model <- make_model("X -> M -> Y") |>
+    set_parameters(
+      param_names = c("M.10"), 
+      parameters = .25)
+
+
+adverse2 <- seq(0, .25, .05)
+
+out <-  
+  sapply(adverse2, function(a) {
+  
+  query_model(
+  set_parameters(model, 
+                 param_names = c("Y.10"), 
+                 parameters = c(a)),
+  query = c("Y[X=1] > Y[X=0]"),
+  given = c("X==1 & Y==1", "X==1 & Y==1 & M==0", "X==1 & Y==1 & M==1"),
+  using = "parameters",
+  expand_grid = TRUE)$mean})
+out2 <- t(out)  |> data.frame()
+names(out2) <- c("No data", "M0", "M1")
+out2 <- arrange(out2,M0, M1)
+
+cbind(adverse2, out2) |> data.frame() |>
+  kabble(
+    col.names = c("$\\lambda^Y_{10}$", "Prior", "$M=0$", "$M=1$"), digits = 3,
+    caption = "Inferences on the probability that $X$ caused $Y$ upon seeing $M=0$ or $M=1$ for a range of possible values of $\\lambda^Y_{10}$", format='pandoc')
+
+```
+
+Even though our inferences given $M=1$ do not depend on $\lambda^Y_{10}$, the amount that we *update* if we see $M=1$ *does* depend on $\lambda^Y_{10}$. This is because $\lambda^Y_{10}$ affects our belief, prior to seeing $M$, that $X=1$ caused $Y=1$. Working with a low $\lambda^Y_{10}$ value, we start out less confident that $X=1$ caused $Y=1$, and thus our beliefs make a bigger jump if we do see $M=1$ than if we had worked with a $\lambda^Y_{10}$ higher value.
+
+However, to the extent that we want to know how our assumptions affect our *conclusions*, the interesting feature of this illustration is that sensitivity depends on what we find. The answer to our query is sensitive to the $\lambda^Y_{10}$ assumption if we find $M=0$, but not if we find $M=1$. It is also worth noting that, even if we observe $M=0$, the sensitivity is limited across the range of parameter values tested. In particular, for all $\lambda^Y_{10}$ values below parity (0.25), seeing $M=0$ moves our beliefs *in the same direction.*
+
+We can use the same basic approach to examine how our conclusions change if we relax assumptions about nodal-type restrictions, about confounds, or about causal structure.
+
+We also note that, in cases in which we cannot quantify uncertainty about parameters, we might still be able to engage in a form of "qualitative inference." There is a literature on probabilistic causal models that assesses the scope for inferences when researchers provide ranges of plausible values for parameters (perhaps intervals, perhaps only signs, positive, negative, zero), rather than specifying a probability distribution. For a comprehensive treatment of qualitative algebras, see @parsons2001qualitative. Under this kind of approach, a researcher might willing to say that they think some probability $p$ is not plausibly greater than .5, but unwilling to make a statement about their beliefs about where in the $0$ to $0.5$ range it lies. Such incomplete statements can be enough to rule out classes of conclusion.
+
+## Evaluating the Democracy-Inequality Model
+\index{Causal models!Democratization}
+
+
+We now turn to consider how well our model of democracy and inequality from  @sec-HJC8 and @sec-HJC10 fares when put to these four tests.
+
+```{r}
+#| label: pimdmodelsch16
+#| echo :  FALSE
+#| message: FALSE
+#| warning: FALSE
+
+pimd <- make_model("I -> M -> D <- P; I -> D") |>
+  
+         set_restrictions(c( 
+           "(M[I=1] < M[I=0])",
+           "(D[I=1] > D[I=0]) | (D[M=1] < D[M=0]) | (D[P=1] < D[P=0])"))
+
+# make an alternative model that permits negative I->M effects
+
+pimd_negmed <- make_model("I -> M -> D <- P; I -> D") |>
+  
+         set_restrictions(c( 
+           "(D[I=1] > D[I=0]) | (D[M=1] < D[M=0]) | (D[P=1] < D[P=0])"))
+
+pimd_nonmon <- make_model("I -> M -> D <- P; I -> D")
+
+data <- CausalQueries::democracy_data
+
+data_2 <- read.csv("data/pimd2.csv") |> #new data we compiled from other sources
+  mutate(I2 = I2*1) |> select(country, P2, I2, M2, D2) |>
+  rename(P = P2, I = I2, M= M2, D = D2)
+
+#data <- read.csv("data/pimd2.csv") |> 
+ # mutate(I2 = I2*1) |> select(country, P2, I2, M2, D2) |>
+  #rename(P = P2, I = I2, M= M2, D = D2) 
+
+
+if(run){
+  
+pimd |>
+   update_model(data, keep_fit = TRUE, iter = 8000) |>
+   write_rds("saved/16_pimd_model.rds") 
+
+pimd_negmed |>
+   update_model(data, keep_fit = TRUE, iter = 8000) |>
+   write_rds("saved/16_pimd_negmed_model.rds") 
+
+pimd_nonmon |>
+   update_model(data, keep_fit = TRUE, iter = 4000) |>
+   write_rds("saved/16_pimd_nonmon_model.rds") 
+#unrestricted model saved here
+
+}
+
+if(run)
+  pimd_nonmon |> set_priors(distribution = "jeffreys") |> 
+   update_model(data_2, chains = 4, iter = 6000) |>
+   write_rds("saved/16_pimd_nonmon_model_2.rds") 
+
+
+pimd <-   read_rds("saved/16_pimd_model.rds") 
+pimd_negmed <-   read_rds("saved/16_pimd_negmed_model.rds")
+pimd_nonmon <-   read_rds("saved/16_pimd_nonmon_model.rds")
+pimd_nonmon_2 <-   read_rds("saved/16_pimd_nonmon_model_2.rds")
+
+```
+
+### Check Assumptions of Conditional Independence
+
+Our model presupposes that $P$ and $I$ are independent and that $P$ and $M$ are independent. Note that the model is consistent with the possibility that, conditional on $D$, there is a correlation between $M$ and $P$ or between $I$ and $P$, as $D$ acts as a collider for these pairs of nodes.\index{Collider}
+
+To test these assumptions, we in fact need to depart from the dataset drawn from @haggard2012distributive because these authors only examined cases in which $D=1$, those that democratized. Thus, we cannot use these data to assess the relationships not conditional on $D$ or conditional on $D=0$. We generate observations on all four nodes for a broader set of cases by pulling together measures from multiple sources, with the aim of modeling democratization that occurred between 1990 and 2000.[^evaluating-models5-7] We describe this data in more detail in Appendix.
+
+[^evaluating-models5-7]: The data that we use to measure mobilization, from @clark2016mobilization, cover only the 1990s.
+
+
+We can check some of the model's assumptions in relation to conditional independencies through a set of simple regression models, with results displayed in @tbl-ch16cipimd. In the first two rows, we examine the simple correlation between $P$ and $I$ and between $P$ and $M$, respectively. We can see from the estimates in the first row that the data pattern is consistent with our assumption of unconditional independence of $I$ and $P$. However, we also see that there *is* evidence of an unconditional correlation between $P$ and $M$, something that is excluded by our model.
+
+```{r}
+#| label: tbl-ch16cipimd
+#| echo: FALSE
+independencies <- function(model){
+
+  dagitty::dagitty(paste("dag{", model$statement, "}" )) |>
+  dagitty::impliedConditionalIndependencies()
+}
+# independencies(pimd)
+
+
+# dd <- CausalQueries::democracy_data 
+
+rbind(
+  lm_robust(P~I, data = data_2) |> tidy() |> filter(term == "I"), 
+  lm_robust(P~M, data = data_2) |> tidy() |> filter(term == "M"), 
+  lm_robust(P~I, data = filter(data_2, M==0)) |> tidy() |> filter(term == "I"), 
+  lm_robust(P~I, data = filter(data_2, M==1)) |> tidy() |> filter(term == "I"))  |> 
+  #lm_robust(P~M, data = filter(data_2, I==0)) |> tidy |> filter(term == "M"), 
+  #lm_robust(P~M, data = filter(data_2, I==1)) |> tidy |> filter(term == "M"))    
+ mutate(Given = c("-", "-", "M = 0", "M = 1")) |>
+  select(Given, estimate, std.error, p.value) |> 
+  mutate(Correlation = c("P,I", "P,M", "P,I", "P,I")) |>
+  select(Correlation, everything()) |>
+  kabble(digits = 3, caption =  "Regression coefficients to assess conditional independence")
+
+
+```
+
+We can dig a little deeper, however. The model *also* implies that $P$ should be independent of $I$ given $M$---since $D$ blocks all paths between $P$ and either $I$ or $M$. We test this assumption in rows 3 and 4 of the table, where we examine the conditional independence of $P$ and $I$ given $M=0$ and given $M=1$. Here, the evidence is also troubling for our model, as we see a relatively strong negative correlation between $P$ and $I$ when $M=0$, and positive correlation when $M=1$.
+
+While we cannot identify the correct model from this data pattern, one possible explanation could be that pressure has a direct effect on mobilization, making mobilization the product of inequality and pressure jointly.[^evaluating-models5-8] A model with an arrow running from $P$ to $M$ would make the model consistent with the unconditional correlation between these two variables, the conditional correlation between $P$ and $I$ given $M$ (since $M$ would now be a collider for $I$ and $P$), as well as the unconditional independence of $I$ and $P$. A possible way forward---which we do not pursue here---would be to now amend the model and evaluate the revised model against an independent set of data.\index{Collider}
+
+[^evaluating-models5-8]: There is, in fact, also a strong positive interaction between $I$ and $P$ in a linear model of $M$.
+
+
+### Bayesian *p*-Value
+
+\index{Bayesian p value@{Bayesian $p$-value}}
+
+We turn next to evaluating the democratization model using the Bayesian $p-$value approach, and for this purpose can return to the data that we coded from @haggard2012distributive's qualitative vignettes. In the two panels of @fig-HJ-F-16-7, we plot the posterior predictive distributions from our updated model for three quantities of interest: The outcome $D$, the correlation between $I$ and $M$, and the correlation between $I$ and $D$. In each graph, we indicate with a vertical line the mean value for these quantities for the data at hand and report the $p-$value: The probability of the observed data conditional on our model.
+
+```{r}
+#| label: fig-HJ-F-16-t
+#| echo :  FALSE
+#| eval :  TRUE
+#| message :  FALSE
+#| warning :  FALSE
+if(run){
+  
+ sims <- 500
+ n <- nrow(data)
+ 
+ # Outcome prediction
+ ############################################# 
+ t(replicate(sims, {
+   pimd_sim <- make_data(pimd, n = n, param_type = "posterior_draw")
+   c(D = mean(pimd_sim$D), 
+     C = cor(pimd_sim$I, pimd_sim$M),
+     C2 = cor(pimd_sim$I, pimd_sim$D)
+)})) |>  data.frame() |>
+  write_rds("saved/16_replicates_pimd.rds") 
+
+  
+  }
+
+
+df <-  read_rds("saved/16_replicates_pimd.rds")  
+
+
+tests <- c("Test stat: Mean of D", "Test stat: I, M covariance", "Test stat: I, D covariance")
+ 
+replicates_pimd <- df |> gather("test", "Val")
+
+pimd_data <- CausalQueries::democracy_data
+
+wegot <- data.frame(
+  test = c("D", "C", "C2"),
+  wegot = c(mean(pimd_data$D),
+            cor(pimd_data$M, pimd_data$I, use = "complete.obs"),
+            cor(pimd_data$I, pimd_data$D, use = "complete.obs")))
+wegot_labelled <-  wegot  |>
+  mutate(test = factor(test, c("D", "C", "C2"), tests))
+                        
+ps <- replicates_pimd |> group_by(test) |> 
+  left_join(wegot) |>
+  summarize(p = p_two_sided(Val, wegot[1])) |>
+  mutate(Val = 1, x = 0, y = 120, label = paste0("p = ", p))
+
+ps_labelled <- ps |>
+  mutate(test = factor(test, c("D", "C", "C2"), tests)) 
+```
+
+```{r}
+#| label: fig-HJ-F-16-7
+#| echo :  FALSE
+#| eval :  TRUE
+#| message :  FALSE
+#| warning :  FALSE
+#| fig.cap :  "Three tests for the Inequality and Democracy model"
+#| fig.height :  3.5
+#| fig.width :  8
+
+replicates_pimd |>
+   mutate(test = factor(test, c("D", "C", "C2"), tests)) |> 
+   ggplot(aes(Val)) + geom_histogram() + facet_grid( ~ test) + xlab("predictions") +
+   geom_vline(data = wegot_labelled, aes(xintercept = wegot), color = "black") + theme_bw() + 
+   ggtext::geom_textbox(data  = ps_labelled, aes(x = x, y = y, label = label), width = unit(0.4, "npc"))
+
+```
+
+As we can see, both visually and from the $p-$values, the model performs well (or at least, does not signal issues) in the sense that the data that we observe are not unexpected under the model.
+
+### Leave-One-Out Likelihoods
+\index{LOO likelihood}
+
+
+Turning to "leave one out" model assessment, we now consider comparing our base model (the "restricted model") to two models that make weaker assumptions. In one (the "partially restricted" model), we drop the assumption of monotonicity of $M$ in $I$. In a second alternative ("unrestricted model"), we make no monotonicity assumptions for any of the causal relations
+
+```{r}
+#| label: 16-loopimdplots1
+#| echo :  FALSE
+#| fig.cap :  "Leave one out likelihoods for restricted and unrestricted democracy and inequality models"
+#| message: FALSE
+#| warning: FALSE
+# Leave one out
+
+if(run){
+  
+  get_loo_likelihood(CausalQueries::democracy_data, pimd, sims = 25, iter = 4000) |> write_rds("saved/16_loo_pimd.rds")
+    
+  get_loo_likelihood(CausalQueries::democracy_data, pimd_negmed, sims = 25, iter = 4000) |> write_rds("saved/16_loo_pimdnegmed.rds")
+  
+  get_loo_likelihood(CausalQueries::democracy_data, pimd_nonmon, sims = 25, iter = 4000) |> write_rds("saved/16_loo_pimdnonmon.rds")
+
+}
+
+loo_pimd       <- read_rds("saved/16_loo_pimd.rds") 
+loo_pimdnegmed <- read_rds("saved/16_loo_pimdnegmed.rds")
+loo_pimdnonmon <- read_rds("saved/16_loo_pimdnonmon.rds")
+```
+
+```{r}
+#| label: fig-HJ-F-16-8
+#| echo :  FALSE
+#| fig.cap :  "LOO data predictions for three versions of the Inequality and Democracy model"
+#| fig.width :  9
+#| warning :  FALSE
+#| fig.height :  4
+
+models <- list(`restricted model` = loo_pimd, 
+     `partialy restricted model` = loo_pimdnegmed,  
+     `unrestricted model` =  loo_pimdnonmon ) 
+
+models |>   plot_loo()
+
+```
+
+@fig-HJ-F-16-8, shows the relationship, for each model, of the likelihood of each data type against the number of cases of that data type in the data. A data type here is defined as a possible combination of realized values on all nodes ($I, P, M$, and $D$). In each plot, the diagonal line represents equality between the proportion of expected cases under the model and the proportion of actual cases. Just eyeballing the relationships, you can see that the plots are very similar. The unrestricted model has, however, somewhat more compressed (and so, less sensitive) predictions. If we were to fit a line on the graphs we would have an adjusted $R^2$ of `r round(r2_loo(models)$R2[3], 2)` for the unrestricted model and `r round(r2_loo(models)$R2[1], 2)` for the partially restricted and unrestricted models, respectively. 
+
+More formally, we calculate the LOO likelihood for each model as `r formatC(loo_pimd$loo_likelihood, format = "e", digits = 2)` for the restricted model, `r formatC(loo_pimdnegmed$loo_likelihood, format = "e", digits = 2)` for the partially restricted model, and `r formatC(loo_pimdnonmon$loo_likelihood, format = "e", digits = 2)` for the unrestricted model. In other words, we see that the most restricted model performs best on this criterion, though the differences between the models are not large.
+
+### Sensitivity to Priors
+
+In our base model we assume a set of monotonicity relations among nodes. How much do conclusions depend on these restrictions? We answer the question by comparing our conclusion with these restrictions to what we would conclude without this assumption. As above, we compare the fully restricted model, to a partially restricted model and a fully unrestricted model.
+
+We first show results for population inference from a mixed methods analysis. As seen in @fig-HJ-F-16-9, our inferences regarding the overall effect of $I$ on $D$ are not very sensitive to the monotonicity assumption at $M$. However, they are extremely sensitive to the other monotonicity assumptions made in the model: As we can see, the effect goes from around $-0.25$ to $0$ when we remove all restrictions. 
+
+Our conditional inferences about the share of $I=0$, $D=1$ cases in which inequality mattered are not sensitive to the monotonicity assumptions. In particular, in cases with $I=0, D=1$ we are about equally likely to think that democratization was due to low inequality given any of the models. However, inferences conditional on $M$ are highly sensitive to the restrictions. When we see that in fact there was no mobilization, our attribution increases in the restricted model but decreases in the unrestricted model. In the fully unrestricted model our inferences are not affected at all by observation of $M=0$.
+
+Why is this? In the partially restricted model, we entertain the possibility that low inequality mattered not just directly but also, perhaps, by inducing protests. However, we when you observe no protests, we rule out this possible pathway. In the restricted model, we do not think that democratization could have been produced by low inequality via demonstrations---but nevertheless entertain the possibility of mobilization that is *not* due to inequality, which could nevertheless be the cause of democratization. In this case, observing no mobilization removes a rival cause of democratization, not a second channel.
+
+In all, we judge the conditional inferences as very sensitive to the monotonicity assumptions we put in place. Defending a particular set of claims requires a stronger defense of the model employed than would be needed if this were not the case.
+
+```{r}
+#| label: fig-HJ-F-16-9
+#| echo :  FALSE
+#| fig.cap :  "ATE of $I$ on $D$ for three models under  different conditions"
+#| fig.height :  3
+#| fig.width :  7
+
+if(run)
+  list(pimd = pimd, pimd_negmed = pimd_negmed, pimd_nonmon = pimd_nonmon) |> 
+    lapply(function(m) query_model(m, "D[I=1] - D[I=0]", using = "posteriors", 
+                           given = c(TRUE, "I==0 & D==1", "I==1 & D==1", "I==0 & M==0 & D==1", "I==1 & M==0 & D==1"))) |>
+    bind_rows(.id = "model") |>
+    write_rds("saved/16_ateID2.rds")
+
+read_rds("saved/16_ateID2.rds")  |> 
+  mutate(model = factor(model, c("pimd", "pimd_negmed", "pimd_nonmon"), 
+                        c("Restricted model", "Partially restricted model", "Unrestricted model"))) |>
+  ggplot(aes(mean, given, shape = model)) + theme_bw() + 
+  geom_point(position=position_dodge(.5)) + 
+  theme_bw() +
+  geom_errorbarh(aes(xmin=mean - sd, xmax=mean + sd), 
+                size=.2, height = .1,
+                position=position_dodge(.5)) +
+  xlab("Posterior") +
+  theme(legend.position = "bottom")
+  
+```
+
+We now consider a process-tracing analysis in which we stipulate the probabilities of nodal types rather than learning about them from the data. For this setup, we compare our restricted model ($M_1$) to an alternative model ($M_2$) in which we allow for negative effects of $I$ on $M$, but consider them to be *unlikely* rather than impossible (with null and positive effects somewhat likely). We refer to these priors as "quantitative priors" in the sense that they place a numerical value on beliefs rather than a logical restriction. Specifically, we define model $M_2$ with prior probabilities on the elements of $\theta^M$ as: $p(\theta^M=\theta^M_{10})=0.1$, $p(\theta^M=\theta^M_{00})=0.3$, $p(\theta^M=\theta^M_{11})=0.3$, and $p(\theta^M=\theta^M_{01})=0.3$. This is in comparison to the 0, 1/3,1/3,1/3 distribution implied by the fully restricted model, $M_1$.
+
+In @fig-HJ-F-16-10 we compare findings for a set of cases with different data realizations.
+
+```{r}
+#| label: fig-HJ-F-16-10
+#| echo :  FALSE
+#| eval :  TRUE
+#| fig.cap :  "Inferences under alternative quantitative priors"
+#| fig.height :  4
+#| fig.width :  7
+
+
+pimd_negmed_1 <- set_parameters(pimd_negmed, nodal_type = "10", node = "M", parameters = 0)
+pimd_negmed_2 <- set_parameters(pimd_negmed, nodal_type = "10", node = "M", parameters = .1)
+
+
+if(run){
+  
+  f_given <- function(i, d) {
+  a = paste("I ==", i,  " & D == ", d)
+  list(a, paste(a, "& M == 0 & P == 0"), paste(a, "& M == 0 & P == 1"), paste(a, "& M == 1 & P == 0"),   paste(a, "& M == 1 & P == 1"))}
+
+q_01_1 <- query_model(
+  pimd_negmed_1, 
+  query = "D[I=1] != D[I=0]", 
+  using = "parameters", 
+  given = f_given(0,1)
+) 
+
+q_01_2 <- query_model(
+  pimd_negmed_2, 
+  query = "D[I=1] != D[I=0]", 
+  using = "parameters", 
+  given = f_given(0,1)
+) 
+
+q_11_1 <- query_model(
+  pimd_negmed_1, 
+  query = "D[I=1] != D[I=0]", 
+  using = "parameters", 
+  given = f_given(1,1)
+) 
+
+q_11_2 <- query_model(
+  pimd_negmed_2, 
+  query = "D[I=1] != D[I=0]", 
+  using = "parameters", 
+  given = f_given(1,1)
+) 
+
+
+list(
+  q_01 = select(q_01_1, Given = given) |> 
+  mutate(
+    M1   = q_01_1$mean,
+    M2 = q_01_2$mean) |>
+  mutate(Example = c(" ", "Mexico (2000)", "Taiwan (1996)", 
+                  "Albania (1991)", "Nicaragua (1984)"),
+         Known = "I=0 & D=1"), 
+
+q_11 = select(q_11_1, Given = given) |> 
+  mutate(
+    M1    = q_11_1$mean,
+    M2  = q_11_2$mean)  |>
+  mutate(Example = c(" ", "Mongolia (1990)", "Paraguay (1989)", "Sierra Leone (1996)", "Malawi (1994)"),
+         Known = "I=1 & D=1")) |>
+  bind_rows() |>
+  select(Known, Example, Given, M1, M2) |>
+  gather("Model", "Estimate", -Known, -Example, -Given) |>
+  mutate(Example = ifelse(Example == " ", "Prior", Example))|>
+  mutate(Given = gsub("I == 0  & D ==  1 & ", "", Given))|>
+  mutate(Given = gsub("I == 1  & D ==  1 & ", "", Given))|>
+  mutate(Given = paste0(Example, ": ", Given)) |>
+  write_rds("saved/16_quantpriors.rds")
+}
+
+read_rds("saved/16_quantpriors.rds")  |>
+  ggplot(aes(Estimate, Given, shape = Model)) + 
+  theme_bw() + 
+  geom_point() + facet_grid(~Known, scales = "free") +
+  theme(legend.position = "bottom")
+
+
+```
+
+The results differ in various modest ways. For cases with $I=0, D=1$ we ask whether the low inequality caused democratization. There are some differences here when we are looking for negative effects of inequality, though the ordering of inferences does not change. The differences appear in the cases of Albania and Nicaragua, where $M=1$. Under priors fully constrained to monotonic causal effects, we see that observing $M=1$ makes us think low inequality was less likely to have caused democracy because $M=1$ represents an alternative cause and because low inequality cannot cause democratization via $M$ if $I \rightarrow M$ effects cannot be negative. However, if we allow for a negative effect of $I$ on $M$, even while believing it to be unlikely, we now believe a negative effect of inequality on democratization, conditional on mobilization, to be more likely since now that effect *can* run from $I=0$ to $M=1$ to $D=1$. Thus, our estimate for Albania and Nicaragua goes up under $M2$ relative to $M1$. We see, likewise, that mobilization, $M$, becomes less *informative* about the effect, as the estimates for Albania ($M=1, P=0$) are more similar to those for Mexico ($M=0, P=0$), and those for Nicaragua ($M=1, P=1$) to those for Taiwan ($M=0, P=1$).
+
+
+Turning to cases with high inequality and democratization, inferences about the probability of positive causation are unaffected by the assumption about the effect of $I$ on $M$. The reason is that, since we still maintain a monotonicity assumption for the direct effect of $I$ on $D$ (no positive effects), the only question is whether there was an indirect effect. Since we maintain the assumption of a monotonic effect of $M$ on $D$, it remains the case in both models that observing $M=0$ rules out a positive indirect effect. If however $M=1$, then $I$ did not have a negative effect on $M$ and the only question is whether $M=1$ because of $I$ or independent of it---which depends only on the relative sizes of $\theta^M_{11}$ and $\theta^M_{01}$. These remain the same (and equal to one another) in both models.
+
+Overall the evaluation of the democracy and inequality model paints a mixed picture. Although the model is able to recreate data patterns consistent with observations, the inferences from within case observations discussed in @sec-HJC8 depended on assumptions about processes that, while theoretically compelling, can *not* be justified from observation of broader data patterns even under relatively heroic assumptions on causal identification.\index{Identification}
+
+## Evaluating the Institutions-Growth Model
+
+Now we use these four techniques on our second application studying institutional quality and economic growth. Recall that we used data from @rodrik2004institutions to assess the causes of economic growth, focusing specifically on the effects of institutions and of geography.
+
+```{r, include = FALSE, echo = FALSE}
+
+#Load and standardize the variables 
+
+data <- haven::read_dta("data/RST_replication.dta")
+  data |> 
+  mutate(lcopen_2 = scale(lcopen),
+         logem4_2 = scale(logem4),
+         disteq_2 = scale(disteq),  
+         rule_2 = scale(rule),
+         eurfrac_2 = scale(eurfrac),
+         engfrac_2 = scale(engfrac),
+         logfrankrom_2 = scale(logfrankrom))
+
+ajr_expanded <- data |> filter(!is.na(logem4))
+
+#Filter out Afghanistan and Central African Republic 
+ajr_expanded <- ajr_expanded |>
+  filter(code != "AFG" &  code != "CAF")
+
+#Baseline AJR sample is 64 countries used in initial AJR paper
+ajr <- filter(data, ajr == 1)
+
+#Expanded 137 country sample is subset of countries for which we have language data 
+expanded <- data |> 
+  filter(!is.na(logfrankromr)) |> 
+  filter(!is.na(engfrac)) |> 
+  filter(!is.na(eurfrac)) |> 
+  filter(!is.na(lcgdp95)) |> 
+  filter(!is.na(rule))
+
+#Dichotomize data 
+dichotomize <- 
+  function(x, na.rm = FALSE) 
+    (as.numeric(sjmisc::dicho(x, dich.by = "median")) - 1)
+
+ajr_expanded_binary <- ajr_expanded |> mutate_at(c("lcgdp95", "rule", "disteq", "logem4", "lcopen", "logfrankrom"), dichotomize)
+
+#Select only columns in the base model
+RST <- select(ajr_expanded_binary, lcgdp95, rule, disteq, logem4, lcopen, logfrankrom, code, country, lnpop)
+
+
+RST$country <- tolower(RST$country)
+RST$country <- tools::toTitleCase(RST$country)
+
+#Rename Columns to be shorter for easy repeated use, RST is the dataset we will be working with throughout the example 
+RST <- RST |> dplyr::rename(Y = lcgdp95, R = rule, M = logem4, T = lcopen, F = logfrankrom, D = disteq)
+
+#Naming notes,Y = GDP, 2nd stage DV for the model, R = rule, M = settler mortality, T = trade openness, F = Frankel-Romer instrument for trade openness, D = distance from the equator 
+
+```
+
+```{r}
+#| label: model_RST16
+#| echo :  FALSE
+#| include :  FALSE
+#| message :  FALSE
+# Make the base model, allowing for confounding between R and Y 
+model_0 <- make_model("M -> R -> Y <- D; R <-> Y") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+
+# Monotonicity violation
+model_1 <- make_model("M -> R -> Y <- D; R <-> Y")  |>
+  set_priors(distribution = "jeffreys")
+
+# Exclusion violation
+model_2 <- 
+  model_RST <- make_model("M -> R -> Y <- D; R <-> Y; M <->Y") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])"))  |>
+  set_priors(distribution = "jeffreys")
+
+# Make the base model, allowing for D -> M path 
+model_3 <- make_model("D -> M -> R -> Y <- D; R <-> Y") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+
+# Make the base model, allowing for confounding between R and Y 
+model_4 <- make_model("D -> R; M -> R -> Y <- D; R <-> Y") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+
+# Two D paths, without confounding and restrictions
+model_5 <- make_model("D -> M -> R -> Y <- D") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+
+# Allow direct M -> Y path
+model_6 <- make_model("Y <- M -> R -> Y <- D") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+
+
+if(run){
+  
+model_0 |>
+   update_model(keep_fit = TRUE, iter = 8000) |>
+   write_rds("saved/16_RST_model_prior.rds") 
+
+model_0 |>
+   update_model(RST, keep_fit = TRUE, iter = 8000) |>
+   write_rds("saved/16_RST_0.rds") 
+
+model_1 |>
+   update_model(RST, keep_fit = TRUE, iter = 8000) |>
+   write_rds("saved/16_RST_1.rds") 
+
+model_2 |>
+   update_model(RST, keep_fit = TRUE, iter = 8000) |>
+   write_rds("saved/16_RST_2.rds") 
+
+model_3 |>
+   update_model(RST, keep_fit = TRUE, iter = 4000) |>
+   write_rds("saved/16_RST_3.rds") 
+
+model_4 |>
+   update_model(RST, keep_fit = TRUE, iter = 4000) |>
+   write_rds("saved/16_RST_4.rds") 
+
+}
+
+RST_0_0 <- read_rds("saved/16_RST_model_prior.rds") 
+
+RST_0 <- read_rds("saved/16_RST_0.rds") 
+RST_1 <- read_rds("saved/16_RST_1.rds")
+RST_2 <- read_rds("saved/16_RST_2.rds")
+RST_3 <- read_rds("saved/16_RST_3.rds")
+RST_4 <- read_rds("saved/16_RST_4.rds")
+
+# df <- make_data(RST_6, n = 79)
+Qs <-
+  list(DM = "M[D=1] - M[D=0]", MR = "R[M=1] - R[M=0]", RY = "Y[R=1] - Y[R=0]", 
+       DY = "Y[D=1] - Y[D=0]", RMY = interacts("R", "M", "Y"))
+
+if(run)
+  checks <-
+  list(RST_0_0, RST_1, RST_2, RST_3, RST_4) |>
+  lapply(function(M) query_model(M, Qs, using = "posteriors"))
+
+if(run)
+M <- make_model("R -> Y") |> update_model(RST) |>
+  query_model("Y[R=1] - Y[R=0]", using = "posteriors")
+```
+
+### Check Assumptions of Conditional Independence
+\index{Conditional independence}
+
+Our model presupposes unconditional independence between $M$ and $D$ and between $R$ and $D$. We can see from the simple unconditional regressions reported in @tbl-HJ-T-16-4 that a dependence exists that is not allowed for in our model. Mortality and distance are related, as are distance from the equator and institutions.
+
+```{r}
+#| label: tbl-HJ-T-16-4
+#| echo:  FALSE
+
+rbind(
+  estimatr::lm_robust(M~D, data = RST) |> tidy() |> filter(term == "D") |> mutate(Relation = "M~D"), 
+  estimatr::lm_robust(R~D, data = RST) |> tidy() |> filter(term == "D")|> mutate(Relation = "R~D")) |>
+  select(Relation, estimate, std.error, p.value) |> 
+  kabble(digits = 3, caption =  "Regression coefficients for $M$  and $R$ on $D$ (estimated separately).")
+
+```
+
+We might consider then a model that allows for an arrow from $D$ to $M$. In this case we have a violation of the exclusion restriction. Even still, one might expect that taking account of possible dependencies might not greatly alter analysis since we in effect block on each variable when assessing the effect of another. We will revisit this question when we assess model sensitivity.
+
+### Bayesian P-Value
+\index{Bayesian p value@{Bayesian $p$-value}}
+
+We turn next to evaluating the institutions and growth model using the Bayesian $p-$value approach, and for this purpose can return to the data that we coded from Rodrik, Subramanian and Trebbi. In the two panels of @fig-HJ-F-16-11, we plot the posterior predictive distributions from our updated model for two quantities of interest: The outcome $Y$, the size of a country's economy and the correlation between $M$, the settler mortality rate and $R$, the quality of institutions. In each graph, we indicate with a vertical line the mean value for these quantities for the data at hand and report the $p-$value: The probability of the observed data conditional on our model. This shows the odds of observing the data we see if we assume our model is true.
+
+```{r, include = FALSE}
+# Helpers
+
+
+tests <- c("Test stat: Mean of Y", "Test stat: R, Y covariance")
+
+wegot <- data.frame(
+  test = c("D", "C"),
+  wegot = c(mean(RST$Y), cor(RST$R, RST$Y)))
+wegot_labelled <-  wegot  |>
+  mutate(test = factor(test, c("D", "C"), tests))
+
+
+
+make_predictions <- function(model, path,  sims = 500, n = nrow(RST)){
+ # Outcome prediction
+ ############################################# 
+ t(replicate(sims, {
+   
+   df <- model  |> 
+     make_data(n = n, param_type = "posterior_draw")
+   
+   c(D=mean(df$Y), C = cor(df$R, df$Y))})) |> 
+   data.frame() |>
+   write_rds(path)
+  }
+
+plot_distribution <- function(path, wegot_df = wegot_labelled, xx = 0, yy =120){
+  
+ reps <- read_rds(path) |> gather("test", "Val")
+
+ ps <- reps |> 
+  group_by(test) |> 
+  left_join(wegot) |> 
+   summarize(p = p_two_sided(Val, wegot[1])) |> 
+   mutate(Val = 1, x = xx, y = yy, label = paste0("p = ", p)) |>
+  mutate(test = factor(test, c("D", "C"), tests)) 
+
+reps |>
+   mutate(test = factor(test, c("D", "C"), tests)) |> 
+  ggplot(aes(Val)) + geom_histogram() + 
+  facet_grid( ~ test) + xlab("predictions") +
+  geom_vline(data = wegot_df, aes(xintercept = wegot), color = "black") + 
+  theme_bw() + 
+  ggtext::geom_textbox(data  = ps, aes(x = x, y = y, label = label), width = unit(0.4, "npc"))
+}
+
+```
+
+```{r}
+#| label: fig-HJ-F-16-11
+#| echo :  FALSE
+#| eval :  TRUE
+#| message :  FALSE
+#| fig.cap :  "Bayesian $p$ values for the Institutions and Growth model"
+#| fig.height :  3
+#| fig.width :  8
+if(run)
+ make_predictions(RST_0, "saved/16_replicates_0.rds", n = nrow(RST), sims = 1000)
+
+plot_distribution("saved/16_replicates_0.rds", wegot_df = wegot_labelled, yy = 80, xx = .25)
+```
+
+This distribution has a low $p$ value, suggesting that the model does not update on the correlation between $R$ and $Y$ sufficiently; even after observing the data we remain surprised how strong this relation is. The Figure looks essentially identical if we instead use the weaker model in which we allow a $D$ to $M$ link.
+
+```{r}
+#| label: fig-HJ-F-16-10-excluded
+#| echo :  FALSE
+#| eval :  FALSE
+#| message :  FALSE
+#| include :  FALSE
+# with larger N:
+
+if(run){
+  
+   RST_0b <- update_model(RST_0, data = RST |> uncount(10))
+   make_predictions(RST_0b, "saved/16_replicates_0b.rds", n = nrow(RST)*10, sims = 1000)
+}
+
+plot_distribution("saved/16_replicates_0b.rds", wegot_df = wegot_labelled, yy = 80, xx = .4)
+```
+
+If we repeat the exercise but imagining that our database were 10 times larger than it is (we replicate it 10 times), the model will have more scope to learn, returning a some somewhat better $p$ value of 10%. This suggests that the problem may not be with the structure of the model so much as the limited confidence we have regarding causal relations.
+
+```{r}
+#| label: fig-HJ-F-16-10-excluded-2
+#| echo :  FALSE
+#| eval :  FALSE
+#| message :  FALSE
+#| include :  FALSE
+if(run)
+ make_predictions(RST_3, "saved/16_replicates_1.rds")
+
+plot_distribution("saved/16_replicates_1.rds")
+```
+
+```{r}
+#| label: fig-HJ-F-16-10-excluded-3
+#| echo :  FALSE
+#| eval :  FALSE
+#| message :  FALSE
+#| include :  FALSE
+if(run){
+  
+   RST_3b <- update(model, data = RST |> uncount(4))
+   make_predictions(RST_3b, "saved/16_replicates_3b.rds", n = nrow(RSB)*4)
+}
+
+plot_distribution("saved/16_replicates_3b.rds")
+```
+
+### Leave-One-Out (LOO) Cross-validation
+\index{LOO cross validation}
+
+@fig-HJ-F-16-12 shows the LOO likelihoods for the models with and without a $D$ to $M$ path.
+
+```{r}
+#| label: 16-looyrmdplots1
+#| echo :  FALSE
+# Leave one out
+
+
+
+if(run){
+  
+  sims <- 25
+  
+  sims <- 5
+  
+  get_loo_likelihood(RST, RST_0, sims = sims, iter = 4000) |> write_rds("saved/16_loo_rst_0.rds")
+  get_loo_likelihood(RST, RST_1, sims = sims, iter = 4000) |> write_rds("saved/16_loo_rst_1.rds")
+  get_loo_likelihood(RST, RST_2, sims = sims, iter = 4000) |> write_rds("saved/16_loo_rst_2.rds")
+  get_loo_likelihood(RST, RST_3, sims = sims, iter = 4000) |> write_rds("saved/16_loo_rst_3.rds")
+  get_loo_likelihood(RST, RST_4, sims = sims, iter = 4000) |> write_rds("saved/16_loo_rst_4.rds")
+
+}
+
+loo_rst_0 <- read_rds("saved/16_loo_rst_0.rds") 
+loo_rst_1 <- read_rds("saved/16_loo_rst_1.rds") 
+loo_rst_2 <- read_rds("saved/16_loo_rst_2.rds") 
+loo_rst_3 <- read_rds("saved/16_loo_rst_3.rds")
+loo_rst_4 <- read_rds("saved/16_loo_rst_4.rds")
+
+```
+
+```{r}
+#| label: fig-HJ-F-16-12
+#| echo :  FALSE
+#| fig.cap :  "LOO data predictions for alternative models"
+#| warning :  FALSE
+#| fig.height :  4
+
+list(`base model` = loo_rst_0,  
+     `D to M path` =  loo_rst_3) |> 
+  plot_loo()
+
+```
+
+We can see here that the LOO likelihoods are relatively similar for the different models. This suggests our monotonicity restrictions are not having an enormous impact on the plausibility of the model through this test. The LOO likelihood is `r formatC(loo_rst_0$loo_likelihood, format = "e", digits = 2)` for the base model and `r formatC(loo_rst_3$loo_likelihood, format = "e", digits = 2)` for the model that allows a $D \rightarrow M$ path.
+
+```{r, eval = FALSE, echo = FALSE}
+# Reminder
+model_0 <- make_model("M -> R -> Y <- D; R <-> Y") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+
+# Make the base model, allowing for D -> M path 
+model_3 <- make_model("D -> M -> R -> Y <- D; R <-> Y") |> 
+  set_restrictions(c("(R[M=1] > R[M=0])")) |>
+  set_priors(distribution = "jeffreys")
+```
+
+The points off the 45 degree line in @fig-HJ-F-16-10 confirm, and provide greater detail about, the weakness in the model that we uncovered in our analysis of Bayesian $p$ values. We can see that we are systematically under-predicting cases in which $Y=R= 1-M = 1-D$, which is why the model finds the true $Y$, $R$ correlation "surprising".
+
+### Sensitivity to Priors
+
+We test for sensitivity to three features of the base model: The assumption of a monotonic effect of mortality on institutions, the exclusion restriction (no direct $M$ to $Y$ path), and the exclusion of a $D$ to $M$ path. How much do conclusions depend on these assumptions? We answer this question by comparing our conclusions with these assumptions to what we would conclude by relaxing them. As above, we compare the baseline model in which all three assumptions are embedded to a one-by-one relaxation of each assumption.\index{Exclusion restriction}
+
+We first show results for population inference from a mixed-methods analysis, in @fig-HJ-F-16-13. As we can see, our inferences are reasonably stable across models, whether we are estimating the average effect of $R$ on $Y$, the share of $R=1, Y=1$ cases in which institutions mattered, or the share of $R=0, Y=0$ cases in which institutions mattered. The most consequential model assumption appears to be that of monotonicity for the effect of $R$ on $Y$.
+
+```{r}
+#| label: fig-HJ-F-16-13
+#| echo :  FALSE
+#| fig.cap :  "Sensitivity of population-level inferences to different  model assumptions"
+#| fig.width :  8
+#| fig.height :  4
+
+if(run)
+  list(M0 = RST_0, M1 = RST_1, M2 = RST_2, M3 = RST_3) |> 
+    lapply(function(m) 
+      query_model(m, 
+                  "Y[R=1] - Y[R=0]", 
+                  using = "posteriors",
+                  given = c(TRUE, "R==0 & Y==0", "R==1 & Y==1"))) |>
+    bind_rows(.id = "model") |>
+    write_rds("saved/16_ateYR2_yrmd.rds")
+
+read_rds("saved/16_ateYR2_yrmd.rds")  |> 
+  
+    mutate(model = factor(model, c("M0", "M1", "M3", "M2"), c("Base model", "Allow monotonicity\nviolation", "Allow path from D to M", "Allow exclusion \n restriction violation")))  |>
+  mutate(Given = factor(given, c("-", "R==0 & Y==0", "R==1 & Y==1") |> rev(), 
+                        c("ATE", "Low growth caused by \nweak institutions ", "Strong growth caused by \n strong institutions")|> rev())
+         ) |> 
+  ggplot(aes(mean, Given, shape = model)) + theme_bw() + 
+  geom_point(position=position_dodge(.5)) + 
+  theme_bw() +
+  geom_errorbarh(aes(xmin=cred.low, xmax=cred.high), 
+                size=.2, height = .1,
+                position=position_dodge(.5)) +
+  xlab("Posterior") + ylab("")
+  
+```
+
+We now consider the consequences of the same model assumptions for case-level queries.Whereas for the democratization model we explored case-level queries under different assumed nodal-type probabilities, here we draw case-level inquiries from the updated model and use the "uninformative-case" query procedure (see Section 9.3.2.1). @fig-HJ-F-16-14 shows the inferences we make given the same four different models for four types of cases. We focus the analysis here on cases with weak institutions and poor growth, but with differing values for $M$ and $D$. We can see, in terms of the substantive conclusions we would draw, that patterns of inference for all cases are similar across the first three models. For instance, learning that there was high mortality makes you more likely to think that Nigeria did poorly because of poor institutions, regardless of whether we require monotonicity in the $R$ to $Y$ relationship or exclude a $D$ to $M$ path. The inferences are strongest in the case in which monotonicity is not imposed, but qualitatively similar across the first three rows. Case-level inference looks very different---indeed, becomes impossible---if we allow an arbitrary violation of the exclusion restriction: We gain nothing at all from observation of $M$ and $D$.
+
+```{r}
+#| label: fig-HJ-F-16-14
+#| echo :  FALSE
+#| fig.cap :  "Sensitivity of probative value to three model assumptions"
+#| fig.height :  7
+#| fig.width :  11
+
+if(run)  
+  
+  list(
+    M0 = cases_table(
+      conditional_inferences(
+        RST_0,
+        using = "posteriors",
+        query = "Y[R=1] > Y[R=0]",
+        given = "Y==0 & R==0"
+      ),
+      case_names  = Y0R0_names,
+      V1 = "M",
+      V2 = "D"
+    ),
+    
+    M1 = cases_table(
+      conditional_inferences(
+        RST_1,
+        using = "posteriors",
+        query = "Y[R=1] > Y[R=0]",
+        given = "Y==0 & R==0"
+      ),
+      case_names  = Y0R0_names,
+      V1 = "M",
+      V2 = "D"
+    ),
+    
+    M2 = cases_table(
+      conditional_inferences(
+        RST_2,
+        using = "posteriors",
+        query = "Y[R=1] > Y[R=0]",
+        given = "Y==0 & R==0"
+      ),
+      case_names  = Y0R0_names,
+      V1 = "M",
+      V2 = "D"
+    ),
+    
+    M3 = cases_table(
+      conditional_inferences(
+        RST_3,
+        using = "posteriors",
+        query = "Y[R=1] > Y[R=0]",
+        given = "Y==0 & R==0"
+      ),
+      case_names  = Y0R0_names,
+      V1 = "M",
+      V2 = "D"
+    )
+  ) |>
+  
+  bind_rows(.id = "Model") |>
+  mutate(Model = factor(
+    Model,
+    c("M0", "M1", "M3", "M2"),
+    c(
+      "Base model",
+      "Allow monotonicity\nviolation",
+      "Allow path from D to M",
+      "Allow exclusion \n restriction violation"
+    )
+  )) |>
+  
+  write_rds("saved/16_probative_value.rds")
+
+
+read_rds("saved/16_probative_value.rds")  |> 
+  mutate(Case = paste0(Case,  " (M = ", M, ", D = ", D, ")")) |>
+  gather("Strategy", "val",-Model,-Case,-M,-D) |>
+  mutate(val = as.numeric(val),
+         Strategy = factor(Strategy, c("No clues", "M only", "D only", "M and D"))) |>
+  ggplot(aes(Strategy, val)) + facet_grid(Model ~ Case) + geom_point() + theme_bw()
+
+```
+
+Overall, the evaluation of the institutions and growth model in @fig-HJ-F-16-14 suggests reasonably robust data-based case-level inferences. However, these case-level queries do depend critically on the plausibility of the exclusion restriction to identify the relation between institutions and growth. \index{Exclusion restriction}
+
+In summary, neither model emerges with a spotless bill of health. In both setups, our probing points to areas where the models' assumptions appear to be weighing on conclusions. Ultimately, however, the sensitivity of conclusions to model assumptions seems greater for the inequality model where monotonicity assumptions appear quite consequential.
+
+
+
+
+## Appendix
+
+Data sources for the expanded inequality and democratization data set.
+
+-   **Inequality**: We measure inequality, $I$, using the Gini estimates from the University of Texas Inequality Project (@galbraith2019inequality). As we want to measure inequality at the beginning of the period, we take the Gini measure for each country that is closest in time to the year 1989. We then dichotomize the variable using the median value for the period as a cutoff.
+
+-   **Mobilization**: We measure $M$ using the Mass Mobilization Protest Data from @clark2016mobilization. To capture the kinds of mobilization on which redistributive theories of democratization focus, we restrict our focus to protests in the demand categories "land farm issue," "labor wage dispute," "price increases, tax policy," and "political behavior, process." We also include only those gatherings with a size of at least 1000 protesters. We code a country case as $M=1$ if and only if, during the 1990s, it experienced at least one protest that meets both the demand-type and size criteria.\index{Clark, David} \index{Regan, Patrick}
+
+-   **Pressure**: We draw on the GIGA Sanctions Dataset to measure international pressure, $P$. Specifically, we code a country case as $P=1$ if and only if the country was the target of democratization-focused sanctions during the 1990-2000 period.
+
+-   **Democratization**: We use dichotomous democracy measures from @cheibub2010democracy, in two ways. First, we filter countries such that our sample includes only those that were not democracies in 1990 ($N=77$). We then use the democracy measure for the year 2000 to determine which countries democratized, coding as $D=1$ those and only those cases that Cheibub et al. code as democracies in that year.\index{Cheibub, José A.}
+

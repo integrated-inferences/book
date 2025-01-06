@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>17&nbsp; Final Words – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./18-appendix.html" rel="next">
+<link href="./16-evaluating-models.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15-justifying-models.html">IV Models in Question</a></li><li class="breadcrumb-item"><a href="./17-conclusion.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#the-benefits" id="toc-the-benefits" class="nav-link active" data-scroll-target="#the-benefits"><span class="header-section-number">17.1</span> The Benefits</a></li>
+  <li><a href="#the-worries" id="toc-the-worries" class="nav-link" data-scroll-target="#the-worries"><span class="header-section-number">17.2</span> The Worries</a></li>
+  <li><a href="#the-future" id="toc-the-future" class="nav-link" data-scroll-target="#the-future"><span class="header-section-number">17.3</span> The Future</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15-justifying-models.html">IV Models in Question</a></li><li class="breadcrumb-item"><a href="./17-conclusion.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC17" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>This book builds off the simple idea that we can usefully learn about the world by combining new evidence with prior causal models to produce updated models of how the world works. We can update a given model with data about different parts of a causal process, with, possibly, different types of data from different cases. When asking specific questions—such as whether this caused that or whether one or another channel is important—we look up answers in our updated model of causal processes rather than seeking to answer the question directly from data.</p>
+<p>This way of thinking about learning, though certainly not new, is very different from many standard approaches in the social sciences. It promises benefits, but it also comes with risks. We try to describe both in this closing chapter.</p>
+<p>The approach stands in particularly stark contrast to the design-based approach to causal inference, which has gained prominence in recent years. Advances in design-based inferences show that it is possible to greatly diminish the role of background assumptions for some research questions and contexts. This is a remarkable achievement that has put the testing of some hypotheses and the estimation of some causal quantities on firm footing. It allows researchers to maintain agnostic positions and base their inferences more solidly on what they know to be true—such as how units were sampled and how treatments were assigned—and less on speculations about background data-generating processes. Nothing here argues against these strengths.</p>
+<p>At the same time, there are limits to model-free social science that affect the kinds of questions we can ask and the conditions that need to be in place to be able to generate an answer. Most simply, we often don’t understand the “design” very well, and random assignment to different conditions, if possible at all, could be prohibitively expensive or unethical. More subtly, perhaps, our goal as social scientists is often to generate a model of the world that we bring with us to make sense of new contexts. Eschewing models, however, can make it difficult to learn about them.</p>
+<p>Drawing on pioneering work by computer science, statistics, and philosophy scholars, we have outlined a principled approach to mobilizing prior knowledge to learn from new data in situations where randomization is unavailable and to answer questions for which randomization is unhelpful. In this approach, causal models are <em>guides</em> to research design, <em>machines</em> for inference, and <em>objects</em> of inquiry. As guides, the models yield expectations about the learning that can be derived from a given case or set of cases and from a given type of evidence, conditional on the question being asked. As inferential machines, models allow updating on that query once the data are in hand. Finally, when we confront a model with data, we learn about the parameters of the model itself, which can be used to answer a range of other causal questions and allow the cumulation of knowledge across studies. To complement the conceptual infrastructure, we have provided software tools that let researchers build, update, and query binary causal models.</p>
+<section id="the-benefits" class="level2" data-number="17.1"><h2 data-number="17.1" class="anchored" data-anchor-id="the-benefits">
+<span class="header-section-number">17.1</span> The Benefits</h2>
+<p>Strategies centered on building, updating, and querying causal models come with striking advantages.</p>
+<p><strong>Many questions.</strong> When we update a causal model, we do not estimate a single causal quantity of interest: We learn about <em>the model</em>. Most concretely, when we encounter new data, we update our beliefs about <em>all</em> parameters in the model at the same time. We can then use the updated parameters to answer very broad classes of causal questions, beyond the population-level average effect. These include case-level questions (<em>Does <span class="math inline">\(X\)</span> explain <span class="math inline">\(Y\)</span> in this case?</em>), process questions (<em>Through which channel does <span class="math inline">\(X\)</span> affect <span class="math inline">\(Y\)</span>?</em>), and transportability questions (<em>What are the implications of results derived in one context for processes and effects in other contexts?</em>).</p>
+<p><strong>Common answer strategy.</strong> Strikingly, these diverse types of questions are all asked and answered in this approach using the same procedure: forming, updating, and querying a causal model. Likewise, once we update a model given a set of data, we can then pose the full range of causal queries to the updated model. In this respect, the causal models approach differs markedly from common statistical frameworks in which distinct estimators are constructed to estimate particular estimands.</p>
+<p><strong>Answers without identification.</strong>The approach can generate answers even when queries are not <em>identified.</em> The ability to “identify” causal effects has been a central pursuit of much social science research in recent years. But identification is, in some ways, a curious goal. A causal quantity is identified if, with infinite data, the correct value can be ascertained with certainty—informally, the distribution that will emerge is consistent with only one parameter value. Oddly, however, knowing that a model, or quantity, is identified in this way does not tell you that estimation with finite data is any good <span class="citation" data-cites="maclaren2019can">(<a href="20-references.html#ref-maclaren2019can" role="doc-biblioref">Maclaren and Nicholson 2019</a>)</span>. What’s more, the estimation of a non-identified model with finite data is not necessarily bad. While there is a tendency to discount models for which quantities of interest are not identified, in fact, as we have demonstrated, considerable learning is possible even without identification, using the same procedure of updating and querying models.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Updating non-identified models can lead to a tightening of posteriors, even if some quantities can never be distinguished from each other.</p>
+<p><strong>Integration</strong> Embedding inference within an explicit causal model brings about an integration across forms of data and beliefs that may otherwise develop in isolation from one another. For one thing, the approach allows us to combine arbitrary mixes of forms of evidence, including data on causes and outcomes and evidence on causal processes (whether from the same or different sets of cases). Further, the causal-model approach ensures that our findings about <em>cases</em> (given evidence about those cases) are informed by what we know about the <em>population</em> to which those cases belong, and vice versa. And, as we discuss further below, the approach generates integration between inputs and outputs: It ensures that the way in which we update from the data is logically consistent with our prior beliefs about the world.</p>
+<p></p>
+<p><strong>A framework for knowledge cumulation.</strong> Closely related to integration is cumulation: A causal-model framework provides a ready-made apparatus for combining information across studies. Thinking in meta-analytic terms, the framework provides a tool for combining the evidence from multiple independent studies. Thinking sequentially, the model updated from one set of data can become the starting point for the next study of the same causal domain.</p>
+<p>Yet organizing inquiry around a causal model allows for cumulation in a deeper sense as well. Compared with most prevailing approaches to observational inference—where the background model is typically left implicit or conveyed informally or incompletely—the approach ensures <em>transparency</em> about the beliefs on which inferences rest. Explicitness about assumptions allows us to assess the degree of sensitivity of conclusions to our prior beliefs. Sensitivity analyses cannot, of course, tell us which beliefs are right. But they can tell us which assumptions are most in need of defense, pinpointing <em>where more learning would be of greatest value.</em> Those features of our model about which we are most uncertain and that matter most to our conclusions—be it the absence of an arrow, a restriction, a prior over nodal types, or the absence of confounding—represent the questions most in need of answers down the road. </p>
+<p><strong>A framework for learning about strategies.</strong> As we showed in <a href="12-clue-selection.html" class="quarto-xref"><span>Chapter 12</span></a> and <a href="13-case-selection.html" class="quarto-xref"><span>Chapter 13</span></a>, access to a model provides an explicit formulation of how and what inferences will be drawn from future data patterns and provides a formal framework for justifying design decisions. Of course, this feature is not unique to model-based inference—one can certainly have a model that describes expectations over future data patterns and imagine what inferences you will make using design-based inference or any other procedure.</p>
+<p><strong>Conceptual clarifications.</strong> Finally, we have found that this framework has been useful for providing conceptual clarification on how to think about qualitative, quantitative, and mixed-method inference. Consider two common distinctions that dissolve under our approach.</p>
+<p>The first is with respect to the difference between “within-case” and “between-case” inference. In <span class="citation" data-cites="humphreys2015mixing">Humphreys and Jacobs (<a href="20-references.html#ref-humphreys2015mixing" role="doc-biblioref">2015</a>)</span>, for instance, we drew on a common operationalization of “quantitative” and “qualitative” data as akin to “dataset” and “causal process” observations, respectively, as defined by <span class="citation" data-cites="collier2010sources">Collier, Brady, and Seawright (<a href="20-references.html#ref-collier2010sources" role="doc-biblioref">2010</a>)</span> ( see also <span class="citation" data-cites="mahoney2000strategies">Mahoney (<a href="20-references.html#ref-mahoney2000strategies" role="doc-biblioref">2000</a>)</span>). In a typical mixed-method setup, we might think of combining a “quantitative” dataset containing <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> (and covariate) observations for many cases with “qualitative” observations on causal processes, such as a mediator <span class="math inline">\(M\)</span>, for a subset of these cases. But this apparent distinction has no meaning in the formal setup and analysis of models. There is no need to think of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> observations as being tied to a large-<span class="math inline">\(N\)</span> analysis or of observations of mediating or other processes as being tied to small-<span class="math inline">\(N\)</span> analysis. One could, for instance, have data on <span class="math inline">\(M\)</span> for a large set of cases but data on <span class="math inline">\(Y\)</span> or <span class="math inline">\(X\)</span> for only a small number. Updating the model to learn about the causal query of interest will proceed in the same basic manner. The cross-case/within-case dichotomy plays no role in the way inferences are drawn: Given any pattern of data we observe in the cases at hand, we are always assessing the likelihood of that data pattern under different values of the model’s parameters. In this framework, what we have conventionally thought of as qualitative and quantitative inference strategies are not just integrated; the distinction between them breaks down completely.</p>
+<p>A second is with regard to the relationship between beliefs about queries and beliefs about the informativeness of evidence. In many accounts of process tracing, researchers posit a set of prior beliefs about the values of estimands and other—independent—beliefs about the informativeness of within-case information. We do this for instance, in <span class="citation" data-cites="humphreys2015mixing">Humphreys and Jacobs (<a href="20-references.html#ref-humphreys2015mixing" role="doc-biblioref">2015</a>)</span>. It is also implicit in approaches that assign uniform distributions to hypotheses (e.g., <span class="citation" data-cites="fairfield2017explicit">Fairfield and Charman (<a href="20-references.html#ref-fairfield2017explicit" role="doc-biblioref">2017</a>)</span>). Viewed through a causal models lens, however <em>both</em> sets of beliefs—about the hypothesis being examined and about the probative value of the data—represent substantive probabilistic claims about the world, particularly about <em>causal relationships</em> in the domain under investigation. They, thus, cannot be treated as generally independent of one another: Our beliefs about causal relations <em>imply</em> our beliefs about the probative value of the evidence. These implications flow naturally in a causal-model framework. When both sets of beliefs are derived from an underlying model representing prior knowledge about the domain of interest, then the same conjectures that inform our beliefs about the hypotheses also inform our beliefs about the informativeness of additional data. Seen in this way, the researcher is under pressure to provide reasons to support beliefs about probative value, but more constructively, they have available to them a strategy to do so.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+</section><section id="the-worries" class="level2" data-number="17.2"><h2 data-number="17.2" class="anchored" data-anchor-id="the-worries">
+<span class="header-section-number">17.2</span> The Worries</h2>
+<p>While we have found the syntax of Directed Acyclic Graphs (DAGs) to provide a flexible framework for setting up causal models, we have also become more keenly aware of some of the limitations of DAGs in representing causal processes (see also <span class="citation" data-cites="dawid2010beware">Dawid (<a href="20-references.html#ref-dawid2010beware" role="doc-biblioref">2010</a>)</span> and <span class="citation" data-cites="cartwright2007hunting">Cartwright (<a href="20-references.html#ref-cartwright2007hunting" role="doc-biblioref">2007</a>)</span>). We discuss a few of these here.</p>
+<p><strong>Well-defined nodes?</strong> A DAG presupposes a set of well-defined nodes that come with location and time stamps. Wealth in time <span class="math inline">\(t\)</span> affects democracy in time <span class="math inline">\(t+1\)</span> which affects wealth in time <span class="math inline">\(t\)</span>. Yet it is not always easy to figure out how to partition the world into such neat event bundles. Wealth in 1985 is not an “event” exactly but a state, and the temporal ordering relative to “Democracy 1985” is not at all clear. Moreover, even if events are coded into well-ordered nodes, values on these nodes may poorly capture actual processes, even in simple systems. Consider the simplest setup with a line of dominos. You are interested in whether the fall of the first domino causes the fall of the last one. But the observations of the states of the dominos at predefined points in time do not fully capture the causal process as seen by observers. The data might report that (a) domino 1 fell and (b) domino 2 fell. But the observer will notice that domino 2 fell <em>just as</em> domino 1 hit it.</p>
+<p><strong>Acyclic, really?</strong> DAGs are by definition acyclic. And it is not hard to argue that, since cause precedes effect, causal relations <em>should</em> be acyclic for any well-defined nodes. In practice, however, our variables often come with coarse periodizations: There was or was not mobilization in the 1990s; there was or was not democratization in the 1990s. We cannot extract the direction of arrows from the definition of nodes this coarse.</p>
+<p><strong>Coherent underlying causal accounts.</strong> The approach we describe is one in which researchers are asked to provide a coherent model—albeit with uncertainty—regarding the ways in which nodes are causally related to each other. For instance, a researcher interested in using information on <span class="math inline">\(K\)</span> to ascertain whether <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> is expected to have a theory of whether <span class="math inline">\(K\)</span> acts as a moderator or a mediator for <span class="math inline">\(X\)</span>, and whether it is realized before or after <span class="math inline">\(Y\)</span>. Yet it is possible that a researcher has well-formed beliefs about the informativeness of <span class="math inline">\(K\)</span> <em>without</em> an underlying model of how <span class="math inline">\(K\)</span> is causally related to <span class="math inline">\(X\)</span> or <span class="math inline">\(Y\)</span>. Granted, one might wonder where these beliefs come from or how they can be defended. We nonetheless note that one limitation of the approach we have described is that one cannot easily make use of an observation without a coherent account of that observation’s causal position relative to other variables and relationships of interest.</p>
+<p><strong>Complexity.</strong> To maintain simplicity, we have largely focused in this book on models with binary nodes. At first blush, this class of causal models indeed appears very simple. Yet even with binary nodes, complexity rises rapidly as the number of nodes and connections among them increases. As a node goes from having 1 parent to 2 parents to 3 parents to 4 parents, for instance, the number of nodal types—at that node alone—goes from 4 to 16 to 256 to 65,536, with knock-on effects for the number of possible causal types (combinations of nodal types across the model). A move in the direction of continuous variables—say, from binary nodes to nodes with three ordinal values—would also involve a dramatic increase in the complexity of the type-space.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> There are practical and substantive implications of this. A practical implication is that one can hit computational constraints very quickly for even moderately sized models. Substantively, models can quickly involve more complexity than humans can comfortably understand.</p>
+<p>One solution is to move away from a fully nonparametric setting and impose structure on permissible function forms—for example, by imposing monotonicity or assuming no high level interactions. Inferences then are <em>conditional</em> on these simplifying assumptions.</p>
+<p>A second approach might be to give up on the commitment to a complete specification of causal relations between nodes and seek lower dimensional representations of models that are sufficient for specific questions we care about. For instance, we could imagine representing an <span class="math inline">\(X \rightarrow Y\)</span> model with just two parameters rather than four (for <span class="math inline">\(Y\)</span>): Define <span class="math inline">\(\tau := \theta^Y_{10}-\theta^Y_{01}\)</span> and <span class="math inline">\(\rho := \theta^Y_{11}-\theta^Y_{00}\)</span>, both of which are identified with experimental data. These give us enough to learn about how common different types of outcomes are as well as average effects, though not enough to infer the probability that <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> in an <span class="math inline">\(X=Y=1\)</span> case.</p>
+<p><strong>Unintended structure.</strong> The complexity of causal models means that it is easy to generate a fully specified causal model with features that we do not fully understand. In the same way, it is possible to make choices between models unaware of differences in assumptions that they have built in.</p>
+<p>Consider two examples:</p>
+<ul>
+<li>We specify a model <span class="math inline">\(X  \rightarrow Y\)</span> and assume flat priors over nodal types. The implied prior that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span> is then 0.25. We then add detail by specifying <span class="math inline">\(X \rightarrow M \rightarrow Y\)</span> but continue to hold flat priors. In our more detailed model, however, the probability of a positive effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is now just 0.125. Adding the detail requires either moving away from flat priors on nodal types or changing priors on aggregate causal relations.</li>
+</ul>
+<ul>
+<li>We specify a model <span class="math inline">\(X  \rightarrow Y \leftarrow W\)</span> and build in that <span class="math inline">\(W\)</span> is a smoking gun for the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. We add detail by specifying <span class="math inline">\(X \rightarrow M \rightarrow Y \leftarrow W\)</span>. This means, however, that <span class="math inline">\(W\)</span> cannot be a smoking gun for <span class="math inline">\(Y\)</span> unless the <span class="math inline">\(X \rightarrow M\)</span> relation is certain. Why? To be a smoking gun, it must be the case that, if <span class="math inline">\(W=1\)</span>, we are sure that <span class="math inline">\(X\)</span> causes <span class="math inline">\(M\)</span> and that <span class="math inline">\(M\)</span> causes <span class="math inline">\(Y\)</span>, which requires an arrow from <span class="math inline">\(W\)</span> to <span class="math inline">\(M\)</span> and not just from <span class="math inline">\(W\)</span> to <span class="math inline">\(X\)</span>.</li>
+</ul>
+<p><strong>Model-dependence of conclusions</strong> One striking aspect of some of the analyses presented here is how sensitive conclusions can be to what would seem to be quite modest changes to models. We see two ways of thinking about the implications of this fact for a causal-models framework.</p>
+<p>One lesson to draw would be that there are tight limits to building inference upon causal models. If results in this approach depend heavily on prior beliefs, which could be wrong, then we might doubt the utility of the framework. On this reasoning, the safer option is to rely on design-based inference to the extent possible.</p>
+<p>An alternative lesson also offers itself, however. To the extent that our inferences depend on our background causal beliefs, a transparent and systematic engagement with models becomes all the more important. If inferences depend on models that are not explicitly articulated, we have no way of knowing how fragile they are, how they would change under an alternative set of premises, or what kind of learning we need to undertake if we want to generate more secure conclusions.</p>
+<p>We do not see causal models as the only way forward or as a panacea, and we are conscious of the limitations and complexities of the approach we have outlined, as well as the need for extension and elaboration along numerous fronts. Yet we think there is value in further development of forms of empirical social science that can operate with analytic transparency outside the safe inferential confines of random assignment.</p>
+</section><section id="the-future" class="level2" data-number="17.3"><h2 data-number="17.3" class="anchored" data-anchor-id="the-future">
+<span class="header-section-number">17.3</span> The Future</h2>
+<p>The future, as we see it, lies in improvements in cumulation, coordination, and model grounding.</p>
+<p><strong>Cumulation</strong> The cumulation of knowledge requires integration. </p>
+<p>As we acquire new evidence—perhaps from observation of additional cases or new events—we want to be able to update our general beliefs about how the world works by integrating new information with the existing store of knowledge. At the same time, we want our inferences about individual cases to be informed by our beliefs about how the world works in general. Causal models provide a natural framework for cumulating knowledge in this way. We have spelled out in this book how an individual researcher can use models to join up new data with prior beliefs and ground case-level inferences in beliefs about population-level parameters. In a scientific discipline, however, cumulation must also operate <em>across</em> researchers. For a field to make progress, I need to update <em>my</em> beliefs in light of <em>your</em> new evidence and vice versa.</p>
+<p>There are more collaborative and adversarial ways to think about this kind of learning across researchers. One more collaborative approach is for researchers to agree on an underlying causal structure. Then, new data will lead not just to individual updating but also, hopefully, to convergence in beliefs—a feature that should hold for identified causal queries, but not universally. This is a nontrivial ask. Not only do I need access to your evidence, but we have to be operating to some degree with a common causal model of the domain of interest; otherwise, the data that you generate might fail to map onto my model. One approach is for researchers to agree on an overarching causal model that nests submodels that different researchers have focused on.</p>
+<p>However, in practice, there may be little reason to be optimistic that individual researchers will naturally tend to generate models that align with one another. Not only might our substantive causal beliefs diverge, but we might also make differing choices about matters of model-construction—from which nodes to include and the appropriate level of detail to the manner of operationalizing variables. Indeed, it might also be that generating comprehensive models undermines the goal of generating simple representations of causal processes.</p>
+<p>Even in an adversarial context, however, we believe the approach described in this book would add value: It would require researchers to be clear and precise about their distinct models. Then these rival models, rather than being aggregated into a single model, could be pitted against each other using tools like those we describe in <a href="16-evaluating-models.html" class="quarto-xref"><span>Chapter 16</span></a>.</p>
+<p><strong>Coordination.</strong> Turning causal models into vehicles for knowledge cumulation in a field will thus require coordination around models. We are under no illusion that such coordination would be easy. But productive coordination would not require prior agreement about how the world works.</p>
+<p>One possibility would be to fix (provisionally, at least) the set of nodes relevant in a given domain—including outcomes of interest, potential causes, and mediators and moderators implicated in prevailing theories—and how those nodes are defined. Individual researchers would then be free to develop their own models by drawing arrows and setting priors and restrictions in line with their beliefs. Coordination around model nodes would then guide data-collection, as teams running new studies would seek to collect data on at least some subset of the common nodes—allowing, in turn, for all models to be updated as the new data come in.</p>
+<p>Another possibility would be to exploit modularity, with different researchers or projects modeling different <em>parts</em> of a causal system. For instance, in the field of democratization, one set of researchers might model and collect data on links between inequality and democratization; others might focus on the role of external pressures; while still others might focus on inter-elite bargaining. Coordination would operate at the level of interoperability. Modules would have to have at least some overlapping nodes for updating from new data to operate across them. Ideally, each module would also take into account any confounding among its nodes that is implied by other modules.</p>
+<p>Another, more minimalist mode of coordination would be for researchers to develop models that agree only on the inclusion of one or more outcome nodes. As new data comes in, models would then be set in competition over predictive performance.</p>
+<p>Coordination would also require agreement on some minimal qualities that models must have. For instance, we would surely want all models to be well defined, following the basic rules of DAG-construction and with clear rules for operationalizing all nodes.</p>
+<p><strong>Grounding.</strong> Most of our models are on stilts. We want them grounded. One kind of grounding is theoretical. As we show in <a href="06-theory-as-causal-models.html" class="quarto-xref"><span>Chapter 6</span></a>, for instance, game-theoretic models can be readily translated into causal models. The same, we believe, can be done for other types of behavioral theories. Clear informal theoretical logics could underwrite causal models also. A second approach would be subjective-Bayesian: Models could be founded on aggregated expert beliefs. A third—our preferred—form of grounding is empirical. As we discuss in Chapters <a href="09-mixing-methods.html" class="quarto-xref"><span>Chapter 9</span></a> and <a href="15-justifying-models.html" class="quarto-xref"><span>Chapter 15</span></a>, experimental data can be used to anchor model assumptions, which can, in turn, provide grounds for drawing case-level inferences. Ultimately, we hope the benefits from mixing methods will flow in both directions.</p>
+<hr>
+<p>We have taken a deep dive into the world of causal models to scope out whether and how they can support social scientists engaging in qualitative and mixed-methods research. We emerge convinced of the promise of the framework. Embedding our beliefs in a causal model enables rich forms of integration, allowing us to cumulate knowledge across cases, types of evidence, settings, study designs, and levels of analysis to address a vast array of causal questions. The framework also provides a coherent machinery to connect theoretical structures to empirical analyses. We have shown how this integration can strengthen the underpinnings of case-oriented research, providing microfoundations not just for the classic process tracing tests but for case-level probative value in general. We have, however, also emerged with a sharpened appreciation of how difficult it can be to justify our starting assumptions, of the extraordinary computational and conceptual complexity arising from all but the simplest causal models, and of the sometimes strong sensitivity of conclusions to our representations of causal processes. We conclude with cautious optimism: Convinced of the need both to re-center social science research on causal models and to keep these models permanently under scrutiny.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-cartwright2007hunting" class="csl-entry" role="listitem">
+Cartwright, Nancy. 2007. <em>Hunting Causes and Using Them: Approaches in Philosophy and Economics</em>. Cambridge University Press.
+</div>
+<div id="ref-collier2010sources" class="csl-entry" role="listitem">
+Collier, David, Henry E Brady, and Jason Seawright. 2010. <span>“Sources of Leverage in Causal Inference: Toward an Alternative View of Methodology.”</span> In <em>Rethinking Social Inquiry: Diverse Tools, Shared Standards</em>, edited by David Collier and Henry E Brady, 161–99. Lanham MD: Rowman; Littlefield.
+</div>
+<div id="ref-dawid2010beware" class="csl-entry" role="listitem">
+Dawid, A Philip. 2010. <span>“Beware of the DAG!”</span> In <em>Causality: Objectives and Assessment</em>, 59–86. PMLR.
+</div>
+<div id="ref-fairfield2017explicit" class="csl-entry" role="listitem">
+Fairfield, Tasha, and Andrew Charman. 2017. <span>“Explicit Bayesian Analysis for Process Tracing: Guidelines, Opportunities, and Caveats.”</span> <em>Political Analysis</em> 25 (3): 363–80.
+</div>
+<div id="ref-humphreys2015mixing" class="csl-entry" role="listitem">
+Humphreys, Macartan, and Alan M Jacobs. 2015. <span>“Mixing Methods: A Bayesian Approach.”</span> <em>American Political Science Review</em> 109 (04): 653–73.
+</div>
+<div id="ref-maclaren2019can" class="csl-entry" role="listitem">
+Maclaren, Oliver J, and Ruanui Nicholson. 2019. <span>“What Can Be Estimated? Identifiability, Estimability, Causal Inference and Ill-Posed Inverse Problems.”</span> <em>arXiv Preprint arXiv:1904.02826</em>.
+</div>
+<div id="ref-mahoney2000strategies" class="csl-entry" role="listitem">
+Mahoney, James. 2000. <span>“Strategies of Causal Inference in Small-n Analysis.”</span> <em>Sociological Methods &amp; Research</em> 28 (4): 387–424.
+</div>
+<div id="ref-tamer2010partial" class="csl-entry" role="listitem">
+Tamer, Elie. 2010. <span>“Partial Identification in Econometrics.”</span> <em>Annu. Rev. Econ.</em> 2 (1): 167–95.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>There is a large literature on partial identification. See <span class="citation" data-cites="tamer2010partial">Tamer (<a href="20-references.html#ref-tamer2010partial" role="doc-biblioref">2010</a>)</span> for a review.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>As an illustration, one might imagine a background model of the form <span class="math inline">\(X \rightarrow Y \leftarrow K\)</span>. Data that are consistent with <span class="math inline">\(X\)</span> causing <span class="math inline">\(Y\)</span> independent of <span class="math inline">\(K\)</span> would suggest a high prior (for a new case) that <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span>, but weak beliefs that <span class="math inline">\(K\)</span> is informative for <span class="math inline">\(X\)</span> causing <span class="math inline">\(Y\)</span>. Data that are consistent with <span class="math inline">\(X\)</span> causing <span class="math inline">\(Y\)</span> if and only if <span class="math inline">\(K=1\)</span> would suggest a lower prior (for a new case) that <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span>, but stronger beliefs that <span class="math inline">\(K\)</span> is informative for <span class="math inline">\(X\)</span> causing <span class="math inline">\(Y\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>If, for instance, we moved to nodes with three ordered categories, then each of <span class="math inline">\(Y\)</span>’s nodal types in an <span class="math inline">\(X \rightarrow Y\)</span> model would have to register three potential outcomes, corresponding to the three values that <span class="math inline">\(X\)</span> takes on. And <span class="math inline">\(Y\)</span> would have <span class="math inline">\(3 \times 3 \times 3 = 27\)</span> nodal types (as <span class="math inline">\(Y\)</span> can take on three possible values for each possible value of <span class="math inline">\(X\)</span>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./16-evaluating-models.html" class="pagination-link" aria-label="Evaluating Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./18-appendix.html" class="pagination-link" aria-label="Glossary">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

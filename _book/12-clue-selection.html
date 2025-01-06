@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>12&nbsp; Clue Selection as a Decision Problem – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./13-case-selection.html" rel="next">
+<link href="./11-fusion.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-clue-selection.html">III Design choices</a></li><li class="breadcrumb-item"><a href="./12-clue-selection.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#a-model-informed-approach-to-clue-selection" id="toc-a-model-informed-approach-to-clue-selection" class="nav-link active" data-scroll-target="#a-model-informed-approach-to-clue-selection"><span class="header-section-number">12.1</span> A Model-Informed Approach to Clue Selection</a>
+  <ul class="collapse">
+<li><a href="#clue-selection-with-a-simple-example" id="toc-clue-selection-with-a-simple-example" class="nav-link" data-scroll-target="#clue-selection-with-a-simple-example"><span class="header-section-number">12.1.1</span> Clue Selection with a Simple Example</a></li>
+  <li><a href="#dependence-on-prior-beliefs" id="toc-dependence-on-prior-beliefs" class="nav-link" data-scroll-target="#dependence-on-prior-beliefs"><span class="header-section-number">12.1.2</span> Dependence on Prior Beliefs</a></li>
+  <li><a href="#clue-selection-for-the-democratization-model" id="toc-clue-selection-for-the-democratization-model" class="nav-link" data-scroll-target="#clue-selection-for-the-democratization-model"><span class="header-section-number">12.1.3</span> Clue Selection for the Democratization Model</a></li>
+  </ul>
+</li>
+  <li><a href="#dynamic-strategies" id="toc-dynamic-strategies" class="nav-link" data-scroll-target="#dynamic-strategies"><span class="header-section-number">12.2</span> Dynamic Strategies</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12.3</span> Conclusion</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-clue-selection.html">III Design choices</a></li><li class="breadcrumb-item"><a href="./12-clue-selection.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC12" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>With this chapter, we begin to turn our attention to how causal models can inform research design. In the present chapter, we draw out the implications of the causal model approach for clue-selection strategies: for figuring out which pieces of evidence are likely to be most informative about a question of interest. We demonstrate procedures for assessing which clues minimize expected posterior variance and how to construct an optimal decision tree for determining a dynamic clue-gathering strategy.</p>
+</div>
+</div>
+<p>The causal models framework can be used not just for analysis but also for guiding research design. This is the topic of the next three chapters. We start here by addressing the problem of clue-selection: determining which qualitative data to gather on a case when conducting process tracing..</p>
+<p>Evidently, it makes sense to gather clues that have large probative value, but whether or not a given clue will have probative value depends on the model we are working with and the question we are asking. As we will also see, a clue’s informativeness can also depend on what other clues have already been collected. Finding out that the butler had no motive may be informative for the claim that he is innocent, but it will not be useful if we already know that he had no opportunity.</p>
+<p>We have already provided some insight into the problem in <a href="07-process-tracing-with-models.html" class="quarto-xref"><span>Chapter 7</span></a>, where we showed how relations of <span class="math inline">\(d-\)</span>connection can tell us when a clue is <em>possibly</em> informative about a query. In this chapter, we go further to show how we can use our causal model to figure out which clues and clue-selection strategies are likely to be <em>most</em> informative about the query we seek to address.</p>
+<section id="a-model-informed-approach-to-clue-selection" class="level2" data-number="12.1"><h2 data-number="12.1" class="anchored" data-anchor-id="a-model-informed-approach-to-clue-selection">
+<span class="header-section-number">12.1</span> A Model-Informed Approach to Clue Selection</h2>
+<p> </p>
+<p>The representation of inference problems as one of querying a Bayesian model points to a relatively simple method for selecting the most informative clues for collection. Consider, first, a situation in which one can invest in collecting various forms of evidence on a case and wants to know the expected gains from all possible collections of evidence that one could gather.</p>
+<p>We can assess alternative strategies through the following procedure:</p>
+<ol type="1">
+<li>Define the model.</li>
+<li>Define a query on the model.</li>
+<li>Define a data strategy: a set of clues for which one might search (e.g., observe the value of <span class="math inline">\(Y\)</span>).</li>
+<li>Given prior data, figure out the probability of different possible realizations of the new data.</li>
+<li>For each possible realization, calculate the posterior variance we would have if we observed that realization.</li>
+<li>Calculate the <em>expected</em> posterior variance for the data strategy by taking a weighted average of the variances arising from the different data realizations, with weights given by the probability of observing the data-realization in question.</li>
+<li>Repeat steps 3-4 for different data strategies that we wish to compare. </li>
+</ol>
+<p>If repeated for different sets of clues, this procedure then allows us to choose the clue strategy with the lowest expected posterior variance.</p>
+<p>A still more sophisticated approach would, for multiple clues, take sequence into account: It would tell us which clues to search for later in the process given the realization of clues sought earlier. The path-dependence of clue selection arises from the possibility that the informativeness of a clue may depend on the value of other nodes in the model. A given clue <span class="math inline">\(K_2\)</span>, for instance, may be informative if another clue <span class="math inline">\(K_1\)</span> has the value of 1 but not if it has the value 0.</p>
+<p>We provide tools for both of these approaches and illustrate them below for a simple model of government survival as well as for our democratization model from <a href="08-PT-application.html" class="quarto-xref"><span>Chapter 8</span></a>.</p>
+<section id="clue-selection-with-a-simple-example" class="level3" data-number="12.1.1"><h3 data-number="12.1.1" class="anchored" data-anchor-id="clue-selection-with-a-simple-example">
+<span class="header-section-number">12.1.1</span> Clue Selection with a Simple Example</h3>
+<p></p>
+<p>Consider a model of government survival in office in which retaining office depends on not being perceived as corrupt by the public. We show a DAG for this model in <a href="#fig-HJ-F-12-1" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>. We take two conditions as root nodes in this model. First, a country may or may not have a free press (<span class="math inline">\(X\)</span>). Second, the country’s government may or may not be sensitive to public opinion (<span class="math inline">\(S\)</span>).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> We set equal prior probabilities on the two values of <span class="math inline">\(X\)</span> and on the two values of <span class="math inline">\(S\)</span>. In terms of causal relations, we then allow that the government’s decision about whether to engage in corruption (<span class="math inline">\(C=1\)</span>) may depend on whether the government is sensitive to public opinion and whether there is a free press (that might reveal that corruption). Moreover, we allow that whether the press will report on the corruption (<span class="math inline">\(R=1\)</span>) may depend on whether there is government corruption and whether the press is free. Finally, whether the government will be removed from office (<span class="math inline">\(Y=1\)</span>) may depend on whether it has acted corruptly and whether this gets reported in the press.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Causal model in which <span class="math inline">\(S\)</span> and <span class="math inline">\(X\)</span> are stochastic <span class="math inline">\(C\)</span> and <span class="math inline">\(R\)</span> have only two possible nodal types each <span class="math inline">\(Y: 1\)</span> if and only if <span class="math inline">\(C\)</span> and <span class="math inline">\(R\)</span> are both 1.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We work with a highly restricted version of this model to simplify the illustration. We will call this version the base survival model and later also consider two variants that have the same DAG but different nodal types permitted. At node <span class="math inline">\(C\)</span>, we allow only two types: Either corruption is always present (<span class="math inline">\(\theta^C_{1111}\)</span>) or corruption is always present except when there is both a free press (<span class="math inline">\(X=1\)</span>) and sensitivity to public opinion (<span class="math inline">\(S=1\)</span>) (<span class="math inline">\(\theta^C_{1110}\)</span>). At <span class="math inline">\(R\)</span>, we allow only for <span class="math inline">\(\theta^R_{0001}\)</span> and <span class="math inline">\(\theta^R_{0000}\)</span>: the possibility that there is reporting on corruption if and only if there is corruption and a free press, and the possibility that there is never reporting on corruption. For both <span class="math inline">\(C\)</span> and <span class="math inline">\(R\)</span>, we put equal prior probabilities on all permitted nodal types. Finally, at <span class="math inline">\(Y\)</span>, we restrict to just one nodal type, <span class="math inline">\(\theta^Y_{0001}\)</span>: The government will remain in office unless there is both corruption (<span class="math inline">\(C=1\)</span>) and reporting on corruption (<span class="math inline">\(R=1\)</span>).</p>
+<p>To summarize the intuition, governments will only fall if there is both corruption and reporting on corruption. We are uncertain whether or not corruption is always present; but if corruption is ever absent, it can only be because there exist both a free press and a government that cares about public opinion. We are also uncertain whether or not media reporting on corruption is always absent; but if it is ever present, it can only be because there is both corruption and a free press. One implication is that governments that are sensitive to public opinion will never fall because they will always eschew corruption when a free press—the only mechanism that can generate reporting on corruption—is present. In turn, the presence of a free press can only matter for government survival if governments are <em>not</em> sensitive and thus do not strategically adjust their behavior in response to the risk of reporting.</p>
+<p>Suppose now that our query is whether <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span>, and we want to know which clues will be most helpful in answering this question. Using the model, we can ask how likely different data realizations are under each possible clue strategy and what we would infer about our query from each possible data realization, given existing data. We illustrate for a situation in which we already know that <span class="math inline">\(Y=0\)</span>.</p>
+<p><a href="#tbl-HJ-T-12-1" class="quarto-xref">Table&nbsp;<span>12.1</span></a> shows results for each possible clue strategy.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> The <span class="math inline">\(S, X, C, R, Y\)</span> columns of <a href="#tbl-HJ-T-12-1" class="quarto-xref">Table&nbsp;<span>12.1</span></a> define the data realizations. The matrix includes all combinations of possible realized values for all available clue strategies, given that we have already observed <span class="math inline">\(Y=0\)</span>. Note that since we can already infer that <span class="math inline">\(R=0\)</span> from <span class="math inline">\(Y=0\)</span>, we omit strategies that seek data on <span class="math inline">\(R\)</span>. A “0” or “1” represents the observed value for a node that we have chosen to observe while “?” indicates that a node is not observed under the given strategy. Thus, for instance, in the first five rows, we are collecting data on all nodes. In the next three rows, we have sought data on all nodes except <span class="math inline">\(S\)</span>.</p>
+<p>We also indicate the probability of each realization given the strategy, the inference we would make from each data-realization—that is, the posterior probability that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span>, given that <span class="math inline">\(Y=0\)</span>—and the posterior variance.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-HJ-T-12-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-12-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;12.1: Inferences on whether <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span>, given different data patterns under different clue strategies.
+</figcaption><div aria-describedby="tbl-HJ-T-12-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">strategy</th>
+<th style="text-align: left;">S</th>
+<th style="text-align: left;">X</th>
+<th style="text-align: left;">C</th>
+<th style="text-align: left;">R</th>
+<th style="text-align: right;">Y</th>
+<th style="text-align: right;">prob</th>
+<th style="text-align: right;">posterior</th>
+<th style="text-align: right;">variance</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SXC</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: right;">0.500</td>
+<td style="text-align: right;">0.250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: right;">0.250</td>
+<td style="text-align: right;">0.188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.077</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">XC</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.615</td>
+<td style="text-align: right;">0.375</td>
+<td style="text-align: right;">0.234</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SC</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.462</td>
+<td style="text-align: right;">0.333</td>
+<td style="text-align: right;">0.222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.385</td>
+<td style="text-align: right;">0.200</td>
+<td style="text-align: right;">0.160</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SX</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: right;">0.500</td>
+<td style="text-align: right;">0.250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: right;">0.250</td>
+<td style="text-align: right;">0.188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.154</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.846</td>
+<td style="text-align: right;">0.273</td>
+<td style="text-align: right;">0.198</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.615</td>
+<td style="text-align: right;">0.375</td>
+<td style="text-align: right;">0.234</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.385</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.462</td>
+<td style="text-align: right;">0.333</td>
+<td style="text-align: right;">0.222</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.538</td>
+<td style="text-align: right;">0.143</td>
+<td style="text-align: right;">0.122</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Prior</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">?</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.231</td>
+<td style="text-align: right;">0.178</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Since each inference, under each data-realization, also has an associated posterior variance, or level of uncertainty, it is easy to assess the <em>expected</em> posterior variance from a given clue strategy. We calculate the expected posterior variance from a given strategy as a weighted average of the posterior variances associated with each possible data-realization under the strategy, with weights given by the probability of each data-realization arising.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: Expected reduction in variance for different data strategies for the base survival model and two variants of the model
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We then operationalize higher levels of expected learning from a strategy using the expected <em>reduction</em> in posterior variance upon observing the data. We present the expected reduction in posterior variance for each possible clue strategy, given the prior observation of <span class="math inline">\(Y\)</span>, in the upper panel of Figure 12.2 (ignore the lower panels for the moment). We can see a couple of patterns here: </p>
+<ul>
+<li><p>By far, the biggest gains in expected learning come from observing <span class="math inline">\(X\)</span>. We can see this most readily by comparing the one-clue strategies to one another. But in general, any strategy that includes observing <span class="math inline">\(X\)</span> always does substantially better than the comparable strategy that excludes <span class="math inline">\(X\)</span>. The intuition here is fairly straightforward: If we want to know whether <span class="math inline">\(Y=0\)</span> was caused by <span class="math inline">\(X=0\)</span>, and start out very uncertain about <span class="math inline">\(X\)</span>’s value, we should expect to learn a good deal from figuring out whether <span class="math inline">\(X\)</span> is in fact equal to <span class="math inline">\(0\)</span>.</p></li>
+<li><p>There are also considerable gains from observing <span class="math inline">\(S\)</span> or <span class="math inline">\(C\)</span> by themselves. Consider, first, why observing <span class="math inline">\(S\)</span> is informative. <span class="math inline">\(S\)</span> is potentially informative because it tells us something about whether <span class="math inline">\(X\)</span> can affect <span class="math inline">\(Y\)</span> by affecting <span class="math inline">\(R\)</span>. Remember that a government is removed only if there is both corruption (<span class="math inline">\(C=1\)</span>) and reporting on corruption (<span class="math inline">\(R=1\)</span>). Moreover, there is only reporting on corruption (if ever) if <span class="math inline">\(C=1\)</span>. Thus, for both of these reasons, <span class="math inline">\(X\)</span> can only have a positive effect on government removal (by causing reporting on corruption) if <span class="math inline">\(C=1\)</span>: That is, if there is corruption. And <span class="math inline">\(S\)</span> (government sensitivity) tells us something about what <span class="math inline">\(C\)</span>’s value is likely to be if <span class="math inline">\(X\)</span> were set to 1, that is, if there is a free press.</p></li>
+</ul>
+<p>Specifically, if we observe <span class="math inline">\(S=0\)</span>, then we know for sure that <span class="math inline">\(C=1\)</span>, regardless of <span class="math inline">\(X\)</span>, since <span class="math inline">\(C\)</span> is always 1 when <span class="math inline">\(S=0\)</span> under both permitted nodal types for <span class="math inline">\(C\)</span>. If <span class="math inline">\(S=1\)</span>, on the other hand, there is a lower chance that <span class="math inline">\(C\)</span> would be equal to 1 if <span class="math inline">\(X\)</span> were set to 1: For one of <span class="math inline">\(C\)</span>’s permitted nodal types, there is always corruption; but for the other type, sensitive governments avoid corruption when there is a free press, so <span class="math inline">\(X\)</span> moving to 1 would give us <span class="math inline">\(C=0\)</span>. Recall that we have put equal prior probabilities on these two nodal types. Thus, if we observe <span class="math inline">\(S=1\)</span>, we conclude that there is a lower probability that <span class="math inline">\(C\)</span> will take on the value necessary for <span class="math inline">\(X\)</span> to exert a positive effect on <span class="math inline">\(Y\)</span> than if we observe <span class="math inline">\(S=0\)</span>.</p>
+<p>Why, then, is <span class="math inline">\(C\)</span> informative? If we observe <span class="math inline">\(C=0\)</span>, then we know that <span class="math inline">\(X\)</span> must be equal to 1 since, under permitted nodal types for <span class="math inline">\(C\)</span>, there is an absence of corruption <em>only</em> in the presence of a free press and sensitive governments. And if <span class="math inline">\(X=1\)</span> with <span class="math inline">\(Y=0\)</span>, a positive effect is ruled out with certainty. If we observe <span class="math inline">\(C=1\)</span>, then there remains some possibility that <span class="math inline">\(X=0\)</span> as well as some possibility <span class="math inline">\(C\)</span> would remain at 1 if <span class="math inline">\(X\)</span> were set to 1 (depending on <span class="math inline">\(C\)</span>’s unknown nodal type), allowing <span class="math inline">\(X\)</span> to yield a positive effect on <span class="math inline">\(Y\)</span> through <span class="math inline">\(R\)</span>.</p>
+<ul>
+<li><p>There are no gains from observing <span class="math inline">\(R\)</span> if <span class="math inline">\(Y=0\)</span>. This result follows from our table of data possibilities consistent with <span class="math inline">\(Y=0\)</span> (<a href="#tbl-HJ-T-12-1" class="quarto-xref">Table&nbsp;<span>12.1</span></a>). As we can see, there is no possibility of observing anything other than <span class="math inline">\(R=0\)</span> if we have already seen <span class="math inline">\(Y=0\)</span>. We can see why by thinking, jointly, about how <span class="math inline">\(Y\)</span> is determined and how <span class="math inline">\(R\)</span> is determined. <span class="math inline">\(Y\)</span> can be 0 either because <span class="math inline">\(C=0\)</span> or because <span class="math inline">\(R=0\)</span>. So if <span class="math inline">\(R\)</span> were equal to <span class="math inline">\(1\)</span>, this must mean that <span class="math inline">\(C\)</span> was <span class="math inline">\(0\)</span>. However, a necessary condition for <span class="math inline">\(R\)</span> to be 1, under <span class="math inline">\(R\)</span>’s permitted nodal types, is <span class="math inline">\(C=1\)</span> and <span class="math inline">\(X=1\)</span>. In other words, the condition under which <span class="math inline">\(R\)</span> could be 1 is a condition under which <span class="math inline">\(Y\)</span> would not be 0. Thus, if we already know <span class="math inline">\(Y=0\)</span>, we know <span class="math inline">\(R=0\)</span>, and there is no gain from actually looking for <span class="math inline">\(R\)</span>.</p></li>
+<li><p>Once we observe <span class="math inline">\(X\)</span>, the next-most informative clue to add to our research design is <span class="math inline">\(S\)</span>: <span class="math inline">\(X, S\)</span> has the greatest expected reduction in posterior variance of any of the two-clue strategies. And, in fact, there are no gains to adding <span class="math inline">\(C\)</span> to <span class="math inline">\(X\)</span>, relative to observing <span class="math inline">\(X\)</span> by itself. </p></li>
+</ul>
+<p>Let us develop the intuition underlying this result.</p>
+<p>Imagine that we have already observed <span class="math inline">\(X\)</span>’s value. If <span class="math inline">\(X=1\)</span>, then (given <span class="math inline">\(Y=0\)</span>), a positive effect is immediately ruled out with certainty, rendering any further observations of no value. If we observe <span class="math inline">\(X=0\)</span>, however, then (under this causal model) we know for certain that <span class="math inline">\(C=1\)</span>, simply because <span class="math inline">\(C=1\)</span> for both of <span class="math inline">\(C\)</span>’s permitted nodal types when <span class="math inline">\(X=0\)</span> (there is always corruption when there is no free press). Thus, there is nothing to be gained by observing <span class="math inline">\(C\)</span>. (We have already seen why there is nothing to be gained from observing <span class="math inline">\(R\)</span>.)</p>
+<p>Why are there possible gains to observing <span class="math inline">\(S\)</span> even if we’re going to observe <span class="math inline">\(X\)</span>? <span class="math inline">\(S\)</span> is informative because it tells us something about whether <span class="math inline">\(X\)</span> can affect <span class="math inline">\(Y\)</span> by affecting <span class="math inline">\(R\)</span>. The potential gains from observing <span class="math inline">\(S\)</span> with <span class="math inline">\(X\)</span> arise from the possibility that we may see <span class="math inline">\(X=0\)</span> (since <span class="math inline">\(X=1\)</span> would decide the matter by itself). If <span class="math inline">\(X=0\)</span>, then we still need to know whether <span class="math inline">\(Y\)</span> <em>would</em> be 1 if we changed <span class="math inline">\(X\)</span> to 1. As discussed above, <em>that</em> depends on whether <span class="math inline">\(C\)</span> would be <span class="math inline">\(1\)</span> if <span class="math inline">\(X\)</span> were set to 1, and (as, again, explained above) <span class="math inline">\(S\)</span> is informative on that matter.</p>
+<ul>
+<li><p>We also see—and it follows from the above logic—that we cannot improve on an <span class="math inline">\(X, S\)</span> strategy by gathering more data. Thus, if the search for information is costly, looking only for <span class="math inline">\(X\)</span> and <span class="math inline">\(S\)</span> dominates all three- and four-clue strategies.</p></li>
+<li><p>Clues can be more informative jointly than separately, and the expected gains from observing one clue can depend on which other clues we plan to observe. To see this, observe that, among the one-clue strategies, observing <span class="math inline">\(C\)</span> by itself is slightly <em>more</em> informative than observing <span class="math inline">\(S\)</span> by itself. However, if we are planning to observe <span class="math inline">\(X\)</span>, then the gains flip, and it is only <span class="math inline">\(S\)</span> that offers additional useful information. As we have discussed, observing <span class="math inline">\(X\)</span> makes observing <span class="math inline">\(C\)</span> uninformative while <span class="math inline">\(S\)</span> remains informative as a moderator of <span class="math inline">\(X\)</span>’s effect. </p></li>
+</ul>
+<p>We would add that the pattern here forms part of a broader point that we wish to emphasize in this chapter: While process tracing often focuses on examining steps along causal pathways, it will often be the case that we learn more from <em>moderators</em>, like <span class="math inline">\(S\)</span> in this model, than from mediators, like <span class="math inline">\(C\)</span> and <span class="math inline">\(R\)</span>. We return to this point below. </p>
+</section><section id="dependence-on-prior-beliefs" class="level3" data-number="12.1.2"><h3 data-number="12.1.2" class="anchored" data-anchor-id="dependence-on-prior-beliefs">
+<span class="header-section-number">12.1.2</span> Dependence on Prior Beliefs</h3>
+<p>Optimal clue strategies can depend on our prior beliefs about causal relationships among the variables in the model. We illustrate this point here, examining how the evaluation of clue strategies shift as we relax restrictions on nodal types and set informative priors over nodal types.</p>
+<p><strong>Relaxing restrictions.</strong> In the analysis above, we allowed for just two (of 16 possible) nodal types at both <span class="math inline">\(C\)</span> and <span class="math inline">\(R\)</span>, effectively expressing strong beliefs about how <span class="math inline">\(C\)</span>’s and <span class="math inline">\(R\)</span>’s values are determined. But what if we are less certain than this?</p>
+<p>Suppose we are not sure that corruption can be prevented only through a combination of a free press and government sensitivity. We think it possible that government sensitivity might be sufficient: That <span class="math inline">\(S\)</span> might negatively affect <span class="math inline">\(C\)</span> regardless of <span class="math inline">\(X\)</span>’s value. (Perhaps, for instance, there are means other than via a free press through which the public might learn of government corruption.) We allow for this causal possibility by expanding the set of kept nodal types for <span class="math inline">\(C\)</span> to include <span class="math inline">\(\theta^C_{1010}\)</span> in defining the model.</p>
+<p>The evaluation of strategies under this adjusted set of beliefs, for the same query (whether <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span>) and prior data (<span class="math inline">\(Y=0\)</span>) as before, is displayed in the middle panel of <a href="#fig-HJ-F-12-2" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>.</p>
+<p>We see that, among one-clue strategies, observing <span class="math inline">\(X\)</span> is still the best choice. The best two-clue strategy is also still <span class="math inline">\(X, S\)</span>. Where things change most significantly, however, is among three-clue strategies: now, we can do even better by additionally observing <span class="math inline">\(C\)</span>. The reason is that, with greater uncertainty about its nodal types, <span class="math inline">\(C\)</span>’s value is no longer known when <span class="math inline">\(X=0\)</span>: It is now possible that <span class="math inline">\(C=0\)</span> when <span class="math inline">\(X=0\)</span> since we think it possible that <span class="math inline">\(C\)</span>’s nodal type is <span class="math inline">\(\theta^C_{1010}\)</span>. Since <span class="math inline">\(C\)</span>’s value bears on whether <span class="math inline">\(X\)</span> can have an effect via <span class="math inline">\(R\)</span>, we can thus, in this situation, potentially learn something by observing <span class="math inline">\(C\)</span>, even if we have already seen <span class="math inline">\(X\)</span> and <span class="math inline">\(S\)</span>.</p>
+<p>We can also see <span class="math inline">\(C\)</span>’s enhanced informational value in other places. Among one-clue strategies, observing <span class="math inline">\(C\)</span> alone generates greater learning here than it does under the base model. More strikingly, among two-clue strategies, we see that observing <span class="math inline">\(C\)</span> can now generate learning even if we have <em>already</em> observed <span class="math inline">\(X\)</span> (whereas there was no gain from strategy <span class="math inline">\(X, C\)</span> relative to <span class="math inline">\(X\)</span> under the base model). While <span class="math inline">\(X, S\)</span> is still a better strategy than <span class="math inline">\(X, C\)</span>, the change in diagnosis could matter if, for instance, we cannot observe <span class="math inline">\(S\)</span> for some reason or if observing <span class="math inline">\(S\)</span> is much more costly than observing <span class="math inline">\(C\)</span>.</p>
+<p>Moreover, the expected variance reduction from observing <span class="math inline">\(S\)</span> is also greater under the new model, for most one- and two-clue strategies. For the informal intuition here, note that <span class="math inline">\(S\)</span> is potentially informative about <span class="math inline">\(C\)</span>’s value as a parent of <span class="math inline">\(C\)</span>. And we now believe (with the added nodal type for <span class="math inline">\(C\)</span>) that there may be an additional way in which <span class="math inline">\(S\)</span> could matter for <span class="math inline">\(C\)</span>, and thus provide information about its value. Moreover, since the added nodal type has <span class="math inline">\(S\)</span> exerting a negative effect on <span class="math inline">\(C\)</span> regardless of <span class="math inline">\(X\)</span>’s value, <span class="math inline">\(S\)</span> can now be informative even if we have already observed <span class="math inline">\(X=0\)</span>.</p>
+<p>Finally, we can see that nothing has changed in regard to <span class="math inline">\(R\)</span>, about whose nodal types we have retained the same beliefs. It is still uniformly unprofitable to observe <span class="math inline">\(R\)</span> because we still know <span class="math inline">\(R\)</span>’s value whenever <span class="math inline">\(X=0\)</span>.</p>
+<p>This exercise also suggests a further interesting principle of clue-selection: that potential informativeness rests on uncertainty about what we will find.</p>
+<p><strong>Changing probabilities.</strong> We can also see what happens when, rather than permitting new nodal types, we have more informative beliefs about the prevalence of permitted types. Suppose we believe most governments to be sensitive to public opinion. This would imply that we should put greater weight on <span class="math inline">\(\theta^S_1\)</span> than on <span class="math inline">\(\theta^S_0\)</span>.</p>
+<p>The third panel of <a href="#fig-HJ-F-12-2" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> shows the evaluation of strategies for a model in which we put a 90% prior probability on <span class="math inline">\(S=1\)</span>. A number of features stand out. First is the lower reduction in variance from most strategies under the new model: Having a more extreme belief about <span class="math inline">\(S\)</span>’s value gives us stronger prior beliefs about whether <span class="math inline">\(X\)</span> could have caused <span class="math inline">\(Y\)</span> since such an effect <em>depends</em> on <span class="math inline">\(S\)</span>’s value. A second striking difference is that searching for <span class="math inline">\(S\)</span> is expected to be much less informative in this model. The reason is simple: We now have a strong prior belief about what we are likely to find when we search for <span class="math inline">\(S\)</span>. We <em>could</em> be surprised, but we should not <em>expect</em> to be. In the original model, in contrast, we were maximally uncertain about <span class="math inline">\(S\)</span>’s value—believing it had a 0.5 chance of being 1—and so there was much more to be gained by looking. Finally, we see that a search for <span class="math inline">\(C\)</span> becomes more fruitful than before; the reason is that with <span class="math inline">\(S=1\)</span> likely, <span class="math inline">\(C\)</span> is now more sensitive to (and informative about) <span class="math inline">\(X\)</span>’s value.</p>
+<p>The highest level lesson from this discussion is that even for a very simple model, assessing which clues are most information ‚Äì in combination with which other clues ‚Äì is relatively complex. It becomes more complex as models become more complex. Even still, there is a relatively simple procedure that can be applied to answer the question that can be used once a causal model has been fully specified.</p>
+</section><section id="clue-selection-for-the-democratization-model" class="level3" data-number="12.1.3"><h3 data-number="12.1.3" class="anchored" data-anchor-id="clue-selection-for-the-democratization-model">
+<span class="header-section-number">12.1.3</span> Clue Selection for the Democratization Model</h3>
+<p></p>
+<p>We now apply this approach to the model of democratization that we worked with in Chapters <a href="08-PT-application.html" class="quarto-xref"><span>Chapter 8</span></a> and <a href="10-mixed-application.html" class="quarto-xref"><span>Chapter 10</span></a>.</p>
+<p>We start by specifying the democratization model, with negative effects ruled out for <span class="math inline">\(I \rightarrow M\)</span>, <span class="math inline">\(M \rightarrow D\)</span>, and <span class="math inline">\(P \rightarrow D\)</span> and a positive direct effect ruled out for <span class="math inline">\(I \rightarrow D\)</span>. ). We set flat priors over all remaining nodal types. We will call this our “base” model. We then examine how optimal clue selection strategies change as we modify the query and the data.</p>
+<section id="base-model" class="level4" data-number="12.1.3.1"><h4 data-number="12.1.3.1" class="anchored" data-anchor-id="base-model">
+<span class="header-section-number">12.1.3.1</span> Base Model</h4>
+<p>Let’s assume that we have already observed both levels of inequality and the outcome of democratization in a case, and we want to know whether inequality caused, or would cause, democratization in that case. The decision we confront is what combination of the other nodes—mobilization or international pressure—we should select to collect data on: The available strategies are to observe nothing further; to observe <span class="math inline">\(P\)</span> only; to observe <span class="math inline">\(M\)</span> only; or to observe both <span class="math inline">\(P\)</span> and <span class="math inline">\(M\)</span>. We can imagine that there are different cost implications of these different strategies.</p>
+<p>We illustrate the consequences of these options for our query in two ways. First, in Figure <a href="#fig-HJ-F-12-3" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>, we show the possible inferences we could draw from different clue strategies. This figure displays all data realizations that might result from all possible clue-selection strategies, the inference we would draw about our query from each realization of the data, and the probability of each realization occurring under each strategy. In each column of the figure, we show these quantities for a different combination of <span class="math inline">\(I, D\)</span> values observed in a case prior to clue-selection. Within each graph in the figure, the size of the plotted point corresponding to each data-realization is scaled to the <em>probability</em> of that data-realization occurring given the model and the case’s <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> values. These data probabilities constitute key information for evaluating a clue strategy: A given strategy might allow for a potential data realization that <em>would</em> shift our inferences by a large amount <em>if</em> observed, but that data-realization might be highly unlikely to occur.</p>
+<p>In reading Figure <a href="#fig-HJ-F-12-3" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>, we want to examine how much inferences shift to the left or right relative to our “prior” belief shown in the top row of graphs—that is, what we infer from only have observed <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span>. In an <span class="math inline">\(I=0, D=0\)</span> case, for instance, we can see that if we search only for <span class="math inline">\(P\)</span>, our inference about the probability that <span class="math inline">\(I\)</span> mattered for <span class="math inline">\(D\)</span> will shift down slightly if we observe <span class="math inline">\(P=0\)</span> but will shift up substantially if we observe <span class="math inline">\(P=1\)</span>. If we look for <span class="math inline">\(M\)</span> only, we see that the more impactful potential observation (<span class="math inline">\(M=1\)</span>) is much less likely to be observed, given our model and <span class="math inline">\(I=0, D=0\)</span>, than the less impactful observation (<span class="math inline">\(M=0\)</span>). This will necessarily limit how fruitful we expect a strategy of searching for <span class="math inline">\(M\)</span> alone to be.</p>
+<p>In Figure <a href="#fig-HJ-F-12-4" class="quarto-xref">Figure&nbsp;<span>12.4</span></a>, we average across the possible ways that each clue-selection strategy might turn out to calculate the reduction in uncertainty (i.e., in variance) that we <em>expect</em> to achieve under each strategy. We can think of expected uncertainty reduction, our measure of expected learning, as a summary assessment of a strategy’s value. Again, we plot this uncertainty-reduction separately by column for each <span class="math inline">\(I, D\)</span> combination. Thus, strategies that shift us further to the right, toward a larger reduction in uncertainty, are those from which we expect to learn the most.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Base democratization model: What we expect to find and what we expect to learn from different clue strategies. Size of each dot indicates the probability of observing the data pattern given the search strategy.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: Reduction in expected variance from different data strategies for different kinds of cases (base democratization model).
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>One clear message emerging from Figure <a href="#fig-HJ-F-12-4" class="quarto-xref">Figure&nbsp;<span>12.4</span></a> is that, if we have to choose one of the two clues to go looking for, then we should choose <span class="math inline">\(P\)</span>. Given our model (including restrictions of and priors on the types), we expect to reduce our uncertainty more by learning about an alternative cause of democratization (international pressure) than by learning about a mediator (mobilization), regardless of the <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> values in the case.</p>
+<p>We also see differences depending on the case’s <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span> values. In particular, we see that the mediator, <span class="math inline">\(M\)</span>, is much more informative for <span class="math inline">\(I=D\)</span> cases (first and fourth columns). This is because, given the restrictions on nodal types in our model, these are cases in which the causal effect we are looking for is one that <em>could</em> have operated via the mediator—that is, because when any <span class="math inline">\(I \rightarrow D\)</span> effect in such cases has to be positive. In contrast, <span class="math inline">\(M\)</span> is informative only as a moderator of the cause’s direct effects when the <span class="math inline">\(I \rightarrow D\)</span> effect can only be negative (second and third columns, where <span class="math inline">\(I \neq D\)</span>). This finding illustrates an important, more general point: The process tracing evidence that will be most informative to go looking for can depend on what it is we have already observed.</p>
+</section><section id="revised-model-revised-query" class="level4" data-number="12.1.3.2"><h4 data-number="12.1.3.2" class="anchored" data-anchor-id="revised-model-revised-query">
+<span class="header-section-number">12.1.3.2</span> Revised Model, Revised Query</h4>
+<p>We can also see how the comparison across clue strategies changes if we revise the model or change the query. To illustrate, let’s first revise the query: imagine that we are interested in understanding whether inequality plausibly mattered for democratization <em>via</em> mobilization.</p>
+<p>The model revision that we contemplate removes a restriction, allowing the possibility of a negative effect of inequality on mobilization. We now set the probability of a negative <span class="math inline">\(I \rightarrow M\)</span> effect at 0.1 instead of 0. Our new, pathway-related query is defined as follows: <em>If</em> we could keep <span class="math inline">\(I\)</span> constant but vary <span class="math inline">\(M\)</span> over the values that it would take as <span class="math inline">\(I\)</span> changes from 0 to 1, would <span class="math inline">\(D\)</span> then change, (<em>given</em> the observed values of <span class="math inline">\(I\)</span> and <span class="math inline">\(D\)</span>)?<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.5: Revised query and/or model: Expected reduction in posterior variance from different data strategies for cases with different I and D values
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Figure <a href="#fig-HJ-F-12-5" class="quarto-xref">Figure&nbsp;<span>12.5</span></a> shows how our uncertainty would change, in expectation, under different clue selection strategies, comparing a scenario in which we alter the query only, without changing the model, to a scenario in which we alter both the query and the model.</p>
+<p>Looking first at the scenario in which we change the query only, we always learn from observing <span class="math inline">\(M\)</span> or <span class="math inline">\(P\)</span> in an <span class="math inline">\(I=0, D=0\)</span> or an <span class="math inline">\(I=1, D=1\)</span> case. However, the relative values on <span class="math inline">\(M\)</span> and <span class="math inline">\(P\)</span> are reversed from what they were for our first query. Whereas <span class="math inline">\(P\)</span> was more informative for assessing whether <span class="math inline">\(I\)</span> had a positive effect on <span class="math inline">\(D\)</span>, observing <span class="math inline">\(M\)</span>’s value is more important, in expectation, for learning whether <span class="math inline">\(I\)</span> had a positive effect on <span class="math inline">\(D\)</span> <em>through</em> the <span class="math inline">\(M\)</span>-mediated pathway. For the cases where <span class="math inline">\(I=0, D=1\)</span> or <span class="math inline">\(I=1,D=0\)</span>, on the other hand, we learn nothing because we already know (or have assumed in the model) that negative effects cannot operate through <span class="math inline">\(M\)</span>.</p>
+<p>However, if we change the model, <span class="math inline">\(M\)</span> becomes still more important for the pathway query. As we can see, we now expect to learn from <span class="math inline">\(M\)</span> both in <span class="math inline">\(I \neq D\)</span>, and in <span class="math inline">\(I=D\)</span> cases—the patterns of learning are very similar, though note that the degree of learning is still lower for the <span class="math inline">\(I \neq D\)</span> cases. Consider an <span class="math inline">\(I=0, D=1\)</span> case. When negative <span class="math inline">\(I \rightarrow M\)</span> effects were excluded, <span class="math inline">\(I\)</span> could not have a negative effect on <span class="math inline">\(D\)</span> through <span class="math inline">\(M\)</span>. <span class="math inline">\(M\)</span> was informative about this type of case only as a moderator of <span class="math inline">\(I\)</span>’s direct negative effect on <span class="math inline">\(D\)</span>, but there was nothing to learn about mediated effects. An observation of <span class="math inline">\(M=1\)</span> counted as evidence against <span class="math inline">\(I=0\)</span> being the cause of <span class="math inline">\(D=1\)</span> only because <span class="math inline">\(M=1\)</span> could be the cause (given that <span class="math inline">\(M\)</span> could have a positive effect on <span class="math inline">\(D\)</span>); but again, there was no question of effects going through <span class="math inline">\(M\)</span>. Once we relax the monotonicity restriction and allow negative effects of <span class="math inline">\(I\)</span> on <span class="math inline">\(M\)</span>, <span class="math inline">\(M\)</span> is additionally informative as a potential <em>mediator</em> of a negative <span class="math inline">\(I \rightarrow D\)</span> effect and thus informative for our new query.</p>
+</section></section></section><section id="dynamic-strategies" class="level2" data-number="12.2"><h2 data-number="12.2" class="anchored" data-anchor-id="dynamic-strategies">
+<span class="header-section-number">12.2</span> Dynamic Strategies</h2>
+<p></p>
+<p>The clue-collection strategies described above assume that researchers select the full set of clues to be gathered in advance and do not alter their strategies as they go along. However, the expected informativeness of a given clue may depend on the values of <em>other</em> clues that we could observe first. Thus, if we have the flexibility to adjust clue-selection procedures as we observe data, then we can select an optimal strategy in a dynamic sense, taking into account earlier observations when selecting later ones.</p>
+<p>Given <span class="math inline">\(n\)</span> nodes, a dynamic data collection strategy will be of the form: <span class="math display">\[\sigma = \{K_1, (K_2|K_1 = 1), (K_2|K_1 = 0), (K_3|K_1=1, K_2 =0),\dots\}\]</span></p>
+<p>where each <span class="math inline">\(K_j\)</span> is an element of the nodes on the graph or is the empty set. Thus, we start with observing <span class="math inline">\(K_1\)</span>; then, whether we choose to observe <span class="math inline">\(K_2\)</span> depends on the value of <span class="math inline">\(K_1\)</span>; whether we choose to observe <span class="math inline">\(K_3\)</span> depends on the value of <span class="math inline">\(K_1\)</span> and (if we observed it) <span class="math inline">\(K_2\)</span>; and so on. A strategy <em>vector</em> specifies a series of conditional clue-search actions: It identifies the first clue sought and then which clues are sought conditional on the realization of all prior clues sought.</p>
+<p>Each possible strategy has an associated expected reduction in variance. We can also build in an expected cost associated with each clue, allowing us to treat clue-selection as a problem of optimizing over informativeness and cost.</p>
+<p>Let’s illustrate with the government survival example from before, using the base model (in which we allow for only two nodal types at <span class="math inline">\(C\)</span> and at <span class="math inline">\(R\)</span> and only one nodal type at <span class="math inline">\(Y\)</span>). Imagine a situation in which we know that <span class="math inline">\(Y=0\)</span> and are interested in whether <span class="math inline">\(Y=0\)</span> because of <span class="math inline">\(S\)</span> (the value of which we have not observed). We consider strategies in which we first seek information on one node and then, conditional on what we find, look or do not look for data on one other node. With five nodes, one already known, there are <span class="math inline">\(4 \times 4^2\)</span> strategies of this form (that is 4 first-clue choices, and then 16 possible <em>pairs</em> of responses to whatever value is found on the first clue).</p>
+<p>To consider the simplest subset of these, consider the strategies that involve looking first at <span class="math inline">\(S\)</span>. If we learn here that the government was not sophisticated, then this answers the query in the negative: The government could not have remained in power because it was sophisticated. If we learn that the government <em>was</em> sophisticated, then it might have been the cause, but we do not yet know that with certainty. Our next move might be to examine whether there was a free press (<span class="math inline">\(X\)</span>): Learning that there was or was not a free press will settle the matter since sophistication will have caused the government’s survival if and only if there is a free press.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-6" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.6: Cost-variance trade-offs for all dynamic strategies involving up to two clues under base government-survival model with undominated strategies labeled. In each label the term in first set of parentheses indicates which clue is observed first. The two elements in the second set of parentheses indicate which clue or none (.) is to be observed if the first clue realization is 0 and if it is 1 respectively
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We represent each of these three two-step strategies (three of many possible ones) in <a href="#tbl-HJ-T-12-2" class="quarto-xref">Table&nbsp;<span>12.2</span></a>, along with the expected variance reduction associated with each. In addition, we indicate each strategy’s expected cost. Here, we assume, for simplicity, that each clue has a cost of 1. We can see that we expect to learn the same amount from Strategies 2 and 3, but that Strategy 3 comes at a lower expected cost because we have a 50% chance of only having to collect one observation, depending on what we observe.</p>
+<div id="tbl-HJ-T-12-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-12-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;12.2: Illustration of three (of many) possible two-step strategies.
+</figcaption><div aria-describedby="tbl-HJ-T-12-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 10%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 24%">
+<col style="width: 19%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: center;">Strategy</th>
+<th style="text-align: center;">Step 1</th>
+<th style="text-align: center;">Step 2 if 0</th>
+<th style="text-align: center;">Step 2 if 1</th>
+<th style="text-align: center;">Expected variance</th>
+<th style="text-align: center;">Expected Cost</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">S</td>
+<td style="text-align: center;">None</td>
+<td style="text-align: center;">None</td>
+<td style="text-align: center;">0.167</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">S</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">S</td>
+<td style="text-align: center;">None</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>We can, of course, also calculate the expected costs of different strategies while allowing different clues to come at different costs. <a href="#fig-HJ-F-12-6" class="quarto-xref">Figure&nbsp;<span>12.6</span></a> plots all dynamic strategies involving up to two clues, assuming <span class="math inline">\(Y=0\)</span> has already been observed, showing expected variance-reduction for the query, “Did <em>S</em> cause <em>Y</em>?” and expected cost. For this exercise, we set differential clue prices such that <em>X</em> is the most costly clue to collect, followed by <em>C</em>, then <em>S</em>, then <em>Y</em>, then <em>R</em>. We have labeled the strategies that lie along the frontier of optimal strategies. The optimal choice then depends on how we want to trade off cost against learning. Among the notable points along this frontier, we see that the cheapest strategy among those that minimize variance involves gathering S and then gathering <em>C</em> if and only if we observe <em>S=1</em>. We can also see that the lowest-variance strategy that minimizes costs involves gathering <em>S</em> only and then stopping.</p>
+<p>We also implement this exercise for the basic inequality and democratization model. We illustrate (<a href="#fig-HJ-F-12-7" class="quarto-xref">Figure&nbsp;<span>12.7</span></a>) for a situation in which we know there is high inequality and democratization has occurred, and we want to know if high inequality caused the democratization. We will assume here that mobilization is easy to observe (low-cost), but pressure is difficult (high-cost).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-12-7" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-12-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="12-clue-selection_files/figure-html/fig-HJ-F-12-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-12-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.7: Cost-variance tradeoffs for all dynamic strategies involving up to two clues under the base democratization model
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We can see here that four strategies are non-dominated by any alternative. These are, in order of increasing cost:</p>
+<ol type="1">
+<li>Observe <span class="math inline">\(M\)</span> first, then stop. This strategy has relatively high expected uncertainty but minimizes costs relative to any other strategy: We observe just one clue, and it’s the cheaper one.</li>
+<li>Observe <span class="math inline">\(P\)</span> first, then stop. We’ll learn more from this strategy than from Strategy 1, though at a higher cost. Still, no other strategy allows us to reduce costs without increasing variance.</li>
+<li>Observe <span class="math inline">\(P\)</span> first; if <span class="math inline">\(P=0\)</span>, observe <span class="math inline">\(M\)</span>; otherwise stop. We, again, get uncertainty reduction here, relative to Strategy 2, but again at a higher cost.</li>
+<li>Observe <span class="math inline">\(M\)</span> first; if <span class="math inline">\(M=0\)</span>, stop; if <span class="math inline">\(M=1\)</span>, observe <span class="math inline">\(P\)</span>. This strategy gets us the lowest expected posterior variance of any strategy. Moreover, it is not the highest-cost strategy, which would be to observe both clues no matter what. Once we’ve observed <span class="math inline">\(M=0\)</span>, we get nothing from the additional investment in <span class="math inline">\(P\)</span> since <span class="math inline">\(M=0\)</span> already tells us that <span class="math inline">\(I\)</span> could not have had a positive effect on <span class="math inline">\(D\)</span>.</li>
+</ol>
+<p>Note also that both Strategies 3 and 4 are <em>conditional</em> two-clue strategies: They involve first seeking one clue and seeking a second clue only under one of the possible realizations of the first clue. But they have different outcomes. Perhaps most interestingly, we don’t expect to learn the most by starting with the most probative clue. If we start with the more informative clue, <span class="math inline">\(P\)</span>, observing <span class="math inline">\(M\)</span> only if <span class="math inline">\(P=0\)</span>, we expect to end up with <em>more</em> uncertainty than if we start with the less informative clue, <span class="math inline">\(M\)</span>, and observe <span class="math inline">\(P\)</span> only if <span class="math inline">\(M=1\)</span>.</p>
+</section><section id="conclusion" class="level2" data-number="12.3"><h2 data-number="12.3" class="anchored" data-anchor-id="conclusion">
+<span class="header-section-number">12.3</span> Conclusion</h2>
+<p>In this chapter, we have sought to show how clue-selection strategies for process-tracing can be guided by a causal model. An explicit statement of a causal model—including prior beliefs over roots—allows one to assess what will be inferred given all possible observations over all nodes on a graph. This opens the way for simple strategies for assessing which case-level data are most valuable for what query, and in what order these should be gathered. A key takeaway from this chapter’s analysis is that there is no one-size-fits-all approach to deciding where in a case to look for probative value. The most useful clue will not always be a step along a causal chain or in any other particular location. Which clue strategy we should expect to be most informative will depend on features of the research situation: on the prior beliefs we have embedded in our model, on the question we are asking, and on what data we have already observed. The procedures outlined in this chapter give the researcher a systematic, transparent way of reasoning from a model, a query, and a set of prior observations to a choice among the available clue strategies. Strategies may be fixed in advance or dynamic, and information about the costliness of clues can readily be incorporated into the analysis.</p>
+<p>The procedures that we describe in this chapter may not always be practicable. Researchers may find it difficult to describe a model in advance and place prior beliefs on nodal types. Moreover, the collection of new data could easily give rise to possibilities and logics that were not previously contemplated. Nothing here seeks to deny these potential challenges. Our claim here is a modest one: Insofar as one can specify a model before engaging in data gathering, the model provides a powerful tool to assess what data it will be most useful to gather.</p>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>Government sensitivity here can be thought of as government sophistication (Does it take the actions of others into account when making decisions?) or as a matter of preferences (Does it have an overriding incentive to engage in corruption?).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This table is generated by applying the <code>conditional_inferences</code> function.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Formally this query is <span class="math inline">\(D(I=0, M = M(I=1)) \neg D(I=0, M = M(I=0))\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./11-fusion.html" class="pagination-link" aria-label="Mixing Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./13-case-selection.html" class="pagination-link" aria-label="Case Selection">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>6&nbsp; Theories as Causal Models – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-process-tracing-with-models.html" rel="next">
+<link href="./05-being-Bayesian.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-causal-models.html">I Foundations</a></li><li class="breadcrumb-item"><a href="./06-theory-as-causal-models.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#models-as-theories-of" id="toc-models-as-theories-of" class="nav-link active" data-scroll-target="#models-as-theories-of"><span class="header-section-number">6.1</span> Models as <em>Theories Of</em></a>
+  <ul class="collapse">
+<li><a href="#sec-impliedtheory1" id="toc-sec-impliedtheory1" class="nav-link" data-scroll-target="#sec-impliedtheory1"><span class="header-section-number">6.1.1</span> Implications of Structural Causal</a></li>
+  <li><a href="#sec-impliedtheory2" id="toc-sec-impliedtheory2" class="nav-link" data-scroll-target="#sec-impliedtheory2"><span class="header-section-number">6.1.2</span> Probabilistic Models Implied by Lower Level Probabilistic Models</a></li>
+  <li><a href="#sec-impliedtheory3" id="toc-sec-impliedtheory3" class="nav-link" data-scroll-target="#sec-impliedtheory3"><span class="header-section-number">6.1.3</span> Models Justified by Theory and Data</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-theorygains" id="toc-sec-theorygains" class="nav-link" data-scroll-target="#sec-theorygains"><span class="header-section-number">6.2</span> Gains from Theory</a>
+  <ul class="collapse">
+<li><a href="#illustration-gains-from-a-front-door-theory" id="toc-illustration-gains-from-a-front-door-theory" class="nav-link" data-scroll-target="#illustration-gains-from-a-front-door-theory"><span class="header-section-number">6.2.1</span> Illustration: Gains from a Front-Door Theory</a></li>
+  <li><a href="#quantifying-gains" id="toc-quantifying-gains" class="nav-link" data-scroll-target="#quantifying-gains"><span class="header-section-number">6.2.2</span> Quantifying gains</a></li>
+  </ul>
+</li>
+  <li><a href="#formal-theories-and-causal-models" id="toc-formal-theories-and-causal-models" class="nav-link" data-scroll-target="#formal-theories-and-causal-models"><span class="header-section-number">6.3</span> Formal Theories and Causal Models</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-causal-models.html">I Foundations</a></li><li class="breadcrumb-item"><a href="./06-theory-as-causal-models.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC6" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We embed the notion of a “theory” into the causal-models framework. We describe a conceptual hierarchy in which a theory is a “lower level” model that explains or justifies a “higher level” model. The approach has implications for the logical consistency of our inferences and for assessing when and how theory is useful for strengthening causal claims.</p>
+</div>
+</div>
+<p><br></p>
+<p>In <a href="03-illustrating-models.html" class="quarto-xref"><span>Chapter 3</span></a>, we described a set of theories and represented them as causal models. But so far we haven’t been very explicit about what we mean by a theory or how theory maps onto a causal-model framework. </p>
+<p>In this book, we will think of theory as a type of <em>explanation</em>: A theory provides an account of how or under what conditions a set of causal relationships operate. We generally express both a theory and the claims being theorized as causal models: A theory is a model that <em>implies</em> another model—possibly with the help of some data.</p>
+<p>To fix ideas: a simple claim might be that “<em>A</em> caused <em>B</em> in case <span class="math inline">\(j\)</span>”. This claim is itself a model, albeit a very simple one. The theory that supports this model might, for instance, be of any of the following forms:</p>
+<ul>
+<li>“<em>A</em> always causes <em>B</em>”</li>
+<li>“<em>A</em> always causes <em>B</em> whenever <em>C</em>, and <em>C</em> holds in case <em>j</em>”, or<br>
+</li>
+<li>“<em>A</em> invariably causes <em>M</em> and invariably <em>M</em> causes <em>B</em>”.</li>
+</ul>
+<p>All of these theories have in common that they are arguments that could be provided to support the simple claim that <em>A</em> causes <em>B</em> is a particular case. In each case, if you believe the theory, you believe the implication.</p>
+<p>We can also think about theoretical implications in probabilistic terms. Suppose that we start with a simple claim of the form “<em>A</em> <em>likely</em> caused <em>B</em> in case <span class="math inline">\(j\)</span>.” That probabilistic simple claim could follow from a theory that reflected uncertainty about causal processes, such as: “<em>A</em> usually causes <em>B</em> or”<em>A</em> always causes <em>B</em> whenever <em>C</em>, and <em>C</em> probably holds in case <em>j</em>.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The rest of this chapter builds out this logic and uses it to provide a way of characterizing when a theory is useful or not.</p>
+<p>In the first section, we consider multiple senses in which one model might imply, and thus serve as a <em>theory of</em>, another model.</p>
+<ul>
+<li><p>First, we consider how one causal structure can imply (serve as a theory of) another causal structure, by including additional detail that explains how or when causal effects in the other model will unfold. If structural model <span class="math inline">\(A\)</span> implies structural model <span class="math inline">\(B\)</span>, then <span class="math inline">\(A\)</span> is a theory of <span class="math inline">\(B\)</span>.</p></li>
+<li><p>We then turn to logical relations between probabilistic models. We show how the distributions over nodal types in a simpler model structure can be underwritten by distributions over nodal types in a more detailed model structure. Here, a claim about the prevalence (or probability) of causal effects in a causal network is justified by claims about the prevalence or probability of causal effects in a more granular rendering of that causal network.</p></li>
+<li><p>Finally, we show how a probabilistic model plus <em>data</em> can provide a theoretical underpinning for a new, stronger model. The new model is again implied by another model, together with data.</p></li>
+</ul>
+<p>In the second section, we consider how <em>models-as-theories-of</em> can be useful. In embedding theorization within the world of causal models, we ultimately have an empirical objective in mind. In our framework, theorizing a causal relationship of interest means elaborating our causal beliefs about the world in greater detail. As we show in later chapters, theorizing in the form of specifying underlying causal models allows us to generate research designs: to identify sources of inferential leverage and to explicitly and systematically link observations of components of a causal system to the causal questions we seek to answer. In this chapter, we point to ways in which the usefulness of theories can be assessed.</p>
+<p>In the chapter’s third and final section, we discuss the connection between the kinds of theories we focus on—what might be called empirical theories—and analytic theories of the kind developed for instance by formal theorists. Moving from one to the other requires a translation and we illustrate how this might be done by showing how we can generate a causal model from a game-theoretic model.</p>
+<section id="models-as-theories-of" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="models-as-theories-of">
+<span class="header-section-number">6.1</span> Models as <em>Theories Of</em>
+</h2>
+<p>Let us say that a causal model, <span class="math inline">\(M^\prime\)</span>, is a <em>theory of</em> <span class="math inline">\(M\)</span> if <span class="math inline">\(M\)</span> is implied by <span class="math inline">\(M^\prime\)</span>. It is a theory <em>because</em> it has implications. Otherwise, it is a conclusion, an inference, or a claim.</p>
+<p>A theory, <span class="math inline">\(M^\prime\)</span>, might itself sit atop—be supported by—another theory, <span class="math inline">\(M^{\prime\prime}\)</span>, that implies <span class="math inline">\(M^\prime\)</span>. To help fix the idea of theory as “supporting” or “underlying” the model(s) it theorizes, we refer to the theory, <span class="math inline">\(M^\prime\)</span>, as a <em>lower</em>-level model relative to <span class="math inline">\(M\)</span> and refer to <span class="math inline">\(M\)</span> as a <em>higher</em>-level model relative to its theorization, <span class="math inline">\(M^\prime\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Both structural models and probabilistic models—possibly in combination with data—imply other models.</p>
+<section id="sec-impliedtheory1" class="level3" data-number="6.1.1"><h3 data-number="6.1.1" class="anchored" data-anchor-id="sec-impliedtheory1">
+<span class="header-section-number">6.1.1</span> Implications of Structural Causal</h3>
+<p></p>
+<p>A structural model can imply multiple other simpler structural models. Similarly, a structural model can be implied <em>by</em> multiple more complex models.</p>
+<p>Theorization often involves a refinement of causal types, implemented through the addition of nodes. Take the very simple model, <span class="math inline">\(M\)</span>, represented in <a href="#fig-HJ-F-6-1" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>(a). The model simply states that <span class="math inline">\(X\)</span> has (or <em>can</em> have) a causal effect on <span class="math inline">\(Y\)</span>.</p>
+<p>What theories might justify <span class="math inline">\(M\)</span>? This question can be rephrased as “what models imply model <span class="math inline">\(M\)</span>?” The figure points to two possibilities. Both models <span class="math inline">\(M^\prime\)</span> and <span class="math inline">\(M^{\prime\prime}\)</span> imply model <span class="math inline">\(M\)</span>. They can be thought of as <em>theories</em>, or lower level models, of <span class="math inline">\(M\)</span>.</p>
+<p>Model <span class="math inline">\(M^\prime\)</span> differs from <span class="math inline">\(M\)</span> by the addition of a node, <span class="math inline">\(K\)</span>, in the causal chain between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. We can say that <span class="math inline">\(M^\prime\)</span> is a <em>theory</em> of <span class="math inline">\(M\)</span> for two reasons. First, it provides a <em>justification</em>—if you believe <span class="math inline">\(M^\prime\)</span> you should believe <span class="math inline">\(M\)</span>. If <span class="math inline">\(X\)</span> affects <span class="math inline">\(Y\)</span> through <span class="math inline">\(K\)</span>, then <span class="math inline">\(X\)</span> affects <span class="math inline">\(Y\)</span>. But as well as a justification, it also provides an <em>explanation</em> of <span class="math inline">\(M\)</span>. Suppose we already <em>know</em> that <span class="math inline">\(X\)</span> affects <span class="math inline">\(Y\)</span> but want to know <em>why</em>. If we ask, “Why does <span class="math inline">\(X\)</span> affect <span class="math inline">\(Y\)</span>?”, <span class="math inline">\(M^\prime\)</span> provides an answer: <span class="math inline">\(X\)</span> affects <span class="math inline">\(Y\)</span> <em>because</em> <span class="math inline">\(X\)</span> affects <span class="math inline">\(K\)</span>, and <span class="math inline">\(K\)</span> affects <span class="math inline">\(Y\)</span>.</p>
+<p>Model <span class="math inline">\(M^{\prime\prime}\)</span> differs from <span class="math inline">\(M\)</span> by the addition of a node, <span class="math inline">\(C\)</span>, that moderates the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. <span class="math inline">\(M^{\prime\prime}\)</span> justifies <span class="math inline">\(M\)</span> in the sense that, if you believe <span class="math inline">\(M^{\prime\prime}\)</span>, you should believe <span class="math inline">\(M\)</span>. <span class="math inline">\(M^{\prime\prime}\)</span> provides an explanation of a kind also: If you believe model <span class="math inline">\(M^{\prime\prime}\)</span>, then you likely believe that the relation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is what it is because of <span class="math inline">\(C\)</span>’s value. Had <span class="math inline">\(C\)</span> been different, the causal relation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> might have also been different.</p>
+<p>Both of these models imply <span class="math inline">\(M\)</span> but themselves constitute stronger—that is, more <em>specific</em>—claims about the world than does <span class="math inline">\(M\)</span>. For instance, <span class="math inline">\(M^\prime\)</span> stipulates not only that <span class="math inline">\(X\)</span> can affect <span class="math inline">\(Y\)</span> but that such an effect <em>must</em> operate via <span class="math inline">\(K\)</span>. For this reason, the two theories should be harder to accept than <span class="math inline">\(M\)</span>—and so may themselves need to be defended, or theorized, by even lower level models.</p>
+<p>Importantly, both <span class="math inline">\(M^\prime\)</span> and <span class="math inline">\(M^{\prime\prime}\)</span> involve a redefinition of <span class="math inline">\(\theta^Y\)</span> relative to model <span class="math inline">\(M\)</span>. We see a change in the endogenous nodes as we go down a level (the addition of <span class="math inline">\(K\)</span> or <span class="math inline">\(C\)</span>) —and these changes, in turn, imply a change in the interpretation of the exogenous, <span class="math inline">\(\theta\)</span> nodes pointing into existing endogenous nodes (such as <span class="math inline">\(Y\)</span> in this example).</p>
+<p>As we move down a level, we can think of a part of <span class="math inline">\(\theta^Y\)</span> as being splintered off and captured by a new component of the more detailed model. Consider, for instance, the move from <span class="math inline">\(M\)</span> down to <span class="math inline">\(M^\prime\)</span>. In moving from the higher- to the lower level model, we have effectively <em>split</em> the nodal-type term <span class="math inline">\(\theta^Y\)</span> into two parts: <span class="math inline">\(\theta^{Y_\text{lower}}\)</span> and <span class="math inline">\(\theta^K\)</span>. Intuitively, in the higher level model, <span class="math inline">\(M\)</span>, <span class="math inline">\(Y\)</span> is a function of <span class="math inline">\(X\)</span> and <span class="math inline">\(\theta^Y\)</span>, the latter representing all things other than <span class="math inline">\(X\)</span> than can affect <span class="math inline">\(Y\)</span>. Or, in the language of our nodal-type setup, <span class="math inline">\(\theta^Y\)</span> represents all of the (unspecified) sources of variation in <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(Y\)</span>. When we insert <span class="math inline">\(K\)</span> into the model, however, <span class="math inline">\(X\)</span> now does not directly affect <span class="math inline">\(Y\)</span> but only does so via <span class="math inline">\(K\)</span>. Further, we model <span class="math inline">\(X\)</span> as acting on <span class="math inline">\(K\)</span> in a manner conditioned by <span class="math inline">\(\theta^K\)</span>; and <span class="math inline">\(\theta^K\)</span> represents all of the unspecified factors determining <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(K\)</span>. The key thing to notice here is that <span class="math inline">\(\theta^K\)</span> now represents <em>a portion of the variance that <span class="math inline">\(\theta^Y\)</span> represented in the higher level graph</em>: Some of the variation in <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(Y\)</span> now arises from variation in <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(K\)</span>, which is captured by <span class="math inline">\(\theta^K\)</span>.</p>
+<p>So, for instance, <span class="math inline">\(X\)</span> might have no effect on <span class="math inline">\(Y\)</span> because <span class="math inline">\(\theta^K\)</span> takes on the value <span class="math inline">\(\theta^K_{00}\)</span>, meaning that <span class="math inline">\(X\)</span> has no effect on <span class="math inline">\(K\)</span>. Put differently, any effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> must arise from an effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(K\)</span>; so <span class="math inline">\(\theta^K\)</span>’s value must be either <span class="math inline">\(\theta^K_{01}\)</span> or <span class="math inline">\(\theta^K_{10}\)</span> for <span class="math inline">\(X\)</span> to affect <span class="math inline">\(Y\)</span>. <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> What <span class="math inline">\(\theta^K\)</span> represents, then, is that part of the original <span class="math inline">\(\theta^Y\)</span> that arose from some force other than <span class="math inline">\(X\)</span> operating at the <em>first</em> step of the causal chain from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>. So now, <span class="math inline">\(\theta^Y\)</span> in the lower level graph is not quite the same entity as it was in the higher level graph. In the original graph, <span class="math inline">\(\theta^Y\)</span> represented <em>all</em> sources of variation in <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(Y\)</span>. In the lower level model, with <span class="math inline">\(K\)</span> as a mediator, <span class="math inline">\(\theta^Y\)</span> represents only the variation in <span class="math inline">\(K\)</span>’s effect on <span class="math inline">\(Y\)</span>. In the move from model <span class="math inline">\(M\)</span> down to model <span class="math inline">\(M^\prime\)</span>, <span class="math inline">\(\theta^Y\)</span> has been expunged of any factors shaping the first stage of the causal process, which now reside in <span class="math inline">\(\theta^K\)</span>. We highlight this change in <span class="math inline">\(\theta^Y\)</span>’s meaning by referring in the second model to <span class="math inline">\(\theta^{Y_\text{lower}}\)</span>.</p>
+<p>Consider next model <span class="math inline">\(M^{\prime\prime}\)</span> in <a href="#fig-HJ-F-6-1" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>, which also supports (implies) the higher level model, <span class="math inline">\(M\)</span>. The logical relationship between models <span class="math inline">\(M\)</span> and <span class="math inline">\(M^{\prime\prime}\)</span>, however, is somewhat different. Here the lower level model <em>specifies</em> one of the conditions that determined the value of <span class="math inline">\(\theta^Y\)</span> in the higher level model. In specifying a moderator, <span class="math inline">\(C\)</span>, we have extracted <span class="math inline">\(C\)</span> from <span class="math inline">\(\theta^Y\)</span>, leaving <span class="math inline">\(\theta^{Y_\text{lower}}\)</span> to represent all factors <em>other than <span class="math inline">\(C\)</span></em> that condition <span class="math inline">\(Y\)</span>’s response to its parents. More precisely, <span class="math inline">\(\theta^{Y_\text{lower}}\)</span> now represents the set of nodal types defining how <span class="math inline">\(Y\)</span> responds jointly to <span class="math inline">\(X\)</span> and <span class="math inline">\(C\)</span>. Again, the relabeling as <span class="math inline">\(\theta^{Y_\text{lower}}\)</span> reflects this change in the term’s meaning. Whereas in Model <span class="math inline">\(M^{\prime}\)</span> we have extracted <span class="math inline">\(\theta^K\)</span> from <span class="math inline">\(\theta^Y\)</span>, in Model <span class="math inline">\(M^{\prime\prime}\)</span>, it is <span class="math inline">\(C\)</span> itself that we have extracted from <span class="math inline">\(\theta^Y\)</span>, specifying as a substantive variable what had been just a random disturbance.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: Two theories—lower level models—that explain a higher level model.
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="sec-impliedtheory2" class="level3" data-number="6.1.2"><h3 data-number="6.1.2" class="anchored" data-anchor-id="sec-impliedtheory2">
+<span class="header-section-number">6.1.2</span> Probabilistic Models Implied by Lower Level Probabilistic Models</h3>
+<p>We used <a href="#fig-HJ-F-6-1" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> to show how one structural model can be implied by another. In the same way, one <em>probabilistic</em> model can be implied by another. If a higher level probabilistic model is to be implied by a lower level probabilistic model, consistency requires that the probability distributions over exogenous nodes for the higher level model are those that are implied by the distributions over the exogenous nodes in the lower level model. </p>
+<p>To illustrate, let us add a distribution over <span class="math inline">\(\theta^K\)</span> and <span class="math inline">\(\theta^Y_{\text{lower}}\)</span> to the structural model <span class="math inline">\(M^\prime\)</span> in <a href="#fig-HJ-F-6-1" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>(b). This gives us a probabilistic causal model. We will call this model <span class="math inline">\(M^p_\text{lower}\)</span>. <span class="math inline">\(M^p_\text{lower}\)</span>, in turn, implies a higher level probabilistic model, <span class="math inline">\(M^p_\text{higher}\)</span>: <span class="math inline">\(M^p_\text{higher}\)</span> is formed from the structure of Model (a) in <a href="#fig-HJ-F-6-1" class="quarto-xref">Figure&nbsp;<span>6.1</span></a> together with a <em>particular</em> distribution over <span class="math inline">\(\theta^Y\)</span>. Specifically, <span class="math inline">\(\theta^Y\)</span> must have the distribution that preserves the causal relations implied by the probabilistic beliefs in <span class="math inline">\(M^p_\text{lower}\)</span>.</p>
+<p>Recall that <span class="math inline">\(\lambda\)</span> represents population-shares over causal types, and thus a probability distribution over <span class="math inline">\(\theta\)</span>. So for instance the probability that <span class="math inline">\(\theta^{Y}_{00}\)</span> is simply <span class="math inline">\(\lambda^{Y}_{00}\)</span>. So we have:</p>
+<ol type="1">
+<li><p>In <span class="math inline">\(M^p{_\text{higher}}\)</span>, the probability that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span> is <span class="math inline">\(\lambda^{Y}_{01}\)</span>.</p></li>
+<li><p>In <span class="math inline">\(M^p_{\text{lower}}\)</span>, the probability that <span class="math inline">\(X\)</span> has a positive effect on <span class="math inline">\(Y\)</span> is <span class="math inline">\(\lambda^{K_{\text{lower}}}_{01}\lambda^{Y_{\text{lower}}}_{01}  + \lambda^{K_{\text{lower}}}_{10}\lambda^{Y_{\text{lower}}}_{10}\)</span>. That is, it is the probability that we have a chain of linked positive effects plus the probability that we have a chain of linked negative effects—the two ways in which we can get a positive total effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> in this model.</p></li>
+</ol>
+<p>Consistency then requires a particular equality between the distributions (<span class="math inline">\(\lambda\)</span>s) at the two levels. Specifically, it requires that <span class="math inline">\(\lambda^{Y_{\text{higher}}}_{01} = \lambda^{M_{\text{lower}}}_{01}\lambda^{Y_{\text{lower}}}_{01}  + \lambda^{K_{\text{lower}}}_{10}\lambda^{Y_{\text{lower}}}_{10}\)</span>. So the value of <span class="math inline">\(\lambda^{Y_{\text{higher}}}_{01}\)</span> is <em>implied</em> by <span class="math inline">\(\lambda^{K_{\text{lower}}}_{01},\lambda^{Y_{\text{lower}}}_{01}, \lambda^{K_{\text{lower}}}_{10},\lambda^{Y_{\text{lower}}}_{10}\)</span>.</p>
+<p>In other words, the probability of a positive <span class="math inline">\(X \rightarrow Y\)</span> effect must be the same in <span class="math inline">\(M^p_\text{higher}\)</span> as it is in <span class="math inline">\(M^p_\text{lower}\)</span>. Otherwise, <span class="math inline">\(M^p_\text{higher}\)</span> cannot be implied by <span class="math inline">\(M^p_\text{lower}\)</span>, and the latter cannot serve as a <em>theory</em> of the former.</p>
+<p>While the probability distributions in a lower level model must imply the probability distributions in the higher level model that it supports, the converse may not be true: Knowing the distribution over exogenous nodes of a higher level model does not provide sufficient information to recover distributions over exogenous nodes in the lower level model. So, for instance, knowing <span class="math inline">\(\lambda^{Y_{\text{higher}}}\)</span> does not give us enough information to determine the values of <span class="math inline">\(\lambda^{Y_{\text{lower}}}\)</span> and <span class="math inline">\(\lambda^{K_{\text{lower}}}\)</span>. This is because there are many different combinations of <span class="math inline">\(\lambda^{K_{\text{lower}}}_{01}, \lambda^{Y_{\text{lower}}}_{01}, \lambda^{K_{\text{lower}}}_{10}\)</span>, and <span class="math inline">\(\lambda^{Y_{\text{lower}}}_{10}\)</span> that will add up to any given value for <span class="math inline">\(\lambda^{Y_{\text{higher}}}\)</span>.</p>
+</section><section id="sec-impliedtheory3" class="level3" data-number="6.1.3"><h3 data-number="6.1.3" class="anchored" data-anchor-id="sec-impliedtheory3">
+<span class="header-section-number">6.1.3</span> Models Justified by Theory and Data</h3>
+<p>Finally, we can think of a higher level model as being supported by a lower level model combined with data. For this reason, we can fruitfully think of an initial model—when coupled with data—as constituting a <em>theory of</em> an updated model.</p>
+<p>To see how this might work, imagine a scholar arguing: “<span class="math inline">\(M_1\)</span>: <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> in country <span class="math inline">\(j\)</span>.” When pushed for a justification for the claim, they provide the lower level model: “<span class="math inline">\(M_0:\)</span> <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> if and only if <span class="math inline">\(C=1\)</span>. Further, in this case, <span class="math inline">\(C=1\)</span> and so <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> in this case.”</p>
+<p>Here <span class="math inline">\(M_1\)</span> is implied by <span class="math inline">\(M_0\)</span> plus data <span class="math inline">\(C=1\)</span>.</p>
+<p>We can take this further. If pushed now as to why <span class="math inline">\(M_0\)</span> is itself credible, the scholar might point to an even lower level model consisting of structural relations <span class="math inline">\(X\rightarrow Y \leftarrow C\)</span> plus flat priors over all nodal types—coupled with data on <span class="math inline">\(X,Y\)</span> and <span class="math inline">\(C\)</span>, where the data <em>justify</em> the higher level belief about <span class="math inline">\(C\)</span>’s moderation of <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(Y\)</span>.</p>
+<p>As further justifications are sought, researchers seek acceptable lower models that, together with data, can justify higher level models. Note that, as we move down levels in this hierarchy of models, we may be—helpfully—moving from models that are <em>harder</em> to accept down to models that are <em>easier</em> to accept, because we are bringing data to bear. So, in the above example, it should be easier to accept <span class="math inline">\(X\rightarrow Y \leftarrow C\)</span> with flat priors than to accept the claim that “<span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> if and only if <span class="math inline">\(C=1\)</span>.” But the former works to justify the latter because we join it up with the data on <span class="math inline">\(X,Y\)</span> and <span class="math inline">\(C\)</span>.</p>
+</section></section><section id="sec-theorygains" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="sec-theorygains">
+<span class="header-section-number">6.2</span> Gains from Theory</h2>
+<p>We now turn to consider how to think about whether a theory is <em>useful</em>. We are comfortable with the idea that theories, or models more generally, are wrong. Models are not full and faithful reflections of reality; they are maps designed for a particular purpose. We make use of them because we think that they <em>help</em> in some way.</p>
+<p></p>
+<p>But how do they actually help, and can we quantify the gains we get from using them?</p>
+<p>We think we can.</p>
+<section id="illustration-gains-from-a-front-door-theory" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="illustration-gains-from-a-front-door-theory">
+<span class="header-section-number">6.2.1</span> Illustration: Gains from a Front-Door Theory</h3>
+<p>Here is an illustration with a theory that allows the use of the “front-door criterion” <span class="citation" data-cites="pearl2009causality">(<a href="20-references.html#ref-pearl2009causality" role="doc-biblioref">Pearl 2009</a>)</span>. The key idea is that by invoking a theory for a model—which itself may require justification—one can draw inferences that would not have been possible without the theory.</p>
+<p>Imagine we have a structural causal model <span class="math inline">\(M_0\)</span>: <span class="math inline">\(C \rightarrow X \rightarrow Y \leftarrow C\)</span>, as depicted in panel (a) of Figure 6.2. Here, <span class="math inline">\(C\)</span> is a confound for the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Say we have data on three variables, <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, and <span class="math inline">\(K\)</span> (a node that is not included in <span class="math inline">\(M_0\)</span>). So we have data for two of the nodes in <span class="math inline">\(M_0\)</span> plus additional data on <span class="math inline">\(K\)</span>, but we do not have data on <span class="math inline">\(C\)</span>. </p>
+<p>Now let’s form a probabilistic causal model, <span class="math inline">\(M^p_0\)</span>, by adding flat priors to <span class="math inline">\(M_0\)</span>. Joining the <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> data to probabilistic model <span class="math inline">\(M^p_0\)</span>, we can then generate an updated model, <span class="math inline">\(M^p_1\)</span>, with a probability distribution that reflects our learning from the data. Suppose that the data here display a strong correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. What kind of beliefs will <span class="math inline">\(M^p_1\)</span> contain? From <span class="math inline">\(M^p_1\)</span>, we would consider a causal connection between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to be plausible—but quite uncertain. This uncertainty arises because we are aware that the correlation we see may be due to the unobserved confound <span class="math inline">\(C\)</span>, and we currently have no leverage for distinguishing between a causal effect and confounding.</p>
+<p>Suppose, however, that we now posit the lower level structural model <span class="math inline">\(M'_0\)</span>: <span class="math inline">\(C \rightarrow X \rightarrow K \rightarrow Y \leftarrow C\)</span>, as depicted in panel (b) of <a href="#fig-HJ-F-6-2" class="quarto-xref">Figure&nbsp;<span>6.2</span></a>. <span class="math inline">\(M'_0\)</span> implies <span class="math inline">\(M_0\)</span> in the structural sense discussed in <a href="#sec-impliedtheory1" class="quarto-xref"><span>Section 6.1.1</span></a>.</p>
+<p><span class="math inline">\(M'_0\)</span> makes a stronger claim than <span class="math inline">\(M_0\)</span>: <span class="math inline">\(M'_0\)</span> presupposes a specific pathway between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> that <span class="math inline">\(M_0\)</span> does not. Critically, however, <em>if</em> we accept <span class="math inline">\(M'_0\)</span>, then we can make use of our data on node, <span class="math inline">\(K\)</span>, which was impossible when working with <span class="math inline">\(M_0\)</span>.</p>
+<p>Specifically, we can now:</p>
+<ul>
+<li>turn <span class="math inline">\(M'_0\)</span> into a probabilistic model <span class="math inline">\(M'^p_0\)</span>;</li>
+<li>use data on <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, and <span class="math inline">\(K\)</span> to move to an updated version, <span class="math inline">\(M'^{p}_1\)</span>; notably, data on the mediator <span class="math inline">\(K\)</span> may help us sort out whether the <span class="math inline">\(X, Y\)</span> correlation is causal or a consequence of confounding; </li>
+<li>pose our causal question to <span class="math inline">\(M'^{p}_1\)</span>, which has been informed by data on <span class="math inline">\(K\)</span>.</li>
+</ul>
+<p>This perhaps all seems a bit convoluted, so it is fair to ask: what are the gains? This depends on the data we observe, of course. If we observe, for instance, that <span class="math inline">\(X\)</span> and <span class="math inline">\(K\)</span> are strongly correlated and that <span class="math inline">\(K\)</span> and <span class="math inline">\(Y\)</span> are strongly correlated, then beliefs in <span class="math inline">\(M'^{p}_1\)</span> will reflect confidence that, in fact, <span class="math inline">\(X\)</span> does cause <span class="math inline">\(Y\)</span>—whereas with <span class="math inline">\(M^{p}_1\)</span> we were very uncertain.</p>
+<p>Thus, in return for specifying a theory of <span class="math inline">\(M_0\)</span>, we may be able to make better use of data and form a more confident conclusion.</p>
+<p>In other situations, we might imagine invoking a theory that does not necessarily involve new data, but that allows us to make different, perhaps tighter inferences using the same data. An example might be the invocation of theory that involves a monotonicity restriction or exclusion restriction that allows for the identification of a quantity that would not be identifiable without the theory. </p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: A lower level model is invoked as a theory of a higher level model which in turn allows identification of the effects of X on Y.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Thus, one reason to theorize our models—develop lower level models that make stronger claims—is to be able to reap greater inferential leverage from the more elaborated theory when we go to the data. </p>
+</section><section id="quantifying-gains" class="level3" data-number="6.2.2"><h3 data-number="6.2.2" class="anchored" data-anchor-id="quantifying-gains">
+<span class="header-section-number">6.2.2</span> Quantifying gains</h3>
+<p>Can we quantify how much better off we are?</p>
+<p>We need some evaluation criterion—some notion of “better off”—to answer this question. Two of the more intuitive criteria might be based on:</p>
+<ul>
+<li>
+<em>Error</em>: An error-based evaluation asks whether the theory helped reduce the (absolute) difference between an estimate and a target; similarly, we might focus on <em>squared</em> error—which essentially places more weight on bigger errors</li>
+<li>
+<em>Uncertainty</em>: We might instead assess gains in terms of reduced uncertainty. We might measure uncertainty using the variance of our beliefs, or we might use relative entropy to assess reductions in uncertainty</li>
+</ul>
+<p>Other criteria (or loss functions) might focus on other features. For instance, we might ask whether the data we see are <em>explained</em> by the theory in the sense that they are more likely—less surprising—given the theory. Or we might want a criterion that takes account of the costs of collecting additional data or to the risks associated with false conclusions. For instance, in <span class="citation" data-cites="heckerman1991toward">Heckerman, Horvitz, and Nathwani (<a href="20-references.html#ref-heckerman1991toward" role="doc-biblioref">1991</a>)</span>, an objective function is generated using expected utility gains from diagnoses generated from new information over diagnoses based on what is believed already.</p>
+<p>Beyond specifying a criterion, we also can approach any criterion from a “subjective” or an “objective” position. Are we concerned with how uncertain we will be as researchers, or do we seek to benchmark our inferences against the true state of the world?</p>
+<p>We can, further, distinguish between evaluation from an <em>ex ante</em> or an <em>ex post</em> perspective. Are we evaluating how we expect to do under a given theory before we have seen the data, or how we <em>have</em> done after we have drawn our inferences? <a href="#tbl-metrics" class="quarto-xref">Table&nbsp;<span>6.1</span></a> shows how these two dimensions might be crossed to generate four different approaches to evaluating learning.</p>
+<div id="tbl-metrics" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.1: Learning metrics.
+</figcaption><div aria-describedby="tbl-metrics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 35%">
+<col style="width: 35%">
+</colgroup>
+<thead><tr class="header">
+<th></th>
+<th style="text-align: center;">Ex ante</th>
+<th style="text-align: center;">Ex post</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>Subjective</strong></td>
+<td style="text-align: center;">Expected posterior variance</td>
+<td style="text-align: center;">Posterior variance, Change in beliefs, Wisdom</td>
+</tr>
+<tr class="even">
+<td><strong>Objective</strong></td>
+<td style="text-align: center;">Expected mean squared error</td>
+<td style="text-align: center;">Error, squared error</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p> </p>
+<p>So, for instance, in the top left quadrant (subjective/<em>ex ante</em>), we are interested in how uncertain we expect to be if we work with a given theory; in the bottom left quadrant (objective/<em>ex ante</em>), we are asking how far off we expect to be from some ground truth. In the second column, we are asking how uncertain we <em>are</em> about an inference we have made (subjective/<em>ex post</em>), or about how far off we have ended up from a ground truth (objective/<em>ex post</em>).</p>
+<p>We now use this <span class="math inline">\(2\times2\)</span> structure to walk through possible metrics for gains from theory, focusing on a situation in which a theory lets us use additional data <span class="math inline">\(K\)</span> to make inferences. Thus, when we speak of the gains from the theory, we mean the gains that come from the use of <span class="math inline">\(K\)</span> in the ways <em>made possible by the theory.</em></p>
+<p>In this setup, we imagine that there is an unknown parameter, <span class="math inline">\(q\in\{0,1\}\)</span>, and we are interested in the value of <span class="math inline">\(q\)</span> for a single unit drawn from some population. We have beliefs about the distribution of <span class="math inline">\(K\)</span>, given <span class="math inline">\(q\)</span>. Let <span class="math inline">\(p(q,k)\)</span> denote the joint distribution over <span class="math inline">\(q\)</span> and <span class="math inline">\(k\)</span> with marginal distributions <span class="math inline">\(p(k)\)</span> and <span class="math inline">\(p(q)\)</span>. Let <span class="math inline">\(p(q|k)\)</span> denote a researcher’s posterior given <span class="math inline">\(k\)</span>, which we abbreviate to <span class="math inline">\(\hat{q}_k\)</span>.</p>
+<p>For the illustrations that follow, imagine that we start with a (subjective) prior that <span class="math inline">\(q=1\)</span> of <span class="math inline">\(p=0.2\)</span>. And so our prior expectation for <span class="math inline">\(q\)</span> is <span class="math inline">\(\hat{q}_0 = p = 0.2\)</span>. We’ll assume that that belief is correct, in the sense that q=1 for one fifth of units in the population.</p>
+<p>Now, we have a theory under which we believe that <span class="math inline">\(p(k=1|q = 1) = .8\)</span> and that <span class="math inline">\(p(k=1|q = 0) = .2\)</span>. Importantly, we will imagine that these two beliefs are <em>incorrect</em>, however: that, in fact, <span class="math inline">\(p(k=1|q = 1) = p(k=1|q = 0) = .5\)</span>. Our theory, then, is wrong. We think <span class="math inline">\(K\)</span> is informative, but in fact it is not. This difference between what our theory tells us and what the truth is will allow us to illustrate different conceptualizations of learning.</p>
+<p>The key features of this example are summarized in <a href="#tbl-HJ-T-06-numeric" class="quarto-xref">Table&nbsp;<span>6.2</span></a>. Each row here (or “event”) represents a different situation we might end up in: A different combination of what the true answer to our query is (<span class="math inline">\(q\)</span> is 0 or 1) and of what we observe when we examine <span class="math inline">\(K\)</span> (<span class="math inline">\(k=1\)</span> or <span class="math inline">\(k=0\)</span>). All four rows are <em>ex ante</em> possible.</p>
+<p>Say, now, that we in fact observe <span class="math inline">\(k=1\)</span> and update to <span class="math inline">\(q_1 = p(q=1|k=1) = \frac{p(k=1|q=1)p(q=1)}{p(k=1|q=1)p(q=1) + p(k=1|q=0)p(q=0)} = \frac{0.8 \times 0.2}{0.8 \times  0.2 + 0.2 \times  0.8} = 0.5\)</span>. Suppose, however, that, unbeknownst to us, in reality <span class="math inline">\(q=0\)</span>. So we are in fact in row 2 of this table (<span class="math inline">\(q=0, k=1\)</span>). But since we cannot observe <span class="math inline">\(q\)</span>, we do not know whether we are in row 2, where <span class="math inline">\(q=0\)</span>, or row 4, where <span class="math inline">\(q=1\)</span>.</p>
+<p>Let’s now think about different ways of characterizing the gains from observing <span class="math inline">\(K\)</span>, the piece of evidence made usable by our theory.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in kableExtra::column_spec(kabble(theorygains, col.names = c("$q$
+(Unobserved)", : Please specify format in kable. kableExtra can customize
+either HTML or LaTeX outputs. See https://haozhu233.github.io/kableExtra/ for
+details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in
+kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in
+kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in
+kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in
+kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in
+kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in
+kable_styling(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kableExtra::column_spec(kabble(theorygains,
+: Please specify format in kable. kableExtra can customize either HTML or LaTeX
+outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
+</div>
+<div id="tbl-HJ-T-06-numeric" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-06-numeric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6.2: Possible events, event probabilities, and inferences.
+</figcaption><div aria-describedby="tbl-HJ-T-06-numeric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: center;">
+<span class="math inline">\(q\)</span> (Unobserved)</th>
+<th style="text-align: center;">
+<span class="math inline">\(k\)</span> (Observable)</th>
+<th style="text-align: center;">Event probability (subjective)</th>
+<th style="text-align: center;">Event probability (objective)</th>
+<th style="text-align: center;">Inference on <span class="math inline">\(q\)</span> given <span class="math inline">\(k\)</span>
+</th>
+<th style="text-align: center;">Actual (squared) Error</th>
+<th style="text-align: center;">Posterior variance</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.64</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">0.059</td>
+<td style="text-align: center;">0.003</td>
+<td style="text-align: center;">0.055</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.16</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">0.500</td>
+<td style="text-align: center;">0.250</td>
+<td style="text-align: center;">0.250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.1</td>
+<td style="text-align: center;">0.059</td>
+<td style="text-align: center;">0.886</td>
+<td style="text-align: center;">0.055</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.16</td>
+<td style="text-align: center;">0.1</td>
+<td style="text-align: center;">0.500</td>
+<td style="text-align: center;">0.250</td>
+<td style="text-align: center;">0.250</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<section id="objective-ex-post" class="level4" data-number="6.2.2.1"><h4 data-number="6.2.2.1" class="anchored" data-anchor-id="objective-ex-post">
+<span class="header-section-number">6.2.2.1</span> Objective, <em>ex post</em>
+</h4>
+<p>If we are willing to posit an external ground truth, then we can define “better” in objective terms. For instance, we might calculate the size of the error (or, more typically, the squared error) we make in our conclusions relative to the ground truth. We can then compare the error we make when we use the theory (and the clue that that theory makes usable) to draw an inference to the error that we make when we draw an inference without the aid of the theory (and its associated clue).</p>
+<p>The difference in squared errors is given by <span class="math inline">\((q - \hat{q}_k)^2 - (q - \hat{q}_0)^2\)</span>.</p>
+<p>In the numeric example, our objective <em>ex post</em> (squared) error is <span class="math inline">\((0-.5)^2 = 0.25\)</span> (using <span class="math inline">\(K\)</span>), which compares unfavorably to our prior error <span class="math inline">\((0-0.2)^2 = .04\)</span> (without using <span class="math inline">\(K\)</span>). Objectively, after the fact, we are worse off basing inferences on <span class="math inline">\(K\)</span> than we were before. Note that we move in the wrong direction here not only because our theory about the informativeness of the clue is incorrect, but also because <em>in this instance</em> the clue realization that we happen upon points us in the wrong direction. </p>
+</section><section id="objective-ex-ante" class="level4" data-number="6.2.2.2"><h4 data-number="6.2.2.2" class="anchored" data-anchor-id="objective-ex-ante">
+<span class="header-section-number">6.2.2.2</span> Objective, <em>ex ante</em>
+</h4>
+<p>Rather than asking how wrong we are given the data pattern we happened to observe, we can ask how wrong we are <em>expected</em> to be when we go looking for a clue that our theory makes usable (we say “are expected to be” rather than “we expect to be” because the evaluation may be made using beliefs that differ from the beliefs we bring with us when we draw inferences). An objective <em>ex ante</em> approach would ask what the <em>expected</em> error is from the conclusions that we will draw given a theory. For instance: how wrong are we likely to be if we base our best guess on our posterior mean, given the observation of a clue that the theory lets us make use of? “How wrong” might again be operationalized in different ways: for instance, in terms of expected squared error—the square of the distance between the truth and the posterior mean.</p>
+<p>The <em>expected</em> squared error (see also <a href="05-being-Bayesian.html#sec-learning" class="quarto-xref"><span>Section 5.1.6</span></a>) is: <span class="math display">\[\mathcal{L} := \int_q\int_k \left(\hat{q}_k-q\right)^2p(k, q)dkdq \]</span></p>
+<p>This equation yields the error that one would expect to get with respect to any true value of the parameter (<span class="math inline">\(q\)</span>), given the data one might see given <span class="math inline">\(q\)</span> and the inferences one might draw. Note here that the joint distribution <span class="math inline">\(p(k,q)\)</span> is the objective (unknown) distribution, whereas the posterior <span class="math inline">\(\hat{q}_k)\)</span> is calculated using the researcher’s subjective beliefs. In principle, <em>ex ante</em> can be thought of with respect to the the new information <span class="math inline">\(k\)</span> or also with respect to the actual estimand <span class="math inline">\(q\)</span>; we will work with the latter.</p>
+<p>Returning to the numeric example, we can calculate the expected (actual) squared error with respect to the objective event probabilities in <a href="#tbl-HJ-T-06-numeric" class="quarto-xref">Table&nbsp;<span>6.2</span></a>. This yields here 0.215. This might be compared (unfavorably) to the expected error if we just used the prior (0.2) on <span class="math inline">\(q\)</span>, given the objective distribution of events. This would give expected (squared) error of 0.16.</p>
+<p>We do badly in expectation not just because the theory is wrong, but because it is very wrong. We might have done better, and gained from the theory, in expectation, had the theory only been moderately wrong. To see this, imagine instead that in fact <span class="math inline">\(p(k=1|q = 1) = 0.7, p(k=1|q = 0) = 0.3\)</span> and so the probabilities of the four events are <span class="math inline">\((0.56, 0.24, 0.06, 0.14)\)</span>. Then, although we are overestimating the probative value of <span class="math inline">\(k\)</span>, we are not wrong about <span class="math inline">\(k\)</span> being informative. In this situation, where the theory is less wrong, our expected error would be 0.15—an improvement relative to our prior.</p>
+</section><section id="subjective-ex-post" class="level4" data-number="6.2.2.3"><h4 data-number="6.2.2.3" class="anchored" data-anchor-id="subjective-ex-post">
+<span class="header-section-number">6.2.2.3</span> Subjective, <em>ex post</em>
+</h4>
+<p>The problem, of course, with an objective approach is that we do not have the information—the true values of our queries—that we need to calculate objective errors.</p>
+<p>A more subjective approach involves asking about the reduction in posterior variance. <em>Ex post</em> we can define “better” as the <em>reduction in posterior variance</em> from drawing an inference that makes use of a theory and its associated clue compared to an inference that does not.</p>
+<p>A problem with this measure, however, is that posterior variance is not guaranteed to go down: Our uncertainty can increase as we gather more data. Importantly, however, that increase in uncertainty would not mean that we have not been learning. Rather, we have learned that things are not as simple as we thought—so we become less certain than we were before, in a manner justified by what we have observed.</p>
+<p>One approach that addresses this issue asks: How much better are our guesses having observed <span class="math inline">\(K\)</span> compared to what we would have guessed before, <em>given</em> what we know having observed <span class="math inline">\(K\)</span>? This question captures the idea that, although we might be more uncertain than we were before, we think we are better off now because we are less naive. We might call this kind of improvement <em>wisdom</em> to reflect the idea that it values appreciation of justifiable uncertainty:</p>
+<p><span class="math display">\[\text{Wisdom}  = \frac{\int\left((\hat{q}_0 - q)^2 - (\hat{q}_k - q)^2 \right)p(q | k)dq}{\int(\hat{q}_0 - q)^2 p(q)dq} = \frac{(\hat{q}_0 - \hat{q}_k)^2}{\hat{q}_0(1-\hat{q}_0)}\]</span></p>
+<p>The numerator in this expression captures how much better off we are with the guess we have made given current data (<span class="math inline">\(\hat{q}_k\)</span>) compared to the guess we would have made if we had a theory that did not let us make use of it (<span class="math inline">\(\hat{q}_0\)</span>), <em>all assessed knowing what we now know</em>. This can be interpreted simply as the subjective reduction in error (squared). <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> The denominator is simply the prior variance and is included here for scaling.</p>
+<p>Returning to the numeric example, our posterior variance after observing <span class="math inline">\(k=1\)</span> is 0.25 compared to a prior variance of 0.16. So variance has increased. However, we have a gain in wisdom of <span class="math inline">\(\frac{0.09}{0.16}\)</span>, reflecting how much better we believe our beliefs are compared to how they were before.</p>
+</section><section id="subjective-ex-ante" class="level4" data-number="6.2.2.4"><h4 data-number="6.2.2.4" class="anchored" data-anchor-id="subjective-ex-ante">
+<span class="header-section-number">6.2.2.4</span> Subjective, <em>ex ante</em>
+</h4>
+<p>Finally, we might think about the contributions to learning that we <em>expect</em> from a theory before observing the data. We can conceptualize expected learning as the <em>reduction</em> in expected posterior variance: How certain do we expect we will be after we make use of new information? (See also our discussion in <a href="05-being-Bayesian.html#sec-learning" class="quarto-xref"><span>Section 5.1.6</span></a>.) </p>
+<p>For any <span class="math inline">\(k\)</span>, we might write the posterior variance on <span class="math inline">\(\hat{q}_k\)</span> given observation <span class="math inline">\(k\)</span> as <span class="math inline">\(V(\hat{q}_k)\)</span>. Then, the expected posterior variance can be written:</p>
+<p><span class="math display">\[EV := \int_k V(\hat{q}_k) p(k)dk\]</span> </p>
+<p>This equation takes the posterior variance, given some data, over all the possible data that one might encounter given distribution <span class="math inline">\(p(k)\)</span>. It is well known that whenever inferences are sensitive to the data, the expected posterior variance will be lower than the prior variance.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> Interestingly, it is also the case that, if we assess expectations using the same priors that we use for forming posteriors, the expected posterior variance and squared error are equivalent <span class="citation" data-cites="scharf1991statistical">(<a href="20-references.html#ref-scharf1991statistical" role="doc-biblioref">Scharf 1991</a>)</span>.^[To see this, we take advantage of the fact that <span class="math inline">\(p(q,k) = p(k)p(q|k) = p(q)p(k|q)\)</span> and that <span class="math inline">\(p(q|k)\)</span> gives the posterior distribution of <span class="math inline">\(q\)</span> given <span class="math inline">\(k\)</span>. We then have: <span class="math display">\[\begin{eqnarray}
+\mathcal{L} &amp;=&amp; \int_q\int_k \left(\hat{q}_k-q\right)^2p(q,k)dkdq \\
+    &amp;=&amp; \int_k\int_q \left(\hat{q}_k-q\right)^2p(k)p(q|k)dq dk \\
+    &amp;=&amp; \int_k\left[\int_q \left(\hat{q}_k-q\right)^2p(q|k)dq\right]p(k)dk \\
+    &amp;=&amp; \int_k V(\hat{q}_k) p(k)dk  = EV
+\end{eqnarray}\]</span> </p>
+<p>The key move is in recognizing that <span class="math inline">\(p(q |k)\)</span> is in fact the posterior distribution on <span class="math inline">\(q\)</span> given <span class="math inline">\(k\)</span>. In using this, we assume that the same distribution is used for assessing error and for conducting analysis—that is we take the researcher’s prior to be the relevant one for assessing error.] Moreover, the reduction in expected posterior variance is also equal to <em>expected wisdom</em>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>Returning to the numeric example in <a href="#tbl-HJ-T-06-numeric" class="quarto-xref">Table&nbsp;<span>6.2</span></a>, the expected posterior variance (with expectations taken with respect to the subjective event probability distribution) is 0.118. Note that we would also get 0.118 if we took the expectation of the actual squared error with respect to subjective event probability distribution. The reduction in posterior variance over the prior variance of 0.16 is 26.47%.</p>
+<p>We have described a set of possible metrics for gains from theory, but there is no single right metric. The right metric for assessing gains fundamentally depends on what the researcher values—whether that is making fewer errors, being confident in conclusions, avoiding overconfidence, or something else.</p>
+</section></section></section><section id="formal-theories-and-causal-models" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="formal-theories-and-causal-models">
+<span class="header-section-number">6.3</span> Formal Theories and Causal Models</h2>
+<p>It is relatively easy to see how the ideas above play out for what might be called empirical models. But in social sciences, “theory” is a term sometimes reserved for what might be called “analytic theories”. In this last section, we work through how to use this framework when seeking to bring analytic theories to data.</p>
+<p>As an example of an analytic theory, we might consider the existence of “Nash equilibria.” Nash considered a class of settings (“normal form games”) in which each player <span class="math inline">\(i\)</span> can choose an action <span class="math inline">\(\sigma_i\)</span> from set <span class="math inline">\(\Sigma_i\)</span> and receives a payoff <span class="math inline">\(u_i\)</span> that depends on the actions of all players. A particular game, <span class="math inline">\(\Gamma\)</span> is the collection of players, action sets, and payoffs. </p>
+<p>Nash’s theorem relates to the existence of a collection of strategies with the property that each strategy would produce the greatest utility for each player, given the strategies of the other players. Such a collection of strategies is called a Nash equilibrium.</p>
+<p>The claim that such a collection of strategies exists in these settings is an analytic claim. Unless there are errors in the derivation of the result, the claim is true in the sense that the conclusions follow from the assumptions. There is no evidence that we could go looking for in the world to assess the claim. The same can be said of the theoretical claims of many formal models in social sciences; they are theoretical conclusions of the if-then variety <span class="citation" data-cites="clarke2012model">(<a href="20-references.html#ref-clarke2012model" role="doc-biblioref">Clarke and Primo 2012</a>)</span>. </p>
+<p>For this reason we will refer to theories of this form as “analytic theories.”</p>
+<p>When researchers refer to a theory of populism or a theory of democratization however, they often do not have such analytic theories in mind. Rather they have in mind what might be called “applied theories” (or perhaps more simply “scientific theories” or “empirical theories”): general claims about the relations between objects in the world. The distinction here corresponds to the distinction in <span class="citation" data-cites="peressini1999applying">Peressini (<a href="20-references.html#ref-peressini1999applying" role="doc-biblioref">1999</a>)</span> between “pure mathematical theories” and “mathematized scientific theories.”</p>
+<p>Applied theory, in this sense, is a collection of claims with <em>empirical</em> content: An applied theory refers to a set of propositions regarding causal relations in the world that might or might not hold, and is susceptible to assessment using data. These theories might look formally a lot <em>like</em> analytic theories, but it is better to think of them as translations at most. The relations between nodes of an applied theory are a matter of conjecture, not a matter of necessity.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>Though it is not standard practice, formal models produced by game theorists can often be translated into applied theoretical analogs and then represented using the notation of structural causal models. Moreover, doing so may be fruitful. Using the approach described above, we can assess the utility of the applied theory, if not the analytic theory itself.</p>
+<p>For two players, for instance, we might imagine a representation of a standard normal form game as shown in <a href="#fig-HJ-F-6-3" class="quarto-xref">Figure&nbsp;<span>6.3</span></a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.3: Formal structure of a normal form game.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The model includes all the primitives of a normal form game: We can read off the number of players, the strategy sets (the range of the strategy nodes) and the mapping from actions to utilities. Here the only causal functions are the utility functions. In an analytic theory, these functions are known. In an applied translation of the theory these are a matter of conjecture: The functions capture the researchers’ beliefs that actual actions will produce actual payoffs. So far the model does not capture any claims about behavior or expected behavior. </p>
+<p>In contrast to Nash’s theorem regarding the existence of equilibria, a behavioral theory might claim that in problems that can be represented as normal form games, players indeed <em>play</em> Nash equilibrium. This is a theory about how people act in the world. We might call it Nash’s theory.</p>
+<p>How might this theory be represented as a causal model? <a href="#fig-HJ-F-6-4" class="quarto-xref">Figure&nbsp;<span>6.4</span></a> provides one representation.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.4: Normal form games with expectations and best responses.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Here, player beliefs about the game form (<span class="math inline">\(\Gamma\)</span>) results in strategy choices by actors. If players play according to Nash’s theory, <em>the causal functions for the strategy choices are given by the Nash equilibrium solution itself</em>, with a refinement in case of multiplicity.</p>
+<p>This model represents what we expect to happen in a game under Nash’s theory and we can indeed see if the relations between nodes in the world look like what we expect under the theory. The relations are nevertheless a matter of conjecture, to be contrasted with the exact claims on strategy profiles that are produced by an analytic theory that assumes Nash equilibria are played.</p>
+<p>So far the model does not provide much of an <em>explanation</em> for behavior. A lower level causal model might help. In Figure <a href="#fig-HJ-F-6-5" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>, the game form <span class="math inline">\(\Gamma\)</span> determines the beliefs about what actions the other player would make (thus <span class="math inline">\(\sigma_2^e\)</span> is 1’s belief about 2’s actions). The causal functions for <span class="math inline">\(\sigma_2^e\)</span> and <span class="math inline">\(\sigma_1^e\)</span> might, for instance, be the Nash equilibrium solution itself: that is, players expect other players to play according to the Nash equilibrium (or in the case of multiple equilibria, a particular equilibrium selected using some refinement). The beliefs, in turn, together with the game form (which contains <span class="math inline">\(u_1, u_2\)</span>), are what cause the players to select a particular action. The causal function for <span class="math inline">\(\sigma_1\)</span> might thus be <span class="math inline">\(\sigma_1 = \arg \max_\sigma u_1(\sigma, \sigma_2^e)\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.5: Normal form games with variation in player rationality.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>This representation implies a set of relations that can be compared against empirical patterns. Do players indeed hold these beliefs when playing a given game? Are actions indeed consistent with beliefs in ways specified by the theory? It provides a theory of beliefs and a theory of individual behavior as well as an explanation for social outcomes.</p>
+<p>The model in <a href="#fig-HJ-F-6-5" class="quarto-xref">Figure&nbsp;<span>6.5</span></a> provides a foundation of sorts for Nash’s theory. It suggests that players play Nash equilibria <em>because</em> they expect others to and they are utility maximizers. But this is not the only explanation that can be provided; alternatively behavior might line up with the theory without passing through beliefs at all, as suggested in some accounts from evolutionary game theory that show how processes might select for behavior that corresponds to Nash even if agents are unaware of the game they are playing.</p>
+<p>One might step still further back and ask <em>why</em> would actors form these beliefs, or take these actions, and answer in terms of assumptions about actor rationality. <a href="#fig-HJ-F-6-6" class="quarto-xref">Figure&nbsp;<span>6.6</span></a>, for instance, is a model in which actor rationality might vary and might influence beliefs about the actions of others as well as reactions to those beliefs. Fully specified causal functions might specify not only how actors act when rational but also how they react when they are not. In this sense, the model in <a href="#fig-HJ-F-6-6" class="quarto-xref">Figure&nbsp;<span>6.6</span></a> both nests Nash’s theory and provides an explanation for why actors conform to the predictions of the theory.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-6" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.6: Formal structure of a normal form game (4).
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>In a final elaboration, we can represent a kind of underspecification of Nash’s theory that makes it difficult to take the theory to data. In the above, we assume that players choose actions based on expectations that the other player would play the Nash equilibrium—or that the theory would specify which equilibrium in the case of multiplicity. But it is well known that Nash’s theory often does not provide a unique solution. This indeterminacy can be captured in the causal model as shown in <a href="#fig-HJ-F-6-7" class="quarto-xref">Figure&nbsp;<span>6.7</span></a>, where a common shock—labeled <span class="math inline">\(\nu\)</span>, and interpreted as norms—interacts with the game form to determine the expectations of other players.</p>
+<p>The causal function for expectations can then allow for the possibility that (i) there is a particular equilibrium invariably chosen and played by both (ii) or a guarantee that players are playing one or other equilibrium together but uncertainty over which one is played, or (iii) the possibility that players are in fact out of sync, with each playing optimal strategies given beliefs but nevertheless not playing the same equilibria.</p>
+<p>Nash’s theory likely corresponds to position (ii). It can be captured by causal functions on beliefs given <span class="math inline">\(\nu\)</span> but the theory does not specify <span class="math inline">\(\nu\)</span>, in the same way that it does not specify <span class="math inline">\(\Gamma\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-6-7" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-6-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.7: A normal form game with a representation of equilibrium selection norms.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We highlight three points from this discussion.</p>
+<p>First, the discussion highlights that thinking of theory as causal models does not force a sharp move away from abstract analytic theories; close analogs of these can often be incorporated in the same framework. This is true even for equilibrium analysis that seems to involve a kind of simultaneity at first blush.</p>
+<p>Second, the discussion highlights how the causal modeling framework can make demands for specificity from formal theories. For instance, specifying a functional relation from game form to actions requires a specification of a selection criterion in the event of multiple equilibria. Including agent rationality as a justification for the theory invites a specification for what would happen absent rationality.</p>
+<p>Third, the example shows a way of building a bridge from pure theory to empirical claims. One can think of Nash’s theory as an entirely data-free set of claims. When translated into an applied theory—a set of propositions about the ways actual players <em>might</em> behave—and represented as a causal model, we are on a path to being able to use data to refine the theory. Thus, we might begin with a formal specification like that in <a href="#fig-HJ-F-6-7" class="quarto-xref">Figure&nbsp;<span>6.7</span></a> but with initial uncertainty about player rationality, optimizing behavior, and equilibrium selection. This theory nests Nash but does not presume the theory to be a valid description of processes in the world. Combined with data, however, we shift to a more refined theory that might select Nash from the lower level model.</p>
+<p>Finally, we can apply the ideas of <a href="#sec-theorygains" class="quarto-xref"><span>Section 6.2</span></a> to formal theories and ask: Is the theory useful? For instance, does data on player rationality help us better understand the relationship between game structure and welfare?</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-clarke2012model" class="csl-entry" role="listitem">
+Clarke, Kevin A, and David M Primo. 2012. <em>A Model Discipline: Political Science and the Logic of Representations</em>. New York: Oxford University Press.
+</div>
+<div id="ref-geweke2014analysis" class="csl-entry" role="listitem">
+Geweke, John, and Gianni Amisano. 2014. <span>“Analysis of Variance for Bayesian Inference.”</span> <em>Econometric Reviews</em> 33 (1-4): 270–88.
+</div>
+<div id="ref-heckerman1991toward" class="csl-entry" role="listitem">
+Heckerman, David E, Eric J Horvitz, and Bharat N Nathwani. 1991. <span>“Toward Normative Expert Systems: The Pathfinder Project.”</span> <em>Methods of Information in Medicine</em> 31: 90I105.
+</div>
+<div id="ref-pearl2009causality" class="csl-entry" role="listitem">
+Pearl, Judea. 2009. <em>Causality</em>. Cambridge university press.
+</div>
+<div id="ref-peressini1999applying" class="csl-entry" role="listitem">
+Peressini, Anthony. 1999. <span>“Applying Pure Mathematics.”</span> <em>Philosophy of Science</em> 66: S1–13.
+</div>
+<div id="ref-raiffa1961applied" class="csl-entry" role="listitem">
+Raiffa, Howard, and Robert Schlaifer. 1961. <span>“Applied Statistical Decision Theory.”</span>
+</div>
+<div id="ref-scharf1991statistical" class="csl-entry" role="listitem">
+Scharf, Louis L. 1991. <em>Statistical Signal Processing</em>. Vol. 98. Addison-Wesley Reading, MA.
+</div>
+<div id="ref-woodward2003scientific" class="csl-entry" role="listitem">
+Woodward, James. 2003. <span>“Scientific Explanation.”</span> <em>The Stanford</em>.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>The claim could also follow from a theory that reflected beliefs about heterogeneity of causal processes. For a review of rival approaches to scientific explanation see <span class="citation" data-cites="woodward2003scientific">Woodward (<a href="20-references.html#ref-woodward2003scientific" role="doc-biblioref">2003</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>We note that our definition of theory differs somewhat from that given in <span class="citation" data-cites="pearl2009causality">Pearl (<a href="20-references.html#ref-pearl2009causality" role="doc-biblioref">2009</a>)</span> (p207): there a theory is a structural causal model and a restriction over the possible values of exogenous but not a probability distribution over these nodes. Our definition also considers probabilistic models as theories, allowing statements such as “the average effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> in some domain is 0.5.”<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>As we emphasize further below, it is in fact only the random, unknown component of the <span class="math inline">\(X\rightarrow K\)</span> link that makes the addition of <span class="math inline">\(K\)</span> potentially informative as a matter of research design: If <span class="math inline">\(K\)</span> were a deterministic function of <span class="math inline">\(X\)</span> only, then knowledge of <span class="math inline">\(X\)</span> would provide full knowledge of <span class="math inline">\(K\)</span>, and nothing could be learned from observing <span class="math inline">\(K\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The numerator simplifies according to: <span class="math display">\[\begin{eqnarray*} \int\left((\hat{q}_0 - q)^2 - (\hat{q}_k - q)^2 \right)p(q | k)dq &amp;=&amp; \int\left(\hat{q}_0^2 - 2q\hat{q}_0  - \hat{q}_k^2 + 2q\hat{q}_k  \right)p(q | k)dq\\ &amp;=&amp;\left(\hat{q}_0^2 - 2\hat{q}_k\hat{q}_0  - \hat{q}_k^2 + 2\hat{q}_k^2  \right)\\ &amp;=&amp; \left(\hat{q}_0- \hat{q}_k\right)^2  \end{eqnarray*}\]</span> From this we see that the measure does not depend on either prior or posterior variance (except through the denominator). Note also that wisdom, though non negative, can exceed 1 in situations in which there is a radical re-evaluation of a prior theory, even if uncertainty rises. As an illustration, if our prior on some share is given by a <span class="math inline">\(\text{Beta}(2, 18)\)</span> distribution, then our prior mean is .1, and our prior variance is very small, at 0.0043. If we observe another four positive cases, then our posterior mean becomes 1/4 and our posterior variance <em>increases</em> to 0.0075. We have shifted our beliefs upward and at the same time, become more uncertain. But we are also wiser since we are confident that our prior best guess of .1 is surely an underestimate. Our wisdom is 5.25—a dramatic gain.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This can be seen from the law of total variance which can be written as: <span class="math display">\[Var(Q|W) = E_{K|W}(Var(Q|K,W)) +Var_{K|W}(E(Q|K,W))\]</span> The expression is written here to highlight the gains from observation of <span class="math inline">\(K\)</span>, given what is already known from observation of <span class="math inline">\(W\)</span>. See <span class="citation" data-cites="raiffa1961applied">Raiffa and Schlaifer (<a href="20-references.html#ref-raiffa1961applied" role="doc-biblioref">1961</a>)</span>. A similar expression can be given for the expected posterior variance from learning <span class="math inline">\(K\)</span> in addition to <span class="math inline">\(W\)</span> when <span class="math inline">\(W\)</span> is not yet known. See, for example, Proposition 3 in <span class="citation" data-cites="geweke2014analysis">Geweke and Amisano (<a href="20-references.html#ref-geweke2014analysis" role="doc-biblioref">2014</a>)</span>. Note also that an implication is that the expected <em>reduction</em> in variance is then always positive, provided you are changing beliefs at all. In contrast, the (objective) expected error measure can be assessed under rival theoretical propositions, allowing for the real possibility that the gains of invoking a theory are negative.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>That is, since: <span class="math display">\[\text{Wisdom}  = \frac{\int\left((\hat{q}_0 - q)^2 - (\hat{q}_k - q)^2 \right)p(q | k)dq}{\int(\hat{q}_0 - q)^2 p(q)dq},\]</span> we have: <span class="math display">\[\text{Expected Wisdom}  = \frac{\int(\hat{q}_0 - q)^2p(q)dq - \int_k\int_q(\hat{q}_k - q)^2 p(q, k)dqdk}{\int(\hat{q}_0 - q)^2 p(q)dq}\]</span> and so: <span class="math display">\[\text{Expected Wisdom}  =
+1 - \frac{\text{Expected Posterior Variance}}{\text{Prior variance}}\]</span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><span class="citation" data-cites="peressini1999applying">Peressini (<a href="20-references.html#ref-peressini1999applying" role="doc-biblioref">1999</a>)</span> distinguishes between “applied mathematical theories” and “mathematized scientific theories” on the grounds that not all mathematized theories are an application of a pure theory.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./05-being-Bayesian.html" class="pagination-link" aria-label="Bayesian Answers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-process-tracing-with-models.html" class="pagination-link" aria-label="Process Tracing with Causal Models">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

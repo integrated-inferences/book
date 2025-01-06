@@ -1,0 +1,42 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.blackbox {
+  padding: 1em;
+  background: black;
+  color: white;
+  border: 2px solid orange;
+  border-radius: 10px;
+}
+.center {
+  text-align: center;
+}
+
+
+.definition {
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 1em;          /* Add some padding inside the box */
+    border-radius: 8px;    /* Optional: Rounded corners */
+    background-color: #f9f9f9; /* Optional: Light background color */
+    margin: 1em 0;         /* Add some spacing around the box */
+}
+
+.remark {
+    border: 1px solid #ccc; /* Light gray border */
+    padding: 1em;          /* Add some padding inside the box */
+    border-radius: 8px;    /* Optional: Rounded corners */
+    background-color: #f9f9f9; /* Optional: Light background color */
+    margin: 1em 0;         /* Add some spacing around the box */
+}

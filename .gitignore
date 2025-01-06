@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+/.quarto/
+saved/13_samecase_models.rds
+saved/16_loo_pimdnonmon.rds
+saved/16_pimd_nonmon_model_2.rds
+saved/16_pimd_nonmon_model.rds

@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>13&nbsp; Case Selection – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./14-wide-or-deep.html" rel="next">
+<link href="./12-clue-selection.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-clue-selection.html">III Design choices</a></li><li class="breadcrumb-item"><a href="./13-case-selection.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#common-case-selection-strategies" id="toc-common-case-selection-strategies" class="nav-link active" data-scroll-target="#common-case-selection-strategies"><span class="header-section-number">13.1</span> Common Case-Selection Strategies</a></li>
+  <li>
+<a href="#no-general-rules" id="toc-no-general-rules" class="nav-link" data-scroll-target="#no-general-rules"><span class="header-section-number">13.2</span> No General Rules</a>
+  <ul class="collapse">
+<li><a href="#any-cell-might-do" id="toc-any-cell-might-do" class="nav-link" data-scroll-target="#any-cell-might-do"><span class="header-section-number">13.2.1</span> Any Cell Might Do</a></li>
+  <li><a href="#interest-in-a-case-might-not-justify-selecting-that-case" id="toc-interest-in-a-case-might-not-justify-selecting-that-case" class="nav-link" data-scroll-target="#interest-in-a-case-might-not-justify-selecting-that-case"><span class="header-section-number">13.2.2</span> Interest in a Case Might Not Justify Selecting that Case</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#general-strategy" id="toc-general-strategy" class="nav-link" data-scroll-target="#general-strategy"><span class="header-section-number">13.3</span> General Strategy</a>
+  <ul class="collapse">
+<li><a href="#walk-through-of-the-general-strategy" id="toc-walk-through-of-the-general-strategy" class="nav-link" data-scroll-target="#walk-through-of-the-general-strategy"><span class="header-section-number">13.3.1</span> Walk through of the General Strategy</a></li>
+  <li><a href="#simulation-strategy" id="toc-simulation-strategy" class="nav-link" data-scroll-target="#simulation-strategy"><span class="header-section-number">13.3.2</span> Simulation Strategy</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">13.3.3</span> Results</a></li>
+  </ul>
+</li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.4</span> Conclusion</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-clue-selection.html">III Design choices</a></li><li class="breadcrumb-item"><a href="./13-case-selection.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC13" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We show how to use causal models to inform the selection of cases for intensive analysis. We outline a procedure in which we predict the inferences that will be made when future data are found and use these predictions to inform case-selection strategies. We ask: Given a set of cases on which we already have data on <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which of these cases will it be most advantageous to choose for more in-depth investigation? We show that the optimal case-selection strategy depends jointly on the model we start with and the causal question we seek to answer, and we draw out the implication that researchers should be wary of generic case-selection principles.</p>
+</div>
+</div>
+<p></p>
+<p>Very often, researchers start out with access to <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> data on many cases and then want to select a subset of cases—case studies—to examine more carefully in order to draw stronger conclusions either about general processes or about likely effects in specific cases. A key design decision is to determine which cases are most likely to be informative about the question at hand. This chapter shows how we can use a causal-model-based approach to inform this key research-design decision.</p>
+<section id="common-case-selection-strategies" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="common-case-selection-strategies">
+<span class="header-section-number">13.1</span> Common Case-Selection Strategies</h2>
+<p></p>
+<p>A host of different strategies have been proposed for selecting cases for in-depth study based on the observed values of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> data. Perhaps the most common strategy is to select cases in which <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span> and look to see whether in fact <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> in the chosen cases, using some approach to inferring causality from within-case evidence. But many other selection strategies have been proposed, including strategies to select cases “on the regression line” or, for some purposes, cases “off the regression line” (e.g., <span class="citation" data-cites="Lieberman2005nested">Lieberman (<a href="20-references.html#ref-Lieberman2005nested" role="doc-biblioref">2005</a>)</span>). Some scholars suggest ensuring variation in <span class="math inline">\(X\)</span> (most prominently, <span class="citation" data-cites="king1994designing">King, Keohane, and Verba (<a href="20-references.html#ref-king1994designing" role="doc-biblioref">1994</a>)</span>), while others have proposed various kinds of matching principles. Still, others have pointed to the advantages of a random sampling of cases, either stratified or unstratified by values on <span class="math inline">\(X\)</span> or <span class="math inline">\(Y\)</span> (<span class="citation" data-cites="FL2008">Fearon and Laitin (<a href="20-references.html#ref-FL2008" role="doc-biblioref">2008</a>)</span>, <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span>).</p>
+<p>One reason why case-selection strategies might differ is that we might be using the case studies in quite different ways.</p>
+<p>A matching strategy, for instance—selecting cases that are comparable on many features but that differ on <span class="math inline">\(X\)</span>—can replicate on a small scale the kind of inference done by matching estimators with large-<span class="math inline">\(n\)</span> data. Such a strategy can draw leverage from <span class="math inline">\(X,Y\)</span> variation even if researchers have matched on other within-case characteristics.</p>
+<p>Other strategies seek to use qualitative information to check assumptions made in cross-case <span class="math inline">\(X, Y\)</span> analysis: For example, is the measurement of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> reliable in critical cases?</p>
+<p>For addressing such questions, given limited resources, it might make sense to focus on cases for which validation plausibly makes a difference to the <span class="math inline">\(X,Y\)</span> inferences: For example, we might focus on influential cases that have unusually extreme values on <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Similar arguments are made for checking assumptions on selection processes, though we consider this a more complex desideratum since this requires making case-level causal inferences and not simply measurement claims <span class="citation" data-cites="dunning2012natural">(<a href="20-references.html#ref-dunning2012natural" role="doc-biblioref">Dunning 2012</a>)</span>. <span class="citation" data-cites="seawrightbook">Seawright (<a href="20-references.html#ref-seawrightbook" role="doc-biblioref">2016</a>)</span> advocates for selecting extreme and deviant cases for purposes such as the discovery of measurement error or omitted variables that might have consequences for inferences drawn from cross-case <span class="math inline">\(X,Y\)</span> correlations.</p>
+<p>A third purpose is to use a case to generate alternative or richer theories of causal processes, as in Lieberman’s “model-building” mode of “nested analysis” (<span class="citation" data-cites="Lieberman2005nested">Lieberman (<a href="20-references.html#ref-Lieberman2005nested" role="doc-biblioref">2005</a>)</span>). Lieberman suggests that cases “off the regression” line will typically be of greatest interest for this purpose. <span class="citation" data-cites="weller2014finding">Weller and Barnes (<a href="20-references.html#ref-weller2014finding" role="doc-biblioref">2014</a>)</span> also focus on both <span class="math inline">\(X,Y\)</span> relations and whether the cases are useful for hypothesis generation.</p>
+<p>In what follows, we focus on a simpler and more general way of thinking about the purpose of gathering more detailed evidence on a subset of cases: The richer evidence gathered in our chosen cases will feed directly into model-updating and, in turn, help answer our query. We can thus frame the case-selection task as follows: Given existing <span class="math inline">\(X, Y\)</span> data for a set of cases and a given clue (or set of clues) that we can go looking for in a more intensive analysis (i.e., process tracing) of some subset of these cases, we want to figure out <em>which cases</em> to select for intensive analysis so that we maximize expected learning about some well specified question of interest.</p>
+<p>The basic insight of this chapter is simple enough: <em>The optimal strategy for case selection for a model-based analysis is a function of the model we start with and the query we seek to address</em>, just as we saw for the optimal clue-selection strategy in <a href="12-clue-selection.html" class="quarto-xref"><span>Chapter 12</span></a>. This insight yields guidance that is consistent with some common advice but at odds with other advice. But the most general message of this chapter is about the overall approach: That is, have clear goals—know what question you are asking and whether you are posing it at the case level, the population level, or both—think through in advance what you might find in cases you could select for inquiry, think through how what you might find addresses your goals, and then choose accordingly. More specifically, we show how researchers can use a causal model to formalize this analysis: To tell them what types of cases are likely to yield the greatest learning given their model and the query that they seek to answer.</p>
+<p>The broad injunction to select cases to maximize learning is in line with the general recommendations of <span class="citation" data-cites="fairfieldcharman">Fairfield and Charman (<a href="20-references.html#ref-fairfieldcharman" role="doc-biblioref">forthcoming</a>)</span>, though the strategy for maximizing learning differs here, particularly in its grounding in a causal model. Most closely related to our analysis in this chapter is the contribution of <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span>, who build on <span class="citation" data-cites="SeawrightGerring2008">Seawright and Gerring (<a href="20-references.html#ref-SeawrightGerring2008" role="doc-biblioref">2008</a>)</span>. While Seawright and Gerring provide a taxonomy of approaches to case selection, they do not provide a general strategy for assessing the relative merits of these different approaches. As we do, <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> focus on a situation with binary <span class="math inline">\(X,Y\)</span> data and assess the gains from learning about causal type in a set of cases. Interestingly, in their treatment, the causal type, <span class="math inline">\(Z_i\)</span> is called a confounder rather than being an estimand of direct interest; in our setup, confounding as normally understood arises because of different probabilities of different causal types of being assigned to “treatment,” or an <span class="math inline">\(X=1\)</span> value). </p>
+<p>Our setup differs from that in <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> in a few ways. <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> parameterize differently, though this difference is not important.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Perhaps the most important difference between our analysis and that in <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> is that we connect the inference strategy to process-tracing approaches. Whereas <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> assume that causal types can be read directly, we assume that these are inferred <em>imperfectly</em> from evidence and we endogenize the informativeness of the evidence to features of the inquiries.^[There are differences in addition to these. Here, we assume that the case-selection decision is made after observing the <span class="math inline">\(XY\)</span> distribution and we explore a range of different possible contingency tables. In <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span>, the distribution from which the contingency tables are drawn is fixed, though set to exhibit an expected observed difference in means (though not necessarily a true treatment effect) of 0.2. They assume large <span class="math inline">\(X,Y\)</span> datasets (with 10,000 units) and case-selection strategies ranging from 1 to 20 cases. Another important difference, is that in many of their analyses, <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> take the perspective of an outside analyst who knows the true treatment effect; they then assess the expected bias generated by a research strategy over the possible data realizations. We, instead, take the perspective of a researcher who has <em>beliefs</em> about the true treatment effect that correspond to their priors, and for whom there is, therefore, no <em>expected</em> bias. Despite these various differences, our results will agree in key ways with those in <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span>.</p>
+</section><section id="no-general-rules" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="no-general-rules">
+<span class="header-section-number">13.2</span> No General Rules</h2>
+<p>Case selection is about choosing in which cases we will seek further information. We want to look for evidence in cases where that evidence is likely to be most informative. And the informativeness of a case depends, in turn, on our model and our query.</p>
+<p>We start in this section by illustrating how simple rules—like choosing cases where <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span> or choosing the cases we most care about—may sometimes lead us astray. Rather, we will argue that there is a general procedure for determining how to select cases, and this procedure requires a specification of the learning we expect to achieve, given different data patterns we might find.</p>
+<section id="any-cell-might-do" class="level3" data-number="13.2.1"><h3 data-number="13.2.1" class="anchored" data-anchor-id="any-cell-might-do">
+<span class="header-section-number">13.2.1</span> Any Cell Might Do</h3>
+<p>Although it might be tempting to seek general case-selection rules of the form “examine cases in which <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span>” or “ignore cases in which <span class="math inline">\(X=0\)</span> and <span class="math inline">\(Y=1\)</span>,” it is easily demonstrated that which cases will be (in expectation) more informative depends on models and queries.</p>
+<p>Suppose that we know that processes in some population can be represented by the model <span class="math inline">\(X \rightarrow Y \leftarrow K\)</span>, and, moreover:</p>
+<ul>
+<li><span class="math inline">\(\Pr(Y=1|X=0, K = 0) = 1\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=1, K = 0) = .5\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=0, K = 1) = 0\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=1, K = 1) = .9\)</span></li>
+</ul>
+<p>One way to read this set of statements is that <span class="math inline">\(X\)</span>’s causal effect on <span class="math inline">\(Y\)</span> varies with <span class="math inline">\(K\)</span>. Say we know that in the population, the share of <span class="math inline">\(X=1\)</span> cases, <span class="math inline">\(\lambda^X_1\)</span> is 0.5. But we do not know how common <span class="math inline">\(K\)</span> is. Nor do we know the joint distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Thus, we do not know either the average effect of <span class="math inline">\(X\)</span> or the probability that <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> either in the population or for a case with particular <span class="math inline">\(X, Y\)</span> values. We will let <span class="math inline">\(\kappa\)</span> denote the unkown quantity <span class="math inline">\(\Pr(K=1) =\lambda^K_1\)</span>.</p>
+<p>What do the above statements tell us about <span class="math inline">\(K\)</span>’s <em>informativeness</em>? The beliefs above imply that if we were given a case with <span class="math inline">\(X=Y=1\)</span>, then <span class="math inline">\(K\)</span> is a “doubly decisive” clue for assessing whether, in this case, <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span>. In particular, we see that for an <span class="math inline">\(X=Y=1\)</span> case, observing <span class="math inline">\(K=1\)</span> implies that <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span>: This is because, if <span class="math inline">\(X\)</span> were 0 <span class="math inline">\(Y\)</span> would have been 0. We also see that <span class="math inline">\(K=0\)</span> in an <span class="math inline">\(X=1, Y=1\)</span> case implies that <span class="math inline">\(X\)</span> did not cause <span class="math inline">\(Y\)</span> since <span class="math inline">\(Y\)</span> would have still been 1 even if <span class="math inline">\(X\)</span> were 0. So an <span class="math inline">\(X=Y=1\)</span> case would be a highly informative place to go looking for <span class="math inline">\(K\)</span>.</p>
+<p>However, if we had a case in which <span class="math inline">\(X=Y=0\)</span>, then learning <span class="math inline">\(K\)</span> would be entirely uninformative for the case. In particular, we already <em>know</em> that <span class="math inline">\(K=1\)</span> in this case as the statements above exclude the possibility of a case in which <span class="math inline">\(X=Y=0\)</span> and <span class="math inline">\(K=0\)</span>. So there would be nothing gained by “looking” to see what <span class="math inline">\(K\)</span>’s value is in the case.</p>
+<p>For the same reason, we can learn nothing from <span class="math inline">\(K\)</span> in an <span class="math inline">\(X=0, Y=1\)</span> case since we know that <span class="math inline">\(K=0\)</span> in such a case.</p>
+<p>On the other hand, if we chose an <span class="math inline">\(X=1, Y=0\)</span> case, then <span class="math inline">\(K\)</span> would again be doubly decisive, with <span class="math inline">\(K=0\)</span> implying that <span class="math inline">\(X=1\)</span> caused <span class="math inline">\(Y=0\)</span> (because the counterfactual of <span class="math inline">\(X = 0\)</span> would have resulted in <span class="math inline">\(Y=1\)</span> when <span class="math inline">\(K\)</span> is 0), and <span class="math inline">\(K=1\)</span> implying that <span class="math inline">\(X=1\)</span> did not cause <span class="math inline">\(Y=0\)</span> (because the counterfactual of <span class="math inline">\(X = 0\)</span> would still result in <span class="math inline">\(Y=0\)</span> since there is zero likelihood that <span class="math inline">\(Y = 1\)</span> when <span class="math inline">\(X\)</span> is 0 and <span class="math inline">\(K\)</span> is 1).</p>
+<p>We have chosen extreme values for this illustration—our beliefs could, of course, allow for gradations of informativeness, rather than all-or-nothing identification—but the larger point is that beliefs about the way the world works can have a powerful effect on the kind of case from which learning is possible. And note that in this example, there is nothing special about where a case lies relative to a (notional) regression line: Informativeness in this setup happens to depend on <span class="math inline">\(X\)</span>’s value entirely. Though again, this is a particular feature of this particular set of beliefs about the world.</p>
+<p>There are two further considerations we might take into account when deciding whether to choose an <span class="math inline">\(X=1, Y=0\)</span> case or an <span class="math inline">\(X=1, Y=1\)</span> case. In both cases, the clue will be doubly decisive, so we will learn about the case. However, the cases may still differ with respect to:</p>
+<ul>
+<li>How great our prior uncertainty is about the case?</li>
+<li>What we can learn from the case for the population?</li>
+</ul>
+<p><em>Case-Level Prior Uncertainty</em></p>
+<p>Prior uncertainty rin our example reduces to the prior that <span class="math inline">\(K=1\)</span> in the case. We have: <span class="math display">\[\Pr(K=1 | X=Y=1) = \frac{\Pr(K=1, X=1,Y=1)}{\Pr(X=1, Y=1)}\]</span> Making use of the fact that <span class="math inline">\(Pr(X=x, K=1)= 0.5\kappa\)</span> and <span class="math inline">\(Pr(X=x, K=0)= 0.5(1-\kappa)\)</span> this can be written:</p>
+<p><span class="math display">\[\begin{eqnarray}
+\Pr(K=1 | X=Y=1)= \frac{\Pr(Y=1|K=1, X=1)\kappa}{\Pr(Y=1|K=1, X=1)\kappa+\Pr(Y=1|K=0, X=1)(1-\kappa)}
+\end{eqnarray}\]</span></p>
+<p>From what we know about the population, we then have:</p>
+<p><span class="math display">\[\Pr(K=1 | X=Y=1) = \frac{0.9\kappa}{0.9\kappa+0.5(1-\kappa)}\]</span></p>
+<p>So if we had a case prior that <span class="math inline">\(\kappa = .5\)</span> (and so each <span class="math inline">\(K,X\)</span> combination is equally likely) we would have <span class="math inline">\(\Pr(K=1 | X=1, Y=1) = \frac{0.9}{0.9 + 0.5} = 0.64\)</span>.</p>
+<p>For an <span class="math inline">\(X=1, Y=0\)</span> case, the same calculation would yield <span class="math inline">\(\Pr(K=1 | X=1, Y=0) = \frac{0.1}{0.5+0.1}=0.17\)</span>.</p>
+<p>In other words, with these priors, we are more uncertain about the value of <span class="math inline">\(K\)</span> in the <span class="math inline">\(X=1, Y=1\)</span> case than in the <span class="math inline">\(X=1, Y=0\)</span> case and expect to learn more from the first kind of case than from the second.</p>
+<p><em>Population inference</em></p>
+<p>Suppose, now, that we were interested in a population query: the average effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. We can see that this is equal to <span class="math inline">\(\kappa\times0.9 + (1-\kappa)\times(-0.5)) = 1.4\times \Pr(K=1)-0.5\)</span>. For this query, we need only determine the prevalence of <span class="math inline">\(K=1\)</span> in the population. It might seem that this means that it is irrelevant what type of case we choose: why not use pure random sampling to determine <span class="math inline">\(K\)</span>’s prevalence? As we saw above, however, we have more information about the likely value of <span class="math inline">\(K\)</span> in some kinds of cases than in others. Thus, for this population-level estimand as well, selecting an <span class="math inline">\(X=1\)</span> case will be informative, while selecting an <span class="math inline">\(X=0\)</span> case will not be informative.</p>
+<p>We also expect different inferences in the two kinds of cases for the population share of <span class="math inline">\(K=1\)</span> cases, <span class="math inline">\(\lambda^K_1\)</span>.<br>
+For illustration, say we entertain two equally likely possibilities about <span class="math inline">\(\lambda^K_1\)</span>: either <span class="math inline">\(\lambda^K_1 = \kappa^H = 2/3\)</span> or <span class="math inline">\(\lambda^K_1 = \kappa^L = 1/3\)</span>. We can request a case with any <span class="math inline">\(X,Y\)</span> combination to inspect and then draw an inference about <span class="math inline">\(\lambda^K_1\)</span>. Note that since we request a case with particular <span class="math inline">\(X,Y\)</span> features <em>we do not learn from the values of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></em> in the case we examine (except perhaps if we were told that no such case existed). We have, after all, requested a case like this to look at.</p>
+<p><a href="#tbl-HJ-T-13-1" class="quarto-xref">Table&nbsp;<span>13.1</span></a> shows the implied probabilities put on different data patterns for the different values of <span class="math inline">\(\lambda^K_1\)</span> we entertain. For instance, looking at the last row if <span class="math inline">\(\lambda^K_1 = 0.67\)</span> we expect <span class="math inline">\(X=1, K=1\)</span> with probability <span class="math inline">\(0.5\times0.67\)</span> and expect <span class="math inline">\(Y=1\)</span> with probability <span class="math inline">\(0.9\)</span>, given <span class="math inline">\(X=1, K=1\)</span>, meaning <span class="math inline">\(\Pr(X=1, K=1, Y=1 | \lambda^K_1 = 0.67) = 0.5\times0.67\times0.9 \approx 0.30\)</span>. Quantity <span class="math inline">\(\Pr(X=1, Y=1 | \lambda^K_1 = 0.67)\)</span> is calculated similarly. The last column is the ratio of these two, which has the same form as Equation 13.1:</p>
+<p><span class="math display">\[\Pr(K=1 | X=1, Y=1, \lambda^K_1 = 0.67) = \frac{0.9\lambda^K_1}{0.9\lambda^K_1+0.5(1-\lambda^K_1)} \approx 0.78 \]</span></p>
+<p>We omit the <span class="math inline">\(X=0\)</span> cases from the table since there is nothing to learn from <span class="math inline">\(K\)</span> for these and so our beliefs about <span class="math inline">\(\lambda^K_1\)</span> would in such a case not change given whatever we find.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-HJ-T-13-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-13-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.1: Beliefs about data outcomes under different paramater values (X=0 cases omitted).
+</figcaption><div aria-describedby="tbl-HJ-T-13-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\lambda^K_1\)</span></th>
+<th style="text-align: center;">K</th>
+<th style="text-align: center;">X</th>
+<th style="text-align: center;">Y</th>
+<th style="text-align: center;"><span class="math inline">\(\Pr(X, Y, K | \lambda^K_1)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\Pr(X, Y| \lambda^K_1)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\Pr(K| X, Y, \lambda^K_1)\)</span></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.33</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.17</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.67</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.08</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0.71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.33</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.02</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.09</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.67</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.33</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.17</td>
+<td style="text-align: center;">0.32</td>
+<td style="text-align: center;">0.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.67</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.08</td>
+<td style="text-align: center;">0.38</td>
+<td style="text-align: center;">0.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.33</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.32</td>
+<td style="text-align: center;">0.47</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.67</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">0.38</td>
+<td style="text-align: center;">0.78</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>From this table, we can calculate what we are likely to find and then what we will infer when we find it, in an <span class="math inline">\(X=1, Y=1\)</span> case:</p>
+<ul>
+<li>
+<span class="math inline">\(\Pr(K=1 | X = 1, Y=1)\)</span> = 0.63</li>
+<li>
+<span class="math inline">\(\Pr(\lambda^K_1 = \frac23 | X=1, Y=1, K=1)\)</span> = 0.62</li>
+<li>
+<span class="math inline">\(\Pr(\lambda^K_1 = \frac23 | X=1, Y=1, K=0)\)</span> = 0.29</li>
+</ul>
+<p>We can now calculate the expected posterior <em>variance</em> as 0.224.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This is an improvement on the prior variance of 0.25.</p>
+<p>Similarly, we can calculate:</p>
+<ul>
+<li>
+<span class="math inline">\(\Pr(K=1 | X = 1, Y=0)\)</span> = 0.19</li>
+<li>
+<span class="math inline">\(\Pr(\lambda^K_1 = \frac23 | X=1, Y=0, K=1)\)</span> = 0.76</li>
+<li>
+<span class="math inline">\(\Pr(\lambda^K_1 = \frac23 | X=1, Y=0, K=0)\)</span> = 0.44</li>
+</ul>
+<p>Now the expected posterior variance, while still an improvement over the prior, is higher than what we expect if we choose a <span class="math inline">\(X=1, Y=1\)</span> case, at 0.234.</p>
+<p>In summary, under the stipulated beliefs about the world, we can learn most about the population ATE by selecting an <span class="math inline">\(X=Y=1\)</span> for study. We learn something from an <span class="math inline">\(X=1, Y=0\)</span> case, and nothing at all from a case with <span class="math inline">\(X=0\)</span>. We can also learn about the case-level effects for cases with <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=0\)</span>. If we are interested in the case level effect for an <span class="math inline">\(X=0\)</span> case, then there are no gains from any case-selection strategy since we know <span class="math inline">\(K\)</span>’s value based on <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>’s value.</p>
+<p>But here’s the thing. While we have demonstrated specific gains from a <span class="math inline">\(X=1, Y=1\)</span> case, in this example, there is nothing <em>generally</em> preferable about such a case. Under a different set of beliefs about the world, we would expect to learn more from an <span class="math inline">\(X=Y=0\)</span> case than from an <span class="math inline">\(X=Y=1\)</span> case. Suppose, for instance, that we have a model in which:</p>
+<ul>
+<li><span class="math inline">\(X \rightarrow Y \leftarrow K\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=0, K = 0) = .5\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=1, K = 0) = 0\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=0, K = 1) = .5\)</span></li>
+<li><span class="math inline">\(\Pr(Y=1|X=1, K = 1) = 1\)</span></li>
+</ul>
+<p>In this world, we learn nothing from observing a case in which <span class="math inline">\(X=1,Y=1\)</span> since we already know that <span class="math inline">\(K=1\)</span>. In contrast, if <span class="math inline">\(X=Y=0\)</span>, then if we learn that <span class="math inline">\(K=1\)</span>, we know that, were <span class="math inline">\(X=1\)</span>, <span class="math inline">\(Y\)</span> would have been 1; and if instead, we observe <span class="math inline">\(K=0\)</span>, we know that <span class="math inline">\(Y\)</span> would have (still) been 0 if <span class="math inline">\(X\)</span> were 1. Now, <span class="math inline">\(K\)</span> is doubly decisive for an <span class="math inline">\(X=Y=0\)</span> case but unhelpful for an <span class="math inline">\(X=Y=1\)</span> case. Our lessons for case selection get turned on their head with this new background model. We can easily mix things up again to construct a situation in which the off-diagonal cases are the informative ones.</p>
+<p>In summary: beware of simple rules for case selection. Depending on the model, our priors, and the query, any type of case can be optimal.</p>
+</section><section id="interest-in-a-case-might-not-justify-selecting-that-case" class="level3" data-number="13.2.2"><h3 data-number="13.2.2" class="anchored" data-anchor-id="interest-in-a-case-might-not-justify-selecting-that-case">
+<span class="header-section-number">13.2.2</span> Interest in a Case Might Not Justify Selecting that Case</h3>
+<p></p>
+<p>It seems obvious that if your query of interest is <em>defined</em> at the case level—not at the population level—then the choice of cases is determined trivially by the query. Just study the case you have a question about.</p>
+<p>This is not correct, however.</p>
+<p>Sometimes we might be interested in effects in case <em>A</em> but still be better off gathering more information about case <em>B</em> instead of digging deeper into case <em>A</em>. We illustrate this phenomenon for a situation in which the learning from cases operates via updating on a general model (and subsequent application of that model to the case of interest) rather than via direct <em>application</em> of a prior, informative general model to the case of interest.</p>
+<p>We imagine a world in which we have causal model <span class="math inline">\(X \rightarrow M \rightarrow Y \leftarrow K\)</span>, flat priors on all nodal types, and start with access to data as in <a href="#tbl-ch13othercasedf" class="quarto-xref">Table&nbsp;<span>13.2</span></a>:</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-ch13othercasedf" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch13othercasedf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.2: The data we start with. If we are interested in whether <span class="math inline">\(X\)</span> caused <span class="math inline">\(Y\)</span> in case <span class="math inline">\(A\)</span>, are we better gathering data on <span class="math inline">\(M for\)</span> in case <span class="math inline">\(A\)</span> or on <span class="math inline">\(K\)</span> in case <span class="math inline">\(B\)</span>?
+</figcaption><div aria-describedby="tbl-ch13othercasedf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Case</th>
+<th style="text-align: right;">X</th>
+<th style="text-align: right;">Y</th>
+<th style="text-align: right;">K</th>
+<th style="text-align: right;">M</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In other words, we start out with data only on clue <span class="math inline">\(K\)</span> in case <span class="math inline">\(A\)</span> and only on clue <span class="math inline">\(M\)</span> in case <span class="math inline">\(B\)</span>. We are interested specifically in whether <span class="math inline">\(X\)</span> mattered for <span class="math inline">\(Y\)</span> in case <span class="math inline">\(A\)</span>. We now want to figure out in which case to focus our further data-collection efforts: Are we better off gathering data on <span class="math inline">\(M\)</span> for case <span class="math inline">\(A\)</span> or on <span class="math inline">\(K\)</span> for case <span class="math inline">\(B\)</span>?</p>
+<p>Given the model, we can work out what we might find under each strategy and what we might then infer for our query about <span class="math inline">\(A\)</span>. These potential inferences and the associated (case level) uncertainty are detailed in <a href="#tbl-ch13millian" class="quarto-xref">Table&nbsp;<span>13.3</span></a>. Note that the probability of finding <span class="math inline">\(K=1\)</span> in case <span class="math inline">\(B\)</span> or <span class="math inline">\(M=1\)</span> in case <span class="math inline">\(A\)</span> is calculated <em>after</em> taking account of the data we already have on <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-ch13millian" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch13millian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.3: Expected data and projected inferences on effects for case A given one additional clue
+</figcaption><div aria-describedby="tbl-ch13millian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: center;">Best guess</th>
+<th style="text-align: center;">Uncertainty</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Current beliefs on A</td>
+<td style="text-align: center;">0.257</td>
+<td style="text-align: center;">0.191</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Probability K = 1 for B</td>
+<td style="text-align: center;">0.660</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">If you find K = 0 for B:</td>
+<td style="text-align: center;">0.250</td>
+<td style="text-align: center;">0.188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">If you find K = 1 for B:</td>
+<td style="text-align: center;">0.262</td>
+<td style="text-align: center;">0.193</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Probability M = 1 for A</td>
+<td style="text-align: center;">0.492</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">If you find M = 0 for A:</td>
+<td style="text-align: center;">0.312</td>
+<td style="text-align: center;">0.215</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">If you find M = 1 for A:</td>
+<td style="text-align: center;">0.201</td>
+<td style="text-align: center;">0.161</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>This table then gives us enough to calculate the <em>expected</em> uncertainty under each strategy.</p>
+<ul>
+<li>The baseline uncertainty for case <em>A</em> is 0.191.</li>
+<li>Under a strategy in which we gather data on <span class="math inline">\(K\)</span> in case <em>B</em>, the expected uncertainty for effects in <span class="math inline">\(A\)</span> is 0.191 (that is, identical up to rounding errors).<br>
+</li>
+<li>The <em>expected</em> uncertainty (about effects in <span class="math inline">\(A\)</span>) from gathering data on <span class="math inline">\(M\)</span> in case <em>A</em> is 0.188.</li>
+</ul>
+<p>These numbers are all very similar—highlighting the difficulty of drawing inferences without a strong prior model based on just two cases. This is one (negative) lesson of this exercise.</p>
+<p>Nevertheless, the expected uncertainties do diverge. Intuitively, when we investigate causal effects in case <span class="math inline">\(B\)</span> we in principle benefit from a Millian logic: finding that the cases are <em>similar</em> on <span class="math inline">\(K\)</span>—the moderator—makes us think it more likely that variation in <span class="math inline">\(X\)</span> is explaining outcomes. At least <span class="math inline">\(K\)</span> is not explaining the outcome. The gain is however quantitatively small. When we investigate case <span class="math inline">\(A\)</span> we are more likely to be convinced that <span class="math inline">\(X\)</span> mattered in case <span class="math inline">\(A\)</span> when we find that <em>differences</em> in <span class="math inline">\(M\)</span>—the mediator—are in line with differences in <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. <span class="math inline">\(M\)</span> is the path through which any effect needs to operate and if <span class="math inline">\(M\)</span> is similar in both cases this knocks confidence that <span class="math inline">\(X\)</span> was making a difference.</p>
+<p>So here to learn about case <span class="math inline">\(A\)</span>, we do well by finding out more about case <span class="math inline">\(A\)</span>, as intuition would suggest.</p>
+<p>Suppose, however, that we are interested in making an inference about case <span class="math inline">\(B\)</span>. Now which strategy would be better?</p>
+<p>Details of the inferences we would draw about <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(Y\)</span> in case <span class="math inline">\(B\)</span> for each possible data strategy are given in <a href="#tbl-ch13millianb" class="quarto-xref">Table&nbsp;<span>13.4</span></a>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-ch13millianb" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ch13millianb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.4: Expected data and projected inferences on effects for case B given one additional clue
+</figcaption><div aria-describedby="tbl-ch13millianb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Quantity</th>
+<th style="text-align: center;">Best guess</th>
+<th style="text-align: center;">Uncertainty</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Current beliefs on B</td>
+<td style="text-align: center;">0.256</td>
+<td style="text-align: center;">0.190</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Probability K = 1 for B</td>
+<td style="text-align: center;">0.660</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">If you find K = 0 for B:</td>
+<td style="text-align: center;">0.251</td>
+<td style="text-align: center;">0.188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">If you find K = 1 for B:</td>
+<td style="text-align: center;">0.265</td>
+<td style="text-align: center;">0.195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Probability M = 1 for A</td>
+<td style="text-align: center;">0.492</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">If you find M = 0 for A:</td>
+<td style="text-align: center;">0.312</td>
+<td style="text-align: center;">0.215</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">If you find M = 1 for A:</td>
+<td style="text-align: center;">0.201</td>
+<td style="text-align: center;">0.160</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>This table looks familiar (we explain why soon). We see here again that updating on case <span class="math inline">\(B\)</span> is also best achieved by observation of <span class="math inline">\(M\)</span> in case <span class="math inline">\(A\)</span>, rather than <span class="math inline">\(K\)</span> in case <span class="math inline">\(B\)</span>. In other words tightening inferences on <span class="math inline">\(B\)</span> is best done by investigating <span class="math inline">\(A\)</span> further. In particular:</p>
+<ul>
+<li>The baseline uncertainty for case <em>B</em> is 0.19.</li>
+<li>Under a strategy in which we gather data on <span class="math inline">\(K\)</span> for case <em>B</em> the expected uncertainty for effects in <span class="math inline">\(B\)</span> is 0.193.<br>
+</li>
+<li>The expected uncertainty (for effects in <span class="math inline">\(B\)</span>) from gathering data on <span class="math inline">\(M\)</span> in case <em>A</em> is 0.188.</li>
+</ul>
+<p>Note that Tables <a href="#tbl-ch13millian" class="quarto-xref">Table&nbsp;<span>13.3</span></a> and <a href="#tbl-ch13millianb" class="quarto-xref">Table&nbsp;<span>13.4</span></a> are in fact identical (up to simulation error beyond the third digit), even though they are asking about different cases. The reason is that, regardless of which case we are interested in, the learning takes place by updating the <em>same</em> population-level model, and then applying those population-level beliefs to a case. (This is the <span class="math inline">\(\hat\pi\)</span> calculation we introduced in <a href="09-mixing-methods.html" class="quarto-xref"><span>Chapter 9</span></a>.) So for both queries, the decision about which case to choose for further study comes down to the same criterion: In which case is the clue to be observed likely to be most informative about the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> in the population? The answer is case <span class="math inline">\(A\)</span>, where we can observe <span class="math inline">\(M\)</span>: This is because observing cross-case variation in the mediator <span class="math inline">\(M\)</span> in this model, which we can do only by collecting more evidence on case <span class="math inline">\(A\)</span>, is more informative about <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(Y\)</span> than is observing cross-case variation in the moderator <span class="math inline">\(K\)</span> (which is what we get from selecting case <span class="math inline">\(B\)</span>).</p>
+<p>This example provides a reminder that we can learn about a case by updating a general causal model rather than by simply <em>applying</em> a prior model to the case data. It confirms the possibility of this learning, even as it highlights the possibly limited scope of learning from very few cases. And it points to a counterintuitive implication for case selection: Sometimes (as here, where our initial model does not imply strong probative value for clues) we can learn the most about a case by learning as much as we can about our model, which may or may not imply collecting additional information about the case of interest.</p>
+</section></section><section id="general-strategy" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="general-strategy">
+<span class="header-section-number">13.3</span> General Strategy</h2>
+<p></p>
+<p>We now introduce a flexible approach to comparing the prospective learning from alternative case-selection strategies. To help explore the intuition behind this strategy, we start by walking through a simplified setup and then implement the approach for a range of models, strategies, and causal queries.</p>
+<section id="walk-through-of-the-general-strategy" class="level3" data-number="13.3.1"><h3 data-number="13.3.1" class="anchored" data-anchor-id="walk-through-of-the-general-strategy">
+<span class="header-section-number">13.3.1</span> Walk through of the General Strategy</h3>
+<p>Consider a situation in which our model is <span class="math inline">\(X \rightarrow M \rightarrow Y\)</span>. Suppose, further, that we restrict the nodal types so that <span class="math inline">\(X\)</span> cannot have a negative effect on <span class="math inline">\(M\)</span>, and <span class="math inline">\(M\)</span> cannot have a negative effect on <span class="math inline">\(Y\)</span>, with flat priors over all remaining nodal types. Imagine then that we begin by collecting only <span class="math inline">\(X,Y\)</span> data on six cases and obtain the data pattern shown in Table 13.5. We can see that the data display a modest positive correlation between (X) and (Y), evidence weakly suggestive of a positive average effect of (X) on (Y) given the model.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Observed data</caption>
+<thead><tr class="header">
+<th style="text-align: left;">event</th>
+<th style="text-align: right;">count</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X0Y0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X1Y0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X0Y1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X1Y1</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>These <span class="math inline">\(X,Y\)</span> data already give us some information about the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. Yet, we want to learn more by examining some subset of these cases more deeply—and, specifically, by collecting data on <span class="math inline">\(M\)</span> for two of these cases. Which cases should we select? We consider three strategies, each conditional on <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> values:</p>
+<ul>
+<li>Strategy <span class="math inline">\(A\)</span> chooses two cases on the “regression line,” implied by the data pattern, one randomly drawn from the <span class="math inline">\(X=Y=0\)</span> cell and one randomly drawn from the <span class="math inline">\(X=Y=1\)</span> cell</li>
+<li>Strategy <span class="math inline">\(B\)</span> chooses off the regression line, one randomly drawn from the <span class="math inline">\(X=1, Y=0\)</span> cell and one randomly drawn from the <span class="math inline">\(X=0, Y=1\)</span> cell</li>
+<li>Strategy <span class="math inline">\(C\)</span> chooses two cases, both from the <span class="math inline">\(X=1, Y=1\)</span> cell</li>
+</ul>
+<p>How can we evaluate these strategies prospectively?</p>
+<p>We recognize that different strategies yield different <em>possible</em> data patterns. For instance, Strategy <span class="math inline">\(A\)</span> (on the line) could possibly give us a data pattern that includes the observation <span class="math inline">\(X=0, M=0, Y=0\)</span>. Yet Strategy <span class="math inline">\(A\)</span> cannot possibly yield a data pattern that includes the observation <span class="math inline">\(X=1, M=0, Y=0\)</span>—because it does not involve the inspection of <span class="math inline">\(M\)</span> in an <span class="math inline">\(X=1, Y=0\)</span> case—whereas Strategy <span class="math inline">\(B\)</span> (off the line) <em>can</em> yield a pattern that includes this observation. And none of the three strategies can possibly yield a pattern that includes both <span class="math inline">\(X=1, M=0, Y=0\)</span> and <span class="math inline">\(X=0, M=1, Y=0\)</span>.</p>
+<p>In <a href="#tbl-chselillustration" class="quarto-xref">Table&nbsp;<span>13.5</span></a>, we represent the full set of possible data patterns that can arise from each strategy, with the possible data patterns for strategy <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span> labeled <span class="math inline">\(A1, A2\)</span>, etc. or <span class="math inline">\(B1, B2\)</span>, etc., respectively. For instance, <span class="math inline">\(A\)</span> is a strategy in which we look for <span class="math inline">\(M\)</span> in one <span class="math inline">\(X=0, Y=0\)</span> case and one <span class="math inline">\(X=1, Y=1\)</span> case. <span class="math inline">\(A1\)</span>, then, is a realization in which we observe <span class="math inline">\(M=0\)</span> in both cases. As we can see, there are four possible data patterns from strategies <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, representing the four different combinations of <span class="math inline">\(M\)</span> values we might find across the two cases selected for deeper investigation. There are three possible outcomes from strategy <span class="math inline">\(C\)</span>. In the comparison presented here, none of the possible data patterns overlap across strategies.</p>
+<p>The next step is to grapple with the fact that not all possible data realizations for a given strategy are equally <em>likely</em> to emerge. We represent the data probabilities near the bottom of the table. How likely a data pattern is to emerge will depend on the model, any restrictions or priors we have built into the model, and any updating of beliefs that arises from the pure <span class="math inline">\(X,Y\)</span> data. Note, for instance, that data pattern <span class="math inline">\(A3\)</span> is much more likely to emerge than the other data patterns possible under Strategy <span class="math inline">\(A\)</span>. This is for two reasons. One is that <span class="math inline">\(A3\)</span> involves <span class="math inline">\(M\)</span> co-varying with <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, a pattern consistent with <span class="math inline">\(X\)</span> having an effect on <span class="math inline">\(Y\)</span>—since, in this model, <span class="math inline">\(X\)</span> can only affect <span class="math inline">\(Y\)</span> if it affects <span class="math inline">\(M\)</span> and if <span class="math inline">\(M\)</span> effects <span class="math inline">\(Y\)</span>. Data patterns <span class="math inline">\(A1\)</span> and <span class="math inline">\(A4\)</span> have <span class="math inline">\(M\)</span> constant between the two cases, even as <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> vary; this is a pattern inconsistent with <span class="math inline">\(X\)</span> having an effect on <span class="math inline">\(Y\)</span>. <span class="math inline">\(A3\)</span>, then, is more likely than <span class="math inline">\(A1\)</span> or <span class="math inline">\(A4\)</span> because the restrictions on the model plus the evidence from the <span class="math inline">\(X,Y\)</span> data make us believe that <span class="math inline">\(X\)</span> <em>does</em> have an average effect on <span class="math inline">\(Y\)</span>. Second, we believe <span class="math inline">\(A3\)</span> is more probable than <span class="math inline">\(A2\)</span> because of the model’s restrictions: The model allows positive effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(M\)</span> and of <span class="math inline">\(M\)</span> on <span class="math inline">\(Y\)</span> (a way of generating <span class="math inline">\(A3\)</span>), but rules out negative intermediate effects (a way of generating <span class="math inline">\(A2\)</span>).</p>
+<p>Finally, each possible data realization will (if realized) generate (possible) updating of our beliefs about the query of interest. In the second-to-last row of <a href="#tbl-chselillustration" class="quarto-xref">Table&nbsp;<span>13.5</span></a>, we can see the mean of the posterior distribution (for the ATE of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>) under each data pattern.</p>
+<p>How do we now evaluate the different strategies? This is the same as asking what our loss function is (or utility function or objective function). As in Chapter 12 we will focus on posterior variance and in particular, <em>expected</em> posterior variance, though we emphasize that the same procedure can be used with other loss functions (a natural candidate from the study of experimental design is the expected <em>information gain</em> <span class="citation" data-cites="lindley1956measure">(<a href="20-references.html#ref-lindley1956measure" role="doc-biblioref">Lindley 1956</a>)</span><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>The posterior variance on the ATEs for each data pattern, is represented in the table’s final row. We can see that our level of posterior uncertainty varies across possible data realizations. We operationalize the expected learning under each case-selection strategy as the <em>expected</em> reduction in posterior variance. </p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-chselillustration" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-chselillustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.5: Each column shows a possible distribution of data that can be generated from a given strategy. We calculate the probability of each data possibility, given the data seen so far, and the posterior variance associated with each one.
+</figcaption><div aria-describedby="tbl-chselillustration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">event</th>
+<th style="text-align: left;">A1</th>
+<th style="text-align: left;">A2</th>
+<th style="text-align: left;">A3</th>
+<th style="text-align: left;">A4</th>
+<th style="text-align: left;">B1</th>
+<th style="text-align: left;">B2</th>
+<th style="text-align: left;">B3</th>
+<th style="text-align: left;">B4</th>
+<th style="text-align: left;">C1</th>
+<th style="text-align: left;">C2</th>
+<th style="text-align: left;">C3</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">X0M0Y0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X0M0Y1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X0M1Y0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X0M1Y1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X0Y0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X0Y1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X1M0Y0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X1M0Y1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X1M1Y0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X1M1Y1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X1Y0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X1Y1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Probability</td>
+<td style="text-align: left;">0.167</td>
+<td style="text-align: left;">0.029</td>
+<td style="text-align: left;">0.634</td>
+<td style="text-align: left;">0.17</td>
+<td style="text-align: left;">0.263</td>
+<td style="text-align: left;">0.237</td>
+<td style="text-align: left;">0.231</td>
+<td style="text-align: left;">0.269</td>
+<td style="text-align: left;">0.077</td>
+<td style="text-align: left;">0.237</td>
+<td style="text-align: left;">0.685</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Posterior mean</td>
+<td style="text-align: left;">0.077</td>
+<td style="text-align: left;">0.041</td>
+<td style="text-align: left;">0.17</td>
+<td style="text-align: left;">0.078</td>
+<td style="text-align: left;">0.13</td>
+<td style="text-align: left;">0.14</td>
+<td style="text-align: left;">0.14</td>
+<td style="text-align: left;">0.13</td>
+<td style="text-align: left;">0.047</td>
+<td style="text-align: left;">0.09</td>
+<td style="text-align: left;">0.161</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Posterior variance</td>
+<td style="text-align: left;">0.007</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: left;">0.02</td>
+<td style="text-align: left;">0.007</td>
+<td style="text-align: left;">0.017</td>
+<td style="text-align: left;">0.018</td>
+<td style="text-align: left;">0.018</td>
+<td style="text-align: left;">0.017</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: left;">0.009</td>
+<td style="text-align: left;">0.019</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>From the probability of each data type (given the model and the <span class="math inline">\(X,Y\)</span> data seen so far) and the posterior variance given each data realization, the implied <em>expected</em> variance is easily calculated as a weighted average. The expected posterior variances for our three strategies are summarized in <a href="#tbl-exppostvar" class="quarto-xref">Table&nbsp;<span>13.6</span></a>.</p>
+<div class="cell" data-layout-align="center">
+<div id="tbl-exppostvar" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-exppostvar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13.6: Expected posterior variances
+</figcaption><div aria-describedby="tbl-exppostvar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Strategy</th>
+<th style="text-align: right;">Variance</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Offline</td>
+<td style="text-align: right;">0.0173</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Online</td>
+<td style="text-align: right;">0.0151</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Two X=1, Y=1 cases</td>
+<td style="text-align: right;">0.0156</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In this example, we see that we would expect to be better off—in the sense of having less posterior uncertainty—by focusing our process-tracing efforts on the regression line than off the regression line. We only do marginally better by spreading over the line than by concentrating on positive cases. We save an account of the intuition underlying this result for the discussion of our more extensive simulations below.</p>
+<p>The key takeaway here is the procedure for assessing case-selection strategies:</p>
+<ol type="1">
+<li>Derive from the model the full set of possible data patterns under each case-selection strategy being assessed.</li>
+<li>Calculate the probability of each data pattern given the model (with any priors or restrictions), the prior <span class="math inline">\(X,Y\)</span> data, and the strategy.</li>
+<li>Generate a posterior distribution on the query of interest for each data pattern.</li>
+<li>Use the probability of different data patterns together with the posterior variance under each data pattern to calculate the expected posterior variance on the query of interest for each strategy.</li>
+</ol></section><section id="simulation-strategy" class="level3" data-number="13.3.2"><h3 data-number="13.3.2" class="anchored" data-anchor-id="simulation-strategy">
+<span class="header-section-number">13.3.2</span> Simulation Strategy</h3>
+<p> In this section, we generalize the model-based approach by applying it to a wide range of models, queries, and case-selection strategies.</p>
+<p>In all scenarios examined here, we imagine a situation in which we have already observed some data (the values of some nodes from the causal model in some set of cases) and must now decide in which cases we should gather additional data. We will assume throughout that we are considering gathering additional observations in cases for which we already have <em>some</em> data. In other words, we are deciding which subset of the cases—among those we have already gathered some data on—we should investigate more <em>deeply</em>. (This is distinct from the question of “wide vs.&nbsp;deep,” examined in Chapter 14, where we might decide to observe cases we have not yet seen at all.)</p>
+<p>The general intuition of the case-selection approach that we develop here is that we can use our causal model and any previously observed data to estimate what observations we are more or less likely to make under a given case-selection strategy, and then figure out how uncertain we can expect to end up being under the strategy, given whatever causal question we seek to answer.</p>
+<p>We proceed as follows:</p>
+<p><strong>DAG</strong>. We start, as always, with a DAG representing our beliefs about which variables we believe to be direct causes of other variables. For the current illustrations, we consider four different structures:</p>
+<ul>
+<li>Chain model: an <span class="math inline">\(X \rightarrow M \rightarrow Y\)</span> model, where <span class="math inline">\(M\)</span> is a mediator</li>
+<li>Confounded model: a model with <span class="math inline">\(X \rightarrow Y\)</span> and with <span class="math inline">\(M\)</span> as a confounder, pointing into both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>
+</li>
+<li>Moderator model: an <span class="math inline">\(X \rightarrow Y \leftarrow M\)</span>, model, where <span class="math inline">\(M\)</span> is a moderator</li>
+<li>Two-path model: a model in which <span class="math inline">\(X \rightarrow M \rightarrow Y \leftarrow X\)</span>, meaning that <span class="math inline">\(X\)</span> can affect <span class="math inline">\(Y\)</span> both through a direct path and indirectly via <span class="math inline">\(M\)</span>
+</li>
+</ul>
+<p><strong>Restrictions or priors</strong>. We can augment the models to allow for informative priors or restrictions on nodal types. Here, for each model, we examine a version with no restrictions and a version with monotonicity restrictions.</p>
+<p><strong>Given data.</strong> If we have already made observations of any of the model’s nodes in some set of cases, we can use this information to condition our strategy for searching for further information. For instance, if we have observed <span class="math inline">\(X\)</span>’s and <span class="math inline">\(Y\)</span>’s values in a set of cases, we might select cases for process tracing based on their values of <span class="math inline">\(X\)</span> and/or <span class="math inline">\(Y\)</span>. And, importantly, what we have already observed in the cases will affect the inferences we will draw when we observe additional data, including how <em>informative</em> a particular new observation is likely to be.</p>
+<p>For the simulations, we assume that we have already observed <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in a set of cases and found a positive correlation. Specifically, for all simulations, we assume prior <span class="math inline">\(X,Y\)</span> data of <span class="math inline">\(N=6\)</span>, with a weak positive relationship (2 <span class="math inline">\(X=1, Y=1\)</span> cases, 2 <span class="math inline">\(X=0, Y=0\)</span> cases, and 1 case in each off-diagonal cell). And it is <em>from</em> these original six cases that we are selecting our cases for process tracing. In the experiments below, we do not examine how the prior data itself might affect the choice of case-selection strategies (as we do, for instance, with clue-selection in <a href="12-clue-selection.html" class="quarto-xref"><span>Chapter 12</span></a>), but we invite the reader to explore these relationships by adjusting the code we provide in Supplementary Material.</p>
+<p><strong>Query</strong>. We define our query. This could, for instance, be <span class="math inline">\(X\)</span>’s average effect on <span class="math inline">\(Y\)</span> or it might be the probability that <span class="math inline">\(X\)</span> has a negative effect on <span class="math inline">\(Y\)</span> in an <span class="math inline">\(X=1, Y=0\)</span> case. We can use the general procedure to identify case-selection strategies for any causal query that can be defined on a DAG. And, importantly, the optimal case-selection strategy may depend on the query. The best case-selection strategy for answering one query may not be the best case-selection strategy for another query. </p>
+<p>In the simulations, we examine four common queries:</p>
+<ul>
+<li>ATE: What is the average effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> for the population?</li>
+<li>Probability of positive causation: What is the probability that <span class="math inline">\(Y=1\)</span> because <span class="math inline">\(X=1\)</span> for a case randomly drawn from the population of <span class="math inline">\(X=1, Y=1\)</span> cases?</li>
+<li>Probability of negative causation: What is the probability that <span class="math inline">\(Y=1\)</span> is due to <span class="math inline">\(X=0\)</span> for a case randomly drawn from the population of <span class="math inline">\(X=0, Y=1\)</span> cases?</li>
+<li>Probability of an indirect effect: Defined only for the two-path models, we estimate the probability that the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> operates through the indirect path. More precisely, we ask, for an <span class="math inline">\(X=1, Y=1\)</span> case in which <span class="math inline">\(X=1\)</span> caused <span class="math inline">\(Y=1\)</span>, what the probability is that that effect would have occurred if <span class="math inline">\(M\)</span> were held fixed at the value it takes on when <span class="math inline">\(X=1\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+</li>
+</ul>
+<p><strong>Define one or more strategies</strong>. A strategy is defined, generically, as the search for data on a given set of <em>nodes</em>, in a given <em>number</em> of cases that are randomly selected <em>conditional</em> on some information we already have about potential cases. In the simulations below, our strategy will always involve uncovering <span class="math inline">\(M\)</span>’s value in one or two cases. What we are wondering is how to choose these one or two cases for deeper analysis.</p>
+<p>Specifically, for our simulations, we assess the contributions of eight strategies, with inferences from the <span class="math inline">\(X,Y\)</span> data alone serving as our baseline. In the figures below, the strategies run along the <span class="math inline">\(X-\)</span>axis of each graph and can be interpreted as follows:</p>
+<ul>
+<li>
+<strong>Prior</strong>: conduct no intensive analysis, with beliefs based on <span class="math inline">\(X,Y\)</span> data only.</li>
+<li>
+<strong>1 off</strong>: data on <span class="math inline">\(M\)</span> is sought in one case in the <span class="math inline">\(X=1, Y=0\)</span> cell</li>
+<li>
+<strong>1 on</strong>: data on <span class="math inline">\(M\)</span> is sought in one case in the <span class="math inline">\(X=1, Y=1\)</span> cell</li>
+<li>
+<strong>2 off</strong>: data on <span class="math inline">\(M\)</span> is sought in one <span class="math inline">\(X=0, Y=1\)</span> case and one <span class="math inline">\(X=1, Y=0\)</span> case</li>
+<li>
+<strong>2 pos</strong>: data on <span class="math inline">\(M\)</span> is sought for two cases in the <span class="math inline">\(X=1, Y=1\)</span> cell</li>
+<li>
+<strong>2 on</strong>: data on <span class="math inline">\(M\)</span> is sought in one <span class="math inline">\(X=1, Y=1\)</span> case and one <span class="math inline">\(X=0, Y=0\)</span> case</li>
+<li>
+<strong>fix <span class="math inline">\(X\)</span></strong>: a strategy in which we seek <span class="math inline">\(M\)</span> in two cases in which a causal condition was present, with <span class="math inline">\(X\)</span> fixed at 1, one with <span class="math inline">\(Y=0\)</span> and one with <span class="math inline">\(Y=1\)</span>
+</li>
+<li>
+<strong>fix <span class="math inline">\(Y\)</span></strong>: a strategy in which we seek <span class="math inline">\(M\)</span> in two cases in which a positive outcome was observed, with <span class="math inline">\(Y\)</span> fixed at 1, one with <span class="math inline">\(X=0\)</span> and one with <span class="math inline">\(X=1\)</span>
+</li>
+</ul>
+<p>These are all “pure” strategies in the sense that the number of units for which data on <span class="math inline">\(M\)</span> is sought in each cell is fixed. One could also imagine random strategies in which a researcher chooses at random in which cells to look. For example, if we choose one case at random, we are randomly choosing between a case on the regression line and a case off the line. The performance of a random strategy will be a weighted average of the pure strategies over which the random strategy is randomizing.</p>
+<p><strong>Possible data</strong>. For each strategy, there are multiple possible sets of data that we could end up observing. In particular, the data we could end up with will be the <span class="math inline">\(X,Y\)</span> patterns we have already observed, plus some pattern of <span class="math inline">\(M\)</span> observations.</p>
+<p><strong>Probability of the data</strong>. We then calculate a probability of each possible data realization, given the model (with any restrictions or priors) and any data that we have already observed. Starting with the model together with our priors, we update our beliefs about <span class="math inline">\(\lambda\)</span> based on the previously observed data. This posterior now represents our <em>prior</em> for the purposes of the process tracing. In the analyses below, we use the already-observed <span class="math inline">\(X,Y\)</span> correlation to update our beliefs about causal-type share allocations in the population. We then use this posterior to draw a series of <span class="math inline">\(\lambda\)</span> values.</p>
+<p>Given that the ambiguities matrix gives us the mapping from causal types to data realizations, we can calculate for each <span class="math inline">\(lambda\)</span> draw, the probability of each data possibility given that particular <span class="math inline">\(\lambda\)</span> and the strategy. We then average across repeated <span class="math inline">\(\lambda\)</span> draws to get the probability of each possible data realization.</p>
+<p><strong>Posterior on estimate given the data</strong>. For each data possibility, we can then ask what inference we would get from each data possibility, given whatever query we seek to answer, as well as the variance of that posterior. Examining the inferences from possible data-realizations, as we do below, can help us understand how the learning unfolds for different strategies.</p>
+<p><strong>Expected posterior variance under each strategy</strong>. The quantity of ultimate interest is the posterior variance that we expect to end up with under each strategy. The expected posterior variance is simply an average of the posterior variances under each data possibility, weighted by the probability of each data possibility. We operationalize the expected learning under a strategy as the expected <em>reduction</em> in posterior variance arising from that strategy. </p>
+</section><section id="results" class="level3" data-number="13.3.3"><h3 data-number="13.3.3" class="anchored" data-anchor-id="results">
+<span class="header-section-number">13.3.3</span> Results</h3>
+<p></p>
+<p>The main results are shown in Figures <a href="#fig-HJ-F-13-1" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> and <a href="#fig-HJ-F-13-2" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-13-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-13-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="13-case-selection_files/figure-html/fig-HJ-F-13-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-13-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.1: Inferences given observations
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The two figures take two different approaches to representing the value of alternative strategies. In <a href="#fig-HJ-F-13-1" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>, we examine the informativeness of strategies by showing how much our inferences depend on what we observe within the cases. For a given model, query, and case-selection strategy, we plot the inferences we would draw from each of the possible data-realizations under the strategy. (Where inferences do not depend on the observed data, the multiple points are superimposed upon one another.) Generally, a larger spread across points (for a given model-query-strategy combination) represents a greater opportunity for learning from the data. However, as expected learning is also a function of how likely each data realization is, we represent the probability of each potential inference via shading of the points. In <a href="#fig-HJ-F-13-2" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>, we directly plot expected learning, operationalized as the expected reduction in posterior variance.</p>
+<p>In the remainder of this section, we walk through the results and suggest, often tentatively, interpretations of some of the more striking patterns. We caution that reasoning one’s way through expected learning for different model-query-strategy combinations, given a particular pattern in the prior data, can be tricky—hence, our recommendation that researchers simulate their way to research-design guidance, rather than relying on intuition.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-13-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-13-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="13-case-selection_files/figure-html/fig-HJ-F-13-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1152">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-13-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13.2: Reduction in variance on each query given different models and case-selection strategies
+</figcaption></figure>
+</div>
+</div>
+</div>
+<section id="n1-strategies-unrestricted-models" class="level4" data-number="13.3.3.1"><h4 data-number="13.3.3.1" class="anchored" data-anchor-id="n1-strategies-unrestricted-models">
+<span class="header-section-number">13.3.3.1</span> <span class="math inline">\(N=1\)</span> Strategies, Unrestricted Models</h4>
+<p>Suppose we can only conduct process tracing (observe <span class="math inline">\(M\)</span>) for a single case drawn from our sample of six <span class="math inline">\(X,Y\)</span> cases. Should we choose a case from on or off the regression line implied by the <span class="math inline">\(X,Y\)</span> pattern? In <a href="#fig-HJ-F-13-1" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>, we can see that for all unrestricted models, our inferences are completely unaffected by the observation of <span class="math inline">\(M\)</span> in a single case, regardless of which case-selection strategy we choose and regardless of the query of interest. We see only one point plotted for the two <span class="math inline">\(N=1\)</span> strategies for all unrestricted models and all queries because the inference is the same regardless of the realized value of <span class="math inline">\(M\)</span>. In <a href="#fig-HJ-F-13-2" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>, we see, in the same vein, that we expect 0 reduction in expected posterior variance from these <span class="math inline">\(N=1\)</span> strategies: They cannot make us any less uncertain about our estimates because the observations we glean cannot affect our beliefs.</p>
+<p>To see why, let’s first consider the on-the-line strategy. Not having observed <span class="math inline">\(M\)</span> previously, we still have flat priors over the nodal types governing <span class="math inline">\(X\)</span>’s effect on <span class="math inline">\(M\)</span> and <span class="math inline">\(M\)</span>’s effect on <span class="math inline">\(Y\)</span>. That is to say, we still have no idea whether <span class="math inline">\(X\)</span>’s positive effect on <span class="math inline">\(Y\)</span> (if present) more commonly operates through a chain of positive effects or a chain of negative effects. Thus, the observation of, say, <span class="math inline">\(M=1\)</span> in an <span class="math inline">\(X=1, Y=1\)</span> case is equally consistent with a positive <span class="math inline">\(X \rightarrow Y\)</span> effect (to the extent that effect operates via linked positive effects) and with no <span class="math inline">\(X \rightarrow Y\)</span> effect (to the extent positive effects operate through linked negative effects). Observing <span class="math inline">\(M=1\)</span> in an <span class="math inline">\(X=1, Y=1\)</span> case, therefore, tells us nothing about the causal effect in that case and, thus, nothing about the average effect either.</p>
+<p>Similarly, we have no idea whether <span class="math inline">\(X\)</span>’s negative effect on <span class="math inline">\(Y\)</span> (if present) operates through a positive-negative chain or a negative-positive chain, making <span class="math inline">\(M=1\)</span> or <span class="math inline">\(M=0\)</span> in an <span class="math inline">\(X=1, Y=0\)</span> case both equally consistent with a negative or null <span class="math inline">\(X \rightarrow Y\)</span> effect, yielding no information about causation in the case. By a similar logic, observing <span class="math inline">\(M=1\)</span> in the <span class="math inline">\(X=1, Y=1\)</span> case is uninformative about negative effects in an <span class="math inline">\(X=0, Y=1\)</span> case, and observing <span class="math inline">\(M=1\)</span> in an <span class="math inline">\(X=1, Y=0\)</span> case tells us nothing about positive effects in an <span class="math inline">\(X=1, Y=1\)</span> case.</p>
+<p>The same logic applies to drawing inferences from <span class="math inline">\(M\)</span> as a moderator or to learning from <span class="math inline">\(M\)</span> about indirect effects. In the absence of prior information about effects, one case is not enough. For more intuition about this finding, see Section <a href="07-process-tracing-with-models.html#sec-DAGalone" class="quarto-xref"><span>Section 7.5.1</span></a>.</p>
+</section><section id="n1-strategies-monotonic-models" class="level4" data-number="13.3.3.2"><h4 data-number="13.3.3.2" class="anchored" data-anchor-id="n1-strategies-monotonic-models">
+<span class="header-section-number">13.3.3.2</span> <span class="math inline">\(N=1\)</span> Strategies, Monotonic Models</h4>
+<p>The situation changes, however, when we operate with models with monotonicity restrictions (as it would more generally for models with informative, rather than flat, priors). Now we can see that our inferences on the queries do generally depend on <span class="math inline">\(M\)</span>’s realization in a single case and that we expect to learn. For many model-query combinations, the two <span class="math inline">\(N=1\)</span> strategies perform comparably, but there are situations in which we see substantial differences.</p>
+<p>Most notably, in a chain model with negative effects ruled out by assumption, we learn almost nothing from choosing an off-the-line case: This is because we already know from the model itself that there can be no <span class="math inline">\(X \rightarrow Y\)</span> effect in such a case since such an effect would require a negative effect at one stage. The only learning that can occur in such a case is about the prevalence of positive effects (relative to null effects) at individual stages (<span class="math inline">\(X \rightarrow M\)</span> and <span class="math inline">\(M \rightarrow Y\)</span>), which in turn has implications for the prevalence of positive effects (relative to null effects) of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>. Likely for similar reasons, in the monotonic two-path model, an on-the-line case is much more informative than an off-the-line case about the ATE and about the probability that the effect runs via the indirect path.</p>
+<p>Interestingly, however, the on-the-line strategy is not uniformly superior for an <span class="math inline">\(N=1\)</span> process-tracing design. We appear to learn significantly more from an off-the-line case than an on-the-line case when estimating the share of positive effects in the population of <span class="math inline">\(X=1, Y=1\)</span> cases and operating with a monotonic confounded or two-path model. At first, this seems surprising: Why would we not want to choose an <span class="math inline">\(X=1, Y=1\)</span> case for learning about the population of <span class="math inline">\(X=1, Y=1\)</span> cases? One possible reason is that, in the on-the-line case, one data realization is much more likely than the other, while we are more uncertain about what we will find in the off-the-line case. For instance, in the confounding model with monotonicity, in an <span class="math inline">\(X=1, Y=1\)</span> case we would learn about the prevalence of confounding from seeing <span class="math inline">\(M=0\)</span> (where confounding cannot be operating since negative effects are excluded) as opposed to <span class="math inline">\(M=1\)</span>; but we do not <em>expect to see</em> <span class="math inline">\(M=0\)</span> when both of its children (<span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>) take a value of 1 while negative effects are excluded. In an <span class="math inline">\(X=1, Y=0\)</span> case, however, <span class="math inline">\(M=0\)</span> and <span class="math inline">\(M=1\)</span> are about equally likely to be observed, and we can learn about confounding from each realization. We can see these differences in relative data probabilities from the shadings in the graphs, where we have more even shading for the possible inferences from the one-off strategy than for the one-on strategy. </p>
+<p>The general point here is that we expect to learn more from seeking a clue the more uncertain we are about what we will find, and some case-selection strategies will give us better opportunities to resolve uncertainty than others.</p>
+</section><section id="n2-strategies-unrestricted-models" class="level4" data-number="13.3.3.3"><h4 data-number="13.3.3.3" class="anchored" data-anchor-id="n2-strategies-unrestricted-models">
+<span class="header-section-number">13.3.3.3</span> <span class="math inline">\(N=2\)</span> Strategies, Unrestricted Models</h4>
+<p>Next, we consider the selection of <em>two</em> of our six cases. Now, because we are observing <span class="math inline">\(M\)</span> in two cases, we can learn from the variation in <span class="math inline">\(M\)</span> across these cases—or, more specifically, from its covariation with <span class="math inline">\(X\)</span> and with <span class="math inline">\(Y\)</span>. This should matter especially for unrestricted models, where we start out with no information about intermediate causal effects (e.g., whether they are more often positive or more often negative). Thus, when we only process trace one case, we cannot learn about causal effects in the cases we process trace since we don’t know how to interpret the clue. In contrast, if we observe <span class="math inline">\(M\)</span> in two or more cases, we <em>do</em> learn about causal effects for those cases because of the leverage provided by observing covariation between the process-tracing clue and other variables.</p>
+<p>We assess the expected gains from five <span class="math inline">\(N=2\)</span> strategies: examine two off-the line cases, one <span class="math inline">\(X=1, Y=0\)</span> case and one <span class="math inline">\(X=0, Y=1\)</span> case; examine two on-the-line cases, an <span class="math inline">\(X=Y=0\)</span> case and an <span class="math inline">\(X=Y=1\)</span> case; examine two treated, positive outcome (<span class="math inline">\(X=Y=1\)</span>) cases; select on <span class="math inline">\(X\)</span> by examining two <span class="math inline">\(X=1\)</span> cases with different <span class="math inline">\(Y\)</span> values; and select on <span class="math inline">\(Y\)</span> by examining two <span class="math inline">\(Y=1\)</span> cases with different <span class="math inline">\(X\)</span> values.</p>
+<p>A key message of these results is that each strategy’s performance depends quite heavily on the model we start with and what we want to learn. For instance, when estimating the ATE, the on-the-line strategy in which we disperse the cases across cells (two-on) clearly outperforms both the dispersed off-the-line strategy (two-off) and an on-the-line strategy in which we concentrate on one cell (two-pos) <em>if</em> we are working with an unrestricted chain model, and the off-the-line strategy is clearly the worst-performing of the three. The differences in learning about the ATE are more muted, however, for an unrestricted confounded model, and the two-pos strategy does <em>better</em> than the other two for a two-path model.</p>
+<p>If we seek to learn about the probability of positive causation in an <span class="math inline">\(X=1, Y=1\)</span> case, then there is little difference between two-off and two-pos, with two-on performing best. We also see that two-pos has lost its edge in an unrestricted two-path model, with no strategy offering leverage. When estimating the probability of a <em>negative</em> effect for an <span class="math inline">\(X=0, Y=1\)</span> case, we see that the two-off strategy performs best for the chain model, <em>but</em> that the two-pos strategy offers the greatest leverage in a two-path model. Finally, when estimating the probability of an indirect positive effect in an unrestricted two-path model, we get the most from a two-on strategy, though the two-off strategy does moderately well.</p>
+<p>In general, selecting conditional on a fixed value of <span class="math inline">\(X\)</span> or <span class="math inline">\(Y\)</span> (while dispersing on the other variable) does not do particularly well in unrestricted models, and it does not usually matter much which variable we fix on. There are exceptions, however. Perhaps most strikingly, in a two-path unrestricted model, we do relatively well in estimating the probability of an indirect positive effect when we fix <span class="math inline">\(Y\)</span> but stand to learn nothing if we fix <span class="math inline">\(X\)</span>. Interestingly, fixing <span class="math inline">\(Y\)</span> generally does better than fixing <span class="math inline">\(X\)</span> across all model-query combinations shown, given the prior data pattern we are working with.</p>
+<p>This pattern is particularly interesting in light of canonical advice in the qualitative methods literature. King et al. <span class="citation" data-cites="king1994designing">(<a href="20-references.html#ref-king1994designing" role="doc-biblioref">1994</a>)</span> advise selecting for variation on the explanatory variable and, as a second-best approach, on the dependent variable… And they warn sternly against selection for variation on both at the same time. But note what happens if we follow their advice. Suppose we start with an unrestricted chain model, hoping to learn about the <span class="math inline">\(ATE\)</span> or probability of positive causation, and decide to select for variation on <span class="math inline">\(X\)</span>, ignoring <span class="math inline">\(Y\)</span>. We might get lucky and end up with a pair of highly informative on-the-line cases. But, depending on the joint <span class="math inline">\(X,Y\)</span> distribution in the population, we might just as easily end up with a fairly uninformative off-the-line case or <span class="math inline">\(X=0, Y=1\)</span>, <span class="math inline">\(X=1, Y=1\)</span> pair. We do better if we intentionally select on <em>both</em> <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in this setup. This is equally true if we want to learn about the probability of negative effects in this model, in which case we want to choose an off-the-line case, or if we want to learn about positive indirect effects in a two-path model, where we want both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to be 1. King, Keohane, and Verba’s advice makes sense if all we are interested in is examining covariation between <span class="math inline">\(X\)</span> and the <span class="math inline">\(Y\)</span>: Then we can learn from forcing <span class="math inline">\(X\)</span> to vary and letting <span class="math inline">\(Y\)</span>’s values fall where they may. However, seeking leverage from the observation of a third variable is a different matter. As our simulations indicate, the strategy from which we stand to learn the most will depend on how we think the world works and what we want to learn.</p>
+</section><section id="n2-strategies-monotonic-models" class="level4" data-number="13.3.3.4"><h4 data-number="13.3.3.4" class="anchored" data-anchor-id="n2-strategies-monotonic-models">
+<span class="header-section-number">13.3.3.4</span> <span class="math inline">\(N=2\)</span> Strategies, Monotonic Models</h4>
+<p>Generally speaking, we get more leverage across strategies, models, and queries if we are willing to rule out negative effects by assumption. The most dramatic illustration of this is in a comparison of the unrestricted to a monotonic moderator and two-path models, where we face bleak prospects of learning about the ATE and the probability of positive effects in an unrestricted model, regardless of strategy. Imposing monotonicity assumptions on these two models makes for relatively similar ATE-learning opportunities across <span class="math inline">\(N=2\)</span> strategies while boosting the relative performance of two-on (best) and two-off (second-best) strategies for learning about the probability of positive causation.</p>
+<p>The relative performance also flips in some places. For instance, whereas two-pos gives us the most leverage for estimating the <span class="math inline">\(ATE\)</span> in an unrestricted two-path model, the two-on strategy is optimal once we impose monotonicity. And two-pos leapfrogs two-off for estimating positive indirect effects when we go from an unrestricted to a monotonic two-path model. The opposite seems to be true for estimating the <span class="math inline">\(ATE\)</span> or the probability of positive causation in a confounded model, where two-off does relatively better when we introduce monotonicity restrictions.</p>
+</section></section></section><section id="conclusion" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="conclusion">
+<span class="header-section-number">13.4</span> Conclusion</h2>
+<p>A small number of summary conclusions stand out.</p>
+<p>First, case selection, in general, depends on the purpose of an investigation, captured here by the query. Considerations differ ifdepending on whether your interest in a case is in learning about the specific case you select or in using the case to learn about a population. Clarity on that overarching purpose is critical, though sometimes absent from discussions of case selection in the existing literature. More generally, although we often focus on simple queries like case-level or average causal effects, the set of queries that might motivate you may be endless. You might focus on estimating effects for units with particular characteristics, on figuring out which interventions have the biggest impact at the lowest cost, on identifying the interventions that have the most equal impact across units, or on learning about likely effects in a <em>new</em> population that has different characteristics from the one that data have been drawn from. Each of these goals might imply a different case-selection strategy.</p>
+<p>Second, we see lessons here specifically for population-level inference. One case, we find, generally will not help unless our model already presupposes probative value—for instance, if we build in monotonicity assumptions. Two cases <em>can</em> be enough to generate probative value where we had none before. What is learned from a particular case depends on what other cases we have selected. For instance, we very often do better when we choose cases with different <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> values — yet even this possibility depends on the model and the query.</p>
+<p>A more pessimistic set of implications of these simulations points to the limits to learning about populations from in-depth investigation of a set of cases. For one thing, studying a small number of cases will, in general, yield quite modest learning about the population they are drawn from. In addition, we find that learning about some queries can be very difficult in the context of some models. For instance, we found it especially hard to get traction on the ATE and the probability of positive causal effects from a mediator clue in an unrestricted two-path model—though we do much better when our query shifts to figuring out the path through which effects operate. In short, a research strategy that combines extensive <span class="math inline">\(X,Y\)</span>-style analysis with drilling down on a subset of cases can, but is not guaranteed to, provide leverage on the population of interest.</p>
+<p>The highest-level lesson from this exercise is the sensitivity of case-selection strategy to models and queries; these determine when different case-level findings will be informative and in which combinations they are most informative. This finding calls for skepticism about broad rules for case selection that provide guidance without taking account of background beliefs about how the world works or the specific question being asked. More positively, as we show in action here, if you can describe your model, your priors, and the data you already have, there is a fairly simple procedure for figuring out where to go next.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-dunning2012natural" class="csl-entry" role="listitem">
+Dunning, T. 2012. <em>Natural Experiments in the Social Sciences: A Design-Based Approach</em>. Strategies for Social Inquiry. Cambridge University Press. <a href="http://books.google.de/books?id=ThxVBFZJp0UC">http://books.google.de/books?id=ThxVBFZJp0UC</a>.
+</div>
+<div id="ref-fairfieldcharman" class="csl-entry" role="listitem">
+Fairfield, Tasha, and Andrew E. Charman. forthcoming. <em>Social Inquiry and Bayesian Inference: Rethinking Qualitative Research</em>. Cambridge University Press.
+</div>
+<div id="ref-FL2008" class="csl-entry" role="listitem">
+Fearon, James, and David Laitin. 2008. <span>“Integrating Qualitative and Quantitative Methods.”</span> In <em>Oxford Handbook of Political Methodology</em>, edited by Janet M. Box-Steffenmeier, David Collier, and Henry E Brady, 756–76. Cambridge, UK: Oxford University Press.
+</div>
+<div id="ref-HerronQuinn" class="csl-entry" role="listitem">
+Herron, Michael C, and Kevin M Quinn. 2016. <span>“A Careful Look at Modern Case Selection Methods.”</span> <em>Sociological Methods &amp; Research</em> 45 (3): 458–92.
+</div>
+<div id="ref-king1994designing" class="csl-entry" role="listitem">
+King, Gary, Robert Keohane, and Sidney Verba. 1994. <em>Designing Social Inquiry: Scientific Inference in Qualitative Research</em>. Princeton University Press. <a href="http://books.google.de/books?id=A7VFF-JR3b8C">http://books.google.de/books?id=A7VFF-JR3b8C</a>.
+</div>
+<div id="ref-Lieberman2005nested" class="csl-entry" role="listitem">
+Lieberman, Evan S. 2005. <span>“Nested Analysis as a Mixed-Method Strategy for Comparative Research.”</span> <em>American Political Science Review</em> 99 (July): 435–52. <a href="https://doi.org/10.1017/S0003055405051762">https://doi.org/10.1017/S0003055405051762</a>.
+</div>
+<div id="ref-lindley1956measure" class="csl-entry" role="listitem">
+Lindley, Dennis V. 1956. <span>“On a Measure of the Information Provided by an Experiment.”</span> <em>The Annals of Mathematical Statistics</em>, 986–1005.
+</div>
+<div id="ref-seawrightbook" class="csl-entry" role="listitem">
+Seawright, Jason. 2016. <em>Multi-Method Social Science: Combining Qualitative and Quantitative Tools</em>. New York: Cambridge University Press.
+</div>
+<div id="ref-SeawrightGerring2008" class="csl-entry" role="listitem">
+Seawright, Jason, and John Gerring. 2008. <span>“Case Selection Techniques in Case Study Research: A Menu of Qualitative and Quantitative Options.”</span> <em>Political Research Quarterly</em> 61 (2): 294–308. <a href="https://doi.org/10.1177/1065912907313077">https://doi.org/10.1177/1065912907313077</a>.
+</div>
+<div id="ref-weller2014finding" class="csl-entry" role="listitem">
+Weller, Nicholas, and Jeb Barnes. 2014. <em>Finding Pathways: Mixed-Method Research for Studying Causal Mechanisms</em>. New York: Cambridge University Press.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p><span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> have a parameter <span class="math inline">\(\theta\)</span> that governs the distribution of data over <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and then, conditional on <span class="math inline">\(X,Y\)</span> values, a set of parameters <span class="math inline">\(\psi_{xy}\)</span> that describe the probability of a case’s being of a given causal type. We take both <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\psi_{xy}\)</span> to derive from the fundamental distribution of causal types and assignment probabilities. The difference in parameterization does have implications for interpretations of the priors. For example, flat priors over <span class="math inline">\(\theta\)</span> and <span class="math inline">\(\psi\)</span> imply a tighter distribution than a uniform prior over the causal types. In fact, <span class="citation" data-cites="HerronQuinn">Herron and Quinn (<a href="20-references.html#ref-HerronQuinn" role="doc-biblioref">2016</a>)</span> use priors with greater variance than uniform.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>We use the fact that variance for a Bernoulli with parameter <span class="math inline">\(p\)</span> is <span class="math inline">\(p(1-p)\)</span>; here, <span class="math inline">\(\Pr\left(\lambda^K_1 = \frac23\right)\left(1-\Pr\left(\lambda^K_1 = \frac23\right)\right)\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Equation 7 <span class="citation" data-cites="lindley1956measure">Lindley (<a href="20-references.html#ref-lindley1956measure" role="doc-biblioref">1956</a>)</span> defines the average gain from an experiment as <span class="math inline">\(E_x(I_1(x) - I_0)]\)</span> where <span class="math inline">\(x\)</span> is the data that might be observed, given the design, and <span class="math inline">\(I_1(x) = \int p(\theta|x)\log(p(\theta|x))d\theta\)</span> and <span class="math inline">\(I_0 = \int p(\theta)\log(p(\theta))d\theta\)</span>).<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>In code, this somewhat complicated query is expressed as <code>"Y[X=0, M=M[X=1]]==Y[X=1, M=M[X=1]]"</code>, <code>given "(X == 1 &amp; Y == 1) &amp; (Y[X=1]&gt;Y[X=0])"</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./12-clue-selection.html" class="pagination-link" aria-label="Clue Selection as a Decision Problem">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./14-wide-or-deep.html" class="pagination-link" aria-label="Going Wide, Going Deep">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,22 @@
+---
+format: 
+  html:
+    toc: false
+    fig-align: left
+    page-layout: full
+---
+
+*Cambridge University Press*, 2023.
+
+::: {.content-hidden}
+
+# Start {.unnumbered}
+
+:::
+
+<img style="border: 1px solid darkgray; height: 55vh" src="figures/cover.jpg">
+
+
+This is a full text open access preprint of [*Integrated Inferences*](https://www.cambridge.org/core/books/integrated-inferences/45B07964AD4718A74CDE3E35A31F26FA) published by Cambridge University Press. 
+
+Hard copies available at [CUP](https://www.cambridge.org/us/universitypress/subjects/social-science-research-methods/qualitative-methods/integrated-inferences-causal-models-qualitative-and-mixed-method-research?format=PB), [Amazon](https://www.amazon.com/Integrated-Inferences-Qualitative-Mixed-Method-Strategies/dp/1107169623/ref=sr_1_1?crid=3B9U2XQQPXPLD&keywords=integrated+inferences&qid=1693495949&sprefix=integrated+inference%2Caps%2C347&sr=8-1) and elsewhere.

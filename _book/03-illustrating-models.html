@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>3&nbsp; Illustrating Causal Models – Integrated Inferences</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./04-causal-questions.html" rel="next">
+<link href="./02-causal-models.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-causal-models.html">I Foundations</a></li><li class="breadcrumb-item"><a href="./03-illustrating-models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Integrated Inferences</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Start</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Front matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick guide</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">I Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-illustrating-models.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-causal-questions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-being-Bayesian.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Bayesian Answers</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-theory-as-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Theories as Causal Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">II Model-based Causal Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-process-tracing-with-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Process Tracing with Causal Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-PT-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Process Tracing Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-mixing-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integrated Inferences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mixed-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Integrated Inferences Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-fusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Mixing Models</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">III Design choices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-clue-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Clue Selection as a Decision Problem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-case-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Case Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-wide-or-deep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Going Wide, Going Deep</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">IV Models in Question</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-justifying-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Justifying Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-evaluating-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Evaluating Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Final Words</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">End matter</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-errata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Errata</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#welfare-state-reform" id="toc-welfare-state-reform" class="nav-link active" data-scroll-target="#welfare-state-reform"><span class="header-section-number">3.1</span> Welfare State Reform</a></li>
+  <li><a href="#military-interventions" id="toc-military-interventions" class="nav-link" data-scroll-target="#military-interventions"><span class="header-section-number">3.2</span> Military Interventions</a></li>
+  <li><a href="#development-and-democratization" id="toc-development-and-democratization" class="nav-link" data-scroll-target="#development-and-democratization"><span class="header-section-number">3.3</span> Development and Democratization</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-causal-models.html">I Foundations</a></li><li class="breadcrumb-item"><a href="./03-illustrating-models.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-HJC3" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Illustrating Causal Models</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="callout callout-style-default callout-note callout-titled" title="Chapter summary">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter summary
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We use three arguments from published political science research to illustrate how to represent theoretical ideas as structural causal models. We illustrate using Paul Pierson’s (1994) work on welfare state retrenchment, Elizabeth Saunders’ (2011) research on military intervention strategies, and Adam Przeworski and Fernando Limongi’s (1997) study of the relationship between national wealth and democracy.</p>
+</div>
+</div>
+<p><br></p>
+<p>In this short chapter, we illustrate how we can encode prior knowledge in a causal model by asking how we might construct models in light of extant scholarly works. We do this drawing on three well-known publications in comparative politics and international relations: Paul Pierson’s book on welfare state retrenchment <span class="citation" data-cites="pierson1994dismantling">(<a href="20-references.html#ref-pierson1994dismantling" role="doc-biblioref">Pierson 1994</a>)</span>; Elizabeth Saunders’ research on leaders’ choice of military intervention strategies <span class="citation" data-cites="saunders2011leaders">(<a href="20-references.html#ref-saunders2011leaders" role="doc-biblioref">Saunders 2011</a>)</span>; and Przeworski and Limongi’s work on democratic survival <span class="citation" data-cites="przeworski1997modernization">(<a href="20-references.html#ref-przeworski1997modernization" role="doc-biblioref">Przeworski and Limongi 1997</a>)</span>, an instructive counterpoint to Boix’s argument about a related dependent variable <span class="citation" data-cites="boix2003democracy">(<a href="20-references.html#ref-boix2003democracy" role="doc-biblioref">Boix 2003</a>)</span>. For each, we represent the causal knowledge that we might plausibly take away from the work in question in the form of a causal model.</p>
+<p>Readers might represent these knowledge bases differently; our aim here is only to illustrate how causal models are constructed, rather than to defend a particular representation (or the works in question) as accurate.</p>
+<p>Before we begin, we offer a caution about how the illustrations in this chapter should be understood. For simplicity, in each of the next sections we focus on a specific argument in the literature. We emphasize, however, that <em>in general</em> a causal model should be thought of as a representation of our state of knowledge or beliefs about causal relations within a domain. Suppose, for instance, that we are interested in testing a specific argument in which <span class="math inline">\(X\)</span> affects <span class="math inline">\(Y\)</span> through mediator <span class="math inline">\(M\)</span>. In constructing a causal model to guide our empirical analysis, we cannot simply draw that argument in DAG form (<span class="math inline">\(X \rightarrow M \rightarrow Y\)</span>) and leave it at that. In line with the principles relating to conditional independence outlined in <a href="02-causal-models.html" class="quarto-xref"><span>Chapter 2</span></a>, we must consult our beliefs about this causal domain in a broader sense. For instance, given what we know about the domain from prior observations or studies, is it plausible that <span class="math inline">\(X\)</span> could affect <span class="math inline">\(Y\)</span> through a pathway that does not go through <span class="math inline">\(M\)</span>? If we believe it is possible, then we must also draw a direct <span class="math inline">\(X \rightarrow Y\)</span> arrow, or our causal model will steer us wrong—even if our primary aim is to examine the pathway through <span class="math inline">\(M\)</span>. Otherwise, our DAG will be enforcing a relation of conditional independence (<span class="math inline">\(X\)</span> being conditionally independent of <span class="math inline">\(Y\)</span> given <span class="math inline">\(M\)</span>) that we do not believe holds. Thus, while we draw on specific works in the illustrations in this chapter, we urge readers to remember that in practice, when generating a causal model, one would want to characterize a broader prior knowledge base in relation to a causal domain.</p>
+<p>With these exercises, we aim to illuminate a number of features of causal models and their construction. The examples demonstrate how graphs capture beliefs about relations of conditional independence and illustrate the potential complexity embedded in the causal structures implied by common social-scientific arguments. For each work, we also go beyond the graphs themselves to illustrate both a potential parametric rendering of the causal functions and a nonparametric formulation built on nodal types. </p>
+<section id="welfare-state-reform" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="welfare-state-reform">
+<span class="header-section-number">3.1</span> Welfare State Reform</h2>
+<p> </p>
+<p>The argument in Pierson’s 1994 book <em>Dismantling the Welfare State?</em> challenged prior notions of post-1980 welfare state retrenchment in OECD countries as a process driven primarily by socioeconomic pressures (slowed growth, rising unemployment, rising deficits, aging populations) and the rise of market-conservative ideologies (embodied by the political ascendance of figures such as Margaret Thatcher and Ronald Reagan). Pierson argues that socioeconomic and ideological forces put retrenchment on the policy agenda, but do not ensure its enactment because retrenchment is a politically perilous process of imposing losses on large segments of the electorate. Governments will only impose such losses if they can do so in ways that allow them to avoid blame—by, for instance, making the losses hard to perceive or the responsibility for those losses difficult to trace. These kinds of blame-avoidance opportunities are themselves conditioned by the particular social-program structures that governments inherit.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-3-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-illustrating-models_files/figure-html/fig-HJ-F-3-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: A graphical representation of Pierson’s (1994) argument.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>While the argument has many more specific features (e.g., different program-structural factors that matter, various potential strategies of blame-avoidance), its essential components can be captured with a relatively simple causal model. We propose such a model in graphical form in <a href="#fig-HJ-F-3-1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>. Here, the outcome of retrenchment (<span class="math inline">\(R\)</span>) hinges on whether retrenchment makes it onto the agenda (<span class="math inline">\(A\)</span>) and on whether blame-avoidance strategies are available to governments (<span class="math inline">\(B\)</span>). Retrenchment emerges on the policy agenda as a consequence of both socioeconomic developments (<span class="math inline">\(S\)</span>) and the ascendance of ideologically conservative political actors (<span class="math inline">\(C\)</span>). Inherited program structures (<span class="math inline">\(P\)</span>), meanwhile, determine the availability of blame-avoidance strategies. To avoid cluttering the graph, we do not represent the <span class="math inline">\(\theta\)</span> terms, but implicitly that every node on this graph has a <span class="math inline">\(\theta\)</span> node pointing into it.</p>
+<p>A few features of this graph warrant attention. As we have discussed, it is the omitted arrows in any causal graph that imply the strongest statements. The graph implies that <span class="math inline">\(C\)</span>, <span class="math inline">\(S\)</span>, and <span class="math inline">\(P\)</span>—which are neither connected along a directed path nor downstream from a common cause—are independent of one another. This implies, for instance, that whether conservatives govern is independent of whether inherited program structures will allow for blame-free retrenchment. Thus, as Pierson argues, a Reagan or Thatcher can come to power but nonetheless run up against an opportunity structure that would make retrenchment politically perilous. Given the absence of bidirectional arrows indicating confounding, the graph similarly implies that the nodal types for all nodes are independent of one another. So, for instance, conservatives are no more or less likely to come to power in places where the policy agenda is more likely to be responsive to conservative ideological demands (i.e., no confounding between <span class="math inline">\(C\)</span> and <span class="math inline">\(A\)</span>). These are all strong assumptions.</p>
+<p>Further, this graph represents the belief that any effect of program structures on retrenchment <em>must</em> run through their effects on blame-avoidance opportunities. One could imagine relaxing this restriction by, for instance, drawing an arrow from <span class="math inline">\(P\)</span> to <span class="math inline">\(A\)</span>: Program structures might additionally affect retrenchment in other ways, such as through an impact on the fiscal costliness of the welfare state, thus helping to determine whether reform makes it onto the agenda. If the current state of knowledge suggested that program structures could affect retrenchment via a pathway other than blame-avoidance opportunities, then we would indeed want to include a direct <span class="math inline">\(P \rightarrow A\)</span> arrow.</p>
+<p>Importantly, adding such an arrow would lend our prior beliefs <em>less</em> structure in the sense that we are ruling out fewer causal possibilities by assumption. Put differently, it is the model with <em>fewer</em> connections between nodes that represents the stronger claim about the world since an omitted arrow forbids particular direct effects. Moreover, as we discuss in later chapters, the choice about which nodes to connect or not to connect directly can have consequences for causal-model based research, including for the inferences that we end up drawing. We also discuss, in <a href="16-evaluating-models.html" class="quarto-xref"><span>Chapter 16</span></a>, the possibility of empirically evaluating alternative model structures.</p>
+<p>Where two variables <em>are</em> connected by an arrow, moreover, this does not imply that a causal effect will always operate. Consider, for instance, the arrow pointing from <span class="math inline">\(A\)</span> to <span class="math inline">\(R\)</span>. The fact that <span class="math inline">\(A\)</span> sometimes affects <span class="math inline">\(R\)</span> and sometimes does not is, in fact, central to Pierson’s argument: Conservatives and socioeconomic pressures forcing retrenchment onto the agenda will <em>not</em> generate retrenchment if blame-avoidance opportunities are absent.</p>
+<p>The graph also reflects a choice about where to begin. We could, of course, construct a causal account of how conservatives come to power in the first place, how socioeconomic pressures arise, or why programs were originally designed as they were. Yet it is perfectly permissible for us to bracket these antecedents and start the model with <span class="math inline">\(C\)</span>, <span class="math inline">\(S\)</span>, and <span class="math inline">\(P\)</span>, as long as we do not believe that these variables have any antecedents in common. If they do have common causes, then this correlation should be captured in the DAG.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The DAG itself tells us about the possible direct causal dependencies but is silent on the ranges of and functional relations among the variables. How might we express these? With three endogenous variables, we need three functions indicating how their values are determined. Moreover, every variable pointing directly into another variable must be part of that child’s causal function. </p>
+<p>One option would be to take a parametric approach and imagine specific functions connecting parents to children, with <span class="math inline">\(\theta\)</span> terms representing exogenous “noise.” Let us assume that all variables (including the implied <span class="math inline">\(\theta\)</span> terms) are binary, with each condition either absent or present. Then, for instance, we can capture quite a lot of Pierson’s theoretical logic with the following quite simple causal functions:</p>
+<ul>
+<li>
+<span class="math inline">\(A=CS\theta^A\)</span>, capturing the idea that retrenchment makes it on the agenda only if conservatives are in power <em>and</em> socioeconomic pressures are high.</li>
+<li>
+<span class="math inline">\(B=P\theta^B\)</span>, implying that blame-avoidance opportunities arise only when program structures take a particular form.</li>
+<li>
+<span class="math inline">\(R=AB\theta^R\)</span>, implying that retrenchment will occur only if it is on the agenda and blame-avoidance opportunities are present.</li>
+</ul>
+<p>In each equation, the <span class="math inline">\(\theta\)</span> term allows for random, exogenous forces that might block the outcome from occurring. In the last causal function, for instance, retrenchment will only occur if retrenchment is on the agenda and blame-avoidance opportunities are present—but even if both are present, the effect on retrenchment also hinges on the value of <span class="math inline">\(\theta^R\)</span>. When <span class="math inline">\(\theta^R=1\)</span>, the <span class="math inline">\(AB\)</span> combination has a positive causal effect on retrenchment. When <span class="math inline">\(\theta^R=0\)</span>, <span class="math inline">\(AB\)</span> has no causal effect: retrenchment will not occur regardless of the presence of <span class="math inline">\(AB\)</span>. We can think of <span class="math inline">\(\theta^R\)</span> as capturing a collection of features of a case’s context that might render the case susceptible or not susceptible to an <span class="math inline">\(AB\)</span> causal effect. For instance, Pierson’s analysis suggests that a polity’s institutional structure might widely diffuse veto power such that stakeholders can block reform even when retrenchment is on the agenda and could be pursued without electoral losses. We could think of such a case as having a <span class="math inline">\(\theta^R\)</span> value of 0, implying that <span class="math inline">\(AB\)</span> has no causal effect. A <span class="math inline">\(\theta^R=1\)</span> case, with a positive effect, would be one in which the government has the institutional capacity to enact reforms that it has the political will to pursue. Yet <span class="math inline">\(\theta^R\)</span> would also capture countless other forces, many of which we might not be able to theorize or observe, that might facilitate or block <span class="math inline">\(AB\)</span>’s effect.</p>
+<p>Alternatively, we could take a non-parametric approach, as we generally do in the remainder of this book. In a non-parametric setup, each node’s <span class="math inline">\(\theta\)</span> term captures that node’s nodal type. Each value of a <span class="math inline">\(\theta\)</span> term’s range represents a possible way in which the node might respond to its parents. With all substantive variables being binary, we would define <span class="math inline">\(\theta^A\)</span> as taking on one of 16 values (16 types, given 2 parent nodes); <span class="math inline">\(\theta^B\)</span> as taking on one of four values; and <span class="math inline">\(\theta^R\)</span> as taking on one of 16 values; with <span class="math inline">\(\theta^C\)</span> and <span class="math inline">\(\theta^S\)</span> each taking on one of two values.</p>
+<p>Thus, the central thrust of Pierson’s argument about causal effects could then be represented in nodal-type form as:</p>
+<ul>
+<li>
+<span class="math inline">\(\theta^A=\theta^A_{0001}\)</span>, meaning that <span class="math inline">\(A=1\)</span> if and only if both of its parents (<span class="math inline">\(C\)</span> and <span class="math inline">\(S\)</span>) are 1, capturing the joint necessity of conservative leadership and socioeconomic pressures for putting welfare state reform on the agenda</li>
+<li>
+<span class="math inline">\(\theta^B=\theta^B_{01}\)</span>, meaning that <span class="math inline">\(B=1\)</span> if and only if its parent (<span class="math inline">\(P\)</span>) is 1, capturing the role of favorable program structures in generating blame-avoidance opportunities.</li>
+<li>
+<span class="math inline">\(\theta^R=\theta^R_{0001}\)</span>, meaning that <span class="math inline">\(R=1\)</span> if and only if both of its parents (<span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>) are 1, capturing the joint necessity of reform being on the agenda and blame-avoidance opportunities being available for retrenchment to occur.</li>
+</ul>
+<p>In practice, we would not simply define each of these <span class="math inline">\(\theta\)</span> terms as taking on the indicated nodal types. Doing so would imply that we had complete certainty that causal relations in all cases behave according to Pierson’s logic. Instead, we would normally allow for a probability <em>distribution</em> over each <span class="math inline">\(\theta\)</span>, representing our beliefs about what kinds of causal effects are most likely or most common. How we define the distributions over <span class="math inline">\(\theta^A, \theta^B\)</span>, and <span class="math inline">\(\theta^R\)</span> depends on the degree of confidence that we want to express in Pierson’s specific argument (given that we accept the DAG). To represent the belief that Pierson’s argument is correct with certainty and operates in a uniform, deterministic fashion across units, we would simply have degenerate distributions for <span class="math inline">\(\theta^A, \theta^B\)</span>, and <span class="math inline">\(\theta^R\)</span>, with a probability of 1.0 placed on the respective nodal types shown above. To capture uncertainty about the functional relations on any graph or if we believe that there is some heterogeneity of effects across units, we would disperse probability density across types for each <span class="math inline">\(\theta\)</span>. For instance, for <span class="math inline">\(\theta^R\)</span> we might want to put some weight on <span class="math inline">\(\theta^R_{0011}\)</span> (blame-avoidance opportunities alone are enough to generate retrenchment), <span class="math inline">\(\theta^R_{0101}\)</span> (conservative leaders alone are enough), <span class="math inline">\(\theta^R_{0111}\)</span> (either is enough), and <span class="math inline">\(\theta^R_{0000}\)</span> (retrenchment will not happen even when both conditions are present), while perhaps putting greatest weight on <span class="math inline">\(\theta^R_{0001}\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Our beliefs about the distribution of exogenous conditions—that is, how common conservative governments, socioeconomic pressures, and particular program structures are—would similarly be captured in distributions over the values of <span class="math inline">\(\theta^C, \theta^S\)</span>, and <span class="math inline">\(\theta^P\)</span>, respectively.</p>
+</section><section id="military-interventions" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="military-interventions">
+<span class="header-section-number">3.2</span> Military Interventions</h2>
+<p> </p>
+<p>In her book <em>Leaders at War</em>, <span class="citation" data-cites="saunders2011leaders">Saunders (<a href="20-references.html#ref-saunders2011leaders" role="doc-biblioref">2011</a>)</span> asks why, when intervening militarily abroad, leaders sometimes seek to transform the <em>domestic</em> political institutions of the states they target while sometimes seeking only to shape those states’ <em>external</em> behaviors.</p>
+<p>Saunders’ central explanatory variable is the nature of leaders’ causal beliefs about security threats. When leaders are “internally focused,” they believe that threats in the international arena derive from the internal characteristics of other states. Leaders who are “externally focused,” by contrast, understand threats as emerging strictly from other states’ foreign and security policies.</p>
+<p>These basic worldviews, in turn, affect the cost-benefit calculations leaders make about intervention strategies—in particular, about whether to try to transform the internal institutions of a target state—via two mechanisms. First, an internal focus (as opposed to an external focus) affects leaders’ perceptions of the likely security gains from a transformative intervention strategy. Second, internal versus external focus affects the kinds of strategic capabilities in which leaders invest over time (Do they invest in the kinds of capabilities suited to internal transformation?); and those investments in turn affect the costliness and likelihood of success of alternative intervention strategies. Calculations about the relative costs and benefits of different strategies then shape the choice between a transformative and a non-transformative approach to intervention.</p>
+<p>At the same time, leaders can only choose a transformative strategy if they decide to intervene in the first place. The decision about whether to intervene depends, in turn, on at least two kinds of considerations. The first is about fit: A leader is more likely to intervene against a target when the nature of the dispute makes the leader’s preferred intervention strategy (transformative or non-transformative) appear feasible in a given situation. Second, Saunders allows that forces outside the logic of her main argument might also affect the likelihood of intervention: in particular, leaders may be pushed to intervene by international or domestic audiences.</p>
+<p><a href="#fig-HJ-F-3-2" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> depicts the causal dependencies in Saunders’ argument in DAG form (again, with all <span class="math inline">\(\theta\)</span> terms left implicit). Working from left to right, we see that whether or not leaders are “internally focused” (<span class="math inline">\(F\)</span>) affects the expected net relative benefits of transformation (<span class="math inline">\(B\)</span>), both via a direct pathway and via an indirect pathway running through investments in transformative capacities (<span class="math inline">\(T\)</span>). Characteristics of a given dispute or target state (<span class="math inline">\(D\)</span>) likewise influence the benefits of transformation (<span class="math inline">\(B\)</span>). The decision about whether to intervene (<span class="math inline">\(I\)</span>) is then a function of three factors: the presence or absence of an internal focus (<span class="math inline">\(F\)</span>), the expected relative net benefits of transformation (<span class="math inline">\(B\)</span>), and audience pressures (<span class="math inline">\(A\)</span>). Finally, the choice of whether to pursue a transformative strategy (<span class="math inline">\(S\)</span>) is a function of whether or not intervention occurs at all (<span class="math inline">\(I\)</span>), and of cost-benefit comparisons between the two strategies (<span class="math inline">\(B\)</span>).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-3-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-illustrating-models_files/figure-html/fig-HJ-F-3-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.2: A graphical representation of Saunders’ (2011) argument.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>This DAG illustrates how readily causal graphs can depict the multiple pathways through which a given variable might affect another variable, as with the multiple pathways linking <span class="math inline">\(F\)</span> to <span class="math inline">\(I\)</span> and <span class="math inline">\(B\)</span> (and, thus, all of its causes) to <span class="math inline">\(S\)</span>. In fact, this graphical representation of the dependencies in some ways throws the multiplicity of pathways into even sharper relief than does a narrative exposition of the argument. For instance, Saunders draws explicit attention to the fact that causal beliefs (<span class="math inline">\(F\)</span>) operate on expected net benefits via both a direct and indirect pathways: both shaping calculations of the net benefits of transformation and conditioning investments in capabilities. What is a bit easier to miss without formalization is that <span class="math inline">\(F\)</span> also acts <em>directly</em> on the choice to intervene as part of the feasibility logic: When leaders assess whether their generally preferred strategy would be feasible if deployed against a particular target, the generally preferred strategy is itself a product of their internal or external focus. The DAG also makes helpfully explicit that the two main outcomes of interest—the choice about whether to intervene and the choice about how—are not just shaped by some of the same causes but are themselves causally linked: one can only decide how to intervene if one has intervened.</p>
+<p>Omitted links are also notable. For instance, the lack of an arrow between <span class="math inline">\(D\)</span> and <span class="math inline">\(A\)</span> suggests that features of the dispute that affect feasibility have no effect on audience pressures. If we instead believed there could be other connections—for instance, that audiences take feasibility into account in demanding intervention—then we would want to include a <span class="math inline">\(D \rightarrow A\)</span> arrow.</p>
+<p>Turning to variable ranges and causal functions, it is not hard to see how one might readily capture Saunders’ logic in a fairly straightforward manner. All variables except <span class="math inline">\(S\)</span> could be treated as binary with <span class="math inline">\(F=1\)</span> representing internally focused causal beliefs, <span class="math inline">\(T=1\)</span> representing investments in transformative capabilities, <span class="math inline">\(B=1\)</span> representing expectations that transformation will be more net beneficial than non-transformation, <span class="math inline">\(D=1\)</span> meaning that a dispute has characteristics that make transformation a feasible strategy, and so on. Although there are two strategies, we in fact need three values for <span class="math inline">\(S\)</span> because it must be defined for all values of the other variables—that is, it must take on a distinct categorical value if there is no intervention at all. We could then define functions, such as:</p>
+<ul>
+<li>
+<span class="math inline">\(B=FTD\)</span>, implying that transformation will be perceived to be net beneficial in a case if and only if the leader has internally focused causal beliefs, the military is prepared for a transformative strategy, and the dispute has characteristics that make transformation feasible.</li>
+<li>
+<span class="math inline">\(I=(1-|B-F|)+(|B-F|)A\)</span>, implying that intervention can occur under (and only under) either of two alternative sets of conditions: if the generally preferred strategy and the more net-beneficial strategy in a given case are the same (i.e., such that <span class="math inline">\(B-F=0\)</span>) or, when this alignment is absent (i.e., such that <span class="math inline">\(|B-F|=1\)</span>), where audiences pressure a leader to intervene.</li>
+</ul>
+<p>As illustrated in the Pierson example, in a non-parametric framework, each parametric causal function represents one nodal type for the relevant <span class="math inline">\(\theta\)</span>. For instance, though we spare the reader the complexities of the corresponding subscript notation, there is a single value of <span class="math inline">\(\theta^B\)</span> under which the conditions <span class="math inline">\(F=1, P=1,\)</span> and <span class="math inline">\(T=1\)</span> generate <span class="math inline">\(B=1\)</span>, and we get <span class="math inline">\(B=0\)</span> otherwise. Likewise, there exists a single value of <span class="math inline">\(\theta^I\)</span> under which <span class="math inline">\(B=1, F=1\)</span> and <span class="math inline">\(B=0, F=0\)</span> produce <span class="math inline">\(I=1\)</span>, for either value of <span class="math inline">\(A\)</span>; and <span class="math inline">\(A\)</span> has a positive effect on <span class="math inline">\(I\)</span> whenever <span class="math inline">\(B \neq F\)</span>. To work with this model, we would specify a probability distribution over all possible nodal types for each node on the graph.</p>
+<p>This example also nicely illustrates how much potential causal complexity a moderately intricate argument and causal graph imply. The number of <em>possible</em> nodal types at each node depends on how many parents that node has. Looking at the endogenous nodes here, we have one binary node with one parent (<span class="math inline">\(T\)</span>), implying 4 nodal types; two binary nodes with three parents (<span class="math inline">\(B\)</span> and <span class="math inline">\(I\)</span>), implying 256 nodal types each; and one ternary node (<span class="math inline">\(S\)</span>) with two parents, implying 81 nodal types.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> If we now conceptualize the set of possible “causal types” as containing all distinct combinations of nodal types—all ways in which a case might behave across all of its nodes (see <a href="02-causal-models.html" class="quarto-xref"><span>Chapter 2</span></a>)—then this graph implies over 21 million different ways in which the values of exogenous nodes (<span class="math inline">\(D\)</span>, <span class="math inline">\(F\)</span>, and <span class="math inline">\(A\)</span>) might jointly produce patterns of outcomes across the graph. Saunders’ argument effectively represents one of these 21 million possible sets of relations.</p>
+<!-- AJ: MH, pls check my nodal type formula above. -->
+<p>The framework that we outline in this book allows for updating our confidence in an argument like Saunders’: We can ask how likely the specific causal type implied by this argument is relative to other causal types. Yet, as we will see, the approach lends itself to a much broader view of causal inquiry than simply asking whether an overall theory or argument is correct. In the approach that we develop here, we will use data to update our beliefs over <em>all</em> causal types allowed for in a model. We can then use these updated beliefs to answer any number of specific causal questions about relationships in the model. For instance, we can use a single set of data to update the model and then ask about the average effect of internal focus on the intervention; the likelihood of a positive effect of internal focus on the intervention; the relative importance of the expected-benefits pathway over the direct pathway in generating a positive effect; or effects at individual steps in the causal chain, such as the effect of expected benefits on the choice of strategy.</p>
+</section><section id="development-and-democratization" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="development-and-democratization">
+<span class="header-section-number">3.3</span> Development and Democratization</h2>
+<p> </p>
+<p><span class="citation" data-cites="przeworski1997modernization">Przeworski and Limongi (<a href="20-references.html#ref-przeworski1997modernization" role="doc-biblioref">1997</a>)</span> argue that democratization occurs for reasons that are largely idiosyncratic (i.e., not driven by socioeconomic or macro-structural conditions); but once a country has democratized, a higher level of economic development makes democracy more likely to survive. Economic development thus affects whether or not a country is a democracy, but only after a democratic transition has occurred, not before. Thus, in their description—and contrary to <span class="citation" data-cites="boix2003democracy">Boix (<a href="20-references.html#ref-boix2003democracy" role="doc-biblioref">2003</a>)</span> —democratization is “exogenous”: it is not determined by other variables in the model. The dynamic component of Przeworski and Limongi’s argument—the fact that both the presence of democracy and the causal effect of development on democracy depend on whether a democratic transition occurred at a previous point in time—forces us to think about how to capture over-time processes in a causal model.</p>
+<p>We represent Przeworski and Limongi’s argument in the DAG in <a href="#fig-HJ-F-3-3" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>. The first thing to note is that we can capture dynamics by considering democracy at different points in time as separate nodes. According to the graph, whether a country is a democracy in a given period (<span class="math inline">\(D_t\)</span>) is a function, jointly, of whether it was a democracy in the previous period (<span class="math inline">\(D_{t-1}\)</span>) and of the level of per capita GDP in the previous period, as well as of other unspecified forces <span class="math inline">\(\theta^{D_t}\)</span> (not pictured).</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-HJ-F-3-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-HJ-F-3-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-illustrating-models_files/figure-html/fig-HJ-F-3-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-3-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: A graphical representation of Przeworski and Limongi’s argument.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Second, the arrow running from <span class="math inline">\(Y_{t-1}\)</span> to <span class="math inline">\(D_t\)</span> means that <span class="math inline">\(Y\)</span> <em>may</em> affect the presence of democracy, not that it always (or certainly) does. Indeed, Przeworski and Limongi’s argument is that development’s effect on democracy depends on a regime’s prior state: GDP matters for whether democracies continue to be democracies, but not for whether autocracies go on to become democracies. The absence of an arrow between <span class="math inline">\(D_{t-1}\)</span> and <span class="math inline">\(Y_{t-1}\)</span>, however, implies a (possibly incorrect) belief that democracy and last period GDP are independent of one another.</p>
+<p>This claim implies an asymmetric effect of national income on regime type: High GDP per capita can prevent a democratic state from reverting to autocracy, according to Przeworski and Limongi, but it cannot cause an autocracy to become a democracy. Interestingly, this argument means that even though high national income cannot cause a state to <em>transition to</em> democracy, it can still cause a state to be democratic. The posited causal effect is best understood in counterfactual terms: a democracy with high per capita GDP <em>would</em> have reverted to autocracy if it had had low per capita GDP. The argument might also be expressed as an interaction: If a state was an autocracy in the previous period, then GDP will have no effect on its regime type in the current period; national income has an effect only on states that were democracies in the previous period. The graph allows for this interaction—in making the current regime type dependent both on GDP and prior regime type—but the type of interaction would need to be specified in a causal function.</p>
+<p>For a parametric representation of this asymmetric relationship, we can specify a function in which GDP can reduce the likelihood of a transition <em>away</em> from democracy but has no effect on the probability of a transition <em>to</em> democracy, which is exogenously determined. One possible causal function that captures this argument is:</p>
+<p><span class="math display">\[D_t = \mathbb{1}(\theta^{D_t} &lt; (1-D_{t-1})p + D_{t-1}Y_{t-1}q))\]</span></p>
+<p>where</p>
+<ul>
+<li>
+<span class="math inline">\(D_t\)</span> and <span class="math inline">\(D_{t-1}\)</span> are binary nodes representing current and last-period democracy, respectively</li>
+<li>
+<span class="math inline">\(Y_{t-1}\)</span> represents national per capita GDP in the previous period, scaled to 0-1.</li>
+<li>
+<span class="math inline">\(p\)</span> is a parameter representing the probability that an autocracy democratizes</li>
+<li>
+<span class="math inline">\(q\)</span> is a parameter representing the probability that a democracy with <span class="math inline">\(Y_{t-1}=1\)</span> remains democratic</li>
+<li>
+<span class="math inline">\(\theta^{D_t}\)</span> represents a random, additional input into whether or not a state is democratic; we might think of this as distributed uniformly over <span class="math inline">\([0,1]\)</span>.</li>
+<li>The indicator function, <span class="math inline">\(\mathbb{1}\)</span>, evaluates the inequality and generates a value of <span class="math inline">\(1\)</span> if and only if it is true</li>
+</ul>
+<p>Unpacking the equation, the likelihood that a country is a democracy in a given period rises and falls with the expression to the right of the inequality operator. This expression itself has two parts, reflecting the difference between the determinants of <em>transitions to</em> democracy (captured by the first part) and the determinants of democratic <em>survival</em> (captured by the second). The first part comes into play—that is, non-zero—only for non-democracies in the last period. For non-democracies, the expression evaluates simply to <span class="math inline">\(p\)</span>, the exogenous probability of democratization. The second part is non-zero only for democracies, where it evaluates to <span class="math inline">\(q\)</span> times <span class="math inline">\(Y_{t-1}\)</span>: thus, remaining democratic is more likely as national income rises. The inequality is then evaluated by asking whether the expression on the left passes a threshold, <span class="math inline">\(\theta^{D_t}\)</span>. Thus, higher values for the expression on the left increase the likelihood of democracy while the randomness of the <span class="math inline">\(\theta^{D_t}\)</span> threshold captures the role of other, idiosyncratic inputs. The mean and variance of <span class="math inline">\(\theta^{D_t}\)</span> capture the overall likelihood of being a democracy as well as the importance of unspecified factors.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> In a model like this, it would be natural to seek to estimate parameters <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> as well as try to understand the distribution of <span class="math inline">\(\theta^{D_t}\)</span>.</p>
+<p>We can also, of course, represent the asymmetry in a binary setup with nodal types. Specifically, nodal type <span class="math inline">\(\theta^{D_t}_{0001}\)</span> represents a causal effect in which a democracy will remain democratic if it is wealthy, but will become authoritarian if it is not wealthy: <span class="math inline">\(D_t=1\)</span> if both of its parents, <span class="math inline">\(Y_{t-1}\)</span> and <span class="math inline">\(D_{t-1}\)</span>, equal <span class="math inline">\(1\)</span>, and <span class="math inline">\(D_t=0\)</span> if either of its parents are <span class="math inline">\(0\)</span>. We can see here the clear causal effect of <span class="math inline">\(Y_{t-1}\)</span> for a country that was a democracy (i.e., <span class="math inline">\(D_{t-1}=1\)</span>): for such a unit, changing <span class="math inline">\(Y_{t-1}\)</span> to 0 would change that country from a democracy to a non-democracy in the current period. We can also see, under this nodal type, that for a country that was <em>not</em> a democracy last period (<span class="math inline">\(D_{t-1}=0\)</span>), changing GDP will have no effect. Consider, in contrast, a <span class="math inline">\(\theta^{D_t}_{0011}\)</span> type: under this alternative nodal type, a non-democracy becomes a democracy if national income goes from low to high.</p>
+<p>Again, we can express our beliefs in the prevalence or likelihood of different causal effects on democracy by assigning a probability distribution over <span class="math inline">\(D_t\)</span>’s 16 possible nodal types.</p>
+<p>Although we do not engage with dynamic models in this book, this model provides a useful opportunity for thinking through the implications of a given distribution of nodal types for a dynamic process. Imagine a setup in which, in each period, one half of units were of type <span class="math inline">\(\theta^{D_t}_{0001}\)</span>, and one half of type <span class="math inline">\(\theta^{D_t}_{1111}\)</span>, meaning that they will be democracies in the current period regardless of income level or prior regime status (with each unit’s type assigned afresh in each period). Suppose, further, that all units’ income level remains constant over time. Now, say that in an initial period, half the units were democracies, half the units had high income, and there was no correlation between these two features or between these features and nodal type. So half the democracies were high-income, half low-income; half the non-democracies were high-income, half low-income; and the two nodal types are also distributed equally among all regime/income combinations.</p>
+<p>How does this setup evolve over time? In particular, what happens over time to the association between income level and regime type? In the next period, half of the cases—the half that are of the <span class="math inline">\(\theta^{D_t}_{1111}\)</span> type—will be democracies <em>regardless</em> of their income level: half of these will be surviving democracies and the other half new democracies, simply because half of the cases of each type were initially democracies. Further, half of this set of democracies will be high-income democracies, simply because half of the <span class="math inline">\(\theta^{D_t}_{1111}\)</span> cases were high-income, and income is constant.</p>
+<p>Of the other half of cases—the <span class="math inline">\(\theta^{D_t}_{0001}\)</span> types—one quarter will be surviving democracies that survived <em>because of</em> their income: These are the quarter of the <span class="math inline">\(\theta^{D_t}_{0001}\)</span> types that were both democracies and high-income at the outset. The other three quarters will be autocracies: the quarter of the <span class="math inline">\(\theta^{D_t}_{0001}\)</span> types that were low-income democracies will be “backsliders,” becoming autocracies because of their poverty; and half of the <span class="math inline">\(\theta^{D_t}_{0001}\)</span> types that were autocracies at the outset will <em>stay</em> autocracies regardless of income level, as all autocracies of this nodal type do.</p>
+<p>So now, a larger share of democracies are high-income. Initially, half of the democracies were high-income. Now half of the <span class="math inline">\(\theta^{D_t}_{1111}\)</span> democracies are high income (half of all cases), but <em>all</em> of the <span class="math inline">\(\theta^{D_t}_{0001}\)</span> democracies are high-income (one-eighth of all cases). So now 0.6 of all democracies are high-income. Similarly, the backsliding process boosts the share of autocracies that are low-income, from one half to two thirds.</p>
+<p>With a fresh type draw for each unit after each round—randomly transitioning some countries into democracies—we get a similar sorting process in future periods. Each period, some autocracies become democracies, with the high-income ones remaining democracies and the low-income ones remaining democracies only if they get assigned to the “always democratic” type (<span class="math inline">\(\theta^{D_t}_{1111}\)</span>). Eventually, the system converges on a joint distribution in which wealthy states are all stable democracies and the poorer states transition back and forth between democracy and autocracy across periods—not a terrible approximation of the global state of affairs in the contemporary era.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-boix2003democracy" class="csl-entry" role="listitem">
+Boix, Carles. 2003. <em>Democracy and Redistribution</em>. New York: Cambridge University Press.
+</div>
+<div id="ref-pierson1994dismantling" class="csl-entry" role="listitem">
+Pierson, Paul. 1994. <em>Dismantling the Welfare State?: Reagan, Thatcher and the Politics of Retrenchment</em>. Cambridge University Press.
+</div>
+<div id="ref-przeworski1997modernization" class="csl-entry" role="listitem">
+Przeworski, Adam, and Fernando Limongi. 1997. <span>“Modernization: Theories and Facts.”</span> <em>World Politics</em> 49 (2): 155–83.
+</div>
+<div id="ref-saunders2011leaders" class="csl-entry" role="listitem">
+Saunders, Elizabeth N. 2011. <em>Leaders at War: How Presidents Shape Military Interventions</em>. Cornell University Press.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>In DAG syntax, this correlation can be captured by placing the common cause(s) explicitly on the graph or by drawing a dashed line between the correlated nodes, leaving the source of the correlation unspecified.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In notation that we use later, these beliefs would be represented with a <span class="math inline">\(\lambda^R\)</span> vector.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For <span class="math inline">\(S\)</span>, we generalize the formula for calculating nodal types in a fully binary setting, given in <a href="02-causal-models.html" class="quarto-xref"><span>Chapter 2</span></a> as <span class="math inline">\(2^{\left(2^n\right)}\)</span>. More generally, for a node with <span class="math inline">\(m\)</span> possible values, and <span class="math inline">\(n\)</span> parents each of which has <span class="math inline">\(p\)</span> possible values, the number of nodal types is <span class="math inline">\(m^{\left(p^n\right)}\)</span>. For <span class="math inline">\(S\)</span>, this becomes <span class="math inline">\(3^{\left(2^2\right)}\)</span>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Note how, while the causal function nails down certain features of the process, it leaves others up for grabs. In particular, the parameters <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are assumed to be constant for all autocracies and for all democracies, respectively, but their values are left unspecified. And one could readily write down a function that left even more openness—by, for instance, including an unknown parameter that translates <span class="math inline">\(y\)</span> into a change in the probability of reversion or allowing for nonlinearities.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./02-causal-models.html" class="pagination-link" aria-label="Causal Models">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Causal Models</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./04-causal-questions.html" class="pagination-link" aria-label="Causal Queries">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Causal Queries</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

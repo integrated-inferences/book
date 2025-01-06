@@ -1,0 +1,60 @@
+project:
+  type: book
+
+book:
+  title: "Integrated Inferences"
+  subtitle: "Causal Models for Qualitative and Mixed-Method Research"
+#  margin-header: >
+#    <p align='center'><a style = 'color: black; text-decoration: none; font-size: 17px' target='_new' href='https://www.cambridge.org/core/books/integrated-inferences/45B07964AD4718A74CDE3E35A31F26FA'>
+#    <img style='border: 1px solid darkgray; margin-bottom: 5px' width = 100px src='/figures/cover.jpg'><br/>Buy book</a></p>
+  author: "Macartan Humphreys and Alan M Jacobs"
+#  date: "1/1/2025"
+  chapters:
+    - index.qmd
+    - part: "Front matter"
+      chapters:
+      - 00-preface.qmd
+      - 00-acknowledgements.qmd
+      - 01-intro.qmd
+    - part: "I Foundations"
+      chapters:
+      - 02-causal-models.qmd
+      - 03-illustrating-models.qmd
+      - 04-causal-questions.qmd
+      - 05-being-Bayesian.qmd
+      - 06-theory-as-causal-models.qmd
+    - part: "II Model-based Causal Inference"
+      chapters:
+      - 07-process-tracing-with-models.qmd
+      - 08-PT-application.qmd
+      - 09-mixing-methods.qmd
+      - 10-mixed-application.qmd
+      - 11-fusion.qmd
+    - part: "III Design choices"
+      chapters:
+      - 12-clue-selection.qmd
+      - 13-case-selection.qmd
+      - 14-wide-or-deep.qmd
+    - part: "IV Models in Question"
+      chapters:
+      - 15-justifying-models.qmd
+      - 16-evaluating-models.qmd
+      - 17-conclusion.qmd
+    - part: "End matter"
+      chapters:
+      - 18-appendix.qmd
+      - 19-errata.qmd
+      - 20-references.qmd
+
+bibliography: bib.bib
+
+format:
+  html:
+    theme: lumen
+    css: style.css
+    code-link: true
+  pdf:
+    documentclass: scrreprt
+
+
+

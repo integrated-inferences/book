@@ -1,0 +1,156 @@
+# Final Words {#sec-HJC17}
+
+This book builds off the simple idea that we can usefully learn about the world by combining new evidence with prior causal models to produce updated models of how the world works. We can update a given model with data about different parts of a causal process, with, possibly, different types of data from different cases.  When asking specific questions---such as whether this caused that or whether one or another channel is important---we look up answers in our updated model of causal processes rather than seeking to answer the question directly from data. 
+
+This way of thinking about learning, though certainly not new, is very different from many standard approaches in the social sciences. It promises benefits, but it also comes with risks. We try to describe both in this closing chapter. 
+
+The approach stands in particularly stark contrast to the design-based approach to causal inference, which has gained prominence in recent years. Advances in design-based inferences show that it is possible to greatly diminish the role of background assumptions for some research questions and contexts. This is a remarkable achievement that has put the testing of some hypotheses and the estimation of some causal quantities on firm footing. It allows researchers to maintain agnostic positions and base their inferences more solidly on what they know to be true---such as how units were sampled and how treatments were assigned---and less on speculations about background data-generating processes. Nothing here argues against these strengths.
+
+At the same time, there are limits to model-free social science that affect the kinds of questions we can ask and the conditions that need to be in place to be able to generate an answer. Most simply, we often don't understand the "design" very well, and random assignment to different conditions, if possible at all, could be prohibitively expensive or unethical. More subtly, perhaps, our goal as social scientists is often to generate a model of the world that we bring with us to make sense of new contexts. Eschewing models, however, can make it difficult to learn about them.
+
+Drawing on pioneering work by computer science, statistics, and philosophy scholars, we have outlined a principled approach to mobilizing prior knowledge to learn from new data in situations where randomization is unavailable and to answer questions for which randomization is unhelpful. In this approach, causal models are *guides* to research design, *machines* for inference, and *objects* of inquiry. As guides, the models yield expectations about the learning that can be derived from a given case or set of cases and from a given type of evidence, conditional on the question being asked. As inferential machines, models allow updating on that query once the data are in hand. Finally, when we confront a model with data, we learn about the parameters of the model itself, which can be used to answer a range of other causal questions and allow the cumulation of knowledge across studies. To complement the conceptual infrastructure, we have provided software tools that let researchers build, update, and query binary causal models.
+
+## The Benefits
+
+Strategies centered on building, updating, and querying causal models come with striking advantages.
+
+**Many questions.** When we update a causal model, we do not estimate a single causal quantity of interest: We learn about *the model*. Most concretely, when we encounter new data, we update our beliefs about *all* parameters in the model at the same time. We can then use the updated parameters to answer very broad classes of causal questions, beyond the population-level average effect. These include case-level questions (*Does $X$ explain $Y$ in this case?*), process questions  (*Through which channel does $X$ affect  $Y$?*), and transportability questions (*What are the implications of results derived in one context for processes and effects in other contexts?*). 
+
+**Common answer strategy.** Strikingly, these diverse types of questions are all asked and answered in this approach using the same procedure: forming, updating, and querying a causal model. Likewise, once we update a model given a set of data, we can then pose the full range of causal queries to the updated model. In this respect, the causal models approach differs markedly from common statistical frameworks in which distinct estimators are constructed to estimate particular estimands.
+
+**Answers without identification.**The\index{Identification} approach can generate answers even when queries are not *identified.* The ability to "identify" causal effects has been a central pursuit of much social science research in recent years. But identification is, in some ways, a curious goal. A causal quantity is identified if, with infinite data, the correct value can be ascertained with certainty---informally, the distribution that will emerge is consistent with only one parameter value. Oddly, however, knowing that a model, or quantity, is identified in this way does not tell you that estimation with finite data is any good [@maclaren2019can]. What's more,  the estimation of a non-identified model with finite data is not necessarily bad. While there is a tendency to discount models for which quantities of interest are not identified, in fact, as we have demonstrated, considerable learning is possible even without identification, using the same procedure of updating and querying models.^[There is a large literature on partial identification. See @tamer2010partial for a review.] Updating non-identified models can lead to a tightening of posteriors, even if some quantities can never be distinguished from each other.  
+
+
+**Integration** Embedding inference within an explicit causal model brings about an integration across forms of data and beliefs that may otherwise develop in isolation from one another. For one thing, the approach allows us to combine arbitrary mixes of forms of evidence, including data on causes and outcomes and evidence on causal processes (whether from the same or different sets of cases). Further, the causal-model approach ensures that our findings about *cases* (given evidence about those cases) are informed by what we know about the *population* to which those cases belong, and vice versa. And, as we discuss further below, the approach generates integration between inputs and outputs: It ensures that the way in which we update from the data is logically consistent with our prior beliefs about the world. 
+
+\index{Cumulation}
+
+**A framework for knowledge cumulation.** Closely related to integration is cumulation: A causal-model framework provides a ready-made apparatus for combining information across studies. Thinking in meta-analytic terms, the framework provides a tool for combining the evidence from multiple independent studies. Thinking sequentially, the model updated from one set of data can become the starting point for the next study of the same causal domain. 
+
+Yet organizing inquiry around a causal model allows for cumulation in a deeper sense as well. Compared with most prevailing approaches to observational inference---where the background model is typically left implicit or conveyed informally or incompletely---the approach ensures *transparency* about the beliefs on which inferences rest. Explicitness about assumptions allows us to assess the degree of sensitivity of conclusions to our prior beliefs. Sensitivity analyses cannot, of course, tell us which beliefs are right. But they can tell us which assumptions are most in need of defense, pinpointing *where more learning would be of greatest value.* Those features of our model about which we are most uncertain and that matter most to our conclusions---be it the absence of an arrow, a restriction, a prior over nodal types, or the absence of confounding---represent the questions most in need of answers down the road. \index{Causal models!Sensitivity} 
+
+**A framework for learning about strategies.** As we showed in  @sec-HJC12 and @sec-HJC13, access to a model provides an explicit formulation of how and what inferences will be drawn from future data patterns and provides a formal framework for justifying design decisions. Of course, this feature is not unique to model-based inference---one can certainly have a model that describes expectations over future data patterns and imagine what inferences you will make using design-based inference or any other procedure.
+
+
+**Conceptual clarifications.** Finally, we have found that this framework has been useful for providing conceptual clarification on how to think about qualitative, quantitative, and mixed-method inference. Consider two common distinctions that dissolve under our approach. 
+
+The first is with respect to the difference between "within-case" and "between-case" inference.  In @humphreys2015mixing, for instance, we drew on a common operationalization of "quantitative" and "qualitative" data as akin to "dataset" and "causal process" observations, respectively, as defined by @collier2010sources  ( see also @mahoney2000strategies). In a typical mixed-method setup, we might think of combining a "quantitative" dataset containing $X$ and $Y$ (and covariate) observations for many cases with "qualitative" observations on causal processes, such as a mediator $M$, for a subset of these cases. But this apparent distinction has no meaning in the formal setup and analysis of models. There is no need to think of $X$ and $Y$ observations as being tied to a large-$N$ analysis or of observations of mediating or other processes as being tied to small-$N$ analysis. One could, for instance, have data on $M$ for a large set of cases but data on $Y$ or $X$ for only a small number. Updating the model to learn about the causal query of interest will proceed in the same basic manner. The cross-case/within-case dichotomy plays no role in the way inferences are drawn: Given any pattern of data we observe in the cases at hand, we are always assessing the likelihood of that data pattern under different values of the model's parameters. In this framework, what we have conventionally thought of as qualitative and quantitative inference strategies are not just integrated; the distinction between them breaks down completely. 
+
+A second is with regard to the relationship between beliefs about queries and beliefs about the informativeness of evidence. In many accounts of process tracing, researchers posit a set of prior beliefs about the values of estimands and other---independent---beliefs about the informativeness of within-case  information. We do this for instance, in @humphreys2015mixing. It is also implicit in approaches that assign uniform distributions to hypotheses (e.g.,  @fairfield2017explicit). Viewed through a causal models lens, however *both* sets of beliefs---about the hypothesis being examined and about the probative value of the data---represent substantive probabilistic claims about the world, particularly about *causal relationships* in the domain under investigation. They, thus, cannot be treated as generally independent of one another: Our beliefs about causal relations *imply* our beliefs about the probative value of the evidence. These implications flow naturally in a causal-model framework. When both sets of beliefs are derived from an underlying model representing prior knowledge about the domain of interest, then the same conjectures that inform our beliefs about the hypotheses also inform our beliefs about the informativeness of additional data. Seen in this way, the researcher is under pressure to provide reasons to support beliefs about probative value, but more constructively, they have available to them a strategy to do so.^[As an illustration, one might imagine a background model of the form $X \rightarrow Y \leftarrow K$. Data that are consistent with $X$ causing $Y$ independent of $K$ would suggest a high prior (for a new case) that $X$ causes $Y$, but weak beliefs that $K$ is informative for $X$ causing $Y$. Data that are consistent with $X$ causing $Y$ if and only if $K=1$ would suggest a lower prior (for a new case) that $X$ causes $Y$, but stronger beliefs that $K$ is informative for $X$ causing $Y$.]
+
+```{r, eval = FALSE, include = FALSE}
+# Is there a joint distribution between ATE and the informativeness of a clue
+
+df1 <- data.frame(X = c(0,1,0,1), K = c(0,0,1,1), Y = c(0,0,0,1)) |> uncount(5)
+df2 <- data.frame(X = c(0,1,0,1), K = c(0,0,1,1), Y = c(0,1,0,1)) |> uncount(5)
+
+model_1 <- make_model("X -> Y <- K") |> update_model(df1)
+model_2 <- make_model("X -> Y <- K") |> update_model(df2)
+
+case_level_1  <- 
+  query_model(model_1, 
+              queries = c("(Y[X=1] > Y[X=0])", "(K==1)"),
+              given = c(TRUE, "(Y[X=1] > Y[X=0])"),
+              using = "posteriors", 
+              case_level = TRUE)
+case_level_2  <- 
+  query_model(model_2, 
+              queries = c("(Y[X=1] > Y[X=0])", "(K==1)"),
+              given = c(TRUE, "(Y[X=1] > Y[X=0])"),
+              using = "posteriors", 
+              case_level = TRUE)
+
+
+
+```
+
+
+
+## The Worries
+
+While we have found the syntax of Directed Acyclic Graphs (DAGs) to provide a flexible framework for setting up causal models, we have also become more keenly aware of some of the limitations of DAGs in representing causal processes (see also @dawid2010beware and @cartwright2007hunting). We discuss a few of these here.
+
+**Well-defined nodes?** A DAG presupposes a set of well-defined nodes that come with location and time stamps. Wealth in time $t$ affects democracy in time $t+1$ which affects wealth in time $t$. Yet it is not always easy to figure out how to partition the world into such neat event bundles.  Wealth in 1985 is not an "event" exactly but a state, and the temporal ordering relative to "Democracy 1985" is not at all clear. Moreover, even if events are coded into well-ordered nodes, values on these nodes may poorly capture actual processes, even in simple systems. Consider the simplest setup with a line of dominos. You are interested in whether the fall of the first domino causes the fall of the last one. But the observations of the states of the dominos at predefined points in time do not fully capture the causal process as seen by observers. The data might report that (a) domino 1 fell and (b) domino 2 fell. But the observer will notice that domino 2 fell *just as* domino 1 hit it. 
+
+
+**Acyclic, really?** DAGs are by definition acyclic. And it is not hard to argue that, since cause precedes effect, causal relations *should* be acyclic for any well-defined nodes. In practice, however, our variables often come with coarse periodizations: There was or was not mobilization in the 1990s; there was or was not democratization in the 1990s. We cannot extract the direction of arrows from the definition of nodes this coarse. 
+
+
+**Coherent underlying causal accounts.** The approach we describe is one in which researchers are asked to provide a coherent model---albeit with uncertainty---regarding the ways in which nodes are causally related to each other. For instance, a researcher interested in using information on $K$ to ascertain whether $X$ caused $Y$ is expected to have a theory of whether $K$ acts as a moderator or a mediator for $X$, and whether it is realized before or after $Y$. Yet it is possible that a researcher has well-formed beliefs about the informativeness of $K$ *without* an underlying model of how $K$ is causally related to $X$ or $Y$. Granted, one might wonder where these beliefs come from or how they can be defended. We nonetheless note that one limitation of the approach we have described is that one cannot easily make use of an observation without a coherent account of that observation's causal position relative to other variables and relationships of interest. 
+
+**Complexity.** To maintain simplicity, we have largely focused in this book on models with binary nodes. At first blush, this class of causal models indeed appears very simple. Yet even with binary nodes, complexity rises rapidly as the number of nodes and connections among them increases. As a node goes from having 1 parent to 2 parents to 3 parents to 4 parents, for instance, the number of nodal types---at that node alone---goes from 4 to 16 to 256 to 65,536, with knock-on effects for the number of possible causal types (combinations of nodal types across the model). A move in the direction of continuous variables---say, from binary nodes to nodes with three ordinal values---would also involve a dramatic increase in the complexity of the type-space.^[If, for instance, we moved to nodes with three ordered categories, then each of $Y$'s nodal types in an $X \rightarrow Y$ model would have to register three potential outcomes, corresponding to the three values that $X$ takes on. And $Y$ would have $3 \times 3 \times 3 = 27$ nodal types (as $Y$ can take on three possible values for each possible value of $X$).] There are practical and substantive implications of this. A practical implication is that one can hit computational constraints very quickly for even moderately sized models. Substantively, models can quickly involve more complexity than humans can comfortably understand.  
+
+One solution is to move away from a fully nonparametric setting and impose structure on permissible function forms---for example, by imposing monotonicity or assuming no high level interactions. Inferences then are *conditional* on these simplifying assumptions.  
+
+A second approach might be to give up on the commitment to a complete specification of causal relations between nodes and seek lower dimensional representations of models that are sufficient for specific questions we care about. For instance, we could imagine representing an $X \rightarrow Y$ model with just two parameters rather than four (for $Y$): Define $\tau := \theta^Y_{10}-\theta^Y_{01}$ and $\rho := \theta^Y_{11}-\theta^Y_{00}$, both of which are identified with experimental data. These give us enough to learn about how common different types of outcomes are as well as average effects, though not enough to infer the probability that $X$ caused $Y$ in an $X=Y=1$ case. 
+
+**Unintended structure.**  The complexity of causal models means that it is easy to generate a fully specified causal model with features that we do not fully understand. In the same way, it is possible to make choices between models unaware of differences in assumptions that they have built in. 
+
+Consider two examples: 
+
+* We specify a model $X  \rightarrow Y$ and assume flat priors over nodal types. The implied prior that $X$ has a positive effect on $Y$ is then 0.25. We then add detail by specifying $X \rightarrow M \rightarrow Y$ but continue to hold flat priors. In our more detailed model, however, the probability of a positive effect of $X$ on $Y$ is now just 0.125. Adding the detail requires either moving away from flat priors on nodal types or changing priors on aggregate causal relations.
+
+
+```{r, echo = FALSE, eval = FALSE}
+
+M1 <- make_model("X->Y")
+
+k <- (1/8)^.5
+kk <- 3.5
+M2 <- make_model("X->M->Y") |> set_priors(alpha = c(1,1, c((1-2*k)/2, k, k, ((1-2*k)/2))*kk, c((1-2*k)/2, k, k, ((1-2*k)/2))*kk))
+
+Q1 <- query_model(M1, c("Y[X=1]==0 & Y[X=0]==0 ", "Y[X=1] > Y[X=0]"), using = "priors" )
+Q2 <- query_model(M2, c("Y[X=1]==0 & Y[X=0]==0 ", "Y[X=1] > Y[X=0]"), using = "priors" )
+
+```
+
+* We specify a model $X  \rightarrow Y \leftarrow W$ and build in that $W$ is a smoking gun for the effect of $X$ on $Y$. We add detail by specifying $X \rightarrow M \rightarrow Y \leftarrow W$. This means, however, that $W$ cannot be a smoking gun for $Y$ unless the $X \rightarrow M$ relation is certain. Why? To be a smoking gun, it must be the case that, if $W=1$, we are sure that $X$ causes $M$ and that $M$ causes $Y$, which requires an arrow from $W$ to $M$ and not just from $W$ to $X$.
+
+
+
+**Model-dependence of conclusions** One striking aspect of some of the analyses presented here is how sensitive conclusions can be to what would seem to be quite modest changes to models. We see two ways of thinking about the implications of this fact for a causal-models framework. 
+
+One lesson to draw would be that there are tight limits to building inference upon causal models. If results in this approach depend heavily on prior beliefs, which could be wrong, then we might doubt the utility of the framework. On this reasoning, the safer option is to rely on design-based inference to the extent possible.
+
+An alternative lesson also offers itself, however. To the extent that our inferences depend on our background causal beliefs, a transparent and systematic engagement with models becomes all the more important. If inferences depend on models that are not explicitly articulated, we have no way of knowing how fragile they are, how they would change under an alternative set of premises, or what kind of learning we need to undertake if we want to generate more secure conclusions. 
+
+We do not see causal models as the only way forward or as a panacea, and we are conscious of the limitations and complexities of the approach we have outlined, as well as the need for extension and elaboration along numerous fronts. Yet we think there is value in further development of forms of empirical social science that can operate with analytic transparency outside the safe inferential confines of random assignment.
+
+
+
+## The Future
+
+The future, as we see it, lies in improvements in cumulation, coordination, and model grounding. 
+
+**Cumulation** The cumulation of knowledge requires integration. 
+\index{Cumulation}
+
+As we acquire new evidence---perhaps from observation of additional cases or new events---we want to be able to update our general beliefs about how the world works by integrating new information with the existing store of knowledge. At the same time, we want our inferences about individual cases to be informed by our beliefs about how the world works in general. Causal models provide a natural framework for cumulating knowledge in this way. We have spelled out in this book how an individual researcher can use models to join up new data with prior beliefs and ground case-level inferences in beliefs about population-level parameters. In a scientific discipline, however, cumulation must also operate *across* researchers. For a field to make progress, I need to update *my* beliefs in light of *your* new evidence and vice versa. 
+
+There are more collaborative and adversarial ways to think about this kind of learning across researchers. One more collaborative approach is for researchers to agree on an underlying causal structure. Then, new data will lead not just to individual updating but also, hopefully, to convergence in beliefs---a feature that should hold for identified causal queries, but not universally. This is a nontrivial ask.  Not only do I need access to your evidence, but we have to be operating to some degree with a common causal model of the domain of interest; otherwise, the data that you generate might fail to map onto my model. One approach is for researchers to agree on an overarching causal model that nests submodels that different researchers have focused on. 
+
+However, in practice, there may be little reason to be optimistic that individual researchers will naturally tend to generate models that align with one another. Not only might our substantive causal beliefs diverge, but we might also make differing choices about matters of model-construction---from which nodes to include and the appropriate level of detail to the manner of operationalizing variables.  Indeed, it might also be that generating comprehensive models undermines the goal of generating simple representations of causal processes.  
+
+Even in an adversarial context, however, we believe the approach described in this book would add value: It would require researchers to be clear and precise about their distinct models. Then these rival models, rather than being aggregated into a single model, could be pitted against each other using tools like those we describe in @sec-HJC16.
+
+**Coordination.** Turning causal models into vehicles for knowledge cumulation in a field will thus require coordination around models. We are under no illusion that such coordination would be easy. But productive coordination would not require prior agreement about how the world works. 
+
+One possibility would be to fix (provisionally, at least) the set of nodes relevant in a given domain---including outcomes of interest, potential causes, and mediators and moderators implicated in prevailing theories---and how those nodes are defined. Individual researchers would then be free to develop their own models by drawing arrows and setting priors and restrictions in line with their beliefs. Coordination around model nodes would then guide data-collection, as teams running new studies would seek to collect data on at least some subset of the common nodes---allowing, in turn, for all models to be updated as the new data come in. 
+
+Another possibility would be to exploit modularity, with different researchers or projects modeling different *parts* of a causal system. For instance, in the field of democratization, one set of researchers might model and collect data on links between inequality and democratization; others might focus on the role of external pressures; while still others might focus on inter-elite bargaining. Coordination would operate at the level of interoperability. Modules would have to have at least some overlapping nodes for updating from new data to operate across them.  Ideally, each module would also take into account any confounding among its nodes that is implied by other modules.\index{Confounding}
+
+Another, more minimalist mode of coordination would be for researchers to develop models that agree only on the inclusion of one or more outcome nodes. As new data comes in, models would then be set in competition over predictive performance.
+
+Coordination would also require agreement on some minimal qualities that models must have. For instance, we would surely want all models to be well defined, following the basic rules of DAG-construction and with clear rules for operationalizing all nodes.
+
+
+**Grounding.** Most of our models are on stilts. We want them grounded. One kind of grounding is theoretical. As we show in @sec-HJC6, for instance, game-theoretic models can be readily translated into causal models. The same, we believe, can be done for other types of behavioral theories. Clear informal theoretical logics could underwrite causal models also. A second approach would be subjective-Bayesian: Models could be founded on aggregated expert beliefs.  A third---our preferred---form of grounding is empirical. As we discuss in Chapters @sec-HJC9 and @sec-HJC15, experimental data can be used to anchor model assumptions, which can, in turn, provide grounds for drawing case-level inferences. Ultimately, we hope the benefits from mixing methods will flow in both directions.
+
+
+***
+
+We have taken a deep dive into the world of causal models to scope out whether and how they can support social scientists engaging in qualitative and mixed-methods research. We emerge convinced of the promise of the framework. Embedding our beliefs in a causal model enables rich forms of integration, allowing us to cumulate knowledge across cases, types of evidence, settings, study designs, and levels of analysis to address a vast array of causal questions. The framework also provides a coherent machinery to connect theoretical structures to empirical analyses. We have shown how this integration can strengthen the underpinnings of case-oriented research, providing microfoundations not just for the classic process tracing tests but for case-level probative value in general. We have, however, also emerged with a sharpened appreciation of how difficult it can be to justify our starting assumptions, of the extraordinary computational and conceptual complexity arising from all but the simplest causal models, and of the sometimes strong sensitivity of conclusions to our representations of causal processes. We conclude with cautious optimism: Convinced of the need both to re-center social science research on causal models and to keep these models permanently under scrutiny.
+
+
+
+
