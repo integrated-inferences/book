@@ -8,7 +8,7 @@ We show how we can integrate inferences across models. We provide four examples 
 
 ```{r}
 #| label: packagesused15
-#| include :  FALSE
+#| include: false
 source("_packages_used.R")
 # run = TRUE
 # library(DeclareDesign)
@@ -43,9 +43,9 @@ Consider the simple DAG in @fig-HJ-F-11-1, in which both $X$ and $Z$ are causes 
 ```{r}
 #| label: fig-HJ-F-11-1
 #| eval :  TRUE
-#| echo:  false
-#| fig.height :  3
-#| fig.cap :  "A DAG containing nodes that feature in different studies."
+#| echo: false
+#| fig-height:  3
+#| fig-cap: "A DAG containing nodes that feature in different studies."
 model <- 
   
   make_model("X -> Y <- Z -> K") |>
@@ -121,7 +121,7 @@ We see that the same thing is true for the other studies. In Study 2, we have no
 
 ```{r}
 #| label: tbl-HJ-T-11-1
-#| echo:  false
+#| echo: false
 
 frank <- read_rds("saved/11_frankenstein.rds")
 
@@ -144,7 +144,7 @@ Rows 3--4 highlight that the updating works through inferences that *K* allows u
 
 ```{r}
 #| label: tbl-HJ-T-11-2
-#| echo:  false
+#| echo: false
 kabble(frank[[4]][1:4,-c(1,3)], caption = "Clue is informative after combining studies linking $K$ to $Z$ and $Z$ to $Y$", digits = 2)
 ```
 
@@ -179,9 +179,9 @@ Note also that this model assumes the exclusion restriction that entering the ex
 
 ```{r}
 #| label: copobsetup
-#| message :  FALSE
-#| warning :  FALSE
-#| echo:  false
+#| message: false
+#| warning: false
+#| echo: false
 if(run)
   make_model("R -> X -> Y; O -> X <- Z; O <-> Y") |>
   
@@ -202,14 +202,14 @@ model <- read_rds("saved/11_copobs.rds")
 
 ```{r}
 #| label: fig-HJ-F-11-2
-#| message :  FALSE
-#| warning :  FALSE
-#| echo:  false
-#| fig.cap: "A model that nests an observational and an experimental study. The treatment $X$ either takes on the observational value $O$
+#| message: false
+#| warning: false
+#| echo: false
+#| fig-cap: "A model that nests an observational and an experimental study. The treatment $X$ either takes on the observational value $O$
 #| or the assigned values $Z$
 #| depending on whether or not the case has been randomized
 #| $R$."
-#| fig.height :  3
+#| fig-height:  3
 hj_ggdag(model = model)
 ```
 
@@ -228,7 +228,7 @@ The implied true values for the estimands of interest, and our priors on those e
 
 ```{r}
 #| label: tbl-fusionestimands
-#| echo:  false
+#| echo: false
 
 if(run){
 result <- query_model(
@@ -264,9 +264,9 @@ Now, we generate data from the model and then update the model using these data.
 
 ```{r}
 #| label: tbl-fusiondim
-#| echo:  false
-#| warning :  FALSE
-#| message :  FALSE
+#| echo: false
+#| warning: false
+#| message: false
 x <- estimatr::difference_in_means(Y~X, data = filter(data, R==0))
 kabble(summary(x)[[1]], digits = 3, caption = "Inferences on the ATE from differences in means")
 ```
@@ -284,7 +284,7 @@ if(run)
 
 ```{r}
 #| label: tbl-fusionCQ
-#| echo:  false
+#| echo: false
 updated <- read_rds("saved/11_exp_obs.rds")
 
 # updated$step <- "dag"
@@ -317,8 +317,8 @@ updated_no_O <- read_rds("saved/11_exp_obs_2.rds")
 
 ```{r}
 #| label: appcombexpopp8
-#| echo:  false
-#| include :  FALSE
+#| echo: false
+#| include: false
 result <- query_model(
     updated_no_O, 
     queries = list(ATE = "c(Y[X=1] - Y[X=0])"), 
@@ -335,7 +335,7 @@ However, what we can learn about uniquely from this model and the combined obser
 
 ```{r}
 #| label: tbl-combexpobsattatc
-#| echo:  false
+#| echo: false
 result2 <- query_model(
     updated, 
     queries = list(ATE = "c(Y[X=1] - Y[X=0])"), 
@@ -369,9 +369,9 @@ We illustrate with a simple model in which an observable confounder has a differ
 
 ```{r}
 #| label: fig-HJ-F-11-3
-#| echo:  false
-#| fig.cap: "Extrapolation when confounders have different distributions across contexts"
-#| fig.height: 3
+#| echo: false
+#| fig-cap: "Extrapolation when confounders have different distributions across contexts"
+#| fig-height: 3
 
 model <- make_model("Context -> W  -> X -> Y <- W") |>
   set_restrictions("W[Context = 1] < W[Context = 0]") |>
@@ -389,12 +389,12 @@ We show priors and true values for the estimands, drawn from a "true" set of par
 
 ```{r}
 #| label: fig-HJ-F-11-4
-#| echo:  false
-#| fig.cap :  "Priors and true values (parameters) for three estimands: the frequency of $W$
+#| echo: false
+#| fig-cap: "Priors and true values (parameters) for three estimands: the frequency of $W$
 #| the effect of $X$ on $Y$
 #| and the effect conditional on $W: 1$"
-#| fig.height :  4
-#| fig.width :  7
+#| fig-height:  4
+#| fig-width:  7
 #| warning: false
 if(run){
 appev2 <-
@@ -431,14 +431,14 @@ We can also see, in @fig-HJ-F-11-5, what would have happened if we had attempted
 
 ```{r}
 #| label: fig-HJ-F-11-5
-#| echo:  false
-#| fig.cap :  "Extrapolation when two contexts differ on $W$ and $W$ is not observable in target context. Posteriors  and true values (parameters)
+#| echo: false
+#| fig-cap: "Extrapolation when two contexts differ on $W$ and $W$ is not observable in target context. Posteriors  and true values (parameters)
 #| for the average effect
 #| the average effect conditional on $W$ (CATE)
 #| and the incidence of $W$
 #| for two contexts."
-#| fig.height :  4
-#| fig.width :  6
+#| fig-height:  4
+#| fig-width:  6
 if(run){
 
   data <- make_data(model, n = 10000, 
@@ -594,9 +594,9 @@ unpooled <-  read_rds("saved/11_meta_unpooled.rds")
 
 ```{r}
 #| label: plotalphas
-#| echo:  false
-#| fig.cap: "Joint distributions over alpha parameters."
-#| include :  FALSE
+#| echo: false
+#| fig-cap: "Joint distributions over alpha parameters."
+#| include: false
 
 # Results
 
@@ -702,9 +702,9 @@ errors <- results |> filter(estimand == "ATE") |> select(analysis, study, mean) 
 
 ```{r}
 #| label: fig-HJ-F-11-6
-#| echo:  false
-#| fig.cap: "Updating on study level parameters from integrated analyses. Error bars indicate 95 percent credibility intervals. Studies are ordered by the size of the estimates from the unpooled analysis."
-#| warning :  FALSE
+#| echo: false
+#| fig-cap: "Updating on study level parameters from integrated analyses. Error bars indicate 95 percent credibility intervals. Studies are ordered by the size of the estimates from the unpooled analysis."
+#| warning: false
 
 order <- results |> filter(estimand == "ATE" & analysis == "Unpooled") |> 
       arrange(study == "Meta", mean) |> pull(study)

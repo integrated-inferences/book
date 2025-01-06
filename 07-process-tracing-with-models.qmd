@@ -7,7 +7,7 @@ We show how process tracing can be implemented within a causal-model framework. 
 
 ```{r}
 #| label: packagesused06
-#| include :  FALSE
+#| include: false
 source("_packages_used.R")
 # run <- TRUE
 ```
@@ -66,16 +66,16 @@ Whatever the model, we generate a complete set of all possible causal types.
 
 ```{r}
 #| label: plotrix
-#| include :  FALSE
+#| include: false
 library(plotrix)
 ```
 
 ```{r}
 #| label: fig-HJ-F-7-1
-#| echo:  false
-#| fig.width: 6
-#| fig.height: 6
-#| fig.cap :  "Logic of simple updating on arbitrary queries."
+#| echo: false
+#| fig-width: 6
+#| fig-height: 6
+#| fig-cap: "Logic of simple updating on arbitrary queries."
 #| fig.align :  "center"
 #| out.width :  "50%"
 
@@ -193,7 +193,7 @@ The ambiguities matrix tells us which causal types are consistent with the data 
 
 ```{r}
 #| label: model289
-#| echo:  false
+#| echo: false
 #| 
 XY <- make_model("X -> Y") |> set_parameters(c(.5, .5, .2, .2, .4, .2))
 ambiguityXY  <- grab(XY, "ambiguities_matrix")
@@ -205,7 +205,7 @@ ambiguityXMY  <- grab(XMY, "ambiguities_matrix")
 
 ```{r}
 #| label: ambXY_with_prior
-#| echo:  false
+#| echo: false
 
 ambXY_with_priors <- data.frame(cbind(ambiguityXY, 
                                       prior = CausalQueries:::get_type_prob(XY)))
@@ -214,7 +214,7 @@ ambXY_with_priors <- data.frame(cbind(ambiguityXY,
 
 ```{r}
 #| label: ambXMY_with_priors
-#| echo:  false
+#| echo: false
 
 ambXMY_with_priors <- data.frame(cbind(ambiguityXMY, 
                                        prior = CausalQueries:::get_type_prob(XMY)))
@@ -272,18 +272,6 @@ Table:  An updated version of the ambiguities matrix in @tbl-ambigmatrixmed, aft
 
 A notable feature of the logic of single-case process tracing is that the relative probabilities on the retained causal types never change. If we start out believing that causal type $A$ is twice as likely as causal type $B$, and both $A$ and $B$ are retained once we see the data, then $A$ will be twice as likely as $B$ in our posteriors. All updating occurs by *eliminating* causal types from consideration and zeroing in on those that remain.
 
-```{r}
-#| label: tbl-ambXMYwpriors
-#| eval :  FALSE
-#| include :  FALSE
-ambXMY_with_priors|>
-    mutate(`Causal Type` = rownames(ambXMY_with_priors)) |>
-    select(`Causal Type`, X1M0Y0, prior) |>
-    filter(X1M0Y0 ==1)|>
-   mutate(posterior = prior/sum(prior)) |>
-   kabble()
-```
-
 A similar logic applies if partial data are observed: that is, if we do not collect data for all nodes in the model. The one difference is that, now, rather than reducing to one column we entertain the possibility of any data *type* consistent with the *observed data*. In general, more than one data type will be consistent with partial data. For instance, suppose that we observe $X=1, Y=0$ but do not observe $M$'s value. These are data that are consistent with both the data type $X1M0Y0$ and the data type $X1M1Y0$ (since the unobserved $M$ could be either $0$ or $1$). We thus retain both of these data-type columns as well as all causal types consistent with *either* of these data types. This gives the updated ambiguities matrix in @tbl-amb-partial. We note that, with these partial data, we are not able to update as strongly. For instance, for the causal type $\theta^X_1,\theta^M_{00},\theta^Y_{00}$, instead of updating to a posterior probability of 0.1667, we update to a posterior of only 0.0833---because there is a larger set of causal types with which these partial data are consistent.
 
 
@@ -303,8 +291,8 @@ Table: An updated version of the ambiguities matrix in @tbl-ambigmatrixmed, afte
 
 ```{r}
 #| label: tbl-ambigmedupdatepartial
-#| echo:  false
-#| include :  FALSE
+#| echo: false
+#| include: false
 ambXMY_with_priors|>
     mutate(type = rownames(ambXMY_with_priors)) |>
     select(type, X1M0Y0, X1M1Y0, prior) |>
@@ -345,8 +333,8 @@ If we observe only the partial data, $X=1, Y=1$, then we update to the ambiguiti
 
 ```{r}
 #| label: tbl-ambXMYwithpriors
-#| echo:  false
-#| include :  FALSE
+#| echo: false
+#| include: false
 ambXMY_with_priors|>
     mutate(type = rownames(ambXMY_with_priors)) |>
     select(type, X1M1Y1, prior) |>
@@ -385,9 +373,9 @@ For more complex models and queries, it can be more difficult to eyeball the cor
 
 ```{r}
 #| label: typesXMY
-#| echo:  false
+#| echo: false
 #| comment :  ""
-#| include :  FALSE
+#| include: false
 types <- get_query_types(XMY, "Y[X=1] != Y[X=0]")
 cat(paste0(names(types$types[types$types]), collapse = ", "))
 ```
@@ -421,14 +409,14 @@ In sum, when we undertake process tracing with a causal model, the probative val
 
 ```{r}
 #| label: fig-HJ-F-7-2
-#| echo:  false
+#| echo: false
 #| fig.align: "center"
-#| fig.width :  9
-#| fig.height :  4
-#| fig.cap :  "The probability of observing $K$ given causal types for different beliefs on lower level causal effects."
+#| fig-width:  9
+#| fig-height:  4
+#| fig-cap: "The probability of observing $K$ given causal types for different beliefs on lower level causal effects."
 #| errors :  FALSE
-#| warning :  FALSE
-#| message :  FALSE
+#| warning: false
+#| message: false
 #| comment :  FALSE
 
 pv_analytic_b <- function(K_eventprobs = c(.25,.25,.25,.25), Y_eventprobs = c(.25,.25,.25,.25))
@@ -487,12 +475,12 @@ The very simplest probabilistic causal graph, shown in @fig-HJ-F-7-3, has $X$ in
 
 ```{r}
 #| label: fig-HJ-F-7-3
-#| echo:  false
-#| fig.width :  8
-#| fig.height :  4
+#| echo: false
+#| fig-width:  8
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '.8\\textwidth'
-#| fig.cap :  "A simple causal model in which the effect of $X$ on $Y$ in a given case depends on the case's nodal type for $Y$ (here marked $Q$ to highlight that this quantity is the query of interest)."
+#| fig-cap: "A simple causal model in which the effect of $X$ on $Y$ in a given case depends on the case's nodal type for $Y$ (here marked $Q$ to highlight that this quantity is the query of interest)."
 hj_ggdag(x = c(0, 1, 1),
        y = c(1, 1, 2),
        names = c("X", "Y", "Q"),
@@ -516,8 +504,8 @@ Finally, what if we observe $X$ first and are considering whether to seek inform
 
 ```{r}
 #| label: kinformative
-#| echo:  false
-#| include :  FALSE
+#| echo: false
+#| include: false
 #| errors :  FALSE
 # Graphing all dags in some class, X,Y,K,Q
 
@@ -590,13 +578,13 @@ We draw all 34 possible graphs with variables $X$, $Y$, $K$, and $Q$ for causal 
 
 ```{r}
 #| label: fig-HJ-F-7-4
-#| echo:  false
-#| fig.width :  11
-#| fig.height :  12
-#| fig.cap :  "All connected directed acyclic graphs over $XYKQ$ in which $Q$ is a root node that directly causes $Y$ and $X$ is a direct or indirect cause of $Y$. Graph titles indicate conditions under which $K$ can be informative about $Q$ given prior observation of $X$ $Y$ both or neither (0)."
+#| echo: false
+#| fig-width:  11
+#| fig-height:  12
+#| fig-cap: "All connected directed acyclic graphs over $XYKQ$ in which $Q$ is a root node that directly causes $Y$ and $X$ is a direct or indirect cause of $Y$. Graph titles indicate conditions under which $K$ can be informative about $Q$ given prior observation of $X$ $Y$ both or neither (0)."
 #| errors :  FALSE
-#| warning :  FALSE
-#| message :  FALSE
+#| warning: false
+#| message: false
 
 
 plist <- list()
@@ -770,8 +758,8 @@ From this model we can draw a single case and examine  parameter values ($\theta
 
 ```{r}
 #| label: tbl-HJ-7-T-append-1
-#| echo:  false
-#| message :  FALSE
+#| echo: false
+#| message: false
 causal_type <- draw_causal_type(model)
 set.seed(1)
 df <-  make_data(model, parameters = causal_type$causal_type) |> 
@@ -803,7 +791,7 @@ queries <-
 
 ```{r}
 #| label: tbl-HJ-7-T-append-2
-#| echo:  false
+#| echo: false
 if(run)
   query_model(model = model, 
             query = "Y[X=1] > Y[X=0]",
@@ -829,8 +817,8 @@ The model is constructed and graphed thus (see @fig-HJ-F-7-5):
 
 
 ```{r}
-#| label: fig-HJ-F-7-5i
-#| eval :  FALSE
+#| label: code-HJ-F-7-5i
+#| eval: false
 model <- make_model("X -> K1 -> Y <- K2; Y -> K3; Y <-> K3") 
 
 plot(model)
@@ -852,9 +840,9 @@ model <- make_model("X -> K1 -> Y <- K2; Y -> K3; Y <-> K3") %>%
 
 ```{r}
 #| label: fig-HJ-F-7-5
-#| fig.height :  3
-#| fig.cap :  "Three potentially informative clues for the effect of $X$ on $Y$"
-#| echo:  false
+#| fig-height:  3
+#| fig-cap: "Three potentially informative clues for the effect of $X$ on $Y$"
+#| echo: false
 model <- make_model("X -> K1 -> Y <- K2; Y -> K3; Y <-> K3", add_causal_types = FALSE) 
 
 hj_ggdag(model = model,
@@ -866,8 +854,8 @@ hj_ggdag(model = model,
 
 ```{r}
 #| label: tbl-HJ-T-7-3K
-#| echo:  false
-#| message :  FALSE
+#| echo: false
+#| message: false
 causal_type <- draw_causal_type(model)
 
 df <-  make_data(model, parameters = causal_type$causal_type) %>% t %>% data.frame
@@ -899,7 +887,7 @@ queries <-
 
 ```{r}
 #| label: tbl-HJ-T-7-3Kb
-#| echo:  false
+#| echo: false
 if(run)
   query_model(model = model, 
             query = "Y[X=1] > Y[X=0]",

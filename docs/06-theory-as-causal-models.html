@@ -369,7 +369,7 @@ window.Quarto = {
   <li><a href="#quantifying-gains" id="toc-quantifying-gains" class="nav-link" data-scroll-target="#quantifying-gains"><span class="header-section-number">6.2.2</span> Quantifying gains</a></li>
   </ul>
 </li>
-  <li><a href="#formal-theories-and-causal-models" id="toc-formal-theories-and-causal-models" class="nav-link" data-scroll-target="#formal-theories-and-causal-models"><span class="header-section-number">6.3</span> Formal Theories and Causal Models</a></li>
+  <li><a href="#sec-formal-theories" id="toc-sec-formal-theories" class="nav-link" data-scroll-target="#sec-formal-theories"><span class="header-section-number">6.3</span> Formal Theories and Causal Models</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -662,7 +662,7 @@ Table&nbsp;6.2: Possible events, event probabilities, and inferences.
 <p>The key move is in recognizing that <span class="math inline">\(p(q |k)\)</span> is in fact the posterior distribution on <span class="math inline">\(q\)</span> given <span class="math inline">\(k\)</span>. In using this, we assume that the same distribution is used for assessing error and for conducting analysis—that is we take the researcher’s prior to be the relevant one for assessing error.] Moreover, the reduction in expected posterior variance is also equal to <em>expected wisdom</em>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>Returning to the numeric example in <a href="#tbl-HJ-T-06-numeric" class="quarto-xref">Table&nbsp;<span>6.2</span></a>, the expected posterior variance (with expectations taken with respect to the subjective event probability distribution) is 0.118. Note that we would also get 0.118 if we took the expectation of the actual squared error with respect to subjective event probability distribution. The reduction in posterior variance over the prior variance of 0.16 is 26.47%.</p>
 <p>We have described a set of possible metrics for gains from theory, but there is no single right metric. The right metric for assessing gains fundamentally depends on what the researcher values—whether that is making fewer errors, being confident in conclusions, avoiding overconfidence, or something else.</p>
-</section></section></section><section id="formal-theories-and-causal-models" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="formal-theories-and-causal-models">
+</section></section></section><section id="sec-formal-theories" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="sec-formal-theories">
 <span class="header-section-number">6.3</span> Formal Theories and Causal Models</h2>
 <p>It is relatively easy to see how the ideas above play out for what might be called empirical models. But in social sciences, “theory” is a term sometimes reserved for what might be called “analytic theories”. In this last section, we work through how to use this framework when seeking to bring analytic theories to data.</p>
 <p>As an example of an analytic theory, we might consider the existence of “Nash equilibria.” Nash considered a class of settings (“normal form games”) in which each player <span class="math inline">\(i\)</span> can choose an action <span class="math inline">\(\sigma_i\)</span> from set <span class="math inline">\(\Sigma_i\)</span> and receives a payoff <span class="math inline">\(u_i\)</span> that depends on the actions of all players. A particular game, <span class="math inline">\(\Gamma\)</span> is the collection of players, action sets, and payoffs. </p>
@@ -695,14 +695,15 @@ Figure&nbsp;6.3: Formal structure of a normal form game.
 <img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.4: Normal form games with expectations and best responses.
+Figure&nbsp;6.4: ‘Nash’s theory’: a mapping from game form to outcomes.
 </figcaption></figure>
 </div>
 </div>
 </div>
+<p><span style="color: orange;">Erratum: figure captions in this section updated, 20250106.</span></p>
 <p>Here, player beliefs about the game form (<span class="math inline">\(\Gamma\)</span>) results in strategy choices by actors. If players play according to Nash’s theory, <em>the causal functions for the strategy choices are given by the Nash equilibrium solution itself</em>, with a refinement in case of multiplicity.</p>
 <p>This model represents what we expect to happen in a game under Nash’s theory and we can indeed see if the relations between nodes in the world look like what we expect under the theory. The relations are nevertheless a matter of conjecture, to be contrasted with the exact claims on strategy profiles that are produced by an analytic theory that assumes Nash equilibria are played.</p>
-<p>So far the model does not provide much of an <em>explanation</em> for behavior. A lower level causal model might help. In Figure <a href="#fig-HJ-F-6-5" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>, the game form <span class="math inline">\(\Gamma\)</span> determines the beliefs about what actions the other player would make (thus <span class="math inline">\(\sigma_2^e\)</span> is 1’s belief about 2’s actions). The causal functions for <span class="math inline">\(\sigma_2^e\)</span> and <span class="math inline">\(\sigma_1^e\)</span> might, for instance, be the Nash equilibrium solution itself: that is, players expect other players to play according to the Nash equilibrium (or in the case of multiple equilibria, a particular equilibrium selected using some refinement). The beliefs, in turn, together with the game form (which contains <span class="math inline">\(u_1, u_2\)</span>), are what cause the players to select a particular action. The causal function for <span class="math inline">\(\sigma_1\)</span> might thus be <span class="math inline">\(\sigma_1 = \arg \max_\sigma u_1(\sigma, \sigma_2^e)\)</span>.</p>
+<p>So far, the model does not provide much of an <em>explanation</em> for behavior. A lower level causal model might help. In <a href="#fig-HJ-F-6-5" class="quarto-xref">Figure&nbsp;<span>6.5</span></a>, the game form <span class="math inline">\(\Gamma\)</span> determines the beliefs about what actions the other player would make (thus <span class="math inline">\(\sigma_2^e\)</span> is 1’s belief about 2’s actions). The causal functions for <span class="math inline">\(\sigma_2^e\)</span> and <span class="math inline">\(\sigma_1^e\)</span> might, for instance, be the Nash equilibrium solution itself: that is, players expect other players to play according to the Nash equilibrium (or in the case of multiple equilibria, a particular equilibrium selected using some refinement). The beliefs, in turn, together with the game form (which contains <span class="math inline">\(u_1, u_2\)</span>), are what cause the players to select a particular action. The causal function for <span class="math inline">\(\sigma_1\)</span> might thus be <span class="math inline">\(\sigma_1 = \arg \max_\sigma u_1(\sigma, \sigma_2^e)\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-HJ-F-6-5" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -710,7 +711,7 @@ Figure&nbsp;6.4: Normal form games with expectations and best responses.
 <img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.5: Normal form games with variation in player rationality.
+Figure&nbsp;6.5: Normal form games with best response mappings: actions are a function of expectations of the actions of others.
 </figcaption></figure>
 </div>
 </div>
@@ -725,7 +726,7 @@ Figure&nbsp;6.5: Normal form games with variation in player rationality.
 <img src="06-theory-as-causal-models_files/figure-html/fig-HJ-F-6-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-HJ-F-6-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.6: Formal structure of a normal form game (4).
+Figure&nbsp;6.6: Normal form games with variation in player rationality.
 </figcaption></figure>
 </div>
 </div>

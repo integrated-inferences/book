@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 #| label: packagesused02a
-#| include :  FALSE
+#| include: false
 source("_packages_used.R")
 ```
 
@@ -37,14 +37,14 @@ The argument in Pierson's 1994 book  *Dismantling the Welfare State?* challenged
 
 ```{r}
 #| label: fig-HJ-F-3-1
-#| echo:  false
-#| fig.width :  11
-#| fig.height :  8
+#| echo: false
+#| fig-width:  11
+#| fig-height:  8
 #| fig.align: "center"
 #| out.width: '.8\\textwidth'
-#| fig.cap :  "A graphical representation of Pierson's (1994) argument."
-#| warning :  FALSE
-#| message :  FALSE
+#| fig-cap: "A graphical representation of Pierson's (1994) argument."
+#| warning: false
+#| message: false
 
 hj_ggdag(
   x = c(1, 2, 3, 1, 1, 2),
@@ -119,14 +119,14 @@ At the same time, leaders can only choose a transformative strategy if they deci
 
 ```{r}
 #| label: fig-HJ-F-3-2
-#| echo:  false
-#| fig.width :  12
-#| fig.height :  7
+#| echo: false
+#| fig-width:  12
+#| fig-height:  7
 #| fig.align: "center"
 #| out.width: '.7\\textwidth'
-#| fig.cap :  "A graphical representation of Saunders' (2011) argument."
-#| warning :  FALSE
-#| message :  FALSE
+#| fig-cap: "A graphical representation of Saunders' (2011) argument."
+#| warning: false
+#| message: false
 
 hj_ggdag(x = c(1,1.5,2,1, 2.5, 2.5,2.5),
          y = c(.5,0,2,1.5, 2, 1.6,0),
@@ -180,14 +180,14 @@ We represent Przeworski and Limongi's argument in the DAG in @fig-HJ-F-3-3. The 
 
 ```{r}
 #| label: fig-HJ-F-3-3
-#| echo:  false
-#| fig.width :  11
-#| fig.height :  5
+#| echo: false
+#| fig-width:  11
+#| fig-height:  5
 #| fig.align: "center"
 #| out.width: '.7\\textwidth'
-#| fig.cap :  "A graphical representation of Przeworski and Limongi's argument."
-#| warning :  FALSE
-#| message :  FALSE
+#| fig-cap: "A graphical representation of Przeworski and Limongi's argument."
+#| warning: false
+#| message: false
 
 hj_ggdag(x = c(1,1.1,1.5),
          y = c(2,0,1),

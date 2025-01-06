@@ -3,7 +3,7 @@
 
 ```{r}
 #| label: packagesused07
-#| include :  FALSE
+#| include: false
 source("_packages_used.R")
 # run <- TRUE
 ```
@@ -50,11 +50,11 @@ Now, observing just $I$ and $D$ alone will always leave two nodal types in conte
 
 ```{r}
 #| label: fig-HJ-F-8-1
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  4
+#| echo: false
+#| fig-width:  9
+#| fig-height:  4
 #| fig.align: "center"
-#| fig.cap :  "Simple democracy
+#| fig-cap: "Simple democracy
 #| inequality model"
 
 set.seed(1)
@@ -89,14 +89,14 @@ We represent in @fig-HJ-F-8-2 one possible lower level model consistent with our
 
 ```{r}
 #| label: fig-HJ-F-8-2
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  7
+#| echo: false
+#| fig-width:  9
+#| fig-height:  7
 #| fig.align: "center"
 #| out.width: '.7\\textwidth'
-#| fig.cap :  "A lower level model of democratization in which inequality may affect regime type both directly and through mobilization of the lower classes
+#| fig-cap: "A lower level model of democratization in which inequality may affect regime type both directly and through mobilization of the lower classes
 #| and international pressure may also affect regime type."
-#| warning :  FALSE
+#| warning: false
 
 set.seed(10)
 hj_ggdag(x = c(1.5, 1.5,3,3, 1.5, 2.2),
@@ -218,8 +218,8 @@ Inference is done by applying Bayes rule to the observed data given the priors. 
 ```{r}
 #| label: basicPIMDmodel
 #| eval :  TRUE
-#| message :  FALSE
-#| include :  FALSE
+#| message: false
+#| include: false
 
 model_id_pt <- make_model("I -> M -> D <- P; I -> D") |>
   
@@ -246,10 +246,10 @@ I1D0 <- IDPT[[4]]
 
 ```{r}
 #| label: fig-HJ-F-8-3
-#| echo:  false
-#| fig.width :  12
-#| fig.height :  7
-#| fig.cap :  "Case-level inferences for whether the level of inequality caused the democratization outcome
+#| echo: false
+#| fig-width:  12
+#| fig-height:  7
+#| fig-cap: "Case-level inferences for whether the level of inequality caused the democratization outcome
 #| given possible observations of mobilization and pressure (untrained model)."
 df <- 
   IDPT  %>%
@@ -446,37 +446,6 @@ Just as there exists a long-running debate about the causes of democratization, 
 
 We now construct the model. We are interested in a single outcome: economic productivity (Y) as measured by real per capita GDP in 1995. 
 
-
-```{r}
-#| label: daggrowth
-#| echo:  false
-#| fig.width :  6
-#| fig.height :  4
-#| fig.align: "center"
-#| out.width :  "60%"
-#| fig.cap :  "Simple democracy
-#| inequality model"
-#| eval :  FALSE
-
-set.seed(1)
-hj_ggdag(x = c(1,2,2),
-         y = c(1,1,2),
-         names = c(
-             "Distance~(D)",
-             "GDP~(Y)",  
-             expression(paste(theta[Y]))
-         ),
-         arcs = cbind( c(1,3),
-                       c(2,2)),
-         title = "A high-level model of Growth",
-         padding = .2,
-         labels = TRUE,
-         force = 0, force_pull=1,
-         direction = 'y'
-)
-```
-
-
 We have two causes of interest: rule of law (R) and distance from the equator (D). We also include settler mortality as an *instrument* for institutional quality. In doing so we allow for the possibility that institutions are not exogenous in our model, but we assume that (lower) settler mortality has an effect on rule of law but is not related to wealth except via its effect on rule of law.\index{Instrument}
 
 We show again in Appendix (@sec-HJC-8-appendix) how to form this model using the `CausalQueries` package.
@@ -486,8 +455,8 @@ The model statement includes two causes for $Y$ ($R$ and $D$), and one cause for
 
 ```{r}
 #| label: model-rst
-#| echo:  false
-#| include :  FALSE
+#| echo: false
+#| include: false
 model_rst_pt <- make_model("M -> R -> Y <- D; R <-> Y")  |> 
   set_restrictions(c(
     "(R[M=1] > R[M=0])",
@@ -496,10 +465,10 @@ model_rst_pt <- make_model("M -> R -> Y <- D; R <-> Y")  |>
 
 ```{r}
 #| label: fig-HJ-F-8-4
-#| echo:  false
-#| fig.cap: "Institutions and growth DAG"
+#| echo: false
+#| fig-cap: "Institutions and growth DAG"
 #| out.width :  "70%"
-#| fig.height :  4
+#| fig-height:  4
 hj_ggdag(model = model_rst_pt, x_coord = c(4,1,2,3), y_coord = c(1,4,3,2))
 ```
 
@@ -527,7 +496,7 @@ We proceed in a similar manner as in the democratization example, focusing now o
 
 ```{r}
 #| label: RST8cases0
-#| echo:  false
+#| echo: false
 
 if(run)
  cases_RST(model = model_rst_pt) |> 
@@ -540,10 +509,10 @@ if(run)
 
 ```{r}
 #| label: fig-HJ-F-8-5
-#| echo:  false
-#| fig.width :  12
-#| fig.height :  7
-#| fig.cap :  "Case level inferences given possible observations  of distance and mortality (untrained model)."
+#| echo: false
+#| fig-width:  12
+#| fig-height:  7
+#| fig-cap: "Case level inferences given possible observations  of distance and mortality (untrained model)."
 
 
 df <- 
@@ -590,9 +559,9 @@ In @tbl-HJ-T-8-1, we show the results of an analysis in which we build into our 
 
 ```{r}
 #| label: tbl-HJ-T-8-1
-#| echo:  false
-#| message :  FALSE
-#| warning :  FALSE
+#| echo: false
+#| message: false
+#| warning: false
 
 model_rst_confound <- 
   
@@ -631,7 +600,7 @@ In @tbl-RSTD00, we show the inferences we would draw about whether low mortality
 
 ```{r}
 #| label: tbl-RSTD00
-#| echo:  false
+#| echo: false
   conditional_inferences(
     model_rst_pt,   
     parameters = NULL,  
@@ -678,8 +647,8 @@ Note that comparing the last line to the second to last line of Table 8.4, obser
 The Inequality and Democratization model can be created in  the `CausalQueries` package, along with monotonicity restrictions, like this: \index{CausalQueries@\texttt{CausalQueries}}
 
 ```{r}
-#| label: sec-HJC8-app1
-#| eval :  FALSE
+#| label: code-sec-HJC8-app1
+#| eval: false
 #| echo :  TRUE
 model_id_pt <- 
   
@@ -698,10 +667,10 @@ The institutions and growth model is formed like this:
 \index{Causal models!Institutions and growth}
 
 ```{r}
-#| label: sec-HJC8-app2
+#| label: code-sec-HJC8-app2
 #| echo :  TRUE
 #| include :  TRUE
-#| eval :  FALSE
+#| eval: false
 model_rst_pt <- make_model("M -> R -> Y <- D; R <-> Y")  |> 
   set_restrictions(c(
     "(R[M=1] > R[M=0])",

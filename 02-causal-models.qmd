@@ -8,7 +8,7 @@ editor_options:
 
 ```{r}
 #| label: packagesused02
-#| include :  FALSE
+#| include: false
  source("_packages_used.R")
 
 ```
@@ -335,8 +335,8 @@ $X_1$ is 0. For that type, $X_1$ and $X_2$ are "substitutes."
 
 ```{r}
 #| label: tbl-HJ-T-2-3
-#| echo:  false
-#| warning :  FALSE
+#| echo: false
+#| warning: false
 tab <- CausalQueries:::get_nodal_types(make_model("X1 -> Y <- X2"), collapse = FALSE)$Y
 
 tab <- cbind(type = paste0("$\\theta^Y_{", rownames(tab), "}$"), tab)
@@ -469,12 +469,12 @@ preferences and ethnic demography).
 
 ```{r}
 #| label: fig-HJ-F-2-1
-#| echo:  false
-#| fig.width :  7
-#| fig.height :  5
+#| echo: false
+#| fig-width:  7
+#| fig-height:  5
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "A simple causal model in which high inequality ($I$) affects democratization ($D$) via redistributive demands ($R$) and mass mobilization ($M$)
+#| fig-cap: "A simple causal model in which high inequality ($I$) affects democratization ($D$) via redistributive demands ($R$) and mass mobilization ($M$)
 #| which is also a function of ethnic homogeneity ($E$). Arrows show relations of causal dependence between variables."
 hj_ggdag(x = c(0, 1, 2, 1, 3, 3, 2, 1, 0, 1),
        y = c(2, 2, 2, 0, 2, 3, 3, 3, 3, -1),
@@ -1231,12 +1231,12 @@ more likely that the other outcome has also occurred.
 
 ```{r}
 #| label: fig-HJ-F-2-2
-#| echo:  false
-#| fig.width :  8
-#| fig.height :  4
+#| echo: false
+#| fig-width:  8
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width :  "60%"
-#| fig.cap :  "A simple causal model in which war ($W$) affects both excess deaths ($D$) and price inflation ($P$)."
+#| fig-cap: "A simple causal model in which war ($W$) affects both excess deaths ($D$) and price inflation ($P$)."
 hj_ggdag(x = c(0, 1, 1),
        y = c(1, 2, 0),
        names = c(
@@ -1499,11 +1499,11 @@ the $I$ and $D$ relationship.
 
 ```{r}
 #| label: fig-HJ-F-2-3
-#| echo:  false
-#| fig.cap: "A DAG with unobserved confounding"
+#| echo: false
+#| fig-cap: "A DAG with unobserved confounding"
 #| out.width :  "60%"
-#| fig.height :  4
-#| fig.width :  6
+#| fig-height:  4
+#| fig-width:  6
 #| fig.align: "center"
 hj_ggdag(model=make_model("I -> D; I <-> D"))
 ```
@@ -1617,12 +1617,12 @@ according to which information can flow across a causal graph.
 
 ```{r}
 #| label: fig-HJ-F-2-4
-#| echo:  false
-#| fig.width :  6
-#| fig.height :  4
+#| echo: false
+#| fig-width:  6
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '70%'
-#| fig.cap :  "Three elemental relations of conditional independence."
+#| fig-cap: "Three elemental relations of conditional independence."
 p1 <- hj_ggdag(x = c(-1, 0, 1), y = c(1,1,1), names = c( "A", "B", "C" ),
        arcs = cbind( c(1, 2),
                      c(2, 3)),
@@ -1921,9 +1921,9 @@ of these steps concisely for *binary* models---models in which all nodes
 are dichotomous. \index{Binary data}
 
 ```{r}
-#| label: ch2-make-models
-#| message :  FALSE
-#| eval :  FALSE
+#| label: code-ch2-make-models
+#| message: false
+#| eval: false
 
 # Steps 1 and 2 
 # We define a model with three binary nodes and 
@@ -1962,12 +1962,12 @@ between $A$ and $D$ in @fig-HJ-F-2-5. Try answering the following questions your
 
 ```{r}
 #| label: fig-HJ-F-2-5
-#| echo:  false
-#| fig.width :  5
-#| fig.height :  2
+#| echo: false
+#| fig-width:  5
+#| fig-height:  2
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "An exercise: $A$ and $D$ are conditionally independent
+#| fig-cap: "An exercise: $A$ and $D$ are conditionally independent
 #| given which other node(s)?"
 hj_ggdag(x = 1:4, y = c(1, 1,1,1), names = c( "A", "B", "C", "D" ),
        arcs = cbind( c(1, 3, 3),

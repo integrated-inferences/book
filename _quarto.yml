@@ -64,6 +64,7 @@ format:
     code-link: true
   pdf:
     documentclass: scrreprt
+    include-in-header: preamble.tex
 
 
 

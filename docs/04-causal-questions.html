@@ -497,7 +497,7 @@ Figure&nbsp;4.2: A causal model in which <span class="math inline">\(Y\)</span> 
 <p>With this model, a query about causal attribution—whether <span class="math inline">\(X_1 = 1\)</span> caused <span class="math inline">\(Y=1\)</span>—can take account of the value of <span class="math inline">\(X_2\)</span>. Parallel to our Taiwan example, suppose that we have a case in which <span class="math inline">\(Y=1\)</span> and in which <span class="math inline">\(X_1\)</span> was also 1, and we want to know whether <span class="math inline">\(X_1\)</span> caused <span class="math inline">\(Y\)</span> to take on the value it did. Answering this question requires knowing whether the case’s type is such that <span class="math inline">\(X_1\)</span> would have had a positive causal effect on <span class="math inline">\(Y\)</span>, given what we know about <span class="math inline">\(X_2\)</span>—which we can think of as part of the context. </p>
 <p> In this setup, we can answer the query by consulting the characterization of nodal types for a two-parent node that we provided in <a href="02-causal-models.html#tbl-HJ-T-2-3" class="quarto-xref">Table&nbsp;<span>2.3</span></a>. From that table, we can figure out for which nodal types <span class="math inline">\(X_1\)</span> has a positive effect on <span class="math inline">\(Y\)</span> given a particular value of <span class="math inline">\(X_2\)</span>.</p>
 <p>Suppose that in the case at hand we observe <span class="math inline">\(X_2=1\)</span>. In <a href="02-causal-models.html#tbl-HJ-T-2-3" class="quarto-xref">Table&nbsp;<span>2.3</span></a>, we can then see that we have four rows—rows 9 to 12—in which <span class="math inline">\(Y\)</span> goes from 0 to 1 as <span class="math inline">\(X_1\)</span> goes from 0 to 1 while <span class="math inline">\(X_2\)</span> is fixed at 1. (The key columns here are the third and fourth, where for these rows we see that <span class="math inline">\(Y\)</span> goes from 0 to 1 as we go from the third to the fourth column.) These four rows represent the four <span class="math inline">\(Y\)</span>-nodal-types: <span class="math inline">\(\theta^Y_{0001}\)</span>, <span class="math inline">\(\theta^Y_{1001}\)</span>, <span class="math inline">\(\theta^Y_{0101}\)</span>, and <span class="math inline">\(\theta^Y_{1101}\)</span>. In other words, we can attribute a <span class="math inline">\(Y=1\)</span> outcome to <span class="math inline">\(X_1=1\)</span> if we are in the context <span class="math inline">\(\theta^{X_2} = \theta^{X_2}_1\)</span> and <span class="math inline">\(\theta^Y\)</span> is one of these four nodal types.</p>
-<p>The <em>probability</em> that <span class="math inline">\(X_1=1\)</span> caused <span class="math inline">\(Y=1\)</span> <em>given</em> <span class="math inline">\(X_1=1, X_2=1\)</span>, and <span class="math inline">\(Y=1\)</span> is the probability of these four types divided by the probability that <span class="math inline">\(Y=1\)</span> given <span class="math inline">\(X_1=1\)</span> and <span class="math inline">\(X_2=1\)</span>. The latter probability is the probability of being in the last eight rows of Table <a href="02-causal-models.html#tbl-HJ-T-2-3" class="quarto-xref">Table&nbsp;<span>2.3</span></a>, which are the eight <span class="math inline">\(Y\)</span>-nodal types consistent with the observation of <span class="math inline">\(X_1=1\)</span>, <span class="math inline">\(X_2=1\)</span>, and <span class="math inline">\(Y=1\)</span>.</p>
+<p>The <em>probability</em> that <span class="math inline">\(X_1=1\)</span> caused <span class="math inline">\(Y=1\)</span> <em>given</em> <span class="math inline">\(X_1=1, X_2=1\)</span>, and <span class="math inline">\(Y=1\)</span> is the probability of these four types divided by the probability that <span class="math inline">\(Y=1\)</span> given <span class="math inline">\(X_1=1\)</span> and <span class="math inline">\(X_2=1\)</span>. The latter probability is the probability of being in the last eight rows of <a href="02-causal-models.html#tbl-HJ-T-2-3" class="quarto-xref">Table&nbsp;<span>2.3</span></a>, which are the eight <span class="math inline">\(Y\)</span>-nodal types consistent with the observation of <span class="math inline">\(X_1=1\)</span>, <span class="math inline">\(X_2=1\)</span>, and <span class="math inline">\(Y=1\)</span>.</p>
 <p>Thus, a question about causal attribution is a question not just about how a case would behave given an intervention, but a question that <em>conditions</em> on observed node values in the case—and then asks how the outcome would have been different <em>if</em> circumstances had been different from what we know them to have been in this case.</p>
 </section><section id="average-causal-effects" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="average-causal-effects">
 <span class="header-section-number">4.3</span> Average Causal Effects</h2>
@@ -692,7 +692,7 @@ Figure&nbsp;4.6: A causal model that allows preemption.
 <li>Q2. What is the probability that <span class="math inline">\(X=1\)</span> causes <span class="math inline">\(Y=1\)</span> in cases in which <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span>? (“POC”)</li>
 </ul>
 <p>To answer these two queries, we define a simple query <span class="math inline">\(q_1\)</span> which assesses whether <span class="math inline">\(X\)</span> causes <span class="math inline">\(Y\)</span> for each <span class="math inline">\(\theta\)</span> and a second simple query <span class="math inline">\(q_2\)</span> which assesses whether <span class="math inline">\(X=1\)</span> and <span class="math inline">\(Y=1\)</span> for each <span class="math inline">\(\theta\)</span>. In this example, the first simple query involves some <code>do</code> operations, the second does not.</p>
-<p>Code to answering these two simple queries is shown below and the output is shown in <a href="#tbl-HJ-T-4-1" class="quarto-xref">Table&nbsp;<span>4.1</span></a> (one row for each causal type).</p>
+<p>Code <del>to</del><span style="color: orange;">for</span> answering these two simple queries is shown below and the output is shown in <span class="quarto-unresolved-ref">?tbl-HJ-T-4-1</span> (one row for each causal type).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">make_model</span><span class="op">(</span><span class="st">"X -&gt; M -&gt; Y"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>         <span class="fu">set_restrictions</span><span class="op">(</span><span class="st">"X[]==0"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -707,13 +707,9 @@ Figure&nbsp;4.6: A causal model that allows preemption.
 <span>  a2 <span class="op">=</span> <span class="fu">get_query_types</span><span class="op">(</span><span class="va">model</span>, <span class="va">q2</span><span class="op">)</span><span class="op">$</span><span class="va">types</span>,</span>
 <span>  p  <span class="op">=</span> <span class="fu">CausalQueries</span><span class="fu">:::</span><span class="fu">get_type_prob</span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-layout-align="center">
-<div id="tbl-HJ-T-4-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: Set of causal types in the model that satisfy q1 and q2 along with the probability of the type.
-</figcaption><div aria-describedby="tbl-HJ-T-4-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="tbl-HJ-T-4-1" class="cell anchored" data-layout-align="center">
 <div class="cell-output-display">
-<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<table class="caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th></th>
 <th style="text-align: left;">a1</th>
@@ -777,12 +773,10 @@ Table&nbsp;4.1: Set of causal types in the model that satisfy q1 and q2 along wi
 </tr>
 </tbody>
 </table>
+<p>Set of causal types in the model that satisfy q1 and q2 along with the probability of the type.</p>
 </div>
 </div>
-</figure>
-</div>
-</div>
-<p>The answer to the overall queries are then (1) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given weights <span class="math inline">\(p\)</span> and (2) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given <span class="math inline">\(q_0\)</span> and weights <span class="math inline">\(p\)</span>. See the next block of code for the implementation in <code>CausalQueries</code> and <a href="#tbl-HJ-T-4-2" class="quarto-xref">Table&nbsp;<span>4.2</span></a> for the results.</p>
+<p>The answer to the overall queries are then (1) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given weights <span class="math inline">\(p\)</span> and (2) the expected value of (the answers to) <span class="math inline">\(q_1\)</span> given <span class="math inline">\(q_0\)</span> and weights <span class="math inline">\(p\)</span>. See the next block of code for the implementation in <code>CausalQueries</code> and <a href="#tbl-HJ-T-4-2" class="quarto-xref">Table&nbsp;<span>4.1</span></a> for the results.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu">summarize</span><span class="op">(</span></span>
 <span>  POS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html">weighted.mean</a></span><span class="op">(</span><span class="va">a1</span>, <span class="va">p</span><span class="op">)</span>,</span>
@@ -792,7 +786,7 @@ Table&nbsp;4.1: Set of causal types in the model that satisfy q1 and q2 along wi
 <div class="cell" data-layout-align="center">
 <div id="tbl-HJ-T-4-2" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.2: Calculated answers to two queries.
+Table&nbsp;4.1: Calculated answers to two queries.
 </figcaption><div aria-describedby="tbl-HJ-T-4-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -822,7 +816,7 @@ Table&nbsp;4.2: Calculated answers to two queries.
 <span><span class="fu">query_model</span><span class="op">(</span><span class="va">model</span>, query <span class="op">=</span> <span class="st">"Y[X = 1] &gt; Y[X = 0]"</span>, </span>
 <span>              given <span class="op">=</span> <span class="st">"X == 1 &amp; Y == 1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The same procedure can be used to identify any set of types that correspond to a particular query. <a href="#tbl-HJ-T-4-3" class="quarto-xref">Table&nbsp;<span>4.3</span></a> illustrates the procedure, showing the syntax for model definition and queries along with the syntax for identifying implied types using <code>get_query_types</code>.</p>
+<p>The same procedure can be used to identify any set of types that correspond to a particular query. <a href="#tbl-HJ-T-4-3" class="quarto-xref">Table&nbsp;<span>4.2</span></a> illustrates the procedure, showing the syntax for model definition and queries along with the syntax for identifying implied types using <code>get_query_types</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in kableExtra::column_spec(., 1, width = "7em"): Please specify format
@@ -858,7 +852,7 @@ https://haozhu233.github.io/kableExtra/ for details.</code></pre>
 </div>
 <div id="tbl-HJ-T-4-3" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.3: Examples of queries and corresponding causal types. The probability of the query is the probability of the causal types that imply the theory.
+Table&nbsp;4.2: Examples of queries and corresponding causal types. The probability of the query is the probability of the causal types that imply the theory.
 </figcaption><div aria-describedby="tbl-HJ-T-4-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -947,7 +941,7 @@ Table&nbsp;4.3: Examples of queries and corresponding causal types. The probabil
 <li><p>the interaction query <code>Q = (Y[X = 1, W = 1] - Y[X = 0, W = 1]) - (Y[X = 1, W = 0] - Y[X = 0, W = 0])</code> is similarly a combination of the simple queries <code>(Y[X = 1, W = 1] ==1</code>, <code>Y[X = 0, W = 1]==1</code>, <code>Y[X = 1, W = 0]==1</code>, and <code>Y[X = 0, W = 0]==1</code>.</p></li>
 </ul>
 <p>For linear complex queries like this, we can proceed by identifying a set of positive or negative coefficients for each causal type that can be used to combine the probabilities of the types.</p>
-<p>For instance, for the interaction query, <code>Q</code>, <code>get_query_types(model, Q)</code> would identify a set of positive or negative coefficients for each causal type that range from -2 to 2, with a 2, for instance corresponding to a type for which a change in <span class="math inline">\(W\)</span> changes the effect of <span class="math inline">\(X\)</span> from -1 to 1. See <a href="#tbl-HJ-T-4-4" class="quarto-xref">Table&nbsp;<span>4.4</span></a> for coefficients on types when <span class="math inline">\(X=1\)</span> and <span class="math inline">\(W =1\)</span>.</p>
+<p>For instance, for the interaction query, <code>Q</code>, <code>get_query_types(model, Q)</code> would identify a set of positive or negative coefficients for each causal type that range from -2 to 2, with a 2, for instance corresponding to a type for which a change in <span class="math inline">\(W\)</span> changes the effect of <span class="math inline">\(X\)</span> from -1 to 1. See <a href="#tbl-HJ-T-4-4" class="quarto-xref">Table&nbsp;<span>4.3</span></a> for coefficients on types when <span class="math inline">\(X=1\)</span> and <span class="math inline">\(W =1\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in kableExtra::column_spec(., 1, width = "6em"): Please specify format
@@ -966,7 +960,7 @@ outputs. See https://haozhu233.github.io/kableExtra/ for details.</code></pre>
 </div>
 <div id="tbl-HJ-T-4-4" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-4-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.4: Coefficients on causal types for an interaction query
+Table&nbsp;4.3: Coefficients on causal types for an interaction query
 </figcaption><div aria-describedby="tbl-HJ-T-4-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">

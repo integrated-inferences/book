@@ -2,7 +2,7 @@
 
 ```{r}
 #| label: packagesused13
-#| include :  FALSE
+#| include: false
 source("_packages_used.R")
 # run = FALSE
 ```
@@ -200,7 +200,7 @@ We omit the $X=0$ cases from the table  since there is nothing to learn from $K$
 
 ```{r}
 #| label: tbl-HJ-T-13-1
-#| echo:  false
+#| echo: false
 df |> filter(X!=0) |>
   arrange(X, Y, K) |>
   kabble(digits = 2, col.names = c("$\\lambda^K_1$", "K", "X", "Y", "$\\Pr(X, Y, K | \\lambda^K_1)$", "$\\Pr(X, Y| \\lambda^K_1)$", "$\\Pr(K| X, Y, \\lambda^K_1)$"),
@@ -461,7 +461,7 @@ We imagine a world in which we have causal model $X \rightarrow M \rightarrow Y 
 
 ```{r}
 #| label: tbl-ch13othercasedf
-#| echo:  false
+#| echo: false
 
 other_case$data |>
 kabble(caption = "The data we start with. If we are interested in whether $X$ caused $Y$ in case $A$, are we better gathering data on $M for$ in case $A$ or on $K$ in case $B$?")
@@ -478,7 +478,7 @@ Given the model, we can work out what we might find under each strategy and what
 
 ```{r}
 #| label: tbl-ch13millian
-#| echo:  false
+#| echo: false
 
 
 results_a %>%
@@ -507,7 +507,7 @@ Details of the inferences we would draw about $X$'s effect on $Y$ in case $B$ fo
 
 ```{r}
 #| label: tbl-ch13millianb
-#| echo:  false
+#| echo: false
 
 results_b %>%
   select(Quantity,`Best guess` = mean, Uncertainty = variance) %>%
@@ -537,7 +537,7 @@ We now introduce a flexible approach to comparing the prospective learning from 
 
 ```{r}
 #| label: selectioncode
-#| echo:  false
+#| echo: false
 
 if(run){
   
@@ -598,7 +598,7 @@ Consider a situation in which our model is $X \rightarrow M \rightarrow Y$. Supp
 
 ```{r}
 #| label: observed
-#| echo:  false
+#| echo: false
 kabble(ch_13_walkkthrough$observed, caption = "Observed data")
 ```
 
@@ -624,7 +624,7 @@ The posterior variance on the ATEs for each data pattern, is represented in the 
 
 ```{r}
 #| label: illustration
-#| echo:  false
+#| echo: false
 
 if(run){
 
@@ -678,8 +678,8 @@ strategies |> lapply(function(s)
 
 ```{r}
 #| label: tbl-chselillustration
-#| echo:  false
-#| warning :  FALSE  
+#| echo: false
+#| warning: false  
 ch_13_walkkthrough$df |>
   rbind(
     c("Probability", round(unlist(probabilities),3)),
@@ -694,7 +694,7 @@ From the probability of each data type (given the model and the $X,Y$ data seen 
 
 ```{r}
 #| label: tbl-exppostvar
-#| echo:  false
+#| echo: false
 
 lapply(estimates_db,  bind_rows) |>  bind_rows(.id = "Strategy") |>
   mutate(variance = sd^2,
@@ -792,11 +792,11 @@ The main results are shown in Figures @fig-HJ-F-13-1 and @fig-HJ-F-13-2.
 
 ```{r}
 #| label: fig-HJ-F-13-1
-#| fig.height :  8.5
-#| fig.width :  12
-#| fig.cap :  "Inferences given observations"
-#| warning :  FALSE
-#| echo:  false 
+#| fig-height:  8.5
+#| fig-width:  12
+#| fig-cap: "Inferences given observations"
+#| warning: false
+#| echo: false 
 
 fig_1 <- 
   # read_rds("rep/out_2002_s/Case_selection_1_9_2022.rds")  
@@ -826,11 +826,11 @@ In the remainder of this section, we walk through the results and suggest, often
 
 ```{r}
 #| label: fig-HJ-F-13-2
-#| fig.height :  7
-#| fig.width :  12
-#| fig.cap :  "Reduction in variance on each query given different models and case-selection strategies"
-#| echo:  false
-#| warning :  FALSE 
+#| fig-height:  7
+#| fig-width:  12
+#| fig-cap: "Reduction in variance on each query given different models and case-selection strategies"
+#| echo: false
+#| warning: false 
 
 fig_2$data |> 
   ggplot(aes(strategy, expected_learning_2)) + 

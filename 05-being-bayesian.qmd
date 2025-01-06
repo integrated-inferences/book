@@ -15,14 +15,14 @@ In this chapter, we outline the logic of Bayesian updating and show how it is us
 
 ```{r}
 #| label: packagesused05
-#| include :  FALSE
+#| include: false
 source("_packages_used.R")
 ```
 
 
 ```{r}
 #| label: bayes
-#| include :  FALSE
+#| include: false
 PV <- function(F, G) log(G/F, 10)
 EL <- function(F, G) (G-F)^2/(2*(G+F) - (F+G)^2)
 
@@ -148,7 +148,7 @@ Third is the unconditional probability of the data $\Pr(d)$, which appears in th
 
 One helpful way to think about these last two quantities is that they capture, respectively, how *consistent* the data are with our hypothesis and how *specific* the data are to our hypothesis (with specificity higher for *lower* values of $\Pr(d)$). We update more strongly in favor of our hypothesis the more consistent the data that we observe are with the hypothesis; but that updating is dampened the more consistent the data pattern is with alternative hypotheses.
 
-As shown in the second line of Equation (5.2), $\Pr(d)$ can be usefully written as a weighted average over different ways (alternative hypotheses, $H'$) in which the data could have come about. If we have three alternative hypotheses, for instance, we ask what the probability of the data pattern is under each hypothesis and then average across those probabilities, weighting each by the prior probability of its associated hypothesis. 
+As shown in the second part of @eq-Bayes, $\Pr(d)$ can be usefully written as a weighted average over different ways (alternative hypotheses, $H'$) in which the data could have come about. If we have three alternative hypotheses, for instance, we ask what the probability of the data pattern is under each hypothesis and then average across those probabilities, weighting each by the prior probability of its associated hypothesis. 
 
 Assessing $\Pr(d)$ requires putting prior probabilities on an exclusive and exhaustive set of hypotheses. However, it does not require a listing of all possible hypotheses, just some *exhaustive* collection of hypotheses (i.e., a set whose probability adds up to 1). For example, in a murder trial, we might need to assess the unconditional probability that the accused's fingerprints would be on the door. We can conceive of two mutually exclusive hypotheses that are collectively exhaustive of the possibilities: The accused is guilty, or they are not guilty. We can average across the probability of the accused's fingerprints being on the door under each of these two hypotheses, weighting by their prior probabilities. What we do *not* have to do is decompose the "not guilty" hypothesis into a set of hypotheses about who *else* might be guilty. As a procedure for assessing the probability of the evidence under the not-guilty hypothesis, it might be helpful to think through who else might have done it, but there is no logical problem with working with just the two hypotheses (guilty and not guilty) since they together capture all possible states of the world. In @sec-derived, we work through an example in which we can calculate the probability of data conditional on some effect *not* being present. 
 
@@ -195,10 +195,10 @@ Note that we can think of proportions as probabilities, and we will often write 
 
 ```{r}
 #| label: fig-HJ-F-5-1
-#| fig.height :  7
-#| fig.width :  8
-#| echo:  false
-#| fig.cap: "Beta distributions"
+#| fig-height:  7
+#| fig-width:  8
+#| echo: false
+#| fig-cap: "Beta distributions"
 
   expand.grid(alpha = c(.5, 1, 5, 20), 
               beta = c(.5, 1, 5, 20), 
@@ -228,7 +228,7 @@ Note that we calculate these quantities using the posterior distribution over th
 ### Learning {#sec-learning}
 \index{Learning}
 
-Bayesian updating is all about learning. We can see right away from Equation @eq-Bayes whether we *learned* anything from data $d$. The simplest notion of learning is that our beliefs after seeing $d$ are different than they were before we saw $d$. That is $\Pr(H|d) \neq \Pr(H)$. Or using Equation @eq-Bayes, we have learned something if: 
+Bayesian updating is all about learning. We can see right away from  @eq-Bayes whether we *learned* anything from data $d$. The simplest notion of learning is that our beliefs after seeing $d$ are different than they were before we saw $d$. That is $\Pr(H|d) \neq \Pr(H)$. Or using Equation @eq-Bayes, we have learned something if: 
 \index{Learning}
 \begin{equation}
 \frac{\Pr(d|H)\Pr(H)}{\sum_{H'}\Pr(d|H')\Pr(H'))} \neq \Pr(H)
@@ -244,13 +244,13 @@ which simply means that the probability of $d$ under the hypothesis is not the s
 
 Two notions are useful for describing how much one can learn or is likely to learn from data: the probative value of data and the expected learning from data. We describe both here and pick up both ideas in later sections.^[In a footnote in @humphreys2015mixing we describe a notion of probative value that made use of expected learning. We think, however, it is better to keep these notions separate to avoid confusion and so adopt the definition used by @kaye1986quantifying and @fairfield2017explicit. As a practical matter, however that work used the same concept of expected learning as presented here and varied probative value by varying the $\phi$ quantities directly.] 
 
-To consider the simplest scenario, suppose there are two mutually exclusive and exhaustive hypotheses, $H_0$ and $H_1$ and that we place a prior probability of $p$ on $H_1$. Imagine that the available evidence can take on two values, $K=0$ or $K=1$. Likelihoods are described by $\phi_0$ and $\phi_1$, where $\phi_0$ denotes the probability $K=1$ under $H_0$ and $\phi_1$ denotes the probability $K=1$ under $H_1$. Equation @eq-Bayes then becomes:
+To consider the simplest scenario, suppose there are two mutually exclusive and exhaustive hypotheses, $H_0$ and $H_1$ and that we place a prior probability of $p$ on $H_1$. Imagine that the available evidence can take on two values, $K=0$ or $K=1$. Likelihoods are described by $\phi_0$ and $\phi_1$, where $\phi_0$ denotes the probability $K=1$ under $H_0$ and $\phi_1$ denotes the probability $K=1$ under $H_1$. @eq-Bayes then becomes:
 
 $$
 \Pr(H_1|K=1)=\frac{\phi_1p}{\phi_1p + \phi_0(1-p)}
 $${#eq-Bayes2}
 
-and the condition for learning (Equation @eq-learningcondition) reduces to $\phi_1 \neq \phi_0$, so long as $p\in(0,1)$.  
+and the condition for learning (@eq-learningcondition) reduces to $\phi_1 \neq \phi_0$, so long as $p\in(0,1)$.  
 
 More generally, the informativeness of evidence depends on how different $\phi_1$ and $\phi_0$ are from each other: how different the likelihood of seeing that evidence is under the two hypotheses. How best to measure that difference? There are many possibilities (see @kaye1986quantifying for a review), but a compelling approach is to  use the log of the ratio of the likelihoods. This is a simple and elegant measure that corresponds to what @good1950probability \index{Good, Irving John} proposes in multiple contributions, a measure of the "weight of evidence." @kaye1986quantifying refers to this as the most common measure of "probative value." \index{Kaye, David} @fairfield2017explicit also use this measure, highlighting how it provides a useful way of characterizing the impact of, and of analyzing, evidence.  \index{Charman, Andrew E.} \index{Fairfield, Tasha}
 
@@ -593,16 +593,16 @@ $\theta^K$ | $\theta^Y$ | $\theta$  | $K|X=1$ | $Y|X=1$ |  $\theta = b| X=Y=1$ |
 
 Table: Worksheet to figure out implied "priors"  ($\Pr(\theta=b | X=1, Y=1)$) and posteriors ($\Pr(\theta=b |X=1, Y=1, K=1)$ from a chain model for a case with $X=1, Y=1$. {#tbl-worksheet}
 
-Then, using Bayes' rule (Equation @eq-Bayes) we can calculate the updated belief via: 
+Then, using Bayes' rule (@eq-Bayes) we can calculate the updated belief via: 
 
 \begin{eqnarray*}
 \Pr(\theta = b |K=1, X=Y=1)&=&\frac{1\times \frac13}{1 \times \frac13 + \frac12 \times \frac23}\\
 &=& \frac12
 \end{eqnarray*}
 
-We can also read the answer by simply taking the average value of the last column of @tbl-worksheet, which has entries only for those cases in which we have $X=1$, $Y=1$ and $K=1$. Counting $TRUE$ as $1$ and $FALSE$ as $0$, we get an average of $0.5$. Thus, upon observing the clue $K=1$ in an $X=1, Y=1$ case, we shift our beliefs that $X=1$ caused $Y=1$ from a prior of $\frac13$ to a posterior of $\frac12$. In contrast, had we observed $K=0$, our posterior would have been 0.
+We can also read the answer by simply taking the average value of the last column of @tbl-worksheet, which has entries only for those cases in which we have $X=1$, $Y=1$ and $K=1$. Counting `TRUE` as $1$ and `FALSE` as $0$, we get an average of $0.5$. Thus, upon observing the clue $K=1$ in an $X=1, Y=1$ case, we shift our beliefs that $X=1$ caused $Y=1$ from a prior of $\frac13$ to a posterior of $\frac12$. In contrast, had we observed $K=0$, our posterior would have been 0.
 
-One thing that these calculations demonstrate is that, as a practical matter, we do not have to go through the process of calculating a likelihood to engage in Bayesian updating. If we can directly calculate $\Pr(H,d)$ and $\Pr(d)$, then we can make direct use of Equation @eq-condprob instead of Equation @eq-Bayes.
+One thing that these calculations demonstrate is that, as a practical matter, we do not have to go through the process of calculating a likelihood to engage in Bayesian updating. If we can directly calculate $\Pr(H,d)$ and $\Pr(d)$, then we can make direct use of @eq-condprob instead of @eq-Bayes.
 
 A few broader lessons for Bayesian process tracing are worth highlighting. 
 
@@ -623,10 +623,10 @@ The hoop test in this example makes use of an extreme probability---a probabilit
 
 ```{r}
 #| label: fig-HJ-F-5-2
-#| fig.cap: "A mapping from the probability of observing a clue if the proposition that a case is a $b$ type is true ($\\phi-b$) or false ($\\phi-d$) to a generalization of the tests described in Van-Evera (1997)."
-#| echo:  false
-#| fig.height: 12
-#| fig.width: 12
+#| fig-cap: "A mapping from the probability of observing a clue if the proposition that a case is a $b$ type is true ($\\phi-b$) or false ($\\phi-d$) to a generalization of the tests described in Van-Evera (1997)."
+#| echo: false
+#| fig-height: 12
+#| fig-width: 12
 
 add_color <- "black"
 cex = 1
@@ -676,7 +676,7 @@ In @sec-HJC4, we described queries of interest as queries over causal types.
 
 Returning to our discussion of queries in @sec-HJC4, suppose we start with the model $X \rightarrow M \rightarrow Y$, and our query is whether $X$ has a positive effect on $Y$. This is a query that is satisfied by four sets of causal types: those in which $X$ has a positive effect on $M$ and $M$ has a positive effect on $Y$, with $X$ being either 0 or 1; and those in which $X$ has a negative effect on $M$ and $M$ has a negative effect on $Y$, with $X$ being either 0 or 1. Our inferences on the query will thus involve gathering these different causal types, and their associated posterior probabilities, together. As we showed in @sec-HJC4, the same is true for very complex causal estimands.
 
-Once queries are defined in terms of causal types, the formation of beliefs, given data $d$, about queries follows immediately from application of Equation @eq-condprob. 
+Once queries are defined in terms of causal types, the formation of beliefs, given data $d$, about queries follows immediately from application of @eq-condprob. 
 
 Let $Q(q)$ define the set of types that satisfy query $q$, and let $D(d)$ denote the set of types that generate data $d$ (recall that each causal type, if fully specified, implies a data type).  
 
@@ -701,10 +701,10 @@ As we noted in the previous section, probative value does not depend upon priors
 
 ```{r}
 #| label: fig-HJ-F-5-3
-#| fig.cap :  "A smoking in which gun test with greatest impact on beliefs when priors are middling low and the clue is observed; a 'hoop test' in which the greatest effects arise when priors are middling high and the clue is not observed."
-#| echo:  false
-#| fig.height: 10
-#| fig.width: 10
+#| fig-cap: "A smoking in which gun test with greatest impact on beliefs when priors are middling low and the clue is observed; a 'hoop test' in which the greatest effects arise when priors are middling high and the clue is not observed."
+#| echo: false
+#| fig-height: 10
+#| fig-width: 10
 par(mfrow = c(2,2))
 	plotit(.4, .6, main="Straw in the Wind")
 	plotit(.6, .95, main="Hoop")
@@ -796,73 +796,6 @@ Then applying Bayes' rule over these states yields the posterior probability: $\
 Thus, we have three ways to apply Bayes' rule in this simple setup. 
 
 More generally, we propose that researchers update over a causal model. As we explain later in this book, updating over a causal model allows us to learn across cases and levels of analysis: we can make inferences about the case at hand, about the population from which the case is drawn, and about other cases of interest, given data on those cases. In this example for instance, the inferences we would draw about future cases could be quite different if we believed $W$ was the same for all units~-- and so our uncertainty represents what we might call "uncertainty about laws"~-- than if we believed that each unit was assigned $W$ independently with a common probability~-- in which case we would think of the uncertainty as representing "uncertainty about units." Under the former belief, learning from one unit is informative for learning about another; under the second belief, it is not.
-
-```{r}
-#| label: ch5joint
-#| echo:  false
-#| fig.cap: "Correlated beliefs on queries and probative value"
-#| fig.width :  10
-#| fig.height :  5
-#| eval :  FALSE
-#| include :  FALSE
-
-if(run){
-
-model <- make_model("X -> Y <- K") |>
-  set_restrictions(statement = decreasing("X", "Y")) |>
-  set_restrictions(statement = substitutes("X", "K", "Y")) |>
-  set_priors(distribution = "jeffreys") %>%
-  update_model(iter = 8000)
-
-data <- data.frame(X=1, Y=1, K=1)
-
-updated <- update_model(model, data, iter = 8000)
-
-list(
-      s2 = 
-      updated %>% 
-      query_model(
-        query = list(TE = "Y[X=1] > Y[X=0]"),
-        given = c("X==1 & Y==1 & K==1"),
-        using = "posteriors",
-        case_level = FALSE),
-      
-    prior = 
-      model %>% 
-      query_model(
-        query = list(te = "Y[X=1] > Y[X=0]", te = "Y[X=1] > Y[X=0]", Pr_K = "K==1", Pr_K= "K==1"),
-        given = c("X==1 & Y==1",  "X==1 & Y==1 & K==1", "(Y[X=1] > Y[X=0]) & X==1 & Y==1", "(Y[X=1] <= Y[X=0]) & X==1 & Y==1"),
-        using = "posteriors",
-        case_level = TRUE),
-    
-    posterior = 
-      updated %>% 
-      query_model(
-        query = list(te = "Y[X=1] > Y[X=0]", te = "Y[X=1] > Y[X=0]", Pr_K = "K==1", Pr_K= "K==1"),
-        given = c("X==1 & Y==1",  "X==1 & Y==1 & K==1", "(Y[X=1] > Y[X=0]) & X==1 & Y==1", "(Y[X=1] <= Y[X=0]) & X==1 & Y==1"),
-        using = "posteriors",
-        case_level = TRUE)) %>%
-    bind_rows(.id = "model") %>%
-    write_rds("saved/joint_ch5.rds")
-}
-
-
-    read_rds("saved/joint_ch5.rds") %>%
-      filter((Query == "te" & Given == "X==1 & Y==1") | Query == "Pr_K" |
-               (Given == "X==1 & Y==1 & K==1" & Query ==  "te")) %>%
-      mutate(Q = paste(Query, Given),
-             Q = factor(Q, 
-                        c("te X==1 & Y==1", 
-                          "te X==1 & Y==1 & K==1", 
-                          "Pr_K (Y[X=1] > Y[X=0]) & X==1 & Y==1", 
-                          "Pr_K (Y[X=1] <= Y[X=0]) & X==1 & Y==1"),
-                        c("Pr(X causes Y) given X=Y=1", "Pr(X causes Y) given X=Y=K=1", "Pr(K = 1)  given \n X causes Y and X=Y=1", 
-                          "Pr(K = 1) if \n X doesn't cause Y and X=Y=1)"))) %>%
-      ggplot(aes(Q, mean, color = model)) + geom_point() + facet_grid(~Q) + coord_flip() + theme_bw()
-                        
-  
-```
-
 
 
 ### Posteriors Are Independent of the Ordering of Data

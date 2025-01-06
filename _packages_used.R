@@ -436,7 +436,7 @@ multiple_inferences <- function(model,
 }
 
 
-colorize <- function(x, color= "red") {
+colorize <- function(x, color= "orange") {
   if (knitr::is_latex_output()) {
     sprintf("\\textcolor{%s}{%s}", color, x)
   } else if (knitr::is_html_output()) {

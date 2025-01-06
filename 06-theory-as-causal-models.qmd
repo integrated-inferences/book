@@ -2,7 +2,7 @@
 
 ```{r}
 #| label: packagesused03
-#| include :  FALSE
+#| include: false
  source("_packages_used.R")
 ```
 
@@ -87,13 +87,13 @@ Consider next model $M^{\prime\prime}$ in @fig-HJ-F-6-1, which also supports (im
 
 ```{r}
 #| label: fig-HJ-F-6-1
-#| echo:  false
-#| fig.width :  7
-#| fig.height :  12
+#| echo: false
+#| fig-width:  7
+#| fig-height:  12
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "Two theories---lower level models---that explain a higher level model."
-#| warning :  FALSE
+#| fig-cap: "Two theories---lower level models---that explain a higher level model."
+#| warning: false
 
 p1 <- hj_ggdag(x = c(1,2,2),
        y = c(1,1,2),
@@ -216,13 +216,13 @@ In other situations, we might imagine invoking a theory that does not necessaril
 
 ```{r}
 #| label: fig-HJ-F-6-2
-#| echo:  false
-#| fig.width :  7
-#| fig.height :  3.5
+#| echo: false
+#| fig-width:  7
+#| fig-height:  3.5
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "A lower level model is invoked as a theory of a higher level model which in turn allows identification of the effects of X on Y."
-#| warning :  FALSE
+#| fig-cap: "A lower level model is invoked as a theory of a higher level model which in turn allows identification of the effects of X on Y."
+#| warning: false
 
 p1 <- hj_ggdag(
   x = c(1,2,3),
@@ -299,7 +299,7 @@ Let's now think about different ways of characterizing the gains from observing 
 
 ```{r}
 #| label: tbl-HJ-T-06-numeric
-#| echo:  false
+#| echo: false
 #| warning: false
 p_k_q <- function(k, q) .8*(k==q) + .2*(k!=q)
 prior = .2
@@ -493,12 +493,12 @@ For two players, for instance, we might imagine a representation of a standard n
 
 ```{r}
 #| label: fig-HJ-F-6-3
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  4
+#| echo: false
+#| fig-width:  9
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "Formal structure of a normal form game."
+#| fig-cap: "Formal structure of a normal form game."
 
 hj_ggdag(x = c(1, 2,  2, 3),
        y = c(1, 1.5,.5,1),
@@ -525,12 +525,12 @@ How might this theory be represented as a causal model? @fig-HJ-F-6-4 provides o
 
 ```{r}
 #| label: fig-HJ-F-6-4
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  4
+#| echo: false
+#| fig-width:  9
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "'Nash's theory': a mapping from game form to outcomes."
+#| fig-cap: "'Nash's theory': a mapping from game form to outcomes."
 
 hj_ggdag(x = c(3, 1, 2, 3, 3,   4, 5),
        y = c(0, 1, 1, .5,1.5, 1, 1),
@@ -551,23 +551,23 @@ hj_ggdag(x = c(3, 1, 2, 3, 3,   4, 5),
 
 ```
 
-`r colorize("Erratum: figure captions in this section corrected; 20250106")`
+`r colorize("Erratum: figure captions in this section have been updated, 2025.01.06.")`
 
 Here, player beliefs about the game form ($\Gamma$) results in strategy choices by actors. If players play according to Nash's theory, *the causal functions for the strategy choices are given by the Nash equilibrium solution itself*, with a refinement in case of multiplicity.\index{Causal functions} 
 
 This model represents what we expect to happen in a game under Nash's theory and we can indeed see if the relations between nodes in the world look like what we expect under the theory. The relations are nevertheless a matter of conjecture, to be contrasted with the exact claims on strategy profiles that are produced by an analytic theory that assumes Nash equilibria are played.
 
-So far the model does not provide much of an *explanation* for behavior. A lower level causal model might help. In Figure  @fig-HJ-F-6-5, 
+So far, the model does not provide much of an *explanation* for behavior. A lower level causal model might help. In @fig-HJ-F-6-5, 
  the game form $\Gamma$ determines the beliefs about what actions the other player would make (thus $\sigma_2^e$ is 1's belief about 2's actions). The causal functions for $\sigma_2^e$ and $\sigma_1^e$ might, for instance, be the Nash equilibrium solution itself: that is, players expect other players to play according to the Nash equilibrium (or in the case of multiple equilibria, a particular equilibrium selected using some refinement). The beliefs, in turn, together with the game form (which contains $u_1, u_2$),  are what cause the players to select a particular action. The causal function for $\sigma_1$ might thus be $\sigma_1 = \arg \max_\sigma u_1(\sigma, \sigma_2^e)$.\index{Causal functions}
 
 ```{r}
 #| label: fig-HJ-F-6-5
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  4
+#| echo: false
+#| fig-width:  9
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "Normal form games with best response mappings: actions are a function of expectations of the actions of others."
+#| fig-cap: "Normal form games with best response mappings: actions are a function of expectations of the actions of others."
 
 hj_ggdag(x = c(3, 1, 2, 3, 3,   4, 5),
        y = c(0, 1, 1, .5,1.5, 1, 1),
@@ -597,12 +597,12 @@ One might step still further back and ask *why* would actors form these beliefs,
 
 ```{r}
 #| label: fig-HJ-F-6-6
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  4
+#| echo: false
+#| fig-width:  9
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "Normal form games with variation in player rationality."
+#| fig-cap: "Normal form games with variation in player rationality."
 #| 
 hj_ggdag(x = c(3, 1, 2, 3, 3,   4, 5, 1.5, 4.5),
        y = c(0, 1, 1, .5,1.5, 1, 1, 1.5, 1.5),
@@ -635,12 +635,12 @@ Nash's theory likely corresponds to position (ii). It can be captured by causal 
 
 ```{r}
 #| label: fig-HJ-F-6-7
-#| echo:  false
-#| fig.width :  9
-#| fig.height :  4
+#| echo: false
+#| fig-width:  9
+#| fig-height:  4
 #| fig.align: "center"
 #| out.width: '80%'
-#| fig.cap :  "A normal form game with a representation of equilibrium selection norms."
+#| fig-cap: "A normal form game with a representation of equilibrium selection norms."
 
 hj_ggdag(x = c(3, 1, 2, 3, 3,   4, 5, 1.5, 4.5, 3),
        y = c(0, 1, 1, .5,1.5, 1, 1, 1.5, 1.5, 2),
