@@ -9,8 +9,8 @@ book:
 #    <img style='border: 1px solid darkgray; margin-bottom: 5px' width = 100px src='/figures/cover.jpg'><br/>Buy book</a></p>
   author: "Macartan Humphreys and Alan M Jacobs"
   downloads: pdf
-  doi: https://doi.org/10.1017/9781316718636
-  isbn: 9781316718636
+  doi: "https://doi.org/10.1017/9781316718636"
+  isbn: "9781316718636"
   date: "Published: November 2023"
   keyword: Causal inference, Causal models, Process tracing, Bayes, Mixed methods, Qualititative inference
   chapters:
