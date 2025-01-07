@@ -10,7 +10,7 @@ We describe major families of causal questions and illustrate how these can all 
 ```{r}
 #| label: packagesused04
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 ```
 
 Although scholars share a broad common interest in causality, there is tremendous heterogeneity in the kinds of causal questions that scholars ask. Consider the relationship between inequality and democratization. We might seek to know inequality's average impact on democratization across some broad set of cases. Alternatively, we might be interested in a particular case---say, Mongolia in 1995---and want to know whether inequality would have had an effect *in this case*. Or we might wonder whether the level of democracy in Mongolia in 1995 is *due* to the level of inequality in that case---yet another distinct question (in the same way that establishing that poison would make you sick does not imply that you are sick because of poison). In a different vein, we might be interested in _how_ causal effects unfold, inquiring about the pathway or mechanism through which inequality affects democratization---a question we can also ask at two levels. We can ask whether inequality affected democratization in Mongolia through mobilization of the masses; or we can ask how commonly, across a broad set of cases, inequality affects democratization through mobilization of the masses. Pushing further, we might ask a counterfactual question of the form: Would inequality have produced democratization had mobilization been prevented from occurring?

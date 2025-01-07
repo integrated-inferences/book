@@ -3,7 +3,7 @@
 ```{r}
 #| label: packagesusedwd
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 # run = FALSE
 ```
 
@@ -135,39 +135,11 @@ Within each panel, each line represents going wide to a differing degree: collec
 #| fig-height:  7
 #| echo: false
 #| message: false
-#| fig-cap: "Reduction in expected posterior variance for different wide versus deep strategies
-#| given different model-query combinations. Reductions are relative to the expected posterior variance for an N: 100
-#| no process-tracing strategy."
+#| fig-cap: "Reduction in expected posterior variance for different wide versus deep strategies given different model-query combinations. Reductions are relative to the expected posterior  variance for an N: 100 no process-tracing strategy."
+#| 
 
-
-query_labs = 
-  c(ATE = "ATE", 
-    PC_11 = "Prob. X=1 \n caused Y = 1", 
-    PC_01 = "Prob. X=0 \n caused Y = 1", 
-    via_M = "Probability effect of X\n on Y went via M"
-)
-
-query_names <- names(query_labs)
-
-wide_deep <- read_rds("rep/wd_2025_saved/14_wide_deep_fig_book_2022.rds")
-
-wide_deep %>% group_by(Query, model_group, monotonic) |>
-  mutate(prior_var = mean_post_var[deep_n==0 & Wide == 100]) |>
-  ungroup() |>
-  mutate(reduction = 1 - mean_post_var/prior_var) %>%  
-  mutate(monotonic = factor(monotonic, c("Unconstrained", "Monotonic"), c("Unrestricted", "Monotonic" ))) |>  
-  mutate(Query = factor(
-    Query, query_names, query_labs)) %>%
-  
-  ggplot(aes(deep_n, reduction, linetype = Wide)) +
-  geom_line() + 
-  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.05) +
-  ggh4x::facet_nested(Query ~ model_group + monotonic, scales = "free_y") +
-  ylab("Reduction in expected posterior variance") + 
-  scale_x_continuous(breaks = c(0, 50, 100)) + theme_bw() +
-  xlab("Number of cases with data on M")  + 
-  labs(linetype='Number of \n X, Y cases') +
-  theme(legend.position="bottom") + ylim(-.02, 1)
+ 
+read_rds("saved/14_wide_deep.rds")
 
 ```
 

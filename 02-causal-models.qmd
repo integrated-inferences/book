@@ -9,7 +9,7 @@ editor_options:
 ```{r}
 #| label: packagesused02
 #| include: false
- source("_packages_used.R")
+ source("_setup.R")
 
 ```
 

@@ -3,7 +3,7 @@
 ```{r}
 #| label: packagesused13
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 # run = FALSE
 ```
 
@@ -798,24 +798,9 @@ The main results are shown in Figures @fig-HJ-F-13-1 and @fig-HJ-F-13-2.
 #| warning: false
 #| echo: false 
 
-fig_1 <- 
-  # read_rds("rep/out_2002_s/Case_selection_1_9_2022.rds")  
-  read_rds("rep/cs_2025/Case_selection_1_2022.rds")  
 
-fig_2 <- 
- # read_rds("rep/out_2002_s/Case_selection_2_9_2022.rds")  
-  read_rds("rep/cs_2025/Case_selection_2_2022.rds")  
+read_rds("saved/13_case_selection_1.rds") 
 
-fig_1$data %>%
-ggplot(aes(strategy, mean)) + 
-  geom_point(aes(colour = prob),size = 2) +
-  geom_point(shape = 1,size = 2,colour = "black") +
-  ggh4x::facet_nested(query ~ model_group + monotonic, scales = "free_y") +
-  # facet_grid(query ~ model_group + monotonic, scales = "free_y") + 
-  xlab("Strategy")  +
-    ylab("Inferences") + theme_bw()  + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  scale_colour_gradient(low = "white", high = "black")  + theme(legend.position="bottom")
 ```
 
 
@@ -832,14 +817,7 @@ In the remainder of this section, we walk through the results and suggest, often
 #| echo: false
 #| warning: false 
 
-fig_2$data |> 
-  ggplot(aes(strategy, expected_learning_2)) + 
-  geom_point() +
-   ggh4x::facet_nested(query ~ model_group + monotonic, scales = "free_y") + 
- xlab("Strategy")  +
-    ylab("Reduction in variance")  +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))  + coord_trans(y="sqrt") + ylim(0, NA)
+read_rds("saved/13_case_selection_2.rds") 
 
 ```
 

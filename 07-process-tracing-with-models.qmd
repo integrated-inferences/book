@@ -8,17 +8,14 @@ We show how process tracing can be implemented within a causal-model framework. 
 ```{r}
 #| label: packagesused06
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 # run <- TRUE
 ```
-
 
 We now show how we can use causal models to address the kinds of problems of causal inference that social scientists frequently grapple with. We begin by demonstrating how we can use causal models to conduct confirmatory process tracing. 
 
 Going forward, we conceptualize process tracing somewhat more broadly than some previous treatments. Scholars have sometimes defined the method in terms of the parts of a causal system from which evidence is drawn or in terms of the kinds of questions being asked. For instance, @george2005case (p. 6) define process tracing, in part, as involving the use of evidence on "the sequence and values of the intervening variables" \index{George, Alexander} \index{Bennett, Andrew} in a causal chain, while @BennettCheckel2015PT (p. 7) \index{Checkel, Jeffrey} \index{Bennett, Andrew} specify the method as one undertaken "for the purposes of either developing or testing hypotheses about causal mechanisms that might causally explain" a case. 
 \index{Process tracing}
-
-
 
 We take a slightly more ecumenical approach to thinking about the nature of the evidence that may be deployed or the inferential purposes being pursued in process tracing. We consider process tracing to be an approach that seeks to draw causal inferences *about a single case* using data *from* that case. The data used may be evidence on intervening steps, on features of context, or on any other potentially informative part of a causal system. Moreover, the causal question that one seeks to answer may be of any kind: whether about the cause of an outcome, the mechanism (or pathway) through which an effect unfolds, or any other query of interest to the analyst, as long as it is a question about the case at hand. 
 
@@ -559,7 +556,7 @@ check.A <- function(A, iterations = 4){
                  NA,NA, 1, 0), 4, 4, byrow = TRUE)
 rownames(.A) <- var_names; colnames(.A) <- var_names
 
-possibilities <- perm_bb(rep(2,9))
+possibilities <- CausalQueries:::perm(rep(1,9))[, 9:1] |> as.matrix()
 
 new_A <- function(j) {
   A <- .A

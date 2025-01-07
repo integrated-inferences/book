@@ -16,7 +16,7 @@ In this chapter, we outline the logic of Bayesian updating and show how it is us
 ```{r}
 #| label: packagesused05
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 ```
 
 

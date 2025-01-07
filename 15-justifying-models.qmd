@@ -20,7 +20,7 @@ We outline strategies for justifying models on the basis of prior data and thus 
 ```{r}
 #| label: packagesused14
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 # run = FALSE
 ```
 

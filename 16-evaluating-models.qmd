@@ -8,7 +8,7 @@ We describe strategies for figuring out whether a model is likely doing more har
 ```{r}
 #| label: packagesused15b
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 
 set.seed(202305)
 # run <- FALSE

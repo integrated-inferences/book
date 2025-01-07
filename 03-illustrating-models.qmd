@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 #| label: packagesused02a
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 ```
 
 :::{.callout-note title="Chapter summary"}

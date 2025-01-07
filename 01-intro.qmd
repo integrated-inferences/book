@@ -7,7 +7,7 @@ We describe the book's general approach, preview our argument for the utility of
 ```{r}
 #| label: packagesused01
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 ```
 
 Here is the key idea of this book.

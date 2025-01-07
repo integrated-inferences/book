@@ -4,7 +4,7 @@
 ```{r}
 #| label: packagesused09
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 # run <- TRUE
 # options(mc.cores = parallel::detectCores())
 ```

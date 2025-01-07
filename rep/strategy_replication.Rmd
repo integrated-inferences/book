@@ -14,11 +14,14 @@ library(tidyverse)
 library(knitr)
 options(mc.cores = parallel::detectCores())
 
+output_wd   <- "../saved/"
+
 run_test <- FALSE
+run_wide_deep <- FALSE
+run_selection <- FALSE
 trim <- TRUE
 
 # wide_deep controls
-run_wide_deep <- FALSE
 path_wd   <- "wd_2025"
 n_large = c(100, 400, 1600) 
 n_small = c(0, 50, 100)
@@ -27,6 +30,7 @@ times = 10
 n_chains <- 8
 n_iter   <- 5000
 
+# For small runs
 # n_large=c(5, 10) 
 # n_small = c(0, 5)
 # n_sims = 3
@@ -35,13 +39,13 @@ n_iter   <- 5000
 # n_iter   <- 1000
 
 # Case selection controls
-run_selection <- FALSE
 path_cs    <- "cs_2025"
 cs_iter = 12000
 cs_chains = 16
 cs_models <- TRUE
 cs_subset <- TRUE 
 
+# For small runs
 # cs_iter = 4000
 # cs_chains = 4
 # cs_models <- 1:2
@@ -408,7 +412,9 @@ all_results %>%
                       names(strategy_labels),
                       strategy_labels), 
     model_group = gsub("_monotonic", "", Model),
-    monotonic = ifelse(grepl("monotonic", Model), "Monotonic", "Unconstrained"))
+    monotonic = ifelse(grepl("monotonic", Model), "Monotonic", "Unconstrained"),
+    monotonic = factor(monotonic, c("Unconstrained", "Monotonic"))) 
+  
 
 case_selection_1 <- 
 all_results %>% 
@@ -417,13 +423,15 @@ ggplot(aes(strategy, mean)) +
   geom_point(shape = 1,size = 2,colour = "black") +
   ggh4x::facet_nested(label ~ model_group + monotonic, scales = "free_y") +
   xlab("Strategy")  +
-    ylab("Inferences") + theme_bw()  + 
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  scale_colour_gradient(low = "white", high = "black")
+  ylab("Inferences") + theme_bw()  + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  scale_colour_gradient(low = "white", high = "black") + 
+  theme(legend.position="bottom")
 
 case_selection_1
 
-write_rds(case_selection_1, paste(path_cs, "Case_selection_1_fig_2025.rds"))
+write_rds(case_selection_1, paste0(output_wd, "13_case_selection_1.rds"))
+
 
 ```
 
@@ -491,7 +499,7 @@ expected_var %>%
 
 case_selection_2 
 
-write_rds(case_selection_2, "Case_selection_2_fig_2025.rds")
+write_rds(case_selection_2, paste0(output_wd, "13_case_selection_2.rds"))
 ```
 
 
@@ -792,12 +800,8 @@ wide_deep_fig_book <-
 
 wide_deep_fig_book
 
-write_rds(short, paste0(path_wd, "/14_wide_deep_fig_book.rds")) 
+write_rds(short, paste0(path_wd, "/14_wide_deep_data.rds")) 
+write_rds(wide_deep_fig_book, paste0(output_wd, "14_wide_deep.rds"))
 
-write_rds(wide_deep_fig_book, paste0(path_wd, "/wide_deep_data.rds")) 
-
-pdf("wide_or_deep.pdf", width = 14, height = 14)
- wide_deep_fig_book
-dev.off()
 ```
 

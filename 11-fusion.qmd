@@ -9,7 +9,7 @@ We show how we can integrate inferences across models. We provide four examples 
 ```{r}
 #| label: packagesused15
 #| include: false
-source("_packages_used.R")
+source("_setup.R")
 # run = TRUE
 # library(DeclareDesign)
 ```
