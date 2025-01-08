@@ -146,6 +146,7 @@ We also indicate the probability of each realization given the strategy, the inf
 
 ```{r}
 #| label: tbl-HJ-T-12-1
+#| tbl-cap: 'Inferences on whether $X$ has a positive effect on $Y$, given different data patterns under different clue strategies.'
 #| echo: false
 #| warning: false
 # colnames(possible_inferences)[1:2] <- c("Prior var", "Var given W")
@@ -173,7 +174,7 @@ for(j in 2:nrow(df)){
 }
 
 df %>% select(strategy = s, S,     X,     C,     R,         Y,   prob, posterior, variance) %>%
-kabble(caption="Inferences on whether $X$ has a positive effect on $Y$, given different data patterns under different clue strategies.", row.names = FALSE, digits = 3)
+kabble( row.names = FALSE, digits = 3)
 ```
 
 

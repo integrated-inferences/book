@@ -570,10 +570,11 @@ df |> summarize(
 
 ```{r}
 #| label: tbl-HJ-T-4-2
+#| tbl-cap: 'Calculated answers to two queries.'
 #| echo: FALSE
 df |> summarize(POS = weighted.mean(a1, p),
                  POC = weighted.mean(a1[a2], p[a2])) |> 
-  kabble(booktabs = TRUE, caption= "Calculated answers to two queries.")
+  kabble(booktabs = TRUE)
 ```
 
 Given the equal weighting on causal types, these answers reflect the fact that for five of nine causal types, we expect to see $X=1$ and $Y=1$ but that the causal effect is present for only one of nine causal types and for one of the five causal types that exhibit  $X=1$ and $Y=1$.
@@ -598,6 +599,7 @@ The same procedure can be used to identify any set of types that correspond to a
 
 ```{r}
 #| label: tbl-HJ-T-4-3
+#| tbl-cap: 'Examples of queries and corresponding causal types. The probability of the query is the probability of the causal types that imply the theory.'
 #| echo: false
 
 q <- read.csv("data/queries.csv")
@@ -614,8 +616,7 @@ types <- sapply(1:nrow(q), function(j) {
 })
 
 q <- q |> mutate(Types = types)
-
-q |> kabble(caption = "Examples of queries and corresponding causal types. The probability of the query is the probability of the causal types that imply the theory.") %>%
+q |> kabble() %>%
           kableExtra::column_spec(1, width = "7em") %>%
           kableExtra::column_spec(2, width = "10em") %>%
           kableExtra::column_spec(3, width = "7em") %>%
@@ -642,6 +643,7 @@ For instance, for the interaction query, `Q`, `get_query_types(model, Q)` would 
                 
 ```{r}
 #| label: tbl-HJ-T-4-4
+#| tbl-cap: 'Coefficients on causal types for an interaction query'
 #| echo: false
 model <- make_model("X -> Y <- W")
 
@@ -652,7 +654,7 @@ q2 <- get_query_types(model,"X==1 & W==1")$types
 
 data.frame(weight = -2 : 2, 
            cases = sapply(-2:2, function(j) q1[q1==j & q2] %>% names() %>% paste(collapse = ", ")) %>% as.vector()
-           ) %>% kabble(caption = "Coefficients on causal types for an interaction query") %>%
+           ) %>% kabble() %>%
           kableExtra::column_spec(1, width = "6em") |>
           kableExtra::column_spec(2, width = "30em") |>
   kable_styling(latex_options="scale_down")

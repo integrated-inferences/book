@@ -200,11 +200,12 @@ We omit the $X=0$ cases from the table  since there is nothing to learn from $K$
 
 ```{r}
 #| label: tbl-HJ-T-13-1
+#| tbl-cap: 'Beliefs about data outcomes under different paramater values (X=0 cases omitted).'
 #| echo: false
 df |> filter(X!=0) |>
   arrange(X, Y, K) |>
   kabble(digits = 2, col.names = c("$\\lambda^K_1$", "K", "X", "Y", "$\\Pr(X, Y, K | \\lambda^K_1)$", "$\\Pr(X, Y| \\lambda^K_1)$", "$\\Pr(K| X, Y, \\lambda^K_1)$"),
-             align = "c", caption = "Beliefs about data outcomes under different paramater values (X=0 cases omitted).", escape = FALSE) 
+             align = "c", escape = FALSE) 
 
 ```
 
@@ -461,10 +462,11 @@ We imagine a world in which we have causal model $X \rightarrow M \rightarrow Y 
 
 ```{r}
 #| label: tbl-ch13othercasedf
+#| tbl-cap: 'The data we start with. If we are interested in whether $X$ caused $Y$ in case $A$, are we better gathering data on $M for$ in case $A$ or on $K$ in case $B$?'
 #| echo: false
 
 other_case$data |>
-kabble(caption = "The data we start with. If we are interested in whether $X$ caused $Y$ in case $A$, are we better gathering data on $M for$ in case $A$ or on $K$ in case $B$?")
+kabble()
 ```
 
 
@@ -479,11 +481,12 @@ Given the model, we can work out what we might find under each strategy and what
 ```{r}
 #| label: tbl-ch13millian
 #| echo: false
+#| tbl-cap: "Expected data and projected inferences on effects for case A given one additional clue"
 
 
 results_a %>%
   select(Quantity,`Best guess` = mean, Uncertainty = variance) %>%
-  kabble(digits = 3, caption = "Expected data and projected inferences on effects for case A given one additional clue", align = c("l", "c", "c"))
+  kabble(digits = 3,  align = c("l", "c", "c"))
 
 get_var <- function(q, df)
   df |> filter(model == q) |> pull(variance)
@@ -507,11 +510,12 @@ Details of the inferences we would draw about $X$'s effect on $Y$ in case $B$ fo
 
 ```{r}
 #| label: tbl-ch13millianb
+#| tbl-cap: 'Expected data and projected inferences on effects for case B given one additional clue'
 #| echo: false
 
 results_b %>%
   select(Quantity,`Best guess` = mean, Uncertainty = variance) %>%
-  kabble(digits = 3, caption = "Expected data and projected inferences on effects for case B given one additional clue", align = c("l", "c", "c"))
+  kabble(digits = 3, align = c("l", "c", "c"))
 
 
 ```
@@ -594,12 +598,13 @@ ch_13_walkkthrough <- read_rds("saved/13_walkkthrough.rds")
 strategies <- read_rds("saved/13_illustration_strategies.rds")
 ```
 
-Consider a situation in which our model is $X \rightarrow M \rightarrow Y$. Suppose, further, that we restrict the nodal types so that $X$ cannot have a negative effect on $M$, and $M$ cannot have a negative effect on $Y$, with flat priors over all remaining nodal types. Imagine then that we begin by collecting only $X,Y$ data on six cases and obtain the data pattern shown in Table 13.5. We can see that the data display a modest positive correlation between \(X\) and \(Y\), evidence weakly suggestive of a positive average effect of \(X\) on \(Y\) given the model.
+Consider a situation in which our model is $X \rightarrow M \rightarrow Y$. Suppose, further, that we restrict the nodal types so that $X$ cannot have a negative effect on $M$, and $M$ cannot have a negative effect on $Y$, with flat priors over all remaining nodal types. Imagine then that we begin by collecting only $X,Y$ data on six cases and obtain the data pattern shown in  @tbl-12-observed. We can see that the data display a modest positive correlation between \(X\) and \(Y\), evidence weakly suggestive of a positive average effect of \(X\) on \(Y\) given the model.
 
 ```{r}
-#| label: observed
+#| label: tbl-12-observed
 #| echo: false
-kabble(ch_13_walkkthrough$observed, caption = "Observed data")
+#| tbl-cap: "Observed data"
+kabble(ch_13_walkkthrough$observed)
 ```
 
 These $X,Y$ data already give us some information about the causal effect of $X$ on $Y$. Yet, we want to learn more by examining some subset of these cases more deeply---and, specifically, by collecting data on $M$ for two of these cases. Which cases should we select? We  consider three strategies, each conditional on $X$ and $Y$ values:
@@ -678,6 +683,7 @@ strategies |> lapply(function(s)
 
 ```{r}
 #| label: tbl-chselillustration
+#| tbl-cap: 'Each column shows a possible distribution of data that can be generated from a given strategy. We calculate the probability of each data possibility, given the data seen so far, and the posterior variance associated with each one.'
 #| echo: false
 #| warning: false  
 ch_13_walkkthrough$df |>
@@ -685,7 +691,7 @@ ch_13_walkkthrough$df |>
     c("Probability", round(unlist(probabilities),3)),
     c("Posterior mean", estimates_db |> bind_rows() |> pull(mean) |> round(3)),
     c("Posterior variance",   (estimates_db |> bind_rows() |> pull(sd))^2 |> round(3))) |>
-  kabble(caption = "Each column shows a possible distribution of data that can be generated from a given strategy. We calculate the probability of each data possibility, given the data seen so far, and the posterior variance associated with each one.")   |>  
+  kabble()   |>  
   kable_styling(latex_options = "scale_down")
 ```
 
@@ -694,6 +700,7 @@ From the probability of each data type (given the model and the $X,Y$ data seen 
 
 ```{r}
 #| label: tbl-exppostvar
+#| tbl-cap: 'Expected posterior variances'
 #| echo: false
 
 lapply(estimates_db,  bind_rows) |>  bind_rows(.id = "Strategy") |>
@@ -707,7 +714,7 @@ lapply(estimates_db,  bind_rows) |>  bind_rows(.id = "Strategy") |>
  ) |> mutate(Strategy = factor(Strategy, 
                                 c("Online", "Offline", "X1Y1"),
                                 c("Online", "Offline", "Two X=1, Y=1 cases"))) |>
-kabble(digits = 4, caption = "Expected posterior variances")
+kabble(digits = 4)
 
 ```
 

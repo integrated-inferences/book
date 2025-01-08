@@ -1312,7 +1312,7 @@ Table&nbsp;9.9: Inferences on effects on true Y given two noisy measures (true A
 <p> A common threat to causal inference is the possibility of spillovers: a given unit’s outcome being affected by the treatment status of another (e.g., possibly neighboring) unit. We can readily set up a causal model to allow for the estimation of various quantities related to spillovers.</p>
 <p>Consider, for instance, the causal model represented in <a href="#fig-HJ-F-9-7" class="quarto-xref">Figure&nbsp;<span>9.7</span></a>. We consider here groupings of pairs of units across which spillovers might occur. We might imagine, for instance, geographically proximate villages separated from other groups such that spillovers might occur between neighboring villages but can be ruled out across more distal villages. Here, <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> represent village <span class="math inline">\(i\)</span>’s treatment status and outcome, respectively. The pattern of directed edges indicates that each village’s outcome might be affected both by its own and by its neighbors’ treatment status.</p>
 <p>We now simulate data that allow for spillovers. Specifically, while independently assigning <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> to treatment <span class="math inline">\(50 \%\)</span> of the time, we (a) set <span class="math inline">\(Y_1\)</span> equal to <span class="math inline">\(X_1\)</span>, meaning that Unit 1 is affected only by its own treatment status and (b) set <span class="math inline">\(Y_2\)</span> equal to <span class="math inline">\(X_1 \times X_2\)</span>, meaning that Unit 2 is equally affected by its own treatment status and that of its neighbor, such that <span class="math inline">\(Y_2 = 1\)</span> only if both Unit 2 and its neighbor are assigned to treatment.</p>
-<p>We simulate 100 observations from this data-generating process and then update a model (with flat priors over all nodal types).</p>
+<p>We simulate 100 observations from this data-generating process and then update a model (with flat priors over all nodal types). Results are presented in <a href="#tbl-HJ09-T10-spillovers" class="quarto-xref">Table&nbsp;<span>9.10</span></a></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-HJ-F-9-7" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
@@ -1331,9 +1331,12 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 <p>Finally, we can ask about the average effect of both treatments going from control to treatment (“both_treated”). The true value of this effect is <span class="math inline">\(1\)</span> for both units, and the posterior has shifted quite far in the direction of this value.</p>
 <p>Obviously, more complex setups are possible. The main idea however is that spillovers, often seen as a threat to inference, can just as well been seen as an opportunity to learn about an array of causal processes.</p>
 <div class="cell" data-layout-align="center">
+<div id="tbl-HJ09-T10-spillovers" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ09-T10-spillovers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.10: Spillover queries
+</figcaption><div aria-describedby="tbl-HJ09-T10-spillovers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Spillover queries</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: left;">label</th>
 <th style="text-align: left;">using</th>
@@ -1379,6 +1382,9 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 </table>
 </div>
 </div>
+</figure>
+</div>
+</div>
 </section></section><section id="chapter-appendix-mixing-methods-with-causalqueries" class="level2" data-number="9.5"><h2 data-number="9.5" class="anchored" data-anchor-id="chapter-appendix-mixing-methods-with-causalqueries">
 <span class="header-section-number">9.5</span> Chapter Appendix: Mixing Methods with <code>CausalQueries</code>
 </h2>
@@ -1411,9 +1417,12 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 <span>            case_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
+<div id="tbl-HJ09-11-1" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ09-11-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.11: Querying an updated model
+</figcaption><div aria-describedby="tbl-HJ09-11-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Querying an updated model</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: left;">given</th>
 <th style="text-align: right;">estimate</th>
@@ -1435,15 +1444,21 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 </table>
 </div>
 </div>
-<p>Results are shown in HJ09-F11-1. We see that <span class="math inline">\(M\)</span> is informative (particularly when <span class="math inline">\(M=0\)</span>) about causal effects in a new case, given our observation of processes in previous cases. The key thing here is that the informativeness of <span class="math inline">\(M\)</span> for the new case is justified by the updating of the original model<sub>–</sub>a model that itself contained no assumptions about whether or how effects passed through <span class="math inline">\(M\)</span>.</p>
+</figure>
+</div>
+</div>
+<p>Results are shown in <a href="#tbl-HJ09-11-1" class="quarto-xref">Table&nbsp;<span>9.11</span></a>. We see that <span class="math inline">\(M\)</span> is informative (particularly when <span class="math inline">\(M=0\)</span>) about causal effects in a new case, given our observation of processes in previous cases. The key thing here is that the informativeness of <span class="math inline">\(M\)</span> for the new case is justified by the updating of the original model<sub>–</sub>a model that itself contained no assumptions about whether or how effects passed through <span class="math inline">\(M\)</span>.</p>
 </section><section id="replication-of-chickering1996clinician-lipid-analysis." class="level3" data-number="9.5.2"><h3 data-number="9.5.2" class="anchored" data-anchor-id="replication-of-chickering1996clinician-lipid-analysis.">
 <span class="header-section-number">9.5.2</span> Replication of <span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span> Lipid Analysis.</h3>
 <p> </p>
-<p><span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span> assess the problem of drawing inferences in the presence of imperfect compliance. They use data that look like those in Table 9.12. </p>
+<p><span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span> assess the problem of drawing inferences in the presence of imperfect compliance. They use data that look like those in <a href="#tbl-HJ-09-CPdata" class="quarto-xref">Table&nbsp;<span>9.12</span></a>. </p>
 <div class="cell" data-layout-align="center">
+<div id="tbl-HJ-09-CPdata" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-09-CPdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9.12: Lipid study data from Chickering and Pearl (1996). Note data are reported in compact form with counts of events, assuming a data strategy in which data are sought on all nodes (ZXY)
+</figcaption><div aria-describedby="tbl-HJ-09-CPdata-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<caption>Lipid study data from Chickering and Pearl (1996). Note data are reported in compact form with counts of events, assuming a data strategy in which data are sought on all nodes (ZXY)</caption>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: left;">event</th>
 <th style="text-align: left;">strategy</th>
@@ -1494,6 +1509,9 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 </table>
 </div>
 </div>
+</figure>
+</div>
+</div>
 <p><span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span> use a Gibbs sampler to update over 16 response types (and so 15 degrees of freedom). The parameterization in <code>CausalQueries</code> has four nodal types for <span class="math inline">\(X\)</span> and four parameters capturing the conditional distribution of the four nodal types for <span class="math inline">\(Y\)</span> given each nodal type for <span class="math inline">\(X\)</span>, giving <span class="math inline">\(3 + 4\times3 = 15\)</span> degrees of freedom. </p>
 <p>In <code>CausalQueries</code> the complete code for model specification, updating, and querying is quite compact:</p>
 <div class="cell" data-layout-align="center">
@@ -1503,16 +1521,39 @@ Figure&nbsp;9.7: Model with spillovers: the treatment status of two units each a
 <span>  <span class="fu">update_model</span><span class="op">(</span><span class="va">data</span>, data_type <span class="op">=</span> <span class="st">"compact"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">query_model</span><span class="op">(</span>query <span class="op">=</span> <span class="st">"Y[X=1] - Y[X=0]"</span>, using <span class="op">=</span> <span class="st">"posteriors"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="#tbl-HJ-T-9-12" class="quarto-xref">Table&nbsp;<span>9.10</span></a> reports the results while <a href="#fig-HJ-F-9-9" class="quarto-xref">Figure&nbsp;<span>9.8</span></a> shows the full posterior distribution for this query.</p>
+<p><a href="#tbl-HJ-T-9-12" class="quarto-xref">Table&nbsp;<span>9.13</span></a> reports the results while <a href="#fig-HJ-F-9-9" class="quarto-xref">Figure&nbsp;<span>9.8</span></a> shows the full posterior distribution for this query.</p>
+<div class="cell" data-layout-align="center">
 <div id="tbl-HJ-T-9-12" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-9-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.10: Replication of Chickering and Pearl (2007).
+Table&nbsp;9.13: Replication of Chickering and Pearl (2007).
 </figcaption><div aria-describedby="tbl-HJ-T-9-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div>
-
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">label</th>
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">given</th>
+<th style="text-align: left;">using</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">cred.low</th>
+<th style="text-align: right;">cred.high</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;">Y[X=1] - Y[X=0]</td>
+<td style="text-align: left;">Y[X=1] - Y[X=0]</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">posteriors</td>
+<td style="text-align: right;">0.552</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.373</td>
+<td style="text-align: right;">0.731</td>
+</tr></tbody>
+</table>
 </div>
 </div>
 </figure>
+</div>
 </div>
 <p>The results agree with the findings in <span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span>. We also show the posterior distribution for the average effects <em>among the compliers</em>—those for whom <span class="math inline">\(Z\)</span> has a positive effect on <span class="math inline">\(X\)</span>—which is tighter thanks to identification for this query. </p>
 <div class="cell" data-layout-align="center">
@@ -1527,7 +1568,7 @@ Figure&nbsp;9.8: Posterior distributions on average treatment effects and treatm
 </div>
 </div>
 </div>
-<p><span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span> also assess probabilities of counterfactual events for single cases. For instance, would there be a positive effect for someone with <span class="math inline">\(X=0, Y=0\)</span>. Our answers to this query, shown in Table 9.14, also agree with <span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span>, see <a href="#tbl-HJ-T-9-13" class="quarto-xref">Table&nbsp;<span>9.11</span></a>. Note that when we calculate inferences for a single “new” case (“Case level”) our conclusion is a single number, a probability, and it does not have a confidence interval around it. </p>
+<p><span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span> also assess probabilities of counterfactual events for single cases. For instance, would there be a positive effect for someone with <span class="math inline">\(X=0, Y=0\)</span>. Our answers to this query, shown in Table 9.14, also agree with <span class="citation" data-cites="chickering1996clinician">Chickering and Pearl (<a href="20-references.html#ref-chickering1996clinician" role="doc-biblioref">1996</a>)</span>, see <a href="#tbl-HJ-T-9-13" class="quarto-xref">Table&nbsp;<span>9.14</span></a>. Note that when we calculate inferences for a single “new” case (“Case level”) our conclusion is a single number, a probability, and it does not have a confidence interval around it. </p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">make_model</span><span class="op">(</span><span class="st">"Z -&gt; X -&gt; Y; X &lt;-&gt; Y"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">update_model</span><span class="op">(</span><span class="va">data</span>, data_type <span class="op">=</span> <span class="st">"compact"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1540,7 +1581,7 @@ Figure&nbsp;9.8: Posterior distributions on average treatment effects and treatm
 <div class="cell" data-layout-align="center">
 <div id="tbl-HJ-T-9-13" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-9-13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.11: Case level counterfactual inference following model updating (replication of Chickering and Pearl 1997).
+Table&nbsp;9.14: Case level counterfactual inference following model updating (replication of Chickering and Pearl 1997).
 </figcaption><div aria-describedby="tbl-HJ-T-9-13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">
@@ -1579,11 +1620,11 @@ Table&nbsp;9.11: Case level counterfactual inference following model updating (r
 <p>In <a href="07-process-tracing-with-models.html" class="quarto-xref"><span>Chapter 7</span></a>, we showed how you can use rules of <span class="math inline">\(d\)</span>-separation to assess whether data on a node has probative value for a query given a case-level DAG.. In that discussion, we were conditioning on <span class="math inline">\(\lambda\)</span> (or assuming that nonindependencies arising from the joint distribution of <span class="math inline">\(\lambda\)</span> were already captured by the DAG). How do things change when we update over the distribution of <span class="math inline">\(\lambda\)</span>?</p>
 <p>In that case, it is possible that when we update over <span class="math inline">\(\lambda\)</span> we have dependencies in our beliefs that call for a reassessment of the case-level DAG and so a reassessment of when case-level data have probative value for a query.</p>
 <p>Thus, we may have a case-level DAG where two nodes, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <span class="math inline">\(d\)</span>-separated given <span class="math inline">\(C\)</span> conditional on <span class="math inline">\(\lambda\)</span>. In other words, we are convinced that in the data generating process, whatever it is, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <span class="math inline">\(d\)</span>-separated given <span class="math inline">\(C\)</span> and so <span class="math inline">\(A\)</span> has no probative value for learning about <span class="math inline">\(B\)</span> given <span class="math inline">\(C\)</span>. We might even specify prior beliefs over <span class="math inline">\(\lambda\)</span> such that beliefs over <span class="math inline">\(\lambda^A\)</span> and <span class="math inline">\(\lambda^B\)</span> are independent and so <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are also <span class="math inline">\(d\)</span>-separated for each case in the population DAG (<a href="#fig-HJ-F-9-2" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>. However, after updating, beliefs over <span class="math inline">\(\lambda^A\)</span> and <span class="math inline">\(\lambda^B\)</span> may no longer be independent and, in consequence, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> may no longer be <span class="math inline">\(d\)</span>-separated given <span class="math inline">\(C\)</span>.</p>
-<p>We illustrate by imagining a chain model of the form <span class="math inline">\(X \rightarrow M \rightarrow Y\)</span>. Note that as written <span class="math inline">\(X\)</span> is <span class="math inline">\(d\)</span>-separated from <span class="math inline">\(Y\)</span> given <span class="math inline">\(M\)</span>. Say, however, that we have the following (<a href="#tbl-HJ-T-9-14" class="quarto-xref">Table&nbsp;<span>9.12</span></a>) joint distribution of beliefs over model parameters (where, as before, subscript <span class="math inline">\(01\)</span> indicates a positive effect and <span class="math inline">\(10\)</span> a negative effect):</p>
+<p>We illustrate by imagining a chain model of the form <span class="math inline">\(X \rightarrow M \rightarrow Y\)</span>. Note that as written <span class="math inline">\(X\)</span> is <span class="math inline">\(d\)</span>-separated from <span class="math inline">\(Y\)</span> given <span class="math inline">\(M\)</span>. Say, however, that we have the following (<a href="#tbl-HJ-T-9-14" class="quarto-xref">Table&nbsp;<span>9.15</span></a>) joint distribution of beliefs over model parameters (where, as before, subscript <span class="math inline">\(01\)</span> indicates a positive effect and <span class="math inline">\(10\)</span> a negative effect):</p>
 <div class="cell" data-layout-align="center">
 <div id="tbl-HJ-T-9-14" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-layout-align="center">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HJ-T-9-14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;9.12: Probability distribution over two parameter vectors
+Table&nbsp;9.15: Probability distribution over two parameter vectors
 </figcaption><div aria-describedby="tbl-HJ-T-9-14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell caption-top table table-sm table-striped small">

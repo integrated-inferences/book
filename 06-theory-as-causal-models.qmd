@@ -299,6 +299,7 @@ Let's now think about different ways of characterizing the gains from observing 
 
 ```{r}
 #| label: tbl-HJ-T-06-numeric
+#| tbl-cap: 'Possible events, event probabilities, and inferences.'
 #| echo: false
 #| warning: false
 p_k_q <- function(k, q) .8*(k==q) + .2*(k!=q)
@@ -321,7 +322,6 @@ theorygains |>
       "Actual (squared) Error",
       "Posterior variance"
     ),
-    caption = "Possible events, event probabilities, and inferences.",
     align = "c",
     escape = FALSE
   )  |>                   kableExtra::column_spec(1, width = "8em") |>

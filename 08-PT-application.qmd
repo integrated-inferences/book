@@ -559,6 +559,7 @@ In @tbl-HJ-T-8-1, we show the results of an analysis in which we build into our 
 
 ```{r}
 #| label: tbl-HJ-T-8-1
+#| tbl-cap: 'Learning from an instrument when patterns of confounding are specified: four $R=1, Y=1$ cases.'
 #| echo: false
 #| message: false
 #| warning: false
@@ -582,8 +583,7 @@ RST_confound <- cases_table(
   V1 = "M", V2= "D") |>
   mutate(Y1R1_names = gsub("\\n", " ", Y1R1_names))
 
-kabble(RST_confound, 
-       caption = "Learning from an instrument when patterns of confounding are specified: four $R=1, Y=1$ cases.")
+kabble(RST_confound)
 ```
 
 This analysis amplifies two general, closely related points we have made elsewhere. One is that whether or not a clue is informative for a given query cannot be read strictly from a DAG alone. We demonstrated in @sec-HJC7 that a clue's *potential* informativeness can be determined from a graph. However, whether the clue is in fact informative can depend, among other things, on the prior probabilities we place on nodal types, including on relationships of confounding between nodal types; the observed values of other nodes; and the query we are trying to answer. We expand on clue informativeness in @sec-HJC12. 
@@ -600,6 +600,7 @@ In @tbl-RSTD00, we show the inferences we would draw about whether low mortality
 
 ```{r}
 #| label: tbl-RSTD00
+#| tbl-cap: 'Inferences on whether low mortality caused high growth in an M=0, Y=1 case given observations on distance and institutions.'
 #| echo: false
   conditional_inferences(
     model_rst_pt,   
@@ -608,7 +609,7 @@ In @tbl-RSTD00, we show the inferences we would draw about whether low mortality
     given = "Y==1 & M==0") |>
   select('Distance (D)' = D, 'Institutions (R)' = R,  posterior) |>
   slice(1:4) |>
-  kabble(digits = 3, caption = "Inferences on whether low mortality caused high growth in an M=0, Y=1 case given observations on distance and institutions.",  row.names = F, align = "c") 
+  kabble(digits = 3,  row.names = F, align = "c") 
 ```
 
 We see that the strong monotonicity assumption makes observing $R$ a hoop test for the proposition that low mortality affected growth: We believe there is a positive probability that this is true if we observe $R=1$ and $0$ probability if $R=0$. Inferences also depend on the case's distance from the equator. We again see a substitution logic in operation here: We have greater confidence that low settler mortality caused high growth in countries where high growth cannot be explained by distance from the equator than we do in countries where distance is a viable explanation. 

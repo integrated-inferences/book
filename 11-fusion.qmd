@@ -121,6 +121,7 @@ We see that the same thing is true for the other studies. In Study 2, we have no
 
 ```{r}
 #| label: tbl-HJ-T-11-1
+#| tbl-cap: 'Clue $K$ is uninformative in all three studies'
 #| echo: false
 
 frank <- read_rds("saved/11_frankenstein.rds")
@@ -132,8 +133,8 @@ kabble(
         rbind(
     frank[[1]][,-c(1,3)],
     frank[[2]][,-c(1,3)], 
-    frank[[3]][,-c(1,3)])), 
-  caption = "Clue $K$ is uninformative in all three studies")
+    frank[[3]][,-c(1,3)])) 
+)
 ```
 
 
@@ -144,8 +145,9 @@ Rows 3--4 highlight that the updating works through inferences that *K* allows u
 
 ```{r}
 #| label: tbl-HJ-T-11-2
+#| tbl-cap: 'Clue is informative after combining studies linking $K$ to $Z$ and $Z$ to $Y$'
 #| echo: false
-kabble(frank[[4]][1:4,-c(1,3)], caption = "Clue is informative after combining studies linking $K$ to $Z$ and $Z$ to $Y$", digits = 2)
+kabble(frank[[4]][1:4,-c(1,3)], digits = 2)
 ```
 
 
@@ -228,6 +230,7 @@ The implied true values for the estimands of interest, and our priors on those e
 
 ```{r}
 #| label: tbl-fusionestimands
+#| tbl-cap: 'Estimands under different assignment schemes'
 #| echo: false
 
 if(run){
@@ -243,7 +246,7 @@ write_rds(result, "saved/11_fusionestimands.rds")
 read_rds("saved/11_fusionestimands.rds") |> 
   select(-case_level) |> 
   mutate(Using = gsub("parameters", "truth", using)) |>
-  kabble(caption = "Estimands under different assignment schemes", digits = 2)
+  kabble( digits = 2)
 
 ```
 
@@ -264,11 +267,12 @@ Now, we generate data from the model and then update the model using these data.
 
 ```{r}
 #| label: tbl-fusiondim
+#| tbl-cap: 'Inferences on the ATE from differences in means'
 #| echo: false
 #| warning: false
 #| message: false
 x <- estimatr::difference_in_means(Y~X, data = filter(data, R==0))
-kabble(summary(x)[[1]], digits = 3, caption = "Inferences on the ATE from differences in means")
+kabble(summary(x)[[1]], digits = 3)
 ```
 
 We begin by analyzing just the observational data (cases where $R=0$) and display the results in @tbl-fusiondim. Recall that the true average effect of $X$ on $Y$ is $0.2$. Naive analysis of the observational data, taking a simple difference in means between the $X=0$ and $X=1$ cases, yields a strongly upwardly biased estimate of that effect, of `r round(x$coefficients[[1]], 2)`. 
@@ -284,6 +288,7 @@ if(run)
 
 ```{r}
 #| label: tbl-fusionCQ
+#| tbl-cap: 'Estimates on the ATE for observational ($R=0$) and experimental ($R=1$) set.'
 #| echo: false
 updated <- read_rds("saved/11_exp_obs.rds")
 
@@ -296,8 +301,7 @@ query_model(
     given = list(TRUE, "R==0", "R==1"),
     using = "posteriors") |>
     select(-case_level) |> 
-
-kabble(caption = "Estimates on the ATE for observational ($R=0$) and experimental ($R=1$) set.")
+kabble()
 ```
 
 
@@ -335,6 +339,7 @@ However, what we can learn about uniquely from this model and the combined obser
 
 ```{r}
 #| label: tbl-combexpobsattatc
+#| tbl-cap: 'Effects of $X$ conditional on $X$ for units that were randomly assigned or not.  Effects of $X$ do not depend on $X$ in the experimental group, but they do in the observational group because of self selection. '
 #| echo: false
 result2 <- query_model(
     updated, 
@@ -344,7 +349,7 @@ result2 <- query_model(
 
 result2 |>
     select(-case_level) |>
-kabble(caption = "Effects of $X$ conditional on $X$ for units that were randomly assigned or not.  Effects of $X$ do not depend on $X$ in the experimental group, but they do in the observational group because of self selection. ")
+kabble()
 ```
 
 In sum, we can learn nothing about the observational ATT or ATC from the experimental data alone, where the ATT and ATC are the same quantity. And in the observational data alone, we are hobbled by confounding of unknown direction and size. What the mixed model and data, in effect, are able to do is to let us (a) learn about the ATE from experimental data, (b) use experimental inferences on the ATE to separate true effects from confounding in the observational data and thus learn about the direction and size of the confounding in those data, and (c) estimate the treatment effect for the $X=0$ group and for the $X=1$ group, respectively, in the observational data *using* knowledge about confounding in these data. By mixing the experimental and observational data, we can learn about how the treatment has affected those units that, in the "real" world of the observational setting, selected into treatment *and* about how the treatment *would* affect those that selected into control. \index{Confounding}

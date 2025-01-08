@@ -235,6 +235,7 @@ This example demonstrates it is, in principle, possible to justify a doubly deci
 
 ``` {r} 
 #| label: tbl-tests15 
+#| tbl-cap: 'Known probabilities from a model with  $X \\rightarrow Y \\leftarrow K$  justifying classic test types for clue $K$ given $X=Y=1$.'
 #| echo: FALSE
 #| message: FALSE
 #| warning: FALSE
@@ -271,7 +272,7 @@ table <- data.frame(Value = c(
 
 kabble(table, 
        col.names = c("", "Doubly decisive", "Hoop", "Smoking gun", "Straw in the wind"),
-       caption = "Known probabilities from a model with  $X \\rightarrow Y \\leftarrow K$  justifying classic test types for clue $K$ given $X=Y=1$.", align=c("l", rep('c', 4)),
+       align=c("l", rep('c', 4)),
        escape = FALSE)   
 
 ```
@@ -321,6 +322,7 @@ van_evera_inference <- function(data)
 
 ```{r}
 #| label: tbl-testsfinite
+#| tbl-cap: 'Classic tests with probative value inferred from (simulated) data, for query, Does $X$ have a positive effect on $Y$ in this case (given $K$)?'
 #| echo: false
 #| warning: false
 if(run){
@@ -347,7 +349,8 @@ read_rds("saved/15_vanevera.rds") |>
                          "Smoking gun", "Doubly Decisive"))) |>
   select(Test, Given, Estimate = mean) |> 
   spread(Test, Estimate) |> 
-  kabble(caption= "Classic tests with probative value inferred from (simulated) data, for query, Does $X$ have a positive effect on $Y$ in this case (given $K$)?", row.names = FALSE, booktabs = TRUE, align = "c")   |>  kable_styling(latex_options = "scale_down")
+  kabble(row.names = FALSE, booktabs = TRUE, align = "c")   |>  
+  kable_styling(latex_options = "scale_down")
 ```
 
 For both of these examples, we have focused on moderators as clues. For results on mediators as clues, see @dawid2019bounding,\index{Dawid, Philip} which establishes that mediators in chain models can produce hoop tests but are generally unable to generate smoking gun tests.\index{Qualitative tests!Smoking gun}\index{Qualitative tests!Hoop}\index{Qualitative tests!Doubly decisive}\index{Qualitative tests!Straw in the wind}\index{Mediator}

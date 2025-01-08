@@ -638,6 +638,7 @@ We then imagine two possible worlds that we might be in, $\lambda_1$ and $\lambd
 
 ```{r}
 #| label: tbl-HJ-T-9-states
+#| tbl-cap: 'Beliefs over two states of the world, where information on a new case leads to updating about the state of the world'
 #| echo: false
 #| 
 
@@ -650,7 +651,6 @@ df <- data.frame(world = c("$\\lambda_1$", "$\\lambda_2$"),
 
 df |>
   kabble(col.names = c("$\\lambda$", "$p(\\lambda)$", "$\\lambda^Y_1$", "$\\lambda^Y_2$", "$\\lambda^K_0$", "$\\lambda^K_1$"), align = "c", digits = 4,
-         caption = "Beliefs over two states of the world, where information on a new case leads to updating about the state of the world", 
          escape = FALSE)
 
 ```
@@ -818,6 +818,7 @@ Updating and querying are done in the usual way. In @tbl-HJ-T-9-5, we show resul
 
 ```{r}
 #| label: tbl-HJ-T-9-5
+#| tbl-cap: 'Posteriors on potential outcomes for non binary model'
 #| echo: false
 #| warning: false
 if(run) 
@@ -852,7 +853,7 @@ query <-
 
 read_rds("saved/09_ordinal_query.rds")  |>
   select(Q, using, 'True value', mean, sd) |> 
-  kabble(digits = 2, caption = "Posteriors on potential outcomes for non binary model")
+  kabble(digits = 2)
 
 ```
 
@@ -899,6 +900,7 @@ model <- make_model("X -> Y -> Yobs") |>
 
 ```{r}
 #| label: tbl-merror
+#| tbl-cap: 'Inferences on effects on true Y given measurement error (true ATE = .6)'
 #| echo: false
 
 model2 <- make_model("X -> Y -> Yobs1; Y -> Yobs2") |>
@@ -929,7 +931,7 @@ list(
 Qs <-   read_rds("saved/09_measurement_error.rds")
 
 Qs |> mutate(Data = c("Data on Y measured only", "Data on true Y for 20% of units", "Data on true Y")) |> select(Data, using, mean, sd) |> 
-  kabble(caption = "Inferences on effects on true Y given measurement error (true ATE = .6)", digits = 2)
+  kabble( digits = 2)
 
 ```
 
@@ -946,6 +948,7 @@ model <- make_model("X -> Y -> Yobs1; Y -> Yobs2") |>
 
 ```{r}
 #| label: tbl-measurementerror2
+#| tbl-cap: 'Inferences on effects on true Y given two noisy measures  (true ATE = .6)'
 #| echo: false
 set.seed(1)
 data <- make_data(model, n = 2000) 
@@ -959,7 +962,7 @@ update_model(model,
 
 read_rds("saved/09_measurement_error_2.rds") |> mutate(Data = "Two noisy measures") |> 
   select(Data, using, mean, sd)  |> 
-  kabble(caption = "Inferences on effects on true Y given two noisy measures  (true ATE = .6)", digits = 2)
+  kabble( digits = 2)
 
 ```
 
@@ -976,7 +979,7 @@ Consider, for instance, the causal model represented in @fig-HJ-F-9-7. We consid
 
 We now simulate data that allow for spillovers. Specifically, while independently assigning $X_1$ and $X_2$ to treatment $50 \%$ of the time, we (a) set $Y_1$ equal to $X_1$, meaning that Unit 1 is affected only by its own treatment status and (b) set $Y_2$ equal to $X_1 \times X_2$, meaning that Unit 2 is equally affected by its own treatment status and that of its neighbor, such that $Y_2 = 1$ only if both Unit 2 and its neighbor are assigned to treatment. 
 
-We simulate 100 observations from this data-generating process and then update a model (with flat priors over all nodal types).
+We simulate 100 observations from this data-generating process and then update a model (with flat priors over all nodal types). Results are presented in @tbl-HJ09-T10-spillovers
 
 
 
@@ -1023,7 +1026,11 @@ Finally, we can ask about the average effect of both treatments going from contr
 
 Obviously, more complex setups are possible. The main idea however is that spillovers, often seen as a threat to inference, can just as well been seen as an opportunity to learn about an array of causal processes.
 
-```{r, echo = FALSE}
+```{r}
+#| label: tbl-HJ09-T10-spillovers
+#| tbl-cap: "Spillover queries"
+#| echo: FALSE
+#| 
 data <- fabricatr::fabricate(N = 100, 
                   X1 = rbinom(N,1,.5), 
                   X2 = rbinom(N,1,.5), 
@@ -1041,7 +1048,7 @@ if(run)
 
 read_rds("saved/09_spillovers_query.rds") |> 
   select(-given, -case_level, -query) |> 
-  kabble(caption = "Spillover queries", digits = 2, booktabs = TRUE)
+  kabble(digits = 2, booktabs = TRUE)
 
 ```
 
@@ -1066,7 +1073,7 @@ We do not provide any structure to priors or impose any monotonicity constraints
 
 
 ```{r}
-#| label: mixingilldata
+#| label: 09mixingilldata
 #| eval: false
 data <- data.frame(
   X = c(0,0,0,0,1,1,1,1),
@@ -1104,8 +1111,10 @@ query_model(model,
 ```
 
 ```{r}
-#| label: HJ09-F11-1
+#| label: tbl-HJ09-11-1
 #| echo: false
+#| tbl-cap: "Querying an updated model"
+#| 
 if(run)
   query_model(model,
             query = "Y[X=1]> Y[X=0]",
@@ -1117,19 +1126,22 @@ if(run)
 
   read_rds("saved/09_example_1q.rds") |>
     select(given, estimate = mean) |>
-    kabble(caption = "Querying an updated model")
+    kabble()
 
 ```
 
-Results are shown in HJ09-F11-1. We see that $M$ is informative (particularly when $M=0$) about causal effects in a new case, given our observation of processes in previous cases. The key thing here is that the informativeness of $M$ for the new case is justified by the updating of the original model~--~a model that itself contained no assumptions about whether or how effects passed through $M$.
+Results are shown in @tbl-HJ09-11-1. We see that $M$ is informative (particularly when $M=0$) about causal effects in a new case, given our observation of processes in previous cases. The key thing here is that the informativeness of $M$ for the new case is justified by the updating of the original model~--~a model that itself contained no assumptions about whether or how effects passed through $M$.
 
 ### Replication of @chickering1996clinician Lipid Analysis.
 
 \index{Replication study} \index{Chickering, David M.} \index{Pearl, Judea}
 
-@chickering1996clinician assess the problem of drawing inferences in the presence of imperfect compliance. They use data that look like those in Table 9.12.\index{Pearl, Judea} \index{Chickering, David M.}
+@chickering1996clinician assess the problem of drawing inferences in the presence of imperfect compliance. They use data that look like those in @tbl-HJ-09-CPdata.\index{Pearl, Judea} \index{Chickering, David M.}
 
-```{r, echo = FALSE}
+```{r} 
+#| label: tbl-HJ-09-CPdata
+#| echo: FALSE
+#| tbl-cap: "Lipid study data from Chickering and Pearl (1996). Note data are reported in compact form with counts of events, assuming a data strategy in which data are sought on all nodes (ZXY)"
 data <- data.frame(
   event = c("Z0X0Y0", "Z1X0Y0", "Z0X1Y0", "Z1X1Y0",
             "Z0X0Y1", "Z1X0Y1", "Z0X1Y1",  "Z1X1Y1"),
@@ -1137,7 +1149,7 @@ data <- data.frame(
   count = as.integer(c(158, 52, 0, 23, 14, 12, 0, 78))
 )
 
-data %>% kabble(caption = "Lipid study data from Chickering and Pearl (1996). Note data are reported in compact form with counts of events, assuming a data strategy in which data are sought on all nodes (ZXY)")
+data %>% kabble()
 ```
 
 @chickering1996clinician use a Gibbs sampler to update over 16 response types (and so 15 degrees of freedom). The parameterization in `CausalQueries` \index{CausalQueries@\texttt{CausalQueries}} has four nodal types for $X$ and four parameters capturing the conditional distribution of the four nodal types for $Y$ given each nodal type for $X$, giving $3 + 4\times3 = 15$ degrees of freedom. \index{Chickering, David M.} \index{Pearl, Judea}
@@ -1165,6 +1177,7 @@ if(run){
   make_model("Z -> X -> Y; X <-> Y") |>
   update_model(data, data_type = "compact") |> 
   write_rds("saved/09_replication_chickering.rds")
+}
 
   read_rds("saved/09_replication_chickering.rds") |>
   query_model(
@@ -1172,7 +1185,7 @@ if(run){
     using = "posteriors") |>
     select(-case_level) |>
     kabble()
-}
+
 ```
 
 
@@ -1214,7 +1227,7 @@ The results agree with the findings in @chickering1996clinician. We also show th
 
 @chickering1996clinician also assess probabilities of counterfactual events for single cases. For instance, would there be a positive effect for someone with $X=0, Y=0$. Our answers to this query, shown in Table 9.14, also agree with @chickering1996clinician, see @tbl-HJ-T-9-13. Note that when we calculate inferences for a single "new" case ("Case level") our conclusion is a single number, a probability, and it does not have a confidence interval around it. \index{Chickering, David M.} \index{Pearl, Judea}
 
-```{r, eval = FALSE}
+```{r code-09-cp, eval = FALSE}
 
 make_model("Z -> X -> Y; X <-> Y") |>
   update_model(data, data_type = "compact") |> 
@@ -1228,6 +1241,7 @@ make_model("Z -> X -> Y; X <-> Y") |>
 
 ```{r}
 #| label: tbl-HJ-T-9-13
+#| tbl-cap: 'Case level counterfactual inference following model updating (replication of Chickering and Pearl 1997).'
 #| echo: false
 
 read_rds("saved/09_replication_chickering.rds") |>
@@ -1237,7 +1251,7 @@ read_rds("saved/09_replication_chickering.rds") |>
     case_level = c(FALSE, TRUE),
     using = "posteriors") |>
 select('Case level' = case_level, mean, sd, cred.low, cred.high) |> 
-  kabble(caption = "Case level counterfactual inference following model updating (replication of Chickering and Pearl 1997).")
+  kabble()
 ```
 
 
@@ -1256,6 +1270,7 @@ We illustrate by imagining a chain model of the form $X \rightarrow M \rightarro
 
 ```{r}
 #| label: tbl-HJ-T-9-14
+#| tbl-cap: 'Probability distribution over two parameter vectors'
 #| echo: false
 
 df <- data.frame(world = c("$\\lambda_1$", "$\\lambda_2$"), 
@@ -1268,7 +1283,7 @@ df <- data.frame(world = c("$\\lambda_1$", "$\\lambda_2$"),
                  LK11 = c(0.99, .01)) 
 
 df |>
-  kabble(col.names = c("$\\lambda$", "$p(\\lambda)$", "$\\lambda^X_0$", "$\\lambda^X_1$", "$\\lambda^M_{01}$", "$\\lambda^M_{10}$", "$\\lambda^Y_{01}$", "$\\lambda^Y_{10}$"), align = "c", digits = 4, caption = "Probability distribution over two parameter vectors",
+  kabble(col.names = c("$\\lambda$", "$p(\\lambda)$", "$\\lambda^X_0$", "$\\lambda^X_1$", "$\\lambda^M_{01}$", "$\\lambda^M_{10}$", "$\\lambda^Y_{01}$", "$\\lambda^Y_{10}$"), align = "c", digits = 4,
          escape = FALSE)
 
 ```
