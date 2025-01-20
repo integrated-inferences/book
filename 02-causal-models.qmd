@@ -871,7 +871,7 @@ from observable data.
 |  **Term**   | **Symbol** |                                                                                           **Meaning**                                                                                           |
 |:-------------:|:-------------:|:----------------------------------------:|
 | Nodal type  | $\theta^J$ |                              The way that node $J$ responds to the values of its parents. Example: $\theta^Y_{10}$: $Y$ takes the value 1 if $X=0$ and 0 if $X=1$.                              |
-| Causal type |  $\theta$  | A causal type is a concatenation of nodal types, one for each node. Example: $(\theta^X_0, \theta^Y_{00})$ is a causal type that has $X=0$ and that has $Y=0$ no matter what the value of $X$. |
+| Causal type |  $\theta$  | A causal type is a concatenation of nodal types, one for each node. Example: $(\theta^X_0, \theta^Y_{00})$ is a causal type that has $X=0$ and that has $Y=0$ no matter what the value of $X$. Types like this are written in code in `CausalQueries` as `X.0Y00`. |
 
 :  Nodal types, causal types. {#tbl-NTCT}
 

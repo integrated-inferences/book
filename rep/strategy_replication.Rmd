@@ -510,9 +510,13 @@ write_rds(case_selection_2, paste0(output_wd, "13_case_selection_2.rds"))
 
 ```{r}
 
-comparisons_wd <- function(model, data, query,  ...)
-  update_model(model, data,  ...) %>%
-  query_model(query = query, using = "posteriors")
+comparisons_wd <- function(model, data, query,  ...) {
+  m <- update_model(model, data,  ...) 
+  
+  m|>
+    query_model(query = query, using = "posteriors") |>
+    mutate(warnings = m$stan_objects$stan_warnings)
+}
 
 make_dfs_helper <- 
   
@@ -720,7 +724,13 @@ results$model_group %>% table
 results$Model %>% table
 
 
+```
 
+
+Clean -- in book extreme outliers were removed.
+Subsequently CQ saves warnings and filtering now possible based on warnings.
+
+```{r}
 
 # Suggests variation coming from some extremes
 results %>%
@@ -750,10 +760,18 @@ table(results$to_keep_2)
 
 results <- results |> filter(to_keep_1)
 
-after_trim <- dim(results)[1]
+after_trim_1 <- dim(results)[1]
 
-c(before_trim, after_trim)
-after_trim/before_trim
+results <- results |> mutate(Rhat_warning = grepl("R-hat", warnings)) 
+results$Rhat_warning |> table()
+results |> group_by(Model) |> summarize(x = mean(Rhat_warning, na.rm = TRUE))
+
+results <- results |> filter(!Rhat_warning)
+
+after_trim_2 <- dim(results)[1]
+
+c(before_trim, after_trim_1, after_trim_1)
+after_trim_2/before_trim
 ```
 
 

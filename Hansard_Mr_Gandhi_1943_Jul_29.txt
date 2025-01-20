@@ -1,0 +1,152 @@
+Search Help
+            
+        
+
+      
+        HANSARD 1803–2005
+        →
+                
+          1940s
+        
+         →
+        
+          1943
+        
+         →
+        
+          July 1943
+        
+         →
+        
+          29 July 1943
+        
+
+        →
+                
+          Commons Sitting
+        
+         →
+        INDIA
+
+      
+      Mr. Gandhi
+    
+    
+      
+      HC Deb 29 July 1943 vol 391 cc1757-8
+      1757
+      
+          
+        
+          §
+          23.
+          Mr. Sorensen
+          
+            asked the Secretary of State for India whether Mr. Gandhi has asked for permission, or made any other attempt, to write to the Viceroy or the Secretary of State since March last; and whether the Viceroy or the Secretary of State has communicated with Mr. Gandhi or any Congress leader?
+          
+        
+      
+      
+      
+          
+        
+          §
+          26.
+          Mr. Richards
+          
+            asked the Secretary of State for India whether there has been
+            1758
+            any recent correspondence between Mr. Gandhi and the Viceroy or between Mr. Gandhi and the Secretary of State.
+          
+        
+      
+      
+      
+          
+        
+          §
+          30.
+          Mr. Parker
+          
+            asked the Secretary of State for India whether Mr. Gandhi has asked for permission, or made any other attempt to write to the Viceroy or the Secretary of State since March last; and whether any such permission has been granted or withheld?
+          
+        
+      
+      
+      
+          
+        
+          §
+          Mr. Amery
+          
+            The answer is in the negative. Letters have, however, passed from time to time between Mr. Gandhi and the Home Department of the Government of India, but I am not prepared to disclose their number or their contents.
+          
+        
+      
+      
+      
+          
+        
+          §
+          Mr. Sorensen
+          
+            Could we have no idea of whether the communications were of a political nature, making any representations or any protests?
+          
+        
+      
+      
+      
+          
+        
+          §
+          Mr. Amery
+          
+            No, Sir. In view of the circumstances of Mr. Gandhi's arrest, the Government of India decided that he should not be afforded any opportunity of expressing or conveying his views to the public, either in India or through me.
+          
+        
+      
+      
+      
+          
+        
+          §
+          Mr. Sorensen
+          
+            How then can the public form any opinion on the views Mr. Gandhi has about the present situation?
+          
+        
+      
+      
+      
+          
+        
+          §
+          Mr. Amery
+          
+            It is not desired that they should.
+          
+        
+      
+              Back to
+        
+          Journalists (Visit to Great Britain)
+        
+        
+        Forward to
+        
+          Fourth Indian Division (Visit of Representatives)
+        
+        
+
+    
+    
+      Noticed a typo? | Report other issues | &copy UK Parliament
+      
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      
+        var pageTracker = _gat._getTracker("UA-3110135-1");
+        pageTracker._initData();
+        
+      
+  (function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9014f9e2188cc7dd',t:'MTczNjc2NzAwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();

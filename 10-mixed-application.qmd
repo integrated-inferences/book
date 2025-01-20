@@ -311,14 +311,14 @@ pimd_neg_queries <-read_rds("saved/10_pimdnegqueries.rds")
 #| message: FALSE
 
 x1 <- pimd_queries |>
-  lapply(function(a) data.frame(p = as.vector(a))) |>
+  lapply(function(a) data.frame(p = as.vector(a[,1]))) |>
   bind_rows(.id = "Q") |>
   mutate(Q = factor(Q, c("prob_b", "PC", "PC2", "PC3", "PC4", "PC5"),
                     c("I=1 causes D=1", "D=1 caused by I=1", "D=1 caused by I=1 | M = 1", "D=1 caused by I=1 | M = 0", "D=1 caused by I=1 | M = 1, P=1",  "D=1 caused by I=1 | M = 1, P=0")))
 
 
  x2 <- pimd_neg_queries |>  
-  lapply(function(a) data.frame(p = as.vector(a))) |>
+  lapply(function(a) data.frame(p = as.vector(a[,1]))) |>
   bind_rows(.id = "Q") |>
   mutate(Q = factor(Q, 
                     c("prob_a", "PCneg", "PC2neg", "PC3neg", "PC4neg", "PC5neg"),
